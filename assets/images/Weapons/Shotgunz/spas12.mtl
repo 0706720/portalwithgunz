@@ -1,0 +1,36 @@
+# 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
+# File Created: 23.01.2022 21:41:54
+
+newmtl spas12_mat02
+	Ns 43.2193
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.2000 0.2000 0.2000
+	Kd 0.8000 0.8000 0.8000
+	Ks 0.2000 0.2000 0.2000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka C:\Users\user\Desktop\SPAS12\textures\spas12_mat02_Albedo.png
+	map_Kd C:\Users\user\Desktop\SPAS12\textures\spas12_mat02_Albedo.png
+	map_Ks C:\Users\user\Desktop\SPAS12\textures\spas12_mat02_Metallic.png
+	map_bump C:\Users\user\Desktop\SPAS12\textures\spas12_mat02_Normal.png
+	bump C:\Users\user\Desktop\SPAS12\textures\spas12_mat02_Normal.png
+
+newmtl spas12_mat01
+	Ns 43.2193
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.2000 0.2000 0.2000
+	Kd 0.8000 0.8000 0.8000
+	Ks 0.2000 0.2000 0.2000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka C:\Users\user\Desktop\SPAS12\textures\spas12_mat01_Albedo.png
+	map_Kd C:\Users\user\Desktop\SPAS12\textures\spas12_mat01_Albedo.png
+	map_Ks C:\Users\user\Desktop\SPAS12\textures\spas12_mat01_Metallic.png
+	map_bump C:\Users\user\Desktop\SPAS12\textures\spas12_mat01_Normal.png
+	bump C:\Users\user\Desktop\SPAS12\textures\spas12_mat01_Normal.png
