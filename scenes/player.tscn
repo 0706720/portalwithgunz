@@ -5,6 +5,9 @@
 [ext_resource type="Texture2D" uid="uid://vwob30tkwej4" path="res://addons/kenney_particle_pack/star_06.png" id="3_27dhu"]
 [ext_resource type="Animation" uid="uid://c2y6nfvxis3xa" path="res://Scripts/Crouch.res" id="4_dqkch"]
 [ext_resource type="Script" uid="uid://27muroark2gj" path="res://scenes/grapple_controller.gd" id="5_qlg0r"]
+[ext_resource type="Script" uid="uid://bo5enab2wen2s" path="res://Scripts/State_Machine.gd" id="6_tuyoq"]
+[ext_resource type="Script" uid="uid://bxy4erehwa46b" path="res://Scripts/Idle_State.gd" id="7_fjrip"]
+[ext_resource type="Script" uid="uid://dtg8rdld5xjau" path="res://Scripts/Move_State.gd" id="8_smehm"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_xk8km"]
 
@@ -231,6 +234,15 @@ debug_shape_custom_color = Color(0, 0.57254905, 0, 1)
 
 [node name="GrappleController" type="Node" parent="." unique_id=364533085]
 script = ExtResource("5_qlg0r")
+
+[node name="StateMachine" type="Node" parent="." unique_id=1887064363]
+script = ExtResource("6_tuyoq")
+
+[node name="IdleState" type="Node" parent="StateMachine" unique_id=1035240996]
+script = ExtResource("7_fjrip")
+
+[node name="MoveState" type="Node" parent="StateMachine" unique_id=721917787]
+script = ExtResource("8_smehm")
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="animation_finished" from="CrouchAnimationPlayer" to="." method="_on_crouch_animation_finished"]
