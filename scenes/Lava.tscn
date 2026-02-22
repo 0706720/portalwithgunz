@@ -29,4 +29,8 @@ mesh = SubResource("PlaneMesh_235tq")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.015808105, 0.033569336, -0.0018920898)
 shape = SubResource("BoxShape3D_jxrcf")
 
+[node name="Damage_Timer" type="Timer" parent="." unique_id=1492053429]
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
+[connection signal="timeout" from="Damage_Timer" to="." method="_on_timer_timeout"]
