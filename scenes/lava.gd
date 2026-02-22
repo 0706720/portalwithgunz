@@ -1,17 +1,24 @@
 extends Node3D
 
+@onready var timer = $Damage_Timer
+var target = null
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	print('initialised')
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
 	pass
 
 func _on_body_entered(body: Node3D) -> void:
 	print('Collision detected')
 	if body.is_in_group("Player"):
-		body.receive_damage()
+		target = body
+		target.receive_damage()
+		timer.start()
 		print("damage dealt")
+
+func _on_body_exited(body: Node3D) -> void:
+	if target == body:
+		timer.stop()
+		target = null
+
+func _on_timer_timeout() -> void:
+	if target != null:
+		target.receive_damage()
