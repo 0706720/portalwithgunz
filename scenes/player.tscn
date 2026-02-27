@@ -174,32 +174,6 @@ material = SubResource("StandardMaterial3D_4smqo")
 size = Vector2(0.5, 0.5)
 orientation = 2
 
-[sub_resource type="Animation" id="Animation_ur7pv"]
-length = 0.001
-
-[sub_resource type="Animation" id="Animation_smehm"]
-resource_name = "Spindash"
-length = 0.15
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Camera3D:rotation:x")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.075, 0.15, 0.16666667, 0.16676667, 0.16686668, 0.16696668),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [0.0, 3.283, 6.283, 3.1415927, 0.0, 0.0, 0.0]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_ur7pv"]
-_data = {
-&"RESET": SubResource("Animation_ur7pv"),
-&"Spindash": SubResource("Animation_smehm")
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_qlg0r"]
 _data = {
 &"Crouch": ExtResource("4_dqkch")
@@ -212,6 +186,24 @@ collision_layer = 2
 script = ExtResource("1_2v3wm")
 crouch_anim_player = NodePath("CrouchAnimationPlayer")
 crouch_shapecast = NodePath("ShapeCast3D")
+crouch_speed = null
+JUMP_VELOCITY = null
+look_sensitivity = null
+auto_bhop = null
+walk_speed = null
+sprint_speed = null
+ground_accel = null
+ground_deccel = null
+ground_friction = null
+air_cap = null
+air_accel = null
+air_move_speed = null
+spin_charge_rate = null
+spin_max_power = null
+spin_min_release = null
+spin_friction = null
+spin_camera_tilt_amount = null
+spin_camera_tilt_speed = null
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1832600017]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -249,10 +241,6 @@ draw_pass_1 = SubResource("PlaneMesh_b2g4i")
 target_position = Vector3(0, 0, -50)
 collision_mask = 2
 
-[node name="SpindashAnimationPlayer" type="AnimationPlayer" parent="Camera3D" unique_id=1945084297]
-root_node = NodePath("../..")
-libraries/ = SubResource("AnimationLibrary_ur7pv")
-
 [node name="CrouchAnimationPlayer" type="AnimationPlayer" parent="." unique_id=320549004]
 libraries/ = SubResource("AnimationLibrary_qlg0r")
 
@@ -275,7 +263,5 @@ script = ExtResource("7_fjrip")
 script = ExtResource("8_smehm")
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
-[connection signal="animation_finished" from="Camera3D/SpindashAnimationPlayer" to="." method="_on_spindash_animation_finished"]
-[connection signal="animation_started" from="Camera3D/SpindashAnimationPlayer" to="." method="_on_spindash_animation_started"]
 [connection signal="animation_finished" from="CrouchAnimationPlayer" to="." method="_on_crouch_animation_finished"]
 [connection signal="animation_started" from="CrouchAnimationPlayer" to="." method="_on_crouch_animation_started"]
