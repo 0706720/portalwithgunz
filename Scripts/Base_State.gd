@@ -2,7 +2,7 @@
 class_name State
 extends Node
 
-signal state_finished(next_state_name: String)
+signal state_finished(next_state_name: StringName)
 
 var player: CharacterBody3D
 var state_machine: StateMachine
@@ -13,5 +13,8 @@ func enter() -> void:
 func exit() -> void:
 	pass
 
-func physics_update(_delta: float) -> void:
+func _physics_update(_delta: float) -> void:
+	pass
+
+func Update(_delta) -> void:
 	pass

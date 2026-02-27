@@ -3,14 +3,23 @@
 class_name StateMachine
 extends Node
 
-var current_state: State
+@export var current_state: State
+var states: Dictionary = {}
 
-func change_state(new_state: State) -> void:
-	if current_state:
-		current_state.exit()
-	current_state = new_state
-	current_state.enter()
+func ready():
+	for child in State:
+		if child is State:
+			states[child.name] = child.transition.connect(change_state)
 
-func _physcics_process(delta: float) -> void:
-	if current_state:
-		current_state.physics_update(delta)
+func change_state(new_state_name: StringName) -> void:
+	var new_state = states.get(new_state_name)
+	if new_state != null:
+		if new_state != current_state:
+			current_state.exit()
+			current_state = new_state
+			current_state.enter()
+	else:
+		push_warning("State does not exist")
+		
+func _physics_process(delta):
+	current_state.physics_update(delta)

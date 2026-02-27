@@ -253,8 +253,9 @@ debug_shape_custom_color = Color(0, 0.57254905, 0, 1)
 [node name="GrappleController" type="Node" parent="." unique_id=364533085]
 script = ExtResource("5_qlg0r")
 
-[node name="StateMachine" type="Node" parent="." unique_id=1887064363]
+[node name="StateMachine" type="Node" parent="." unique_id=1887064363 node_paths=PackedStringArray("current_state")]
 script = ExtResource("6_tuyoq")
+current_state = NodePath("MoveState")
 
 [node name="IdleState" type="Node" parent="StateMachine" unique_id=1035240996]
 script = ExtResource("7_fjrip")
