@@ -148,7 +148,7 @@ func _physics_process(delta):
 	else:
 		anim_player.play("idle")
 	var camera = $Camera3D
-s
+
 	#move_and_slide()
 
 @rpc("call_local")
