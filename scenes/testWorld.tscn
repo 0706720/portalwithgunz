@@ -6,8 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://c1j7an8woikyd" path="res://scenes/environment.tscn" id="4_fxuqr"]
 [ext_resource type="PackedScene" uid="uid://c5hpa4wn0ppg5" path="res://scenes/woodenBoard.tscn" id="5_myy55"]
 [ext_resource type="PackedScene" uid="uid://bcvf4hmrpkuno" path="res://MovingPlatform.tscn" id="6_7nwna"]
-[ext_resource type="PackedScene" uid="uid://dd5aonfteue3y" path="res://assets/Buckler FBX.fbx" id="7_rucky"]
-[ext_resource type="PackedScene" uid="uid://sdkadv2wrutx" path="res://scenes/spikes.tscn" id="7_rucky"]
+[ext_resource type="PackedScene" path="res://scenes/spikes.tscn" id="7_rucky"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_u5pdl"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -144,12 +143,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.6858497, -27.101051)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.230011, 2.2330034, -7.1072836)
 
 [node name="Node3D" parent="." unique_id=1220480673 instance=ExtResource("6_7nwna")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.479332, 5.2076035, 0.6210048)
-a = Vector3(-17.479, 1, 0.621)
-b = Vector3(0, 1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.479, 10, 0.621)
+a = Vector3(-17.479, 10, 0.621)
+b = Vector3(0, 10, 0)
+time = 5.0
 
 [node name="Buckler FBX" parent="." unique_id=867873564 instance=ExtResource("7_rucky")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.8643875, 2.7206473, -10.727936)
+
 [node name="Spikes" parent="." unique_id=1208670092 instance=ExtResource("7_rucky")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.4133005, 0.5747968, 0.18279529)
 
