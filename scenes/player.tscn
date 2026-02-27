@@ -5,9 +5,10 @@
 [ext_resource type="Texture2D" uid="uid://vwob30tkwej4" path="res://addons/kenney_particle_pack/star_06.png" id="3_27dhu"]
 [ext_resource type="Animation" uid="uid://c2y6nfvxis3xa" path="res://Scripts/Crouch.res" id="4_dqkch"]
 [ext_resource type="Script" uid="uid://27muroark2gj" path="res://scenes/grapple_controller.gd" id="5_qlg0r"]
-[ext_resource type="Script" uid="uid://bo5enab2wen2s" path="res://Scripts/State_Machine.gd" id="6_tuyoq"]
-[ext_resource type="Script" uid="uid://bxy4erehwa46b" path="res://Scripts/Idle_State.gd" id="7_fjrip"]
-[ext_resource type="Script" uid="uid://dtg8rdld5xjau" path="res://Scripts/Move_State.gd" id="8_smehm"]
+[ext_resource type="Script" uid="uid://bo5enab2wen2s" path="res://Scripts/States/State_Machine.gd" id="6_tuyoq"]
+[ext_resource type="Script" uid="uid://bxy4erehwa46b" path="res://Scripts/States/Idle_State.gd" id="7_fjrip"]
+[ext_resource type="Script" uid="uid://dtg8rdld5xjau" path="res://Scripts/States/Move_State.gd" id="8_smehm"]
+[ext_resource type="Script" uid="uid://ckid4cb6ksg1q" path="res://Scripts/States/Jump_State.gd" id="9_ur7pv"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_xk8km"]
 
@@ -186,24 +187,6 @@ collision_layer = 2
 script = ExtResource("1_2v3wm")
 crouch_anim_player = NodePath("CrouchAnimationPlayer")
 crouch_shapecast = NodePath("ShapeCast3D")
-crouch_speed = null
-JUMP_VELOCITY = null
-look_sensitivity = null
-auto_bhop = null
-walk_speed = null
-sprint_speed = null
-ground_accel = null
-ground_deccel = null
-ground_friction = null
-air_cap = null
-air_accel = null
-air_move_speed = null
-spin_charge_rate = null
-spin_max_power = null
-spin_min_release = null
-spin_friction = null
-spin_camera_tilt_amount = null
-spin_camera_tilt_speed = null
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1832600017]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -262,6 +245,9 @@ script = ExtResource("7_fjrip")
 
 [node name="MoveState" type="Node" parent="StateMachine" unique_id=721917787]
 script = ExtResource("8_smehm")
+
+[node name="JumpState" type="Node" parent="StateMachine" unique_id=735201202]
+script = ExtResource("9_ur7pv")
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="animation_finished" from="CrouchAnimationPlayer" to="." method="_on_crouch_animation_finished"]
