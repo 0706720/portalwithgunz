@@ -176,18 +176,6 @@ orientation = 2
 
 [sub_resource type="Animation" id="Animation_ur7pv"]
 length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Camera3D:rotation:x")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [3.1415927]
-}
 
 [sub_resource type="Animation" id="Animation_smehm"]
 resource_name = "Spindash"
@@ -200,10 +188,10 @@ tracks/0/path = NodePath("Camera3D:rotation:x")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.15, 0.16666667, 0.16676667, 0.16686668, 0.16696668),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.075, 0.15, 0.16666667, 0.16676667, 0.16686668, 0.16696668),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [0.0, 6.283, 3.1415927, 0.0, 0.0, 0.0]
+"values": [0.0, 3.283, 6.283, 3.1415927, 0.0, 0.0, 0.0]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ur7pv"]
@@ -242,7 +230,7 @@ playback_default_blend_time = 0.05
 replication_config = SubResource("SceneReplicationConfig_hn37q")
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1853814499]
-transform = Transform3D(1, 0, 0, 0, -1, 8.742278e-08, 0, -8.742278e-08, -1, 0, 1.51306, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.51306, 0)
 
 [node name="Pistol" parent="Camera3D" unique_id=945160158 instance=ExtResource("2_4esil")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, -0.25, -0.5)
@@ -261,7 +249,7 @@ draw_pass_1 = SubResource("PlaneMesh_b2g4i")
 target_position = Vector3(0, 0, -50)
 collision_mask = 2
 
-[node name="Spindash" type="AnimationPlayer" parent="Camera3D" unique_id=1945084297]
+[node name="SpindashAnimationPlayer" type="AnimationPlayer" parent="Camera3D" unique_id=1945084297]
 root_node = NodePath("../..")
 libraries/ = SubResource("AnimationLibrary_ur7pv")
 
@@ -287,7 +275,7 @@ script = ExtResource("7_fjrip")
 script = ExtResource("8_smehm")
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
-[connection signal="animation_finished" from="Camera3D/Spindash" to="." method="_on_spindash_animation_finished"]
-[connection signal="animation_started" from="Camera3D/Spindash" to="." method="_on_spindash_animation_started"]
+[connection signal="animation_finished" from="Camera3D/SpindashAnimationPlayer" to="." method="_on_spindash_animation_finished"]
+[connection signal="animation_started" from="Camera3D/SpindashAnimationPlayer" to="." method="_on_spindash_animation_started"]
 [connection signal="animation_finished" from="CrouchAnimationPlayer" to="." method="_on_crouch_animation_finished"]
 [connection signal="animation_started" from="CrouchAnimationPlayer" to="." method="_on_crouch_animation_started"]

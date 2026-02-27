@@ -95,6 +95,15 @@ func _physics_process(delta):
 
 		if speed < walk_speed:
 			is_spin_rolling = false
+# Camera tilt while spinning
+	var target_tilt = 0.0
+
+	if is_spin_rolling == true:
+		target_tilt = spin_camera_tilt_amount
+		current_camera_tilt = lerp(current_camera_tilt, target_tilt, spin_camera_tilt_speed * delta)
+		camera.rotation.x = current_camera_tilt
+		var current_camera_tilt := 0.0
+
 
 	move_and_slide()
 	if not is_multiplayer_authority(): return
@@ -189,14 +198,18 @@ var headbob_time := 0.0
 
 var wish_dir := Vector3.ZERO
 @export var spin_charge_rate := 25.0
-@export var spin_max_power := 60.0
+@export var spin_max_power := 50.0
 @export var spin_min_release := 10.0
-@export var spin_friction := 4.0
+@export var spin_friction := 20.0
 
 var spin_charge := 0.0
 var is_charging_spin := false
 var is_spin_rolling := false
 var spin_direction := Vector3.ZERO
+
+@export var spin_camera_tilt_amount := 180.0   
+@export var spin_camera_tilt_speed := 200.0
+var current_camera_tilt := 0.0
 
 
 func get_move_speed():
