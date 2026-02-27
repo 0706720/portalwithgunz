@@ -67,7 +67,7 @@ func _unhandled_input(event):
 func _on_single_player_button_pressed():
 	main_menu.hide()
 	hud.show()
-	#multiplayer.multiplayer_peer = enet_peer
+	multiplayer.multiplayer_peer = enet_peer
 	add_player(multiplayer.get_unique_id())
 
 
