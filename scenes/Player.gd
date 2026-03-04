@@ -36,7 +36,7 @@ func _ready():
 	camera.current = true
 	# ensure collision check ignores player collision shape
 	crouch_shapecast.add_exception($".")
-	
+	State
 func _exit_tree() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
@@ -148,6 +148,7 @@ func _physics_process(delta):
 	else:
 		anim_player.play("idle")
 	var camera = $Camera3D
+
 	#move_and_slide()
 
 @rpc("call_local")
@@ -178,7 +179,7 @@ var player_health = 100
 var canThrow = true
 @onready var my_label = $Label
 
-@export var JUMP_VELOCITY := 6.5
+@export var JUMP_VELOCITY := 8.0
 @export var look_sensitivity : float = 0.006
 @export var auto_bhop := true
 
@@ -207,7 +208,7 @@ var is_charging_spin := false
 var is_spin_rolling := false
 var spin_direction := Vector3.ZERO
 
-@export var spin_camera_tilt_amount := 180.0   
+@export var spin_camera_tilt_amount := 360.0   
 @export var spin_camera_tilt_speed := 200.0
 var current_camera_tilt := 0.0
 
