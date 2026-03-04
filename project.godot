@@ -28,6 +28,15 @@ Global="*uid://c1xxttxh8shp6"
 
 project/assembly_name="MultiplayerFPSTemplate"
 
+[file_customization]
+
+folder_colors={
+"res://Scripts/": "red",
+"res://addons/": "green",
+"res://assets/": "purple",
+"res://scenes/": "blue"
+}
+
 [filesystem]
 
 import/blender/enabled=false

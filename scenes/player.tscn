@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://xcjrjq5cbn7y"]
 
 [ext_resource type="Script" uid="uid://byvoccpe1ihl7" path="res://scenes/Player.gd" id="1_2v3wm"]
-[ext_resource type="PackedScene" uid="uid://cf1dcxwv6bvl3" path="res://models/Pistol.glb" id="2_4esil"]
+[ext_resource type="PackedScene" uid="uid://cf1dcxwv6bvl3" path="res://scenes/models/Pistol.glb" id="2_4esil"]
 [ext_resource type="Texture2D" uid="uid://vwob30tkwej4" path="res://addons/kenney_particle_pack/star_06.png" id="3_27dhu"]
 [ext_resource type="Animation" uid="uid://c2y6nfvxis3xa" path="res://Scripts/Crouch.res" id="4_dqkch"]
 [ext_resource type="Script" uid="uid://27muroark2gj" path="res://scenes/grapple_controller.gd" id="5_qlg0r"]
