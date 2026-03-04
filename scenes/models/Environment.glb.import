@@ -3,18 +3,18 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://dd5aonfteue3y"
-path="res://.godot/imported/Buckler FBX.fbx-f3dc53b3ee78b475cb23ba851417d430.scn"
+uid="uid://ckf3250w8jpro"
+path="res://.godot/imported/Environment.glb-8fea6208b4adb24b49c04eb935db4fe9.scn"
 
 [deps]
 
-source_file="res://assets/Buckler FBX.fbx"
-dest_files=["res://.godot/imported/Buckler FBX.fbx-f3dc53b3ee78b475cb23ba851417d430.scn"]
+source_file="res://scenes/models/Environment.glb"
+dest_files=["res://.godot/imported/Environment.glb-8fea6208b4adb24b49c04eb935db4fe9.scn"]
 
 [params]
 
-nodes/root_type=""
-nodes/root_name=""
+nodes/root_type="Node3D"
+nodes/root_name="Scene Root"
 nodes/root_script=null
 nodes/apply_root_scale=true
 nodes/root_scale=1.0
@@ -30,7 +30,7 @@ meshes/force_disable_compression=false
 skins/use_named_skins=true
 animation/import=true
 animation/fps=30
-animation/trimming=true
+animation/trimming=false
 animation/remove_immutable_tracks=true
 animation/import_rest_as_RESET=false
 import_script/path=""
@@ -38,7 +38,5 @@ materials/extract=0
 materials/extract_format=0
 materials/extract_path=""
 _subresources={}
-fbx/importer=0
-fbx/allow_geometry_helper_nodes=false
-fbx/embedded_image_handling=1
-fbx/naming_version=2
+gltf/naming_version=0
+gltf/embedded_image_handling=1

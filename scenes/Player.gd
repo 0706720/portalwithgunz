@@ -36,7 +36,7 @@ func _ready():
 	camera.current = true
 	# ensure collision check ignores player collision shape
 	crouch_shapecast.add_exception($".")
-	
+	State
 func _exit_tree() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
