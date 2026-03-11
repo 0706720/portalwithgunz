@@ -153,6 +153,8 @@ time = 5.0
 [node name="Spikes" parent="." unique_id=1208670092 instance=ExtResource("7_rucky")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.4133005, 0.5747968, 0.18279529)
 
+[node name="MovingPlatform" parent="." unique_id=19052067 instance=ExtResource("6_7nwna")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.34358716, 2.2500002, 21.196417)
 [node name="Target" parent="." unique_id=647349676 instance=ExtResource("8_0ddhe")]
 transform = Transform3D(-4.3711385e-08, 0, 0.99999994, 0, 1, 0, -0.99999994, 0, -4.3711385e-08, 0.022996247, 2.4999983, 20.957216)
 
