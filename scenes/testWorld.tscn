@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://c1j7an8woikyd" path="res://scenes/environment.tscn" id="4_fxuqr"]
 [ext_resource type="PackedScene" uid="uid://c5hpa4wn0ppg5" path="res://scenes/woodenBoard.tscn" id="5_myy55"]
 [ext_resource type="PackedScene" uid="uid://bcvf4hmrpkuno" path="res://MovingPlatform.tscn" id="6_7nwna"]
-[ext_resource type="PackedScene" path="res://scenes/spikes.tscn" id="7_rucky"]
+[ext_resource type="PackedScene" uid="uid://sdkadv2wrutx" path="res://scenes/spikes.tscn" id="7_rucky"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_u5pdl"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -153,6 +153,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.8643875, 2.7206473, -10.7
 
 [node name="Spikes" parent="." unique_id=1208670092 instance=ExtResource("7_rucky")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.4133005, 0.5747968, 0.18279529)
+
+[node name="MovingPlatform" parent="." unique_id=19052067 instance=ExtResource("6_7nwna")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.34358716, 2.2500002, 21.196417)
 
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/SinglePlayer" to="." method="_on_single_player_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/HostButton" to="." method="_on_host_button_pressed"]
