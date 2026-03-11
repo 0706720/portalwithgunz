@@ -155,8 +155,8 @@ func _physics_process(delta):
 func play_shoot_effects():
 	anim_player.stop()
 	anim_player.play("shoot")
-	muzzle_flash.restart()
-	muzzle_flash.emitting = true
+	#muzzle_flash.restart()
+	#muzzle_flash.emitting = true
 
 @rpc("any_peer")
 func receive_damage():
