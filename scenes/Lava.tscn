@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://m1wd27j0gvt6"]
 
-[ext_resource type="Script" uid="uid://dxtworpoc1h8b" path="res://scenes/lava.gd" id="1_4qsyj"]
+[ext_resource type="Script" uid="uid://dxtworpoc1h8b" path="res://Scripts/lava.gd" id="1_4qsyj"]
 [ext_resource type="Texture2D" uid="uid://chanwbkb08oln" path="res://assets/images/Weapons/Red Volcano.jpeg" id="1_n3js4"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_jxrcf"]
