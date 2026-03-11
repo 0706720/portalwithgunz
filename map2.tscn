@@ -15,17 +15,21 @@ data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_55y45"]
 albedo_texture = ExtResource("2_kyc3v")
+uv1_scale = Vector3(6, 6, 6)
 
 [sub_resource type="BoxMesh" id="BoxMesh_nwr2e"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4f56f"]
 albedo_texture = ExtResource("2_kyc3v")
+uv1_scale = Vector3(6, 6, 6)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ehxak"]
 albedo_texture = ExtResource("2_kyc3v")
+uv1_scale = Vector3(6, 6, 6)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ky2co"]
 albedo_texture = ExtResource("2_kyc3v")
+uv1_scale = Vector3(6, 6, 6)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dt2mv"]
 albedo_texture = ExtResource("3_nwr2e")
@@ -48,22 +52,22 @@ mesh = SubResource("PlaneMesh_55y45")
 shape = SubResource("ConcavePolygonShape3D_4f56f")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=43129575]
-transform = Transform3D(45.36089, 0, 0, 0, 43.405952, 0, 0, 0, 0.55113757, 0, 2.2314138, 23.079882)
+transform = Transform3D(48, 0, 0, 0, 42, 0, 0, 0, 1.2, 0, 20.5, 23.5)
 material_override = SubResource("StandardMaterial3D_55y45")
 mesh = SubResource("BoxMesh_nwr2e")
 
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="." unique_id=975313962]
-transform = Transform3D(46.381523, 0, 0, 0, 42.961475, 0, 0, 0, 0.804, 0, 2.2314138, -23.071156)
+transform = Transform3D(48, 0, 0, 0, 42, 0, 0, 0, 1.2, 0, 20.5, -23.571)
 material_override = SubResource("StandardMaterial3D_4f56f")
 mesh = SubResource("BoxMesh_nwr2e")
 
 [node name="MeshInstance3D4" type="MeshInstance3D" parent="." unique_id=1062758236]
-transform = Transform3D(0.27260146, 0, -0.5573136, 0, 42.144165, 0, 46.623394, 0, 0.0032585463, 22.967316, 2.2314138, 0.011815786)
+transform = Transform3D(-2.0981465e-06, 0, 1.2, 0, 42, 0, -48, 0, -5.2453668e-08, 23.5, 20.5, 0)
 material_override = SubResource("StandardMaterial3D_ehxak")
 mesh = SubResource("BoxMesh_nwr2e")
 
 [node name="MeshInstance3D5" type="MeshInstance3D" parent="." unique_id=812424291]
-transform = Transform3D(0.27423668, 0, -1.2473063, 0, 23.31149, 0, 46.90306, 0, 0.0072928523, -23.086075, 11.3739, -0.096312284)
+transform = Transform3D(-2.0981465e-06, 0, 1.2, 0, 42, 0, -48, 0, -5.2453668e-08, -23.586, 20.5, 0)
 material_override = SubResource("StandardMaterial3D_ky2co")
 mesh = SubResource("BoxMesh_nwr2e")
 
@@ -71,7 +75,7 @@ mesh = SubResource("BoxMesh_nwr2e")
 transform = Transform3D(1, 0, 0, 0, 0.22399859, 0.97458947, 0, -0.97458947, 0.22399859, 0, 11.111266, 0)
 
 [node name="MeshInstance3D6" type="MeshInstance3D" parent="." unique_id=568462674]
-transform = Transform3D(0.012478758, 11.269945, 0, -0.99992144, 0.14064586, 0, 0, 0, -11.405586, -16.674381, 0.44251394, 17.112967)
+transform = Transform3D(0.0012478787, 4.999611, 0, -0.099992216, 0.062393934, 0, 0, 0, -5, -20.478487, 0, 20.44507)
 material_override = SubResource("StandardMaterial3D_dt2mv")
 mesh = SubResource("BoxMesh_kyc3v")
 

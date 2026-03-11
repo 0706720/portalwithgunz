@@ -9,5 +9,4 @@ func physics_update(delta: float) -> void:
 		print("hi")
 		state_finished.emit("IdleState")
 		return
-
 	#player.handle_movement(input, delta)
