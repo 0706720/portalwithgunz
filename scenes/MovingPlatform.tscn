@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bcvf4hmrpkuno"]
 
-[ext_resource type="Script" uid="uid://c8flguu2aaass" path="res://moving_platform.gd" id="1_k63f6"]
+[ext_resource type="Script" uid="uid://c8flguu2aaass" path="res://scenes/moving_platform.gd" id="1_6xvjr"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_c1kxk"]
 size = Vector3(10, 0.5, 10)
@@ -12,7 +12,7 @@ data = PackedVector3Array(-5, 0.25, 5, 5, 0.25, 5, -5, -0.25, 5, 5, 0.25, 5, 5, 
 data = PackedVector3Array(-5, 0.25, 5, 5, 0.25, 5, -5, -0.25, 5, 5, 0.25, 5, 5, -0.25, 5, -5, -0.25, 5, 5, 0.25, -5, -5, 0.25, -5, 5, -0.25, -5, -5, 0.25, -5, -5, -0.25, -5, 5, -0.25, -5, 5, 0.25, 5, 5, 0.25, -5, 5, -0.25, 5, 5, 0.25, -5, 5, -0.25, -5, 5, -0.25, 5, -5, 0.25, -5, -5, 0.25, 5, -5, -0.25, -5, -5, 0.25, 5, -5, -0.25, 5, -5, -0.25, -5, 5, 0.25, 5, -5, 0.25, 5, 5, 0.25, -5, -5, 0.25, 5, -5, 0.25, -5, 5, 0.25, -5, -5, -0.25, 5, 5, -0.25, 5, -5, -0.25, -5, 5, -0.25, 5, 5, -0.25, -5, -5, -0.25, -5)
 
 [node name="MovingPlatform" type="AnimatableBody3D" unique_id=1220480673]
-script = ExtResource("1_k63f6")
+script = ExtResource("1_6xvjr")
 
 [node name="Platform" type="Node3D" parent="." unique_id=1189744583]
 
