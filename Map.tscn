@@ -5,7 +5,6 @@
 [ext_resource type="Texture2D" uid="uid://cj5unt7ykwulf" path="res://assets/images/brickwall.jpg" id="4_ud676"]
 [ext_resource type="Texture2D" uid="uid://bvu15qfr23noj" path="res://assets/images/blue.webp" id="5_6f7pb"]
 [ext_resource type="PackedScene" uid="uid://bcvf4hmrpkuno" path="res://scenes/MovingPlatform.tscn" id="5_v6avs"]
-[ext_resource type="PackedScene" uid="uid://eeadoxxlvepj" path="res://scenes/Target.tscn" id="6_8qak7"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kyc3v"]
 albedo_texture = ExtResource("3_vm4q1")
@@ -183,9 +182,6 @@ offset_bottom = 40.0
 layout_mode = 0
 offset_right = 4.0
 offset_bottom = 27.0
-
-[node name="Target" parent="." unique_id=647349676 instance=ExtResource("6_8qak7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.095988, 0.84659815, 0.32838938)
 
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/SinglePlayer" to="." method="_on_single_player_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/HostButton" to="." method="_on_host_button_pressed"]
