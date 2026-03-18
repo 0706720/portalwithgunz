@@ -167,7 +167,6 @@ placeholder_text = "Enter Address to Join Here"
 alignment = 1
 
 [node name="HUD" type="Control" parent="CanvasLayer" unique_id=1348645830]
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -182,6 +181,7 @@ offset_bottom = 40.0
 layout_mode = 0
 offset_right = 4.0
 offset_bottom = 27.0
+value = 100.0
 
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/SinglePlayer" to="." method="_on_single_player_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/HostButton" to="." method="_on_host_button_pressed"]
