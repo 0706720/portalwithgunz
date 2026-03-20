@@ -1,12 +1,11 @@
-[gd_scene format=3 uid="uid://s74yrrv7hvxf"]
+[gd_scene format=3 uid="uid://f6gdc1w23xi4"]
 
-[ext_resource type="Script" uid="uid://demmf2hbrwaat" path="res://scenes/world.gd" id="1_8qak7"]
-[ext_resource type="Texture2D" uid="uid://cjddue730snm" path="res://assets/images/WoodenTexture.jpg" id="3_vm4q1"]
-[ext_resource type="Texture2D" uid="uid://cj5unt7ykwulf" path="res://assets/images/brickwall.jpg" id="4_ud676"]
-[ext_resource type="Texture2D" uid="uid://bvu15qfr23noj" path="res://assets/images/blue.webp" id="5_6f7pb"]
+[ext_resource type="Script" uid="uid://demmf2hbrwaat" path="res://scenes/world.gd" id="1_mvbas"]
+[ext_resource type="Texture2D" uid="uid://cjddue730snm" path="res://assets/images/WoodenTexture.jpg" id="2_8wjku"]
+[ext_resource type="Texture2D" uid="uid://cj5unt7ykwulf" path="res://assets/images/brickwall.jpg" id="3_15umc"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kyc3v"]
-albedo_texture = ExtResource("3_vm4q1")
+albedo_texture = ExtResource("2_8wjku")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_55y45"]
 
@@ -14,7 +13,7 @@ albedo_texture = ExtResource("3_vm4q1")
 data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0, -1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_55y45"]
-albedo_texture = ExtResource("4_ud676")
+albedo_texture = ExtResource("3_15umc")
 uv1_scale = Vector3(6, 6, 6)
 
 [sub_resource type="BoxMesh" id="BoxMesh_nwr2e"]
@@ -23,36 +22,28 @@ uv1_scale = Vector3(6, 6, 6)
 data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4f56f"]
-albedo_texture = ExtResource("4_ud676")
+albedo_texture = ExtResource("3_15umc")
 uv1_scale = Vector3(6, 6, 6)
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_8qak7"]
 data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ehxak"]
-albedo_texture = ExtResource("4_ud676")
+albedo_texture = ExtResource("3_15umc")
 uv1_scale = Vector3(6, 6, 6)
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_0f2yp"]
 data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ky2co"]
-albedo_texture = ExtResource("4_ud676")
+albedo_texture = ExtResource("3_15umc")
 uv1_scale = Vector3(6, 6, 6)
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_vm4q1"]
 data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7if1s"]
-albedo_texture = ExtResource("5_6f7pb")
-
-[sub_resource type="BoxMesh" id="BoxMesh_v6avs"]
-
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_ud676"]
-data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
-
-[node name="Map1" type="Node3D" unique_id=317795099]
-script = ExtResource("1_8qak7")
+[node name="Map4" type="Node3D" unique_id=317795099]
+script = ExtResource("1_mvbas")
 
 [node name="Items" type="Node3D" parent="." unique_id=1768092550]
 
@@ -165,17 +156,6 @@ layout_mode = 0
 offset_right = 4.0
 offset_bottom = 27.0
 value = 100.0
-
-[node name="Spawner" type="MeshInstance3D" parent="." unique_id=1724714596]
-transform = Transform3D(0.0012478787, 4.999611, 0, -0.099992216, 0.062393934, 0, 0, 0, -5, -20.478487, 0, 20.44507)
-material_override = SubResource("StandardMaterial3D_7if1s")
-mesh = SubResource("BoxMesh_v6avs")
-skeleton = NodePath("../..")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="Spawner" unique_id=1128933568]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Spawner/StaticBody3D" unique_id=609756881]
-shape = SubResource("ConcavePolygonShape3D_ud676")
 
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/SinglePlayer" to="." method="_on_single_player_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/HostButton" to="." method="_on_host_button_pressed"]
