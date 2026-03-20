@@ -124,19 +124,14 @@ skeleton = NodePath("../..")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Items/Spawner/StaticBody3D" unique_id=1885032500]
 shape = SubResource("ConcavePolygonShape3D_n8cy1")
 
-[node name="MovingPlatform" parent="Items" unique_id=1220480673 instance=ExtResource("5_v6avs")]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -20.303137, 0.25000483, -3.525357)
-a = Vector3(-20.303, 0.25, -3.525)
-b = Vector3(-20.3, 10.25, -3.525)
-
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=994830642]
 transform = Transform3D(1, 0, 0, 0, 0.22399859, 0.97458947, 0, -0.97458947, 0.22399859, 0, 39.572945, 0)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1658927941]
 
 [node name="MainMenu" type="PanelContainer" parent="CanvasLayer" unique_id=2061536540]
-offset_right = 1154.0
-offset_bottom = 648.0
+offset_right = 40.0
+offset_bottom = 40.0
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/MainMenu" unique_id=910911842]
 layout_mode = 2
@@ -147,7 +142,6 @@ layout_mode = 2
 [node name="Label" type="Label" parent="CanvasLayer/MainMenu/MarginContainer/VBoxContainer" unique_id=493067479]
 layout_mode = 2
 text = "Main Menu"
-horizontal_alignment = 1
 
 [node name="SinglePlayer" type="Button" parent="CanvasLayer/MainMenu/MarginContainer/VBoxContainer" unique_id=711279843]
 layout_mode = 2
@@ -163,12 +157,12 @@ text = "Join"
 
 [node name="AddressEntry" type="LineEdit" parent="CanvasLayer/MainMenu/MarginContainer/VBoxContainer" unique_id=1500193154]
 layout_mode = 2
-size_flags_vertical = 6
+size_flags_horizontal = 4
+size_flags_vertical = 4
 placeholder_text = "Enter Address to Join Here"
 alignment = 1
 
 [node name="HUD" type="Control" parent="CanvasLayer" unique_id=1348645830]
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -183,6 +177,12 @@ offset_bottom = 40.0
 layout_mode = 0
 offset_right = 4.0
 offset_bottom = 27.0
+value = 100.0
+
+[node name="spawn" type="Node" parent="." unique_id=713438145]
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=1722437550]
+spawn_path = NodePath("../spawn")
 
 [node name="Target" parent="." unique_id=647349676 instance=ExtResource("6_8qak7")]
 transform = Transform3D(0.013525914, 0, -0.9999086, 0, 1, 0, 0.9999086, 0, 0.013525914, 0.15913963, 0.92645234, -5.6288843)
