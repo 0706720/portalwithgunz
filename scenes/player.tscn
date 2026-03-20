@@ -209,7 +209,7 @@ replication_config = SubResource("SceneReplicationConfig_hn37q")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.51306, 0)
 
 [node name="Propulsion_shotgun" parent="Camera3D" unique_id=1602549375 instance=ExtResource("10_y4r1p")]
-transform = Transform3D(-1.4998202, 0, 0.023220792, 0, 1.5, 0, -0.023220792, 0, -1.4998202, -0.5, -0.36306, -0.7)
+transform = Transform3D(-1.4998202, 0, 0.023220792, 0, 1.5, 0, -0.023220792, 0, -1.4998202, -0.5, -0.35, -0.7)
 
 [node name="Pistol" parent="Camera3D" unique_id=945160158 instance=ExtResource("2_4esil")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, -0.25, -0.5)
