@@ -190,7 +190,7 @@ crouch_anim_player = NodePath("CrouchAnimationPlayer")
 crouch_shapecast = NodePath("ShapeCast3D")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1832600017]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+transform = Transform3D(0.9999907, 0.0029026093, 0.0031991696, -0.0029034857, 0.9999957, 0.00026967606, -0.0031983743, -0.00027895274, 0.9999949, 0, 1, 0)
 mesh = SubResource("CapsuleMesh_xk8km")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2073760843 groups=["Player"]]
@@ -207,6 +207,9 @@ replication_config = SubResource("SceneReplicationConfig_hn37q")
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1853814499]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.51306, 0)
+
+[node name="Propulsion_shotgun" parent="Camera3D" unique_id=1602549375 instance=ExtResource("10_y4r1p")]
+transform = Transform3D(-1.4998202, 0, 0.023220792, 0, 1.5, 0, -0.023220792, 0, -1.4998202, -0.5, -0.36306, -0.7)
 
 [node name="Pistol" parent="Camera3D" unique_id=945160158 instance=ExtResource("2_4esil")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, -0.25, -0.5)
@@ -249,9 +252,6 @@ script = ExtResource("8_smehm")
 
 [node name="JumpState" type="Node" parent="StateMachine" unique_id=735201202]
 script = ExtResource("9_ur7pv")
-
-[node name="Propulsion_shotgun" parent="." unique_id=1602549375 instance=ExtResource("10_y4r1p")]
-transform = Transform3D(-1.4998202, 0, 0.023220792, 0, 1.5, 0, -0.023220792, 0, -1.4998202, -0.22666532, 1.2250983, -0.8870559)
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="animation_finished" from="CrouchAnimationPlayer" to="." method="_on_crouch_animation_finished"]
