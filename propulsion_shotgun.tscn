@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://bg1xha1x7mh6l"]
+
+[ext_resource type="PackedScene" uid="uid://xcu4pcj2p1s1" path="res://assets/images/Weapons/Shotgunz/spas12.FBX" id="1_j20jc"]
+
+[node name="Propulsion_shotgun" type="Node3D" unique_id=1602549375]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
+
+[node name="Shotgun_model" parent="." unique_id=546938671 instance=ExtResource("1_j20jc")]
