@@ -6,7 +6,8 @@ signal health_changed(health_value)
 @onready var camera = $Camera3D
 @onready var anim_player = $AnimationPlayer
 @onready var muzzle_flash = $Camera3D/Pistol/MuzzleFlash
-@onready var raycast = $Camera3D/RayCast3D
+@onready var raycast = $Camera3D/RayContainer/RayCast3D
+@onready var ray_container = $Camera3D/RayContainer
 
 # crouch handlers
 @export var crouch_anim_player: AnimationPlayer
@@ -15,7 +16,7 @@ signal health_changed(health_value)
 var crouch_speed : float = 4.0
 var _is_crouching: bool = false
 var _using_crouch: bool = false
-
+var spread = 10
 var health = 3
 
 #const SPEED = 10.0
@@ -37,6 +38,7 @@ func _ready():
 	# ensure collision check ignores player collision shape
 	crouch_shapecast.add_exception($".")
 	State
+	randomize()
 func _exit_tree() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
@@ -148,7 +150,6 @@ func _physics_process(delta):
 	else:
 		anim_player.play("idle")
 	var camera = $Camera3D
-
 	#move_and_slide()
 
 @rpc("call_local")
@@ -165,6 +166,15 @@ func receive_damage():
 		health = 3
 		position = Vector3.ZERO
 	health_changed.emit(health)
+
+func Fire_shotgun():
+	if Input.is_action_just_pressed("Fire_shotgun"):
+		for r in ray_container.get_children():
+			r.cast_to.x = randf_range(spread, -spread)
+			r.cast_to.y = randf_range(spread, -spread)
+			if r.is_colliding():
+				if r.get_collider().is_in_group("BOX"):
+					print("BOX HIT")
 
 func _on_animation_player_animation_finished(anim_name):
 	if anim_name == "shoot":

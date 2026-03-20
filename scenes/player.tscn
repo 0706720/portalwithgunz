@@ -224,7 +224,33 @@ local_coords = true
 process_material = SubResource("ParticleProcessMaterial_uu53b")
 draw_pass_1 = SubResource("PlaneMesh_b2g4i")
 
-[node name="RayCast3D" type="RayCast3D" parent="Camera3D" unique_id=1804038237]
+[node name="RayContainer" type="Node3D" parent="Camera3D" unique_id=1618153657]
+
+[node name="RayCast3D" type="RayCast3D" parent="Camera3D/RayContainer" unique_id=1804038237]
+target_position = Vector3(0, 0, -50)
+collision_mask = 2
+
+[node name="RayCast3D2" type="RayCast3D" parent="Camera3D/RayContainer" unique_id=1554132219]
+target_position = Vector3(0, 0, -50)
+collision_mask = 2
+
+[node name="RayCast3D3" type="RayCast3D" parent="Camera3D/RayContainer" unique_id=1595891996]
+target_position = Vector3(0, 0, -50)
+collision_mask = 2
+
+[node name="RayCast3D4" type="RayCast3D" parent="Camera3D/RayContainer" unique_id=1418456470]
+target_position = Vector3(0, 0, -50)
+collision_mask = 2
+
+[node name="RayCast3D5" type="RayCast3D" parent="Camera3D/RayContainer" unique_id=1729050992]
+target_position = Vector3(0, 0, -50)
+collision_mask = 2
+
+[node name="RayCast3D6" type="RayCast3D" parent="Camera3D/RayContainer" unique_id=1420577742]
+target_position = Vector3(0, 0, -50)
+collision_mask = 2
+
+[node name="RayCast3D7" type="RayCast3D" parent="Camera3D/RayContainer" unique_id=1581432572]
 target_position = Vector3(0, 0, -50)
 collision_mask = 2
 
