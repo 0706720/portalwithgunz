@@ -54,7 +54,13 @@ func upnp_setup():
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	var target_node = get_node("Target")
+	target_node.update_score.connect(_on_target_destroyed)
+	print('target signal connect successful')
 
+func _on_target_destroyed(am):
+	Global.current_score += 10
+	print('current score is ' + str(Global.current_score))
 
 func _physics_process(delta):
 	if tracked:
