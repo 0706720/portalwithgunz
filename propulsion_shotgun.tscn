@@ -1,8 +1,32 @@
 [gd_scene format=3 uid="uid://bg1xha1x7mh6l"]
 
+[ext_resource type="Script" uid="uid://bsws0dd6nmx0w" path="res://propulsion_shotgun.gd" id="1_imbo3"]
 [ext_resource type="PackedScene" uid="uid://xcu4pcj2p1s1" path="res://assets/images/Weapons/Shotgunz/spas12.FBX" id="1_j20jc"]
 
-[node name="Propulsion_shotgun" type="Node3D" unique_id=1602549375]
+[node name="Propulsion_shotgun" type="Node3D" unique_id=1602549375 groups=["player"]]
 transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
+script = ExtResource("1_imbo3")
 
 [node name="Shotgun_model" parent="." unique_id=546938671 instance=ExtResource("1_j20jc")]
+
+[node name="Raycasts(shotgun)" type="Node3D" parent="." unique_id=1689945132]
+
+[node name="RayCast3D" type="RayCast3D" parent="Raycasts(shotgun)" unique_id=648701779]
+
+[node name="RayCast3D2" type="RayCast3D" parent="Raycasts(shotgun)" unique_id=505833983]
+
+[node name="RayCast3D3" type="RayCast3D" parent="Raycasts(shotgun)" unique_id=1611255479]
+
+[node name="RayCast3D4" type="RayCast3D" parent="Raycasts(shotgun)" unique_id=2033743021]
+
+[node name="RayCast3D5" type="RayCast3D" parent="Raycasts(shotgun)" unique_id=773726169]
+
+[node name="RayCast3D6" type="RayCast3D" parent="Raycasts(shotgun)" unique_id=1018275780]
+
+[node name="RayCast3D7" type="RayCast3D" parent="Raycasts(shotgun)" unique_id=1182431234]
+
+[node name="RayCast3D8" type="RayCast3D" parent="Raycasts(shotgun)" unique_id=107393226]
+
+[node name="RayCast3D9" type="RayCast3D" parent="Raycasts(shotgun)" unique_id=1799837380]
+
+[node name="RayCast3D10" type="RayCast3D" parent="Raycasts(shotgun)" unique_id=1450995088]

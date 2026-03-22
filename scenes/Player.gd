@@ -59,6 +59,8 @@ func _unhandled_input(event):
 		if raycast.is_colliding():
 			var hit_player = raycast.get_collider()
 			hit_player.receive_damage.rpc_id(hit_player.get_multiplayer_authority())
+			
+	
 
 func _physics_process(delta):
 	var input_dir := Input.get_vector("left", "right", "up", "down").normalized()
@@ -152,6 +154,7 @@ func _physics_process(delta):
 	var camera = $Camera3D
 	#move_and_slide()
 
+
 @rpc("call_local")
 func play_shoot_effects():
 	anim_player.stop()
@@ -166,15 +169,6 @@ func receive_damage():
 		health = 3
 		position = Vector3.ZERO
 	health_changed.emit(health)
-
-func Fire_shotgun():
-	if Input.is_action_just_pressed("Fire_shotgun"):
-		for r in ray_container.get_children():
-			r.cast_to.x = randf_range(spread, -spread)
-			r.cast_to.y = randf_range(spread, -spread)
-			if r.is_colliding():
-				if r.get_collider().is_in_group("BOX"):
-					print("BOX HIT")
 
 func _on_animation_player_animation_finished(anim_name):
 	if anim_name == "shoot":
