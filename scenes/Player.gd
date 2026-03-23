@@ -7,6 +7,7 @@ signal health_changed(health_value)
 @onready var anim_player = $AnimationPlayer
 @onready var muzzle_flash = $Camera3D/Pistol/MuzzleFlash
 @onready var raycast = $Camera3D/RayCast3D
+@onready var healthBar = $HUD/healthBar
 
 # crouch handlers
 @export var crouch_anim_player: AnimationPlayer
@@ -37,7 +38,7 @@ func _ready():
 	# ensure collision check ignores player collision shape
 	crouch_shapecast.add_exception($".")
 	State
-	var healthBar = $HUD/healthBar
+	# initialise hp for healthbar
 	healthBar.max_value = health
 	healthBar.value = health
 func _exit_tree() -> void:

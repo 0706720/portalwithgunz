@@ -184,6 +184,12 @@ _data = {
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_dqkch"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3v2ag"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d2wvv"]
+bg_color = Color(0.23921569, 0.7372549, 0.30588236, 1)
+
 [node name="Player" type="CharacterBody3D" unique_id=820130408 node_paths=PackedStringArray("crouch_anim_player", "crouch_shapecast") groups=["Player"]]
 collision_layer = 2
 script = ExtResource("1_2v3wm")
@@ -262,10 +268,14 @@ offset_bottom = 40.0
 script = ExtResource("11_d2wvv")
 
 [node name="healthBar" type="ProgressBar" parent="HUD" unique_id=288653942]
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 0
 offset_left = 608.0
 offset_right = 612.0
 offset_bottom = 27.0
+theme_override_styles/background = SubResource("StyleBoxFlat_3v2ag")
+theme_override_styles/fill = SubResource("StyleBoxFlat_d2wvv")
+show_percentage = false
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="animation_finished" from="CrouchAnimationPlayer" to="." method="_on_crouch_animation_finished"]
