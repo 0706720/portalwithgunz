@@ -6,7 +6,8 @@ signal health_changed(health_value)
 @onready var camera = $Camera3D
 @onready var anim_player = $AnimationPlayer
 @onready var muzzle_flash = $Camera3D/Pistol/MuzzleFlash
-@onready var raycast = $Camera3D/RayCast3D
+@onready var raycast = $Camera3D/RayContainer/RayCast3D
+@onready var ray_container = $Camera3D/RayContainer
 
 # crouch handlers
 @export var crouch_anim_player: AnimationPlayer
@@ -15,7 +16,7 @@ signal health_changed(health_value)
 var crouch_speed : float = 4.0
 var _is_crouching: bool = false
 var _using_crouch: bool = false
-
+var spread = 10
 var health = 3
 
 #const SPEED = 10.0
@@ -37,6 +38,7 @@ func _ready():
 	# ensure collision check ignores player collision shape
 	crouch_shapecast.add_exception($".")
 	State
+	randomize()
 func _exit_tree() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
@@ -57,6 +59,8 @@ func _unhandled_input(event):
 		if raycast.is_colliding():
 			var hit_player = raycast.get_collider()
 			hit_player.receive_damage.rpc_id(hit_player.get_multiplayer_authority())
+			
+	
 
 func _physics_process(delta):
 	var input_dir := Input.get_vector("left", "right", "up", "down").normalized()
@@ -148,8 +152,8 @@ func _physics_process(delta):
 	else:
 		anim_player.play("idle")
 	var camera = $Camera3D
-
 	#move_and_slide()
+
 
 @rpc("call_local")
 func play_shoot_effects():
@@ -179,7 +183,7 @@ var player_health = 100
 var canThrow = true
 @onready var my_label = $Label
 
-@export var JUMP_VELOCITY := 8.0
+@export var JUMP_VELOCITY := 10.0
 @export var look_sensitivity : float = 0.006
 @export var auto_bhop := true
 

@@ -209,7 +209,7 @@ replication_config = SubResource("SceneReplicationConfig_hn37q")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.51306, 0)
 
 [node name="Propulsion_shotgun" parent="Camera3D" unique_id=1602549375 instance=ExtResource("10_y4r1p")]
-transform = Transform3D(-1.4998202, 0, 0.023220792, 0, 1.5, 0, -0.023220792, 0, -1.4998202, -0.5, -0.35, -0.7)
+transform = Transform3D(-1.5, 0, -1.3113416e-07, 0, 1.5, 0, 1.3113416e-07, 0, -1.5, -0.5, -0.35, -0.7)
 
 [node name="Pistol" parent="Camera3D" unique_id=945160158 instance=ExtResource("2_4esil")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, -0.25, -0.5)
@@ -224,7 +224,33 @@ local_coords = true
 process_material = SubResource("ParticleProcessMaterial_uu53b")
 draw_pass_1 = SubResource("PlaneMesh_b2g4i")
 
-[node name="RayCast3D" type="RayCast3D" parent="Camera3D" unique_id=1804038237]
+[node name="RayContainer" type="Node3D" parent="Camera3D" unique_id=1618153657]
+
+[node name="RayCast3D" type="RayCast3D" parent="Camera3D/RayContainer" unique_id=1804038237]
+target_position = Vector3(0, 0, -50)
+collision_mask = 2
+
+[node name="RayCast3D2" type="RayCast3D" parent="Camera3D/RayContainer" unique_id=1554132219]
+target_position = Vector3(0, 0, -50)
+collision_mask = 2
+
+[node name="RayCast3D3" type="RayCast3D" parent="Camera3D/RayContainer" unique_id=1595891996]
+target_position = Vector3(0, 0, -50)
+collision_mask = 2
+
+[node name="RayCast3D4" type="RayCast3D" parent="Camera3D/RayContainer" unique_id=1418456470]
+target_position = Vector3(0, 0, -50)
+collision_mask = 2
+
+[node name="RayCast3D5" type="RayCast3D" parent="Camera3D/RayContainer" unique_id=1729050992]
+target_position = Vector3(0, 0, -50)
+collision_mask = 2
+
+[node name="RayCast3D6" type="RayCast3D" parent="Camera3D/RayContainer" unique_id=1420577742]
+target_position = Vector3(0, 0, -50)
+collision_mask = 2
+
+[node name="RayCast3D7" type="RayCast3D" parent="Camera3D/RayContainer" unique_id=1581432572]
 target_position = Vector3(0, 0, -50)
 collision_mask = 2
 
