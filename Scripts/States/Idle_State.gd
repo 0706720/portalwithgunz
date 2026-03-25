@@ -8,3 +8,6 @@ func physics_process(delta: float) -> void:
 	if input.length() > 0:
 		#print("walking")
 		state_finished.emit("MoveState")
+	elif Global.player.is_on_floor() == false:
+		state_finished.emit("CrouchState")
+		return

@@ -8,8 +8,6 @@ func physics_update(delta: float) -> void:
 	if input.length() == 0:
 		#print("hi")
 		state_finished.emit("IdleState")
-		return
 	elif Global.player.is_on_floor() == false:
-		state_finished.emit("JumpState")
-		print("french")
+		state_finished.emit("CrouchState")
 		return

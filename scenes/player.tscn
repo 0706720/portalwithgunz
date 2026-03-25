@@ -8,7 +8,7 @@
 [ext_resource type="Script" uid="uid://bo5enab2wen2s" path="res://Scripts/States/State_Machine.gd" id="6_tuyoq"]
 [ext_resource type="Script" uid="uid://bxy4erehwa46b" path="res://Scripts/States/Idle_State.gd" id="7_fjrip"]
 [ext_resource type="Script" uid="uid://dtg8rdld5xjau" path="res://Scripts/States/Move_State.gd" id="8_smehm"]
-[ext_resource type="Script" uid="uid://ckid4cb6ksg1q" path="res://Scripts/States/Jump_State.gd" id="9_ur7pv"]
+[ext_resource type="Script" uid="uid://c1udmtgavkqdt" path="res://scenes/Crouch_State.gd" id="10_d2wvv"]
 [ext_resource type="PackedScene" uid="uid://bg1xha1x7mh6l" path="res://propulsion_shotgun.tscn" id="10_y4r1p"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_xk8km"]
@@ -250,8 +250,8 @@ script = ExtResource("7_fjrip")
 [node name="MoveState" type="Node" parent="StateMachine" unique_id=721917787]
 script = ExtResource("8_smehm")
 
-[node name="JumpState" type="Node" parent="StateMachine" unique_id=735201202]
-script = ExtResource("9_ur7pv")
+[node name="CrouchState" type="Node" parent="StateMachine" unique_id=1785402087]
+script = ExtResource("10_d2wvv")
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="animation_finished" from="CrouchAnimationPlayer" to="." method="_on_crouch_animation_finished"]
