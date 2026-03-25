@@ -6,6 +6,7 @@ signal health_changed(health_value)
 @onready var camera = $Camera3D
 @onready var anim_player = $AnimationPlayer
 @onready var muzzle_flash = $Camera3D/Pistol/MuzzleFlash
+@onready var healthBar = $HUD/healthBar
 @onready var raycast = $Camera3D/RayContainer/RayCast3D
 @onready var ray_container = $Camera3D/RayContainer
 
@@ -16,8 +17,9 @@ signal health_changed(health_value)
 var crouch_speed : float = 4.0
 var _is_crouching: bool = false
 var _using_crouch: bool = false
+
+var health = 99
 var spread = 10
-var health = 3
 
 #const SPEED = 10.0
 #const JUMP_VELOCITY = 10.0
@@ -39,6 +41,10 @@ func _ready():
 	# ensure collision check ignores player collision shape
 	crouch_shapecast.add_exception($".")
 	State
+	# initialise hp for healthbar
+	# call damage to initialise healthbar, initialise max hp
+	healthBar.max_value = health
+	receive_damage(0)
 	randomize()
 func _exit_tree() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
@@ -164,10 +170,10 @@ func play_shoot_effects():
 	muzzle_flash.emitting = true
 
 @rpc("any_peer")
-func receive_damage():
-	health -= 1
+func receive_damage(amount):
+	health -= amount
 	if health <= 0:
-		health = 3
+		health = 99
 		position = Vector3.ZERO
 	health_changed.emit(health)
 

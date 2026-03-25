@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://dtg8rdld5xjau" path="res://Scripts/States/Move_State.gd" id="8_smehm"]
 [ext_resource type="Script" uid="uid://c1udmtgavkqdt" path="res://scenes/Crouch_State.gd" id="10_d2wvv"]
 [ext_resource type="PackedScene" uid="uid://bg1xha1x7mh6l" path="res://propulsion_shotgun.tscn" id="10_y4r1p"]
+[ext_resource type="Script" uid="uid://c8bg3xqpf178p" path="res://scenes/hud.gd" id="11_d2wvv"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_xk8km"]
 
@@ -183,6 +184,12 @@ _data = {
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_dqkch"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3v2ag"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d2wvv"]
+bg_color = Color(0.23921569, 0.7372549, 0.30588236, 1)
+
 [node name="Player" type="CharacterBody3D" unique_id=820130408 node_paths=PackedStringArray("crouch_anim_player", "crouch_shapecast") groups=["Player"]]
 collision_layer = 2
 script = ExtResource("1_2v3wm")
@@ -278,6 +285,49 @@ script = ExtResource("8_smehm")
 
 [node name="CrouchState" type="Node" parent="StateMachine" unique_id=1785402087]
 script = ExtResource("10_d2wvv")
+
+[node name="HUD" type="Control" parent="." unique_id=886859724]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("11_d2wvv")
+
+[node name="healthBar" type="ProgressBar" parent="HUD" unique_id=288653942]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 0
+offset_left = 500.0
+offset_top = 30.0
+offset_right = 600.0
+offset_bottom = 45.0
+scale = Vector2(2, 2)
+theme_override_styles/background = SubResource("StyleBoxFlat_3v2ag")
+theme_override_styles/fill = SubResource("StyleBoxFlat_d2wvv")
+show_percentage = false
+
+[node name="healthPlaceholder" type="Label" parent="HUD" unique_id=1231744766]
+layout_mode = 0
+offset_left = 605.0
+offset_top = 7.0
+offset_right = 621.0
+offset_bottom = 30.0
+text = "/"
+
+[node name="healthVar" type="Label" parent="HUD" unique_id=1547088208]
+layout_mode = 0
+offset_left = 586.0
+offset_top = 7.0
+offset_right = 626.0
+offset_bottom = 30.0
+text = "00"
+
+[node name="healthMax" type="Label" parent="HUD" unique_id=1475800816]
+layout_mode = 0
+offset_left = 612.0
+offset_top = 7.0
+offset_right = 652.0
+offset_bottom = 30.0
+text = "00"
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="animation_finished" from="CrouchAnimationPlayer" to="." method="_on_crouch_animation_finished"]

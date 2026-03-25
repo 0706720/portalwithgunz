@@ -37,7 +37,8 @@ func _on_join_button_pressed():
 
 func _on_multiplayer_spawner_spawned(node):
 	if node.is_multiplayer_authority():
-		node.health_changed.connect(update_health_bar)
+		pass
+		#node.health_changed.connect(update_health_bar)
 func upnp_setup():
 	var upnp = UPNP.new()
 	
@@ -55,8 +56,9 @@ func upnp_setup():
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	var target_node = get_node("Target")
-	#target_node.update_score.connect(_on_target_destroyed)
-	print('target signal connect successful')
+	if target_node:
+		target_node.update_score.connect(_on_target_destroyed)
+		print('target signal connect successful')
 
 func _on_target_destroyed(am):
 	Global.current_score += 10
@@ -83,12 +85,10 @@ func add_player(peer_id):
 	add_child(player)
 	tracked = true
 	if player.is_multiplayer_authority():
-		player.health_changed.connect(update_health_bar)
+		pass
+		#player.health_changed.connect(update_health_bar)
 
 func remove_player(peer_id):
 	var player = get_node_or_null(str(peer_id))
 	if player:
 		player.queue_free()
-
-func update_health_bar(health_value):
-	health_bar.value = health_value
