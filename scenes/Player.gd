@@ -17,7 +17,7 @@ var crouch_speed : float = 4.0
 var _is_crouching: bool = false
 var _using_crouch: bool = false
 
-var health = 3
+var health = 99
 
 #const SPEED = 10.0
 #const JUMP_VELOCITY = 10.0
@@ -39,8 +39,9 @@ func _ready():
 	crouch_shapecast.add_exception($".")
 	State
 	# initialise hp for healthbar
+	# call damage to initialise healthbar, initialise max hp
 	healthBar.max_value = health
-	healthBar.value = health
+	receive_damage(0)
 func _exit_tree() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
@@ -163,10 +164,10 @@ func play_shoot_effects():
 	muzzle_flash.emitting = true
 
 @rpc("any_peer")
-func receive_damage():
-	health -= 1
+func receive_damage(amount):
+	health -= amount
 	if health <= 0:
-		health = 3
+		health = 99
 		position = Vector3.ZERO
 	health_changed.emit(health)
 
