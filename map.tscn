@@ -1,14 +1,12 @@
-[gd_scene format=3 uid="uid://s74yrrv7hvxf"]
+[gd_scene format=3 uid="uid://b73mvx1vwbgpq"]
 
-[ext_resource type="Script" uid="uid://demmf2hbrwaat" path="res://scenes/world.gd" id="1_8qak7"]
-[ext_resource type="Texture2D" uid="uid://cjddue730snm" path="res://assets/images/WoodenTexture.jpg" id="3_vm4q1"]
-[ext_resource type="Texture2D" uid="uid://cj5unt7ykwulf" path="res://assets/images/brickwall.jpg" id="4_ud676"]
-[ext_resource type="Texture2D" uid="uid://bvu15qfr23noj" path="res://assets/images/blue.webp" id="5_6f7pb"]
-[ext_resource type="PackedScene" uid="uid://bcvf4hmrpkuno" path="res://scenes/MovingPlatform.tscn" id="5_v6avs"]
-[ext_resource type="Script" uid="uid://cj5spe81hvlb4" path="res://BOX.gd" id="6_8qak7"]
+[ext_resource type="Script" uid="uid://demmf2hbrwaat" path="res://scenes/world.gd" id="1_p5pve"]
+[ext_resource type="Texture2D" uid="uid://cjddue730snm" path="res://assets/images/WoodenTexture.jpg" id="2_urblq"]
+[ext_resource type="Texture2D" uid="uid://cj5unt7ykwulf" path="res://assets/images/brickwall.jpg" id="3_iw27f"]
+[ext_resource type="PackedScene" uid="uid://bcvf4hmrpkuno" path="res://scenes/MovingPlatform.tscn" id="4_p5pve"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kyc3v"]
-albedo_texture = ExtResource("3_vm4q1")
+albedo_texture = ExtResource("2_urblq")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_55y45"]
 
@@ -16,7 +14,7 @@ albedo_texture = ExtResource("3_vm4q1")
 data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0, -1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_55y45"]
-albedo_texture = ExtResource("4_ud676")
+albedo_texture = ExtResource("3_iw27f")
 uv1_scale = Vector3(6, 6, 6)
 
 [sub_resource type="BoxMesh" id="BoxMesh_nwr2e"]
@@ -25,38 +23,28 @@ uv1_scale = Vector3(6, 6, 6)
 data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4f56f"]
-albedo_texture = ExtResource("4_ud676")
+albedo_texture = ExtResource("3_iw27f")
 uv1_scale = Vector3(6, 6, 6)
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_8qak7"]
 data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ehxak"]
-albedo_texture = ExtResource("4_ud676")
+albedo_texture = ExtResource("3_iw27f")
 uv1_scale = Vector3(6, 6, 6)
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_0f2yp"]
 data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ky2co"]
-albedo_texture = ExtResource("4_ud676")
+albedo_texture = ExtResource("3_iw27f")
 uv1_scale = Vector3(6, 6, 6)
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_vm4q1"]
 data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dt2mv"]
-albedo_texture = ExtResource("5_6f7pb")
-
-[sub_resource type="BoxMesh" id="BoxMesh_kyc3v"]
-
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_n8cy1"]
-data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
-
-[sub_resource type="BoxMesh" id="BoxMesh_0f2yp"]
-
-[node name="Map" type="Node3D" unique_id=317795099]
-script = ExtResource("1_8qak7")
+[node name="Map2" type="Node3D" unique_id=317795099]
+script = ExtResource("1_p5pve")
 
 [node name="Items" type="Node3D" parent="." unique_id=1768092550]
 
@@ -115,22 +103,6 @@ skeleton = NodePath("../..")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Items/Wall4/StaticBody3D" unique_id=1138488161]
 shape = SubResource("ConcavePolygonShape3D_vm4q1")
 
-[node name="Spawner" type="MeshInstance3D" parent="Items" unique_id=568462674]
-transform = Transform3D(0.0012478787, 4.999611, 0, -0.099992216, 0.062393934, 0, 0, 0, -5, -20.478487, 0, 20.44507)
-material_override = SubResource("StandardMaterial3D_dt2mv")
-mesh = SubResource("BoxMesh_kyc3v")
-skeleton = NodePath("../..")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="Items/Spawner" unique_id=99511505]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Items/Spawner/StaticBody3D" unique_id=1885032500]
-shape = SubResource("ConcavePolygonShape3D_n8cy1")
-
-[node name="MovingPlatform" parent="Items" unique_id=1220480673 instance=ExtResource("5_v6avs")]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -20.303137, 0.25000483, -3.525357)
-a = Vector3(-20.303, 0.25, -3.525)
-b = Vector3(-20.3, 10.25, -3.525)
-
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=994830642]
 transform = Transform3D(1, 0, 0, 0, 0.22399859, 0.97458947, 0, -0.97458947, 0.22399859, 0, 39.572945, 0)
 
@@ -186,9 +158,10 @@ offset_right = 4.0
 offset_bottom = 27.0
 value = 100.0
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1093695183 groups=["BOX"]]
-mesh = SubResource("BoxMesh_0f2yp")
-script = ExtResource("6_8qak7")
+[node name="MovingPlatform" parent="." unique_id=1220480673 instance=ExtResource("4_p5pve")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -20.303137, 0.25000483, -3.525357)
+a = Vector3(-20.303, 0.25, -3.525)
+b = Vector3(-20.3, 10.25, -3.525)
 
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/SinglePlayer" to="." method="_on_single_player_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/HostButton" to="." method="_on_host_button_pressed"]
