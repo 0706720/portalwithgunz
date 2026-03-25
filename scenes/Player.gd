@@ -183,7 +183,7 @@ var player_health = 100
 var canThrow = true
 @onready var my_label = $Label
 
-@export var JUMP_VELOCITY := 8.0
+@export var JUMP_VELOCITY := 10.0
 @export var look_sensitivity : float = 0.006
 @export var auto_bhop := true
 
