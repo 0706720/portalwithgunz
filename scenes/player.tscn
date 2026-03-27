@@ -4,7 +4,6 @@
 [ext_resource type="PackedScene" uid="uid://cf1dcxwv6bvl3" path="res://scenes/models/Pistol.glb" id="2_4esil"]
 [ext_resource type="Texture2D" uid="uid://vwob30tkwej4" path="res://addons/kenney_particle_pack/star_06.png" id="3_27dhu"]
 [ext_resource type="Animation" uid="uid://c2y6nfvxis3xa" path="res://Scripts/Crouch.res" id="4_dqkch"]
-[ext_resource type="Script" uid="uid://27muroark2gj" path="res://scenes/grapple_controller.gd" id="5_qlg0r"]
 [ext_resource type="Script" uid="uid://bo5enab2wen2s" path="res://Scripts/States/State_Machine.gd" id="6_tuyoq"]
 [ext_resource type="Script" uid="uid://bxy4erehwa46b" path="res://Scripts/States/Idle_State.gd" id="7_fjrip"]
 [ext_resource type="Script" uid="uid://dtg8rdld5xjau" path="res://Scripts/States/Move_State.gd" id="8_smehm"]
@@ -269,9 +268,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 shape = SubResource("SphereShape3D_dqkch")
 target_position = Vector3(0, 0.5, 0)
 debug_shape_custom_color = Color(0, 0.57254905, 0, 1)
-
-[node name="GrappleController" type="Node" parent="." unique_id=364533085]
-script = ExtResource("5_qlg0r")
 
 [node name="StateMachine" type="Node" parent="." unique_id=1887064363 node_paths=PackedStringArray("current_state")]
 script = ExtResource("6_tuyoq")
