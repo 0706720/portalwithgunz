@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://ccubnasmgpn5b" path="res://grapplehook.gd" id="1_1w4tv"]
 [ext_resource type="PackedScene" uid="uid://bnwaxjn3kx02" path="res://assets/images/Weapons/Grapple Hook/hook_textuer.fbx" id="1_i1x4r"]
 
-[node name="Grapple Hook" type="Node3D" unique_id=1118393077]
+[node name="Grapple Hook" type="Node3D" unique_id=1356339492]
 script = ExtResource("1_1w4tv")
 
 [node name="hook_textuer" parent="." unique_id=1145913485 instance=ExtResource("1_i1x4r")]
