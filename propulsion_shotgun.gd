@@ -6,6 +6,7 @@ var spread = 15
 @onready var bullet
 @onready var raycasts = $"Raycasts(shotgun)"
 @onready var anim_player = $AnimationPlayer
+@onready var muzzle_flash = $MuzzleFlash
 
 
 func _physics_process(delta):
@@ -37,3 +38,5 @@ func fire_shotgun():
 func play_shoot_effects():
 	anim_player.stop()
 	anim_player.play("Shoot Shotgun")
+	muzzle_flash.restart()
+	muzzle_flash.emitting = true
