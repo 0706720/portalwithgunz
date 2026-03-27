@@ -1,68 +1,51 @@
 extends CharacterBody3D
 
-@export var speed = 10.0
-@export var grapple_speed = 25.0
-@export var gravity = 20.0
+@export var grapple_speed: float = 25.0
+@export var grapple_pull_strength: float = 40.0
+@export var max_grapple_distance: float = 50.0
+@export var stop_distance: float = 2.0
+
+var is_grappling: bool = false
+var grapple_point: Vector3
 
 @onready var camera = $Camera3D
-@onready var raycast = $Camera3D/RayCast3D
-
-var velocity = Vector3.ZERO
-
-var is_grappling = false
-var grapple_point = Vector3.ZERO
+@onready var ray = $Camera3D/RayCast3D
 
 func _physics_process(delta):
-	if not is_grappling:
-		normal_movement(delta)
+	if Input.is_action_just_pressed("grapple"):
+		start_grapple()
+
+	if is_grappling:
+		process_grapple(delta)
 	else:
-		grapple_movement(delta)
-
-func normal_movement(delta):
-	var dir = Vector3.ZERO
-
-	if Input.is_action_pressed("move_forward"):
-		dir -= camera.global_transform.basis.z
-	if Input.is_action_pressed("move_back"):
-		dir += camera.global_transform.basis.z
-	if Input.is_action_pressed("move_left"):
-		dir -= camera.global_transform.basis.x
-	if Input.is_action_pressed("move_right"):
-		dir += camera.global_transform.basis.x
-
-		dir = dir.normalized()
-
-		velocity.x = dir.x * speed
-		velocity.z = dir.z * speed
-
-	if not is_on_floor():
-		velocity.y -= gravity * delta
-	else:
-		velocity.y = 0
+		apply_gravity(delta)
 
 	move_and_slide()
 
-func grapple_movement(delta):
-	var direction = (grapple_point - global_transform.origin).normalized()
+func start_grapple():
+	ray.target_position = Vector3(0, 0, -max_grapple_distance)
+	ray.force_raycast_update()
 
-	velocity = direction * grapple_speed
-
-move_and_slide()
-
-# Stop when close
-	if global_transform.origin.distance_to(grapple_point) < 2.0:
-	is_grappling = false
-
-func _input(event):
-	if Input.is_action_just_pressed("fire_grapple"):
-	shoot_grapple()
-
-	if Input.is_action_just_released("fire_grapple"):
-	is_grappling = false
-
-func shoot_grapple():
-	raycast.force_raycast_update()
-
-	if raycast.is_colliding():
-	grapple_point = raycast.get_collision_point()
+	if ray.is_colliding():
+		grapple_point = ray.get_collision_point()
 	is_grappling = true
+
+func process_grapple(delta):
+	var direction = (grapple_point - global_transform.origin)
+	var distance = direction.length()
+
+	if distance < stop_distance:
+		stop_grapple()
+	return
+
+	direction = direction.normalized()
+
+	velocity = direction * grapple_pull_strength
+
+func stop_grapple():
+	is_grappling = false
+	velocity = Vector3.ZERO
+
+func apply_gravity(delta):
+	if not is_on_floor():
+		velocity.y -= 9.8 * delta
