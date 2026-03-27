@@ -20,7 +20,7 @@ var _using_crouch: bool = false
 
 var health = 99
 var spread = 10
-var knockback_force = 50.0
+var knockback_force = 20.0
 var anim_playing = false
 
 #const SPEED = 10.0
@@ -75,7 +75,7 @@ func _unhandled_input(event):
 			anim_playing = true
 			var shoot_dir = -camera.global_transform.basis.z.normalized()
 			velocity += -shoot_dir * knockback_force
-			await get_tree().create_timer(5.0).timeout
+			await get_tree().create_timer(1.0).timeout
 			anim_playing = false
 
 
@@ -208,9 +208,9 @@ var canThrow = true
 @export var sprint_speed := 8.5
 @export var ground_accel := 14.0
 @export var ground_deccel :=5.0
-@export var ground_friction := 6.0
+@export var ground_friction := 5.0
 
-const HEADBOB_MOVE_AMOUNT = 0.06   
+const HEADBOB_MOVE_AMOUNT = 0.06
 const HEADBOB_FREQUENCY = 2.4 
 var headbob_time := 0.0
 

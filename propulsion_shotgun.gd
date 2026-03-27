@@ -38,7 +38,7 @@ func fire_shotgun():
 			# Check hit
 				if r.is_colliding():
 					var collider = r.get_collider()
-			await get_tree().create_timer(5.0).timeout
+			await get_tree().create_timer(1.0).timeout
 			anim_playing = false
 
 
