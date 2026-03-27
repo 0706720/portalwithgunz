@@ -20,6 +20,8 @@ var _using_crouch: bool = false
 
 var health = 99
 var spread = 10
+var knockback_force = 50.0
+var anim_playing = false
 
 #const SPEED = 10.0
 #const JUMP_VELOCITY = 10.0
@@ -67,7 +69,15 @@ func _unhandled_input(event):
 			var hit_player = raycast.get_collider()
 			hit_player.receive_damage.rpc_id(hit_player.get_multiplayer_authority())
 			
-	
+			
+	if anim_playing == false:
+		if Input.is_action_just_pressed("Fire_shotgun"):
+			anim_playing = true
+			var shoot_dir = -camera.global_transform.basis.z.normalized()
+			velocity += -shoot_dir * knockback_force
+			await get_tree().create_timer(5.0).timeout
+			anim_playing = false
+
 
 func _physics_process(delta):
 	var input_dir := Input.get_vector("left", "right", "up", "down").normalized()
