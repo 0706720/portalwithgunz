@@ -24,21 +24,21 @@ func normal_movement(delta):
 	if Input.is_action_pressed("move_forward"):
 		dir -= camera.global_transform.basis.z
 	if Input.is_action_pressed("move_back"):
-	dir += camera.global_transform.basis.z
+		dir += camera.global_transform.basis.z
 	if Input.is_action_pressed("move_left"):
-	dir -= camera.global_transform.basis.x
+		dir -= camera.global_transform.basis.x
 	if Input.is_action_pressed("move_right"):
-	dir += camera.global_transform.basis.x
+		dir += camera.global_transform.basis.x
 
-	dir = dir.normalized()
+		dir = dir.normalized()
 
-	velocity.x = dir.x * speed
-	velocity.z = dir.z * speed
+		velocity.x = dir.x * speed
+		velocity.z = dir.z * speed
 
 	if not is_on_floor():
-	velocity.y -= gravity * delta
+		velocity.y -= gravity * delta
 	else:
-	velocity.y = 0
+		velocity.y = 0
 
 	move_and_slide()
 
