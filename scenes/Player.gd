@@ -9,6 +9,7 @@ signal health_changed(health_value)
 @onready var healthBar = $HUD/healthBar
 @onready var raycast = $Camera3D/RayContainer/RayCast3D
 @onready var ray_container = $Camera3D/RayContainer
+@onready var rope = $rope
 
 # crouch handlers
 @export var crouch_anim_player: AnimationPlayer
@@ -23,6 +24,18 @@ var spread = 10
 var knockback_force = 20.0
 var anim_playing = false
 
+
+#grapple hook
+@export var grapple_speed: float = 25.0
+@export var grapple_pull_strength: float = 40.0
+@export var max_grapple_distance: float = 50.0
+@export var stop_distance: float = 2.0
+
+var is_grappling: bool = false
+var grapple_point: Vector3
+@export var rope_length = 0.0
+var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
+
 #const SPEED = 10.0
 #const JUMP_VELOCITY = 10.0
 const LOOK_SPEED = 5 # Adjust as needed for controller comfort
@@ -35,6 +48,7 @@ func _enter_tree():
 	set_multiplayer_authority(str(name).to_int())
 
 func _ready():
+	raycast.add_exception(self)
 	Global.player = self
 	if not is_multiplayer_authority(): return
 	
@@ -170,6 +184,65 @@ func _physics_process(delta):
 		anim_player.play("idle")
 	var camera = $Camera3D
 	#move_and_slide()
+	
+	if Input.is_action_just_pressed("Grapple"):
+		start_grapple()
+		print("Grapple")
+		
+	if Input.is_action_just_released("Grapple"):
+		stop_grapple()
+
+	if is_grappling:
+		process_grapple(delta)
+	else:
+		apply_gravity(delta)
+
+
+func start_grapple():
+	raycast.global_transform = camera.global_transform
+	raycast.target_position = Vector3(0, 0, -max_grapple_distance)
+	raycast.force_raycast_update()
+	print("grapple")
+	print(raycast.is_colliding())
+
+	if raycast.is_colliding():
+		grapple_point = raycast.get_collision_point()
+		rope_length = global_transform.origin.distance_to(grapple_point)
+		is_grappling = true
+		print("elpprag")
+
+
+
+func process_grapple(delta):
+	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
+	var cam_basis = camera.global_transform.basis
+	var move_dir = (cam_basis.x * input_dir.x + cam_basis.z * input_dir.y).normalized()
+	velocity += move_dir * 10.0 * delta
+	var to_grapple = grapple_point - global_transform.origin
+	var distance = to_grapple.length()
+	var direction = to_grapple.normalized()
+
+	# --- Keep rope length (constraint) ---
+	if distance > rope_length:
+		var correction = direction * (distance - rope_length)
+		velocity += correction * 20.0 * delta
+
+	# --- Remove velocity going away from grapple ---
+	var velocity_away = velocity.dot(direction)
+	if velocity_away > 0:
+		velocity -= direction * velocity_away
+
+	# --- Add swing pull (tension) ---
+	velocity += direction * grapple_pull_strength * delta
+
+func stop_grapple():
+	is_grappling = false
+	velocity *= 1.2
+
+
+func apply_gravity(delta):
+	if not is_on_floor():
+		velocity.y -= 9.8 * delta
 
 
 @rpc("call_local")
