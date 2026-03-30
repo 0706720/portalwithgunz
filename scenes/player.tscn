@@ -184,10 +184,48 @@ _data = {
 [sub_resource type="SphereShape3D" id="SphereShape3D_dqkch"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3v2ag"]
-bg_color = Color(1, 1, 1, 1)
+bg_color = Color(1, 0, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d2wvv"]
 bg_color = Color(0.23921569, 0.7372549, 0.30588236, 1)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_y4r1p"]
+
+[sub_resource type="Animation" id="Animation_d2wvv"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:value")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [66.0]
+}
+
+[sub_resource type="Animation" id="Animation_3v2ag"]
+resource_name = "damage_anim"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:value")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [66.0, 99.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jej6c"]
+_data = {
+&"RESET": SubResource("Animation_d2wvv"),
+&"damage_anim": SubResource("Animation_3v2ag")
+}
 
 [node name="Player" type="CharacterBody3D" unique_id=820130408 node_paths=PackedStringArray("crouch_anim_player", "crouch_shapecast") groups=["Player"]]
 collision_layer = 2
@@ -299,7 +337,14 @@ offset_bottom = 45.0
 scale = Vector2(2, 2)
 theme_override_styles/background = SubResource("StyleBoxFlat_3v2ag")
 theme_override_styles/fill = SubResource("StyleBoxFlat_d2wvv")
+value = 66.0
 show_percentage = false
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="HUD/healthBar" unique_id=546106167]
+sprite_frames = SubResource("SpriteFrames_y4r1p")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/healthBar" unique_id=2061124700]
+libraries/ = SubResource("AnimationLibrary_jej6c")
 
 [node name="healthPlaceholder" type="Label" parent="HUD" unique_id=1231744766]
 layout_mode = 0
