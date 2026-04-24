@@ -92,3 +92,7 @@ func remove_player(peer_id):
 	var player = get_node_or_null(str(peer_id))
 	if player:
 		player.queue_free()
+
+
+func _on_map_1_pressed() -> void:
+	get_tree().change_scene_to_file("res://Map.tscn")
