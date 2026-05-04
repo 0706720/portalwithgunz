@@ -1,25 +1,25 @@
-#state_machine.gd
+#state_machine
 
-class_name StateMachine
 extends Node
 
-@export var current_state: State
-var states: Dictionary = {}
+@export var initial_state: NodePath
+@onready var current_state: State = get_node(initial_state)
 
-func ready():
-	for child in State:
-		if child is State:
-			states[child.name] = child.transition.connect(change_state)
+func _ready():
+	for child in get_children():
+		child.state_machine = self
+	current_state.enter()
 
-func change_state(new_state_name: StringName) -> void:
-	var new_state = states.get(new_state_name)
-	if new_state != null:
-		if new_state != current_state:
-			current_state.exit()
-			current_state = new_state
-			current_state.enter()
-	else:
-		push_warning("State does not exist")
-		
+func _process(delta):
+	current_state.update(delta)
+
 func _physics_process(delta):
 	current_state.physics_update(delta)
+
+func transition_to(target_state_name: String):
+	if not has_node(target_state_name):
+		return
+		
+	current_state.exit()
+	current_state = get_node(target_state_name)
+	current_state.enter()
