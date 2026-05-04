@@ -87,6 +87,7 @@ func _unhandled_input(event):
 	if anim_playing == false:
 		if Input.is_action_just_pressed("Fire_shotgun"):
 			anim_playing = true
+			print(raycast.is_colliding())
 			var shoot_dir = -camera.global_transform.basis.z.normalized()
 			velocity += -shoot_dir * knockback_force
 			await get_tree().create_timer(1.0).timeout
