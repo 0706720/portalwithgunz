@@ -3,6 +3,7 @@ extends CharacterBody3D
 
 signal health_changed(health_value)
 
+@onready var weaponsManager = $weaponsManager
 @onready var camera = $Camera3D
 @onready var anim_player = $AnimationPlayer
 @onready var movement_anim = $MovementAnimationPlayer
@@ -49,6 +50,7 @@ func _enter_tree():
 	set_multiplayer_authority(str(name).to_int())
 
 func _ready():
+	weaponsManager.print(0)
 	if is_multiplayer_authority():
 		$Player/RightArm.hide()
 		$Player/LeftArm.hide()
@@ -86,7 +88,8 @@ func _unhandled_input(event):
 		toggle_crouch()
 	
 	if Input.is_action_just_pressed("shoot") \
-			and anim_player.current_animation != "shoot":
+			and Global.currentWeapon == 'Pistol' \
+				and anim_player.current_animation != "shoot":
 		play_shoot_effects.rpc()
 		if raycast.is_colliding():
 			var hit_player = raycast.get_collider()
@@ -94,7 +97,7 @@ func _unhandled_input(event):
 			
 			
 	if anim_playing == false:
-		if Input.is_action_just_pressed("Fire_shotgun"):
+		if Input.is_action_just_pressed("Fire_shotgun") and Global.currentWeapon == 'Shotgun':
 			anim_playing = true
 			print(raycast.is_colliding())
 			var shoot_dir = -camera.global_transform.basis.z.normalized()
@@ -198,9 +201,18 @@ func _physics_process(delta):
 	var camera = $Camera3D
 	#move_and_slide()
 	
-	if Input.is_action_just_pressed("Grapple"):
+	if Input.is_action_just_pressed("Grapple") and Global.currentWeapon == 'GrappleGun':
 		start_grapple()
 		print("Grapple")
+	
+	if Input.is_action_just_pressed("weapon1"):
+		weaponsManager.print(0)
+		
+	if Input.is_action_just_pressed("weapon2"):
+		weaponsManager.print(1)
+		
+	if Input.is_action_just_pressed("weapon3"):
+		weaponsManager.print(2)
 		
 	if Input.is_action_just_released("Grapple"):
 		stop_grapple()

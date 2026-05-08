@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://bg1xha1x7mh6l" path="res://propulsion_shotgun.tscn" id="10_y4r1p"]
 [ext_resource type="PackedScene" uid="uid://d4i7nb1k36bs3" path="res://Grapplehook.tscn" id="11_3v2ag"]
 [ext_resource type="Script" uid="uid://c8bg3xqpf178p" path="res://scenes/hud.gd" id="11_d2wvv"]
+[ext_resource type="Script" uid="uid://bjam2q4r8dwcf" path="res://scenes/weapons_manager.gd" id="12_3v2ag"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3v2ag"]
 albedo_color = Color(1, 1, 0, 1)
@@ -624,6 +625,8 @@ offset_right = 652.0
 offset_bottom = 30.0
 text = "00"
 
+[node name="weaponsManager" type="Node" parent="." unique_id=828943716]
+script = ExtResource("12_3v2ag")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1497174945]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0036621094, 0.8963623, -0.008407593)
 shape = SubResource("BoxShape3D_d2wvv")
