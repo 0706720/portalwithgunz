@@ -108,6 +108,13 @@ func _physics_process(delta):
 	movement_anim.play("Movement_animation")
 	wish_dir = self.global_transform.basis * Vector3(input_dir.x, 0., input_dir.y)
 	
+	
+	if input_dir != Vector2.ZERO:
+		if movement_anim.current_animation != "Movement_animation":
+			movement_anim.play("Movement_animation")
+	else:
+		if movement_anim.current_animation != "Idle":
+			movement_anim.play("Idle")
 		
 		
 	if is_on_floor():
