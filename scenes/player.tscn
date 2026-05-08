@@ -7,10 +7,10 @@
 [ext_resource type="Script" uid="uid://bo5enab2wen2s" path="res://Scripts/States/State_Machine.gd" id="6_tuyoq"]
 [ext_resource type="Script" uid="uid://bxy4erehwa46b" path="res://Scripts/States/Idle_State.gd" id="7_fjrip"]
 [ext_resource type="Script" uid="uid://dtg8rdld5xjau" path="res://Scripts/States/Move_State.gd" id="8_smehm"]
-[ext_resource type="Script" path="res://scenes/Crouch_State.gd" id="10_d2wvv"]
+[ext_resource type="Script" uid="uid://c1udmtgavkqdt" path="res://scenes/Crouch_State.gd" id="10_d2wvv"]
 [ext_resource type="PackedScene" uid="uid://bg1xha1x7mh6l" path="res://propulsion_shotgun.tscn" id="10_y4r1p"]
 [ext_resource type="PackedScene" uid="uid://d4i7nb1k36bs3" path="res://Grapplehook.tscn" id="11_3v2ag"]
-[ext_resource type="Script" path="res://scenes/hud.gd" id="11_d2wvv"]
+[ext_resource type="Script" uid="uid://c8bg3xqpf178p" path="res://scenes/hud.gd" id="11_d2wvv"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3v2ag"]
 albedo_color = Color(1, 1, 0, 1)
@@ -623,7 +623,7 @@ draw_pass_1 = SubResource("PlaneMesh_b2g4i")
 
 [node name="RayCast3D" type="RayCast3D" parent="Camera3D/RayContainer" unique_id=1804038237]
 target_position = Vector3(0, 0, -50)
-collision_mask = 2
+collision_mask = 3
 
 [node name="RayCast3D2" type="RayCast3D" parent="Camera3D/RayContainer" unique_id=1554132219]
 target_position = Vector3(0, 0, -50)
