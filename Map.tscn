@@ -56,6 +56,9 @@ data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0
 
 [sub_resource type="BoxMesh" id="BoxMesh_0f2yp"]
 
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_ud676"]
+data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
+
 [node name="Map" type="Node3D" unique_id=317795099]
 script = ExtResource("1_8qak7")
 
@@ -188,8 +191,14 @@ offset_bottom = 27.0
 value = 100.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1093695183 groups=["BOX"]]
+transform = Transform3D(1, 0, 0, 0, 5.290849, 0, 0, 0, 1, 0, 2.6454244, -7.4967723)
 mesh = SubResource("BoxMesh_0f2yp")
 script = ExtResource("6_8qak7")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D" unique_id=763206282]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D" unique_id=1106573020]
+shape = SubResource("ConcavePolygonShape3D_ud676")
 
 [node name="Target" parent="." unique_id=647349676 instance=ExtResource("7_0f2yp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.657845, 1.0563881, 3.4984007)

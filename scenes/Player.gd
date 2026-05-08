@@ -6,12 +6,13 @@ signal health_changed(health_value)
 @onready var weaponsManager = $weaponsManager
 @onready var camera = $Camera3D
 @onready var anim_player = $AnimationPlayer
+@onready var movement_anim = $MovementAnimationPlayer
 @onready var muzzle_flash = $Camera3D/Pistol/MuzzleFlash
 @onready var healthBar = $HUD/healthBar
 @onready var raycast = $Camera3D/RayContainer/RayCast3D
 @onready var ray_container = $Camera3D/RayContainer
 @onready var rope = $rope
-
+@onready var ray = $RayCast3D
 # crouch handlers
 @export var crouch_anim_player: AnimationPlayer
 @export var crouch_shapecast: Node3D
@@ -50,6 +51,14 @@ func _enter_tree():
 
 func _ready():
 	weaponsManager.print(0)
+	if is_multiplayer_authority():
+		$Player/RightArm.hide()
+		$Player/LeftArm.hide()
+		$Player/RightLeg.hide()
+		$Player/LeftLeg.hide()
+		$Player/Body.hide()
+		$Player/Head.hide()
+	
 	raycast.add_exception(self)
 	Global.player = self
 	if not is_multiplayer_authority(): return
@@ -90,6 +99,7 @@ func _unhandled_input(event):
 	if anim_playing == false:
 		if Input.is_action_just_pressed("Fire_shotgun") and Global.currentWeapon == 'Shotgun':
 			anim_playing = true
+			print(raycast.is_colliding())
 			var shoot_dir = -camera.global_transform.basis.z.normalized()
 			velocity += -shoot_dir * knockback_force
 			await get_tree().create_timer(1.0).timeout
@@ -98,8 +108,11 @@ func _unhandled_input(event):
 
 func _physics_process(delta):
 	var input_dir := Input.get_vector("left", "right", "up", "down").normalized()
+	movement_anim.play("Movement_animation")
 	wish_dir = self.global_transform.basis * Vector3(input_dir.x, 0., input_dir.y)
 	
+		
+		
 	if is_on_floor():
 		if Input.is_action_pressed("spin_dash") and !is_spin_rolling:
 			is_charging_spin = true
