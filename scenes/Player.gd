@@ -93,7 +93,8 @@ func _unhandled_input(event):
 		play_shoot_effects.rpc()
 		if raycast.is_colliding():
 			var hit_player = raycast.get_collider()
-			hit_player.receive_damage.rpc_id(hit_player.get_multiplayer_authority())
+			if hit_player.is_in_group('Player'):
+				hit_player.receive_damage.rpc_id(hit_player.get_multiplayer_authority())
 			
 			
 	if anim_playing == false:
