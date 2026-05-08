@@ -1,7 +1,9 @@
 extends Node
 
 # .. is simply a reference to the parent node.
-@onready var weaponNode = ^"../Camera3D/Pistol"
+@onready var pistolNode = ^"../Camera3D/Pistol"
+@onready var shotgunNode = ^"../Camera3D/Propulsion_shotgun"
+@onready var grappleNode = ^"../Camera3D/Grapple Hook"
 
 var weapons = ["Pistol", "Shotgun", "GrappleGun"]
 
@@ -10,18 +12,33 @@ var paths = [
 	"res://assets/images/Weapons/Shotgunz/spas12.FBX",
 	"res://assets/images/Weapons/Vacuum Cleanerz/vacuum3.fbx"]
 
+var nodepaths = [^"../Camera3D/Pistol", ^"../Camera3D/Propulsion_shotgun", ^"../Camera3D/Grapple Hook"]
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	print(weapons[0])
 
 func print(weapon_index):
+	var weaponInstance
+	for i in nodepaths:
+		weaponInstance = get_node(i)
+		weaponInstance.visible = false
+		
+	var nodeReference = nodepaths[weapon_index]
+	weaponInstance = get_node(nodeReference)
+	weaponInstance.visible = true
+	Global.currentWeapon = weapons[weapon_index]
+	print(Global.currentWeapon)
+		
+		
 	# should return pistol, shotgun or grapplegun since parameter should be 0, 1 or 2. 2
-	var index = weapons[weapon_index]
-	var path = paths[weapon_index]
-	var weaponInstance = get_node(weaponNode)
+	#var index = weapons[weapon_index]
+	#var path = paths[weapon_index]
+	#var nodeReference = nodepaths[weapon_index]
+	#var weaponInstance = get_node(nodeReference)
 	#if weaponInstance:
-	weaponInstance.visible = false
-	print(weaponInstance.position)
+	#weaponInstance.visible = false
+	#print(weaponInstance.visible)
 	#else:
 		#print('failure')
 	
