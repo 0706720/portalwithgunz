@@ -150,6 +150,211 @@ _data = {
 &"shoot": SubResource("Animation_efeb8")
 }
 
+[sub_resource type="Animation" id="Animation_jej6c"]
+resource_name = "Movement_animation"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Player/RightArm:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0.2617994, 0, 0), Vector3(0.5235988, 0, 0), Vector3(0.2617994, 0, 0), Vector3(0, 0, 0), Vector3(-0.2617994, 0, 0), Vector3(-0.5235988, 0, 0), Vector3(-0.2617994, 0, 0), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Player/LeftArm:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-0.2617994, 0, 0), Vector3(-0.5235988, 0, 0), Vector3(-0.2617994, 0, 0), Vector3(0, 0, 0), Vector3(0.2617994, 0, 0), Vector3(0.5235988, 0, 0), Vector3(0.2617994, 0, 0), Vector3(0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Player/RightLeg:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-0.2617994, 0, 0), Vector3(-0.5235988, 0, 0), Vector3(-0.2617994, 0, 0), Vector3(0, 0, 0), Vector3(0.2617994, 0, 0), Vector3(0.5235988, 0, 0), Vector3(0.2617994, 0, 0), Vector3(0, 0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Player/LeftLeg:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0.2617994, 0, 0), Vector3(0.5235988, 0, 0), Vector3(0.2617994, 0, 0), Vector3(0, 0, 0), Vector3(-0.2617994, 0, 0), Vector3(-0.5235988, 0, 0), Vector3(-0.2617994, 0, 0), Vector3(0, 0, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Player/RightArm:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0.6, 1.5, 0), Vector3(0.6, 1.5, -0.1), Vector3(0.6, 1.5, -0.2), Vector3(0.6, 1.5, -0.1), Vector3(0.6, 1.5, 0), Vector3(0.6, 1.5, 0.1), Vector3(0.6, 1.5, 0.2), Vector3(0.6, 1.5, 0.1), Vector3(0.6, 1.5, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Player/LeftArm:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(-0.6, 1.5, 0), Vector3(-0.6, 1.5, 0.1), Vector3(-0.6, 1.5, 0.2), Vector3(-0.6, 1.5, 0.1), Vector3(-0.6, 1.5, 0), Vector3(-0.6, 1.5, -0.1), Vector3(-0.6, 1.5, -0.2), Vector3(-0.6, 1.5, -0.1), Vector3(-0.6, 1.5, 0)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Player/RightLeg:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0.20000002, 0.50000006, 0), Vector3(0.2, 0.5, 0.1), Vector3(0.2, 0.5, 0.2), Vector3(0.2, 0.5, 0.1), Vector3(0.2, 0.5, 0), Vector3(0.2, 0.5, -0.1), Vector3(0.2, 0.5, -0.2), Vector3(0.2, 0.5, -0.1), Vector3(0.2, 0.5, 0)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Player/LeftLeg:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(-0.20000002, 0.50000006, 0), Vector3(-0.2, 0.5, -0.1), Vector3(-0.2, 0.5, -0.2), Vector3(-0.2, 0.5, -0.1), Vector3(-0.2, 0.5, 0), Vector3(-0.2, 0.5, 0.1), Vector3(-0.2, 0.5, 0.2), Vector3(-0.2, 0.5, 0.1), Vector3(-0.2, 0.5, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_f1ej7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Player/RightArm:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Player/LeftArm:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Player/RightLeg:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Player/LeftLeg:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Player/RightArm:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.6, 1.5, -0.1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Player/LeftArm:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.6, 1.5, 0)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Player/RightLeg:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.20000002, 0.50000006, 0)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Player/LeftLeg:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.20000002, 0.50000006, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_oprun"]
+_data = {
+&"Movement_animation": SubResource("Animation_jej6c"),
+&"RESET": SubResource("Animation_f1ej7")
+}
+
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_hn37q"]
 properties/0/path = NodePath(".:position")
 properties/0/spawn = true
@@ -242,7 +447,7 @@ _data = {
 }
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_d2wvv"]
-size = Vector3(0.54052734, 1.3400879, 0.25576782)
+size = Vector3(0.54052734, 1.7932129, 0.25576782)
 
 [node name="Player" type="CharacterBody3D" unique_id=820130408 node_paths=PackedStringArray("crouch_anim_player", "crouch_shapecast") groups=["Player"]]
 collision_layer = 2
@@ -253,33 +458,33 @@ crouch_shapecast = NodePath("ShapeCast3D")
 [node name="Player" type="Node3D" parent="." unique_id=444522863]
 transform = Transform3D(0.67, 0, 0, 0, 0.67, 0, 0, 0, 0.67, 0, 0, 0)
 
-[node name="MeshInstance3D4" type="MeshInstance3D" parent="Player" unique_id=1615553866]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, 1.5, 0)
+[node name="RightArm" type="MeshInstance3D" parent="Player" unique_id=1615553866]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, 1.5, -0.1)
 layers = 16
 mesh = SubResource("BoxMesh_a8ls1")
 
-[node name="MeshInstance3D5" type="MeshInstance3D" parent="Player" unique_id=2066844578]
+[node name="LeftArm" type="MeshInstance3D" parent="Player" unique_id=2066844578]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, 1.5, 0)
 layers = 16
 mesh = SubResource("BoxMesh_qfm1y")
 
-[node name="MeshInstance3D6" type="MeshInstance3D" parent="Player" unique_id=1214053066]
+[node name="Head" type="MeshInstance3D" parent="Player" unique_id=1214053066]
 transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 2.3, 0)
 layers = 16
 mesh = SubResource("SphereMesh_fulsm")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Player" unique_id=1832600017]
+[node name="Body" type="MeshInstance3D" parent="Player" unique_id=1832600017]
 transform = Transform3D(0.99999404, 0.0034906513, 0, -0.0034906517, 0.9999939, 0, 0, 0, 1.0000001, 0, 1.5, 0)
 layers = 16
 mesh = SubResource("BoxMesh_3v2ag")
 skeleton = NodePath("../..")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Player" unique_id=2078180814]
+[node name="RightLeg" type="MeshInstance3D" parent="Player" unique_id=2078180814]
 transform = Transform3D(1.0000001, 0, 0, 0, 1.0000001, 0, 0, 0, 1.0000001, 0.20000002, 0.50000006, 0)
 layers = 16
 mesh = SubResource("BoxMesh_f1ej7")
 
-[node name="MeshInstance3D3" type="MeshInstance3D" parent="Player" unique_id=1810649658]
+[node name="LeftLeg" type="MeshInstance3D" parent="Player" unique_id=1810649658]
 transform = Transform3D(1.0000001, 0, 0, 0, 1.0000001, 0, 0, 0, 1.0000001, -0.20000002, 0.50000006, 0)
 layers = 16
 mesh = SubResource("BoxMesh_oprun")
@@ -288,6 +493,9 @@ mesh = SubResource("BoxMesh_oprun")
 libraries/ = SubResource("AnimationLibrary_p6wdk")
 autoplay = &"idle"
 playback_default_blend_time = 0.05
+
+[node name="MovementAnimationPlayer" type="AnimationPlayer" parent="." unique_id=352400550]
+libraries/ = SubResource("AnimationLibrary_oprun")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=374552710]
 replication_config = SubResource("SceneReplicationConfig_hn37q")
@@ -417,7 +625,7 @@ offset_bottom = 30.0
 text = "00"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1497174945]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0036621094, 0.6697998, -0.008407593)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0036621094, 0.8963623, -0.008407593)
 shape = SubResource("BoxShape3D_d2wvv")
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
