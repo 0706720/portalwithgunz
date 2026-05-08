@@ -7,10 +7,10 @@
 [ext_resource type="Script" uid="uid://bo5enab2wen2s" path="res://Scripts/States/State_Machine.gd" id="6_tuyoq"]
 [ext_resource type="Script" uid="uid://bxy4erehwa46b" path="res://Scripts/States/Idle_State.gd" id="7_fjrip"]
 [ext_resource type="Script" uid="uid://dtg8rdld5xjau" path="res://Scripts/States/Move_State.gd" id="8_smehm"]
-[ext_resource type="Script" uid="uid://c1udmtgavkqdt" path="res://scenes/Crouch_State.gd" id="10_d2wvv"]
+[ext_resource type="Script" path="res://scenes/Crouch_State.gd" id="10_d2wvv"]
 [ext_resource type="PackedScene" uid="uid://bg1xha1x7mh6l" path="res://propulsion_shotgun.tscn" id="10_y4r1p"]
 [ext_resource type="PackedScene" uid="uid://d4i7nb1k36bs3" path="res://Grapplehook.tscn" id="11_3v2ag"]
-[ext_resource type="Script" uid="uid://c8bg3xqpf178p" path="res://scenes/hud.gd" id="11_d2wvv"]
+[ext_resource type="Script" path="res://scenes/hud.gd" id="11_d2wvv"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3v2ag"]
 albedo_color = Color(1, 1, 0, 1)
@@ -554,6 +554,8 @@ collision_layer = 2
 script = ExtResource("1_2v3wm")
 crouch_anim_player = NodePath("CrouchAnimationPlayer")
 crouch_shapecast = NodePath("ShapeCast3D")
+grapple_speed = 500.0
+grapple_pull_strength = 500.0
 
 [node name="Player" type="Node3D" parent="." unique_id=444522863]
 transform = Transform3D(0.67, 0, 0, 0, 0.67, 0, 0, 0, 0.67, 0, 0, 0)
