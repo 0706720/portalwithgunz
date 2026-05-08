@@ -48,6 +48,13 @@ func _enter_tree():
 	set_multiplayer_authority(str(name).to_int())
 
 func _ready():
+	if is_multiplayer_authority():
+		$Player/MeshInstance3D.hide()
+		$Player/MeshInstance3D2.hide()
+		$Player/MeshInstance3D3.hide()
+		$Player/MeshInstance3D4.hide()
+		$Player/MeshInstance3D5.hide()
+		$Player/MeshInstance3D6.hide()
 	raycast.add_exception(self)
 	Global.player = self
 	if not is_multiplayer_authority(): return
