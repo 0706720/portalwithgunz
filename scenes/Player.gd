@@ -3,6 +3,7 @@ extends CharacterBody3D
 
 signal health_changed(health_value)
 
+@onready var weaponsManager = $weaponsManager
 @onready var camera = $Camera3D
 @onready var anim_player = $AnimationPlayer
 @onready var movement_anim = $MovementAnimationPlayer
@@ -49,6 +50,7 @@ func _enter_tree():
 	set_multiplayer_authority(str(name).to_int())
 
 func _ready():
+	weaponsManager.print(0)
 	if is_multiplayer_authority():
 		$Player/RightArm.hide()
 		$Player/LeftArm.hide()
@@ -86,15 +88,17 @@ func _unhandled_input(event):
 		toggle_crouch()
 	
 	if Input.is_action_just_pressed("shoot") \
-			and anim_player.current_animation != "shoot":
+			and Global.currentWeapon == 'Pistol' \
+				and anim_player.current_animation != "shoot":
 		play_shoot_effects.rpc()
 		if raycast.is_colliding():
 			var hit_player = raycast.get_collider()
-			hit_player.receive_damage.rpc_id(hit_player.get_multiplayer_authority())
+			if hit_player.is_in_group('Player'):
+				hit_player.receive_damage.rpc_id(hit_player.get_multiplayer_authority())
 			
 			
 	if anim_playing == false:
-		if Input.is_action_just_pressed("Fire_shotgun"):
+		if Input.is_action_just_pressed("Fire_shotgun") and Global.currentWeapon == 'Shotgun':
 			anim_playing = true
 			print(raycast.is_colliding())
 			var shoot_dir = -camera.global_transform.basis.z.normalized()
@@ -108,6 +112,13 @@ func _physics_process(delta):
 	movement_anim.play("Movement_animation")
 	wish_dir = self.global_transform.basis * Vector3(input_dir.x, 0., input_dir.y)
 	
+	
+	if input_dir != Vector2.ZERO:
+		if movement_anim.current_animation != "Movement_animation":
+			movement_anim.play("Movement_animation")
+	else:
+		if movement_anim.current_animation != "Idle":
+			movement_anim.play("Idle")
 		
 		
 	if is_on_floor():
@@ -198,9 +209,18 @@ func _physics_process(delta):
 	var camera = $Camera3D
 	#move_and_slide()
 	
-	if Input.is_action_just_pressed("Grapple"):
+	if Input.is_action_just_pressed("Grapple") and Global.currentWeapon == 'GrappleGun':
 		start_grapple()
 		print("Grapple")
+	
+	if Input.is_action_just_pressed("weapon1"):
+		weaponsManager.print(0)
+		
+	if Input.is_action_just_pressed("weapon2"):
+		weaponsManager.print(1)
+		
+	if Input.is_action_just_pressed("weapon3"):
+		weaponsManager.print(2)
 		
 	if Input.is_action_just_released("Grapple"):
 		stop_grapple()
