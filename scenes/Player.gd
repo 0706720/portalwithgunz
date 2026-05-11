@@ -3,14 +3,16 @@ extends CharacterBody3D
 
 signal health_changed(health_value)
 
+@onready var weaponsManager = $weaponsManager
 @onready var camera = $Camera3D
 @onready var anim_player = $AnimationPlayer
+@onready var movement_anim = $MovementAnimationPlayer
 @onready var muzzle_flash = $Camera3D/Pistol/MuzzleFlash
 @onready var healthBar = $HUD/healthBar
 @onready var raycast = $Camera3D/RayContainer/RayCast3D
 @onready var ray_container = $Camera3D/RayContainer
-@onready var rope = $rope
-
+@onready var rope = Node3D
+@onready var ray = $RayCast3D
 # crouch handlers
 @export var crouch_anim_player: AnimationPlayer
 @export var crouch_shapecast: Node3D
@@ -48,6 +50,15 @@ func _enter_tree():
 	set_multiplayer_authority(str(name).to_int())
 
 func _ready():
+	weaponsManager.print(0)
+	if is_multiplayer_authority():
+		$Player/RightArm.hide()
+		$Player/LeftArm.hide()
+		$Player/RightLeg.hide()
+		$Player/LeftLeg.hide()
+		$Player/Body.hide()
+		$Player/Head.hide()
+	
 	raycast.add_exception(self)
 	Global.player = self
 	if not is_multiplayer_authority(): return
@@ -77,16 +88,19 @@ func _unhandled_input(event):
 		toggle_crouch()
 	
 	if Input.is_action_just_pressed("shoot") \
-			and anim_player.current_animation != "shoot":
+			and Global.currentWeapon == 'Pistol' \
+				and anim_player.current_animation != "shoot":
 		play_shoot_effects.rpc()
 		if raycast.is_colliding():
 			var hit_player = raycast.get_collider()
-			hit_player.receive_damage.rpc_id(hit_player.get_multiplayer_authority())
+			if hit_player.is_in_group('Player'):
+				hit_player.receive_damage.rpc_id(hit_player.get_multiplayer_authority())
 			
 			
 	if anim_playing == false:
-		if Input.is_action_just_pressed("Fire_shotgun"):
+		if Input.is_action_just_pressed("Fire_shotgun") and Global.currentWeapon == 'Shotgun':
 			anim_playing = true
+			print(raycast.is_colliding())
 			var shoot_dir = -camera.global_transform.basis.z.normalized()
 			velocity += -shoot_dir * knockback_force
 			await get_tree().create_timer(1.0).timeout
@@ -95,8 +109,18 @@ func _unhandled_input(event):
 
 func _physics_process(delta):
 	var input_dir := Input.get_vector("left", "right", "up", "down").normalized()
+	movement_anim.play("Movement_animation")
 	wish_dir = self.global_transform.basis * Vector3(input_dir.x, 0., input_dir.y)
 	
+	
+	if input_dir != Vector2.ZERO:
+		if movement_anim.current_animation != "Movement_animation":
+			movement_anim.play("Movement_animation")
+	else:
+		if movement_anim.current_animation != "Idle":
+			movement_anim.play("Idle")
+		
+		
 	if is_on_floor():
 		if Input.is_action_pressed("spin_dash") and !is_spin_rolling:
 			is_charging_spin = true
@@ -185,9 +209,18 @@ func _physics_process(delta):
 	var camera = $Camera3D
 	#move_and_slide()
 	
-	if Input.is_action_just_pressed("Grapple"):
+	if Input.is_action_just_pressed("Grapple") and Global.currentWeapon == 'GrappleGun':
 		start_grapple()
 		print("Grapple")
+	
+	if Input.is_action_just_pressed("weapon1"):
+		weaponsManager.print(0)
+		
+	if Input.is_action_just_pressed("weapon2"):
+		weaponsManager.print(1)
+		
+	if Input.is_action_just_pressed("weapon3"):
+		weaponsManager.print(2)
 		
 	if Input.is_action_just_released("Grapple"):
 		stop_grapple()
@@ -431,3 +464,5 @@ func _on_spindash_animation_finished(anim_name: StringName) -> void:
 
 func _on_spindash_animation_started(anim_name: StringName) -> void:
 	pass # Replace with function body.
+	
+	

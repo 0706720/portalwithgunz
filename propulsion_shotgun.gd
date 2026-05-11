@@ -18,7 +18,7 @@ func _ready() -> void:
 
 func fire_shotgun():
 	if anim_playing == false:
-		if Input.is_action_just_pressed("Fire_shotgun"):
+		if Input.is_action_just_pressed("Fire_shotgun") and Global.currentWeapon == 'Shotgun':
 			anim_playing = true
 			play_shoot_effects()
 			print("SHOTGUN FIRED")
