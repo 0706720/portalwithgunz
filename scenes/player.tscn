@@ -10,7 +10,7 @@
 [ext_resource type="Script" path="res://scenes/Crouch_State.gd" id="10_d2wvv"]
 [ext_resource type="PackedScene" uid="uid://bg1xha1x7mh6l" path="res://propulsion_shotgun.tscn" id="10_y4r1p"]
 [ext_resource type="PackedScene" uid="uid://d4i7nb1k36bs3" path="res://Grapplehook.tscn" id="11_3v2ag"]
-[ext_resource type="Script" uid="uid://c8bg3xqpf178p" path="res://scenes/hud.gd" id="11_d2wvv"]
+[ext_resource type="Script" path="res://scenes/hud.gd" id="11_d2wvv"]
 [ext_resource type="Script" uid="uid://bjam2q4r8dwcf" path="res://scenes/weapons_manager.gd" id="12_3v2ag"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3v2ag"]
@@ -659,7 +659,7 @@ transform = Transform3D(-1.3113417e-08, 0, -0.3, 0, 0.3, 0, 0.3, 0, -1.3113417e-
 libraries/ = SubResource("AnimationLibrary_qlg0r")
 
 [node name="ShapeCast3D" type="ShapeCast3D" parent="." unique_id=1797677701]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.499389, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7684464, 0)
 shape = SubResource("SphereShape3D_dqkch")
 target_position = Vector3(0, 0.5, 0)
 debug_shape_custom_color = Color(0, 0.57254905, 0, 1)
@@ -729,6 +729,7 @@ text = "00"
 
 [node name="weaponsManager" type="Node" parent="." unique_id=828943716]
 script = ExtResource("12_3v2ag")
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1497174945]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0036621094, 0.8963623, -0.008407593)
 shape = SubResource("BoxShape3D_d2wvv")
