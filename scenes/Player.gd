@@ -11,7 +11,7 @@ signal health_changed(health_value)
 @onready var healthBar = $HUD/healthBar
 @onready var raycast = $Camera3D/RayContainer/RayCast3D
 @onready var ray_container = $Camera3D/RayContainer
-@onready var rope = $rope
+@onready var rope = Node3D
 @onready var ray = $RayCast3D
 # crouch handlers
 @export var crouch_anim_player: AnimationPlayer
@@ -464,3 +464,5 @@ func _on_spindash_animation_finished(anim_name: StringName) -> void:
 
 func _on_spindash_animation_started(anim_name: StringName) -> void:
 	pass # Replace with function body.
+	
+	
