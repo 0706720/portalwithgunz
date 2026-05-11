@@ -3,6 +3,12 @@
 [ext_resource type="Script" uid="uid://ccubnasmgpn5b" path="res://grapplehook.gd" id="1_1w4tv"]
 [ext_resource type="PackedScene" uid="uid://bnwaxjn3kx02" path="res://assets/images/Weapons/Grapple Hook/hook_textuer.fbx" id="1_i1x4r"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1w4tv"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_nvqsp"]
+material = SubResource("StandardMaterial3D_1w4tv")
+
 [node name="Grapple Hook" type="Node3D" unique_id=1356339492]
 script = ExtResource("1_1w4tv")
 
@@ -11,3 +17,7 @@ transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
 
 [node name="RayCast3D" type="RayCast3D" parent="hook_textuer" unique_id=514762055]
 transform = Transform3D(-8.742278e-08, 200, 0, -2, -8.742278e-06, 0, 0, 0, 2, -3, 0.9621439, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=2075579343]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -101.25732, 0.5081954, 0)
+mesh = SubResource("SphereMesh_nvqsp")
