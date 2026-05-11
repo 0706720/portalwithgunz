@@ -23,10 +23,12 @@ func print(weapon_index):
 	for i in nodepaths:
 		weaponInstance = get_node(i)
 		weaponInstance.visible = false
+		weaponInstance.position = Vector3(-0.5, -0.35, -0.7)
 		
 	var nodeReference = nodepaths[weapon_index]
 	weaponInstance = get_node(nodeReference)
 	weaponInstance.visible = true
+	weaponInstance.position = Vector3(0.5, -0.25, -0.5)
 	Global.currentWeapon = weapons[weapon_index]
 	print(Global.currentWeapon)
 		
