@@ -10,7 +10,7 @@
 [ext_resource type="Script" uid="uid://c1udmtgavkqdt" path="res://scenes/Crouch_State.gd" id="10_d2wvv"]
 [ext_resource type="PackedScene" uid="uid://bg1xha1x7mh6l" path="res://propulsion_shotgun.tscn" id="10_y4r1p"]
 [ext_resource type="PackedScene" uid="uid://d4i7nb1k36bs3" path="res://Grapplehook.tscn" id="11_3v2ag"]
-[ext_resource type="Script" path="res://scenes/hud.gd" id="11_d2wvv"]
+[ext_resource type="Script" uid="uid://c8bg3xqpf178p" path="res://scenes/hud.gd" id="11_d2wvv"]
 [ext_resource type="Script" uid="uid://bjam2q4r8dwcf" path="res://scenes/weapons_manager.gd" id="12_3v2ag"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3v2ag"]
