@@ -1,14 +1,27 @@
-[gd_scene format=3 uid="uid://11o27xt3kfxj"]
+[gd_scene format=3 uid="uid://s74yrrv7hvxf"]
 
 [ext_resource type="Script" uid="uid://demmf2hbrwaat" path="res://scenes/world.gd" id="1_8qak7"]
 [ext_resource type="Texture2D" uid="uid://cjddue730snm" path="res://assets/images/WoodenTexture.jpg" id="3_vm4q1"]
 [ext_resource type="Texture2D" uid="uid://cj5unt7ykwulf" path="res://assets/images/brickwall.jpg" id="4_ud676"]
 [ext_resource type="Texture2D" uid="uid://bvu15qfr23noj" path="res://assets/images/blue.webp" id="5_6f7pb"]
 [ext_resource type="PackedScene" uid="uid://bcvf4hmrpkuno" path="res://scenes/MovingPlatform.tscn" id="5_v6avs"]
-[ext_resource type="Script" uid="uid://cj5spe81hvlb4" path="res://BOX.gd" id="6_8qak7"]
 [ext_resource type="PackedScene" uid="uid://eeadoxxlvepj" path="res://scenes/Target.tscn" id="7_0f2yp"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_0f2yp"]
+
+[sub_resource type="GDScript" id="GDScript_lrfoy"]
+script/source = "extends MeshInstance3D
+
+var damage = 20
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+"
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_ud676"]
 data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
@@ -88,7 +101,7 @@ script = ExtResource("1_8qak7")
 transform = Transform3D(1, 0, 0, 0, 5.290849, 0, 0, 0, 1, 0, 2.6454244, -7.4967723)
 mesh = SubResource("BoxMesh_0f2yp")
 skeleton = NodePath("../..")
-script = ExtResource("6_8qak7")
+script = SubResource("GDScript_lrfoy")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Items/MeshInstance3D" unique_id=763206282]
 
