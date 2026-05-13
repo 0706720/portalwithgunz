@@ -10,8 +10,9 @@
 [ext_resource type="Script" uid="uid://c1udmtgavkqdt" path="res://scenes/Crouch_State.gd" id="10_d2wvv"]
 [ext_resource type="PackedScene" uid="uid://bg1xha1x7mh6l" path="res://propulsion_shotgun.tscn" id="10_y4r1p"]
 [ext_resource type="PackedScene" uid="uid://d4i7nb1k36bs3" path="res://Grapplehook.tscn" id="11_3v2ag"]
-[ext_resource type="Script" path="res://scenes/hud.gd" id="11_d2wvv"]
+[ext_resource type="Script" uid="uid://c8bg3xqpf178p" path="res://scenes/hud.gd" id="11_d2wvv"]
 [ext_resource type="Script" uid="uid://bjam2q4r8dwcf" path="res://scenes/weapons_manager.gd" id="12_3v2ag"]
+[ext_resource type="Script" uid="uid://bwjf6rau8gocs" path="res://scenes/screen_overlay.gd" id="13_jej6c"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3v2ag"]
 albedo_color = Color(1, 1, 0, 1)
@@ -550,6 +551,12 @@ _data = {
 [sub_resource type="BoxShape3D" id="BoxShape3D_d2wvv"]
 size = Vector3(0.54052734, 1.7932129, 0.25576782)
 
+[sub_resource type="LabelSettings" id="LabelSettings_f1ej7"]
+line_spacing = 5.0
+font_size = 15
+
+[sub_resource type="LabelSettings" id="LabelSettings_oprun"]
+
 [node name="Player" type="CharacterBody3D" unique_id=820130408 node_paths=PackedStringArray("crouch_anim_player", "crouch_shapecast") groups=["Player"]]
 collision_layer = 2
 script = ExtResource("1_2v3wm")
@@ -664,9 +671,8 @@ shape = SubResource("SphereShape3D_dqkch")
 target_position = Vector3(0, 0.5, 0)
 debug_shape_custom_color = Color(0, 0.57254905, 0, 1)
 
-[node name="StateMachine" type="Node" parent="." unique_id=1887064363 node_paths=PackedStringArray("current_state")]
+[node name="StateMachine" type="Node" parent="." unique_id=1887064363]
 script = ExtResource("6_tuyoq")
-current_state = NodePath("MoveState")
 
 [node name="IdleState" type="Node" parent="StateMachine" unique_id=1035240996]
 script = ExtResource("7_fjrip")
@@ -733,6 +739,83 @@ script = ExtResource("12_3v2ag")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1497174945]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0036621094, 0.8963623, -0.008407593)
 shape = SubResource("BoxShape3D_d2wvv")
+
+[node name="Screen overlay" type="CanvasLayer" parent="." unique_id=1381377161]
+unique_name_in_owner = true
+script = ExtResource("13_jej6c")
+
+[node name="MarginContainer" type="MarginContainer" parent="Screen overlay" unique_id=822845209]
+offset_right = 252.0
+offset_bottom = 67.0
+
+[node name="PanelContainer" type="PanelContainer" parent="Screen overlay/MarginContainer" unique_id=622200215]
+layout_mode = 2
+
+[node name="BoxContainer" type="BoxContainer" parent="Screen overlay/MarginContainer/PanelContainer" unique_id=1919061572]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Screen overlay/MarginContainer/PanelContainer/BoxContainer" unique_id=385354221]
+layout_mode = 2
+
+[node name="CurrentSpeedLabel" type="Label" parent="Screen overlay/MarginContainer/PanelContainer/BoxContainer/VBoxContainer" unique_id=206970349]
+layout_mode = 2
+text = "Current speed :"
+label_settings = SubResource("LabelSettings_f1ej7")
+vertical_alignment = 1
+
+[node name="IsOnFloorLabel" type="Label" parent="Screen overlay/MarginContainer/PanelContainer/BoxContainer/VBoxContainer" unique_id=1680581108]
+layout_mode = 2
+text = "Is on floor :"
+label_settings = SubResource("LabelSettings_oprun")
+
+[node name="CurrentStateLabel" type="Label" parent="Screen overlay/MarginContainer/PanelContainer/BoxContainer/VBoxContainer" unique_id=1540738121]
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="Screen overlay/MarginContainer/PanelContainer/BoxContainer/VBoxContainer" unique_id=709748240]
+layout_mode = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Screen overlay/MarginContainer/PanelContainer/BoxContainer" unique_id=1737314027]
+layout_mode = 2
+
+[node name="CurrentSpeedLabelText" type="Label" parent="Screen overlay/MarginContainer/PanelContainer/BoxContainer/VBoxContainer2" unique_id=607054651]
+unique_name_in_owner = true
+layout_mode = 2
+text = "..................."
+
+[node name="IsOnFloorLableText" type="Label" parent="Screen overlay/MarginContainer/PanelContainer/BoxContainer/VBoxContainer2" unique_id=15133553]
+unique_name_in_owner = true
+layout_mode = 2
+text = "..................."
+
+[node name="CurrentStateLabelText" type="Label" parent="Screen overlay/MarginContainer/PanelContainer/BoxContainer/VBoxContainer2" unique_id=25523209]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="Screen overlay" unique_id=1493372493]
+offset_left = 900.0
+offset_right = 1151.0
+offset_bottom = 35.0
+
+[node name="PanelContainer" type="PanelContainer" parent="Screen overlay/MarginContainer2" unique_id=1803128789]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Screen overlay/MarginContainer2/PanelContainer" unique_id=769238200]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Screen overlay/MarginContainer2/PanelContainer/HBoxContainer" unique_id=1413277483]
+layout_mode = 2
+
+[node name="FramesPerSecondLabel" type="Label" parent="Screen overlay/MarginContainer2/PanelContainer/HBoxContainer/VBoxContainer" unique_id=1560079755]
+layout_mode = 2
+text = "Frames per seconds :"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Screen overlay/MarginContainer2/PanelContainer/HBoxContainer" unique_id=2115360281]
+layout_mode = 2
+
+[node name="FramesPerSecondLabelText" type="Label" parent="Screen overlay/MarginContainer2/PanelContainer/HBoxContainer/VBoxContainer2" unique_id=449893105]
+unique_name_in_owner = true
+layout_mode = 2
+text = "..................."
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="animation_finished" from="CrouchAnimationPlayer" to="." method="_on_crouch_animation_finished"]

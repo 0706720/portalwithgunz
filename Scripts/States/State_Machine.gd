@@ -8,13 +8,15 @@ extends Node
 func _ready():
 	for child in get_children():
 		child.state_machine = self
-	current_state.enter()
+	#current_state.enter()
 
 func _process(delta):
-	current_state.update(delta)
+	#current_state.update(delta)
+	pass
 
 func _physics_process(delta):
-	current_state.physics_update(delta)
+	#current_state.physics_update(delta)
+	pass
 
 func transition_to(target_state_name: String):
 	if not has_node(target_state_name):

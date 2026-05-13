@@ -1,7 +1,11 @@
 
 extends CharacterBody3D
 
+class_name PlayerCharacter
+
 signal health_changed(health_value)
+
+var current_speed: float
 
 @onready var weaponsManager = $weaponsManager
 @onready var camera = $Camera3D
