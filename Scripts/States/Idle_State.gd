@@ -1,13 +1,14 @@
 #idle_state.gd
-class_name IdleState
+
 extends State
 
-func physics_process(delta: float) -> void:
-	var input = Input.get_vector("left", "right", "up", "down")
+func enter():
+	# Play idle animation here
+	# player.get_node("AnimationPlayer").play("idle")
+	pass
 
-	if input.length() > 0:
-		#print("walking")
-		state_finished.emit("MoveState")
-	elif Global.player.is_on_floor() == false:
-		state_finished.emit("CrouchState")
-		return
+func physics_update(_delta):
+	# Check for movement input to transition
+	var input_dir = Input.get_vector("left", "right", "forward", "back")
+	if input_dir.length() > 0:
+		state_machine.transition_to("Walking")

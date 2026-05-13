@@ -1,7 +1,11 @@
 
 extends CharacterBody3D
 
+class_name PlayerCharacter
+
 signal health_changed(health_value)
+
+var current_speed: float
 
 @onready var weaponsManager = $weaponsManager
 @onready var camera = $Camera3D
@@ -221,6 +225,12 @@ func _physics_process(delta):
 		
 	if Input.is_action_just_pressed("weapon3"):
 		weaponsManager.print(2)
+		
+	if Input.is_action_just_pressed("weapon4"):
+		weaponsManager.print(3)
+		
+	if Input.is_action_just_pressed("weapon5"):
+		weaponsManager.print(4)
 		
 	if Input.is_action_just_released("Grapple"):
 		stop_grapple()

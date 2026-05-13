@@ -1,13 +1,19 @@
 #move_state.gd
-class_name MoveState
+
 extends State
 
-func physics_update(delta: float) -> void:
-	var input = Input.get_vector("left", "right", "up", "down")
+@export var speed = 5.0
 
-	if input.length() == 0:
-		#print("hi")
-		state_finished.emit("IdleState")
-	elif Global.player.is_on_floor() == false:
-		state_finished.emit("CrouchState")
+func physics_update(_delta):
+	var input_dir = Input.get_vector("left", "right", "forward", "back")
+	
+	# Transition to Idle if no input
+	if input_dir.length() == 0:
+		state_machine.transition_to("Idle")
 		return
+
+	# Handle 3D Movement
+	var direction = (player.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	player.velocity.x = direction.x * speed
+	player.velocity.z = direction.z * speed
+	player.move_and_slide()

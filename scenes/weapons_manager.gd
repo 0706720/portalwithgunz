@@ -18,41 +18,30 @@ var nodepaths = [^"../Camera3D/Pistol", ^"../Camera3D/Propulsion_shotgun", ^"../
 func _ready() -> void:
 	print(weapons[0])
 
+# this should automate new weapons being added.
+func import_weapon(weaponname: String, nodepath: String):
+	weapons.append(weaponname)
+	nodepaths.append(nodepath)
+	print('new weapons array: ' + str(weapons) + ' new nodepaths array: ' + str(nodepaths))
+	
 func print(weapon_index):
-	var weaponInstance
-	for i in nodepaths:
-		weaponInstance = get_node(i)
-		weaponInstance.visible = false
-		weaponInstance.position = Vector3(-0.5, -0.35, -0.7)
+	# below line is needed due to the lack of a 'try'syntax in godot.
+	if weapon_index >= 0 and weapon_index < nodepaths.size():
+		var weaponInstance
+		# for all weapons, reset location to the left of the player and make invisible
+		for i in nodepaths:
+			weaponInstance = get_node(i)
+			weaponInstance.visible = false
+			weaponInstance.position = Vector3(-0.5, -0.35, -0.7)
 		
-	var nodeReference = nodepaths[weapon_index]
-	weaponInstance = get_node(nodeReference)
-	weaponInstance.visible = true
-	weaponInstance.position = Vector3(0.5, -0.25, -0.5)
-	Global.currentWeapon = weapons[weapon_index]
-	print(Global.currentWeapon)
+		var nodeReference = nodepaths[weapon_index]
+		weaponInstance = get_node(nodeReference)
+		weaponInstance.visible = true
+		weaponInstance.position = Vector3(0.5, -0.25, -0.5)
+		Global.currentWeapon = weapons[weapon_index]
+		print(Global.currentWeapon)
+	else:
+		print('weapon index fetch unsuccessful')
 		
-		
-	# should return pistol, shotgun or grapplegun since parameter should be 0, 1 or 2. 2
-	#var index = weapons[weapon_index]
-	#var path = paths[weapon_index]
-	#var nodeReference = nodepaths[weapon_index]
-	#var weaponInstance = get_node(nodeReference)
-	#if weaponInstance:
-	#weaponInstance.visible = false
-	#print(weaponInstance.visible)
-	#else:
-		#print('failure')
-	
-	
-	#var new_enemies = preload("res://new _round.tscn")
-	#instantiate a new set of enemies, but not reload the scene entirely
-	#current_round = new_enemies.instantiate()
-	#current_round.position = Vector2(0, 0)
-	#get_tree().get_root().add_child(current_round)
-	
-	
-	
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
