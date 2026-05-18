@@ -4,10 +4,8 @@
 [ext_resource type="PackedScene" uid="uid://cf1dcxwv6bvl3" path="res://scenes/models/Pistol.glb" id="2_4esil"]
 [ext_resource type="Texture2D" uid="uid://vwob30tkwej4" path="res://addons/kenney_particle_pack/star_06.png" id="3_27dhu"]
 [ext_resource type="Animation" uid="uid://c2y6nfvxis3xa" path="res://Scripts/Crouch.res" id="4_dqkch"]
-[ext_resource type="Script" uid="uid://bo5enab2wen2s" path="res://Scripts/States/State_Machine.gd" id="6_tuyoq"]
-[ext_resource type="Script" uid="uid://bxy4erehwa46b" path="res://Scripts/States/Idle_State.gd" id="7_fjrip"]
-[ext_resource type="Script" uid="uid://dtg8rdld5xjau" path="res://Scripts/States/Move_State.gd" id="8_smehm"]
-[ext_resource type="Script" uid="uid://c1udmtgavkqdt" path="res://scenes/Crouch_State.gd" id="10_d2wvv"]
+[ext_resource type="Script" uid="uid://bo5enab2wen2s" path="res://Scripts/StateMachine/State_Machine.gd" id="6_tuyoq"]
+[ext_resource type="Script" uid="uid://vnpwjo05p8a2" path="res://scenes/idle_state.gd" id="8_d2wvv"]
 [ext_resource type="PackedScene" uid="uid://bg1xha1x7mh6l" path="res://propulsion_shotgun.tscn" id="10_y4r1p"]
 [ext_resource type="PackedScene" uid="uid://d4i7nb1k36bs3" path="res://Grapplehook.tscn" id="11_3v2ag"]
 [ext_resource type="Script" uid="uid://c8bg3xqpf178p" path="res://scenes/hud.gd" id="11_d2wvv"]
@@ -671,17 +669,13 @@ shape = SubResource("SphereShape3D_dqkch")
 target_position = Vector3(0, 0.5, 0)
 debug_shape_custom_color = Color(0, 0.57254905, 0, 1)
 
-[node name="StateMachine" type="Node" parent="." unique_id=1887064363]
+[node name="StateMachine" type="Node" parent="." unique_id=1887064363 node_paths=PackedStringArray("initial_state")]
+unique_name_in_owner = true
 script = ExtResource("6_tuyoq")
+initial_state = NodePath("IdleState")
 
-[node name="IdleState" type="Node" parent="StateMachine" unique_id=1035240996]
-script = ExtResource("7_fjrip")
-
-[node name="MoveState" type="Node" parent="StateMachine" unique_id=721917787]
-script = ExtResource("8_smehm")
-
-[node name="CrouchState" type="Node" parent="StateMachine" unique_id=1785402087]
-script = ExtResource("10_d2wvv")
+[node name="IdleState" type="Node" parent="StateMachine" unique_id=732515225]
+script = ExtResource("8_d2wvv")
 
 [node name="HUD" type="Control" parent="." unique_id=886859724]
 layout_mode = 3
@@ -770,6 +764,7 @@ label_settings = SubResource("LabelSettings_oprun")
 
 [node name="CurrentStateLabel" type="Label" parent="Screen overlay/MarginContainer/PanelContainer/BoxContainer/VBoxContainer" unique_id=1540738121]
 layout_mode = 2
+text = "Current state: "
 
 [node name="HSeparator" type="HSeparator" parent="Screen overlay/MarginContainer/PanelContainer/BoxContainer/VBoxContainer" unique_id=709748240]
 layout_mode = 2
