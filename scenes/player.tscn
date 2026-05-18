@@ -669,9 +669,10 @@ shape = SubResource("SphereShape3D_dqkch")
 target_position = Vector3(0, 0.5, 0)
 debug_shape_custom_color = Color(0, 0.57254905, 0, 1)
 
-[node name="StateMachine" type="Node" parent="." unique_id=1887064363]
+[node name="StateMachine" type="Node" parent="." unique_id=1887064363 node_paths=PackedStringArray("initial_state")]
 unique_name_in_owner = true
 script = ExtResource("6_tuyoq")
+initial_state = NodePath("IdleState")
 
 [node name="IdleState" type="Node" parent="StateMachine" unique_id=732515225]
 script = ExtResource("8_d2wvv")
@@ -763,6 +764,7 @@ label_settings = SubResource("LabelSettings_oprun")
 
 [node name="CurrentStateLabel" type="Label" parent="Screen overlay/MarginContainer/PanelContainer/BoxContainer/VBoxContainer" unique_id=1540738121]
 layout_mode = 2
+text = "Current state: "
 
 [node name="HSeparator" type="HSeparator" parent="Screen overlay/MarginContainer/PanelContainer/BoxContainer/VBoxContainer" unique_id=709748240]
 layout_mode = 2

@@ -15,10 +15,10 @@ func enter(play_char_ref : CharacterBody3D):
 func verifications():
 	pass
 
-func physics_update(_delta : float):
+func physics_update(delta : float):
 	applies(delta)
 	
-	play_char.gravity_apply(delta)
+	#play_char.gravity_apply(delta)
 	
 	input_management()
 	
@@ -28,7 +28,9 @@ func applies(delta : float):
 	pass
 
 func input_management():
-	pass
+	if Input.is_action_just_pressed(play_char.run_action):
+		if play_char.walk_or_run == "WalkState": play_char.walk_or_run = "RunState"
+		elif play_char.walk_or_run == "RunState": play_char.walk_or_run = "WalkState"
 
 func move(delta : float):
 	pass

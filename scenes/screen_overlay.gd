@@ -17,7 +17,7 @@ func _process(_delta : float) -> void:
 	display_properties()
 	
 func display_properties() -> void:
-	#current_state_label_text.set_text(str(play_char.state_machine.curr_state_name))
+	current_state_label_text.set_text(str(play_char.state_machine.curr_state_name))
 	current_speed_label_text.set_text(str(round_to_3_decimals(play_char.walk_speed)))
 
 func display_current_FPS() -> void:

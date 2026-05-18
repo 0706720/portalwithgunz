@@ -343,6 +343,20 @@ var spin_direction := Vector3.ZERO
 @export var spin_camera_tilt_speed := 200.0
 var current_camera_tilt := 0.0
 
+@onready var state_machine: StateMachine = %StateMachine
+
+@export_group("Keybind variables")
+@export var move_forward_action: StringName = "play_char_move_forward_action"
+@export var move_backward_action: StringName = "play_char_move_backward_action"
+@export var move_left_action: StringName = "play_char_move_left_ation"
+@export var move_right_action: StringName = "play_char_move_right_action"
+@export var run_action: StringName = "play_char_run_action"
+@export var crouch_action: StringName = "play_char_crouch_action"
+@export var jump_action: StringName = "play_char_jump_action"
+@onready var input_actions_list : Array[StringName] = [move_forward_action, move_backward_action, move_left_action, move_right_action, 
+run_action, crouch_action, jump_action]
+@export var check_on_ready_if_inputs_registered : bool = true
+var default_input_actions : Dictionary
 
 func get_move_speed():
 	if Input.is_action_just_pressed("sprint"):
@@ -469,4 +483,15 @@ func _on_spindash_animation_finished(anim_name: StringName) -> void:
 func _on_spindash_animation_started(anim_name: StringName) -> void:
 	pass # Replace with function body.
 	
-	
+
+func build_default_keybinding() -> void:
+	#build it in runtime to ensure that export variables have been set
+	default_input_actions = {
+		move_forward_action : [Key.KEY_W, Key.KEY_UP],
+		move_backward_action : [Key.KEY_S, Key.KEY_DOWN],
+		move_left_action : [Key.KEY_A, Key.KEY_LEFT],
+		move_right_action : [Key.KEY_D, Key.KEY_RIGHT],
+		run_action : [Key.KEY_SHIFT],
+		crouch_action : [Key.KEY_C],
+		jump_action : [Key.KEY_SPACE],
+	}
