@@ -1,8 +1,8 @@
 extends State
 
-class_name IdleState
+class_name JumpState
 
-var state_name : String = "Idle"
+var state_name : String = "Jump"
 
 var play_char : CharacterBody3D
 
@@ -11,7 +11,8 @@ func enter(play_char_ref : CharacterBody3D):
 	play_char = play_char_ref
 	
 	verifications()
-
+	
+	print("Entered Jump")
 func verifications():
 	pass
 
@@ -25,12 +26,12 @@ func physics_update(delta : float):
 	move(delta)
 
 func applies(delta : float):
-	pass
+	if play_char.is_on_floor():
+		if play_char.move_direction: transitioned.emit(self, play_char.walk_or_run)
+		else: transitioned.emit(self, "IdleState")
 
 func input_management():
-	if Input.is_action_just_pressed(play_char.run_action):
-		if play_char.walk_or_run == "WalkState": play_char.walk_or_run = "RunState"
-		elif play_char.walk_or_run == "RunState": play_char.walk_or_run = "WalkState"
+	pass
 
 func move(delta : float):
 	pass

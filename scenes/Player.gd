@@ -42,6 +42,70 @@ var grapple_point: Vector3
 @export var rope_length = 0.0
 var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
 
+#debug physics code V1
+var mouse_sensitivity = 0.002
+
+var input_direction: Vector2
+var move_direction: Vector3
+
+@onready var bulletSpawn = $Head/Camera3D/bulletSpawn
+var ammo : int = 5
+var player_health = 100
+var canThrow = true
+@onready var my_label = $Label
+
+@export var JUMP_VELOCITY := 10.0
+@export var look_sensitivity : float = 0.006
+@export var auto_bhop := true
+
+@export var walk_speed := 7.0
+@export var sprint_speed := 8.5
+@export var ground_accel := 14.0
+@export var ground_deccel :=5.0
+@export var ground_friction := 5.0
+
+const HEADBOB_MOVE_AMOUNT = 0.06
+const HEADBOB_FREQUENCY = 2.4 
+var headbob_time := 0.0
+
+@export var air_cap := 0.85
+@export var air_accel := 800.0
+@export var air_move_speed := 500.0
+
+var wish_dir := Vector3.ZERO
+@export var spin_charge_rate := 25.0
+@export var spin_max_power := 50.0
+@export var spin_min_release := 10.0
+@export var spin_friction := 20.0
+
+var spin_charge := 0.0
+var is_charging_spin := false
+var is_spin_rolling := false
+var spin_direction := Vector3.ZERO
+
+@export var spin_camera_tilt_amount := 360.0   
+@export var spin_camera_tilt_speed := 200.0
+var current_camera_tilt := 0.0
+
+@onready var state_machine: StateMachine = %StateMachine
+@onready var cam_holder = %Camera3D
+
+var walk_or_run: String = "WalkState" #keep in memory if play char was walking or running before being in the air
+#for states that require visible changes of the model
+
+@export_group("Keybind variables")
+@export var move_forward_action: StringName = "play_char_move_forward_action"
+@export var move_backward_action: StringName = "play_char_move_backward_action"
+@export var move_left_action: StringName = "play_char_move_left_ation"
+@export var move_right_action: StringName = "play_char_move_right_action"
+@export var run_action: StringName = "play_char_run_action"
+@export var crouch_action: StringName = "play_char_crouch_action"
+@export var jump_action: StringName = "play_char_jump_action"
+@onready var input_actions_list : Array[StringName] = [move_forward_action, move_backward_action, move_left_action, move_right_action, 
+run_action, crouch_action, jump_action]
+@export var check_on_ready_if_inputs_registered : bool = true
+var default_input_actions : Dictionary
+
 #const SPEED = 10.0
 #const JUMP_VELOCITY = 10.0
 const LOOK_SPEED = 5 # Adjust as needed for controller comfort
@@ -71,12 +135,54 @@ func _ready():
 	camera.current = true
 	# ensure collision check ignores player collision shape
 	crouch_shapecast.add_exception($".")
-	State
 	# initialise hp for healthbar
 	# call damage to initialise healthbar, initialise max hp
 	healthBar.max_value = health
 	receive_damage(0)
 	randomize()
+	
+	build_default_keybinding()
+	input_actions_check()
+
+func build_default_keybinding() -> void:
+	#build it in runtime to ensure that export variables have been set
+	default_input_actions = {
+		move_forward_action : [Key.KEY_W, Key.KEY_UP],
+		move_backward_action : [Key.KEY_S, Key.KEY_DOWN],
+		move_left_action : [Key.KEY_A, Key.KEY_LEFT],
+		move_right_action : [Key.KEY_D, Key.KEY_RIGHT],
+		run_action : [Key.KEY_SHIFT],
+		crouch_action : [Key.KEY_C],
+		jump_action : [Key.KEY_SPACE],
+	}
+	
+func input_actions_check() -> void:
+	#check if the input actions written in the editor are the same as the ones registered in the Input map, and if they are written correctly
+	#if not, add it to runtime Input map with default keybindings
+	if check_on_ready_if_inputs_registered:
+		var registered_input_actions: Array[StringName] = []
+		for input_action in InputMap.get_actions():
+			if input_action.begins_with(&"play_char_"):
+				registered_input_actions.append(input_action)
+				
+		for input_action in input_actions_list:
+			if input_action == &"":
+				assert(false, "There's an undefined input action")
+				
+			if not registered_input_actions.has(input_action):
+				var key_names = default_input_actions[input_action].map(func(key):
+					return OS.get_keycode_string(key)
+				)
+				
+				push_warning("'{input}' missing in InputMap, or input action wrongly named in the editor.\nAdding the '{input}' to runtime InputMap temporarily with the key/s: {keys}"
+				.format({"input": input_action, "keys": String(", ").join(key_names)}))
+				
+				InputMap.add_action(input_action)
+				for keycode in default_input_actions[input_action]:
+					var input_event_key = InputEventKey.new()
+					input_event_key.physical_keycode = keycode
+					InputMap.action_add_event(input_action, input_event_key)
+					
 func _exit_tree() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
@@ -176,7 +282,7 @@ func _physics_process(delta):
 		velocity.y -= gravity * delta
 
 	# Handle Jump.
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
+	if Input.is_action_just_pressed(jump_action) and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 
 	# Get the input direction and handle the movement/deceleration.
@@ -307,63 +413,6 @@ func _on_animation_player_animation_finished(anim_name):
 	if anim_name == "shoot":
 		crouch_anim_player.play("idle")
 
-#debug physics code V1
-var mouse_sensitivity = 0.002
-
-@onready var bulletSpawn = $Head/Camera3D/bulletSpawn
-var ammo : int = 5
-var player_health = 100
-var canThrow = true
-@onready var my_label = $Label
-
-@export var JUMP_VELOCITY := 10.0
-@export var look_sensitivity : float = 0.006
-@export var auto_bhop := true
-
-@export var walk_speed := 7.0
-@export var sprint_speed := 8.5
-@export var ground_accel := 14.0
-@export var ground_deccel :=5.0
-@export var ground_friction := 5.0
-
-const HEADBOB_MOVE_AMOUNT = 0.06
-const HEADBOB_FREQUENCY = 2.4 
-var headbob_time := 0.0
-
-@export var air_cap := 0.85
-@export var air_accel := 800.0
-@export var air_move_speed := 500.0
-
-var wish_dir := Vector3.ZERO
-@export var spin_charge_rate := 25.0
-@export var spin_max_power := 50.0
-@export var spin_min_release := 10.0
-@export var spin_friction := 20.0
-
-var spin_charge := 0.0
-var is_charging_spin := false
-var is_spin_rolling := false
-var spin_direction := Vector3.ZERO
-
-@export var spin_camera_tilt_amount := 360.0   
-@export var spin_camera_tilt_speed := 200.0
-var current_camera_tilt := 0.0
-
-@onready var state_machine: StateMachine = %StateMachine
-
-@export_group("Keybind variables")
-@export var move_forward_action: StringName = "play_char_move_forward_action"
-@export var move_backward_action: StringName = "play_char_move_backward_action"
-@export var move_left_action: StringName = "play_char_move_left_ation"
-@export var move_right_action: StringName = "play_char_move_right_action"
-@export var run_action: StringName = "play_char_run_action"
-@export var crouch_action: StringName = "play_char_crouch_action"
-@export var jump_action: StringName = "play_char_jump_action"
-@onready var input_actions_list : Array[StringName] = [move_forward_action, move_backward_action, move_left_action, move_right_action, 
-run_action, crouch_action, jump_action]
-@export var check_on_ready_if_inputs_registered : bool = true
-var default_input_actions : Dictionary
-
 func get_move_speed():
 	if Input.is_action_just_pressed("sprint"):
 		return sprint_speed 
@@ -489,15 +538,3 @@ func _on_spindash_animation_finished(anim_name: StringName) -> void:
 func _on_spindash_animation_started(anim_name: StringName) -> void:
 	pass # Replace with function body.
 	
-
-func build_default_keybinding() -> void:
-	#build it in runtime to ensure that export variables have been set
-	default_input_actions = {
-		move_forward_action : [Key.KEY_W, Key.KEY_UP],
-		move_backward_action : [Key.KEY_S, Key.KEY_DOWN],
-		move_left_action : [Key.KEY_A, Key.KEY_LEFT],
-		move_right_action : [Key.KEY_D, Key.KEY_RIGHT],
-		run_action : [Key.KEY_SHIFT],
-		crouch_action : [Key.KEY_C],
-		jump_action : [Key.KEY_SPACE],
-	}

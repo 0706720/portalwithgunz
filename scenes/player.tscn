@@ -5,11 +5,16 @@
 [ext_resource type="Texture2D" uid="uid://vwob30tkwej4" path="res://addons/kenney_particle_pack/star_06.png" id="3_27dhu"]
 [ext_resource type="Animation" uid="uid://c2y6nfvxis3xa" path="res://Scripts/Crouch.res" id="4_dqkch"]
 [ext_resource type="Script" uid="uid://bo5enab2wen2s" path="res://Scripts/StateMachine/State_Machine.gd" id="6_tuyoq"]
-[ext_resource type="Script" uid="uid://vnpwjo05p8a2" path="res://scenes/idle_state.gd" id="8_d2wvv"]
+[ext_resource type="Script" uid="uid://vnpwjo05p8a2" path="res://Scripts/StateMachine/idle_state.gd" id="8_d2wvv"]
+[ext_resource type="Script" uid="uid://r8smofxec1bn" path="res://Scripts/StateMachine/walk_state.gd" id="9_3v2ag"]
+[ext_resource type="Script" uid="uid://c7qspfds2j4ui" path="res://Scripts/StateMachine/jump_state.gd" id="10_a8ls1"]
 [ext_resource type="PackedScene" uid="uid://bg1xha1x7mh6l" path="res://propulsion_shotgun.tscn" id="10_y4r1p"]
 [ext_resource type="PackedScene" uid="uid://d4i7nb1k36bs3" path="res://Grapplehook.tscn" id="11_3v2ag"]
 [ext_resource type="Script" uid="uid://c8bg3xqpf178p" path="res://scenes/hud.gd" id="11_d2wvv"]
+[ext_resource type="Script" uid="uid://cmnednq1yfuee" path="res://Scripts/StateMachine/crouch_state.gd" id="11_qfm1y"]
 [ext_resource type="Script" uid="uid://bjam2q4r8dwcf" path="res://scenes/weapons_manager.gd" id="12_3v2ag"]
+[ext_resource type="Script" uid="uid://b23ugk3mrfmt1" path="res://Scripts/StateMachine/run_state.gd" id="12_fulsm"]
+[ext_resource type="Script" uid="uid://d2recx0hfql57" path="res://Scripts/StateMachine/inair_state.gd" id="13_4r5pv"]
 [ext_resource type="Script" uid="uid://bwjf6rau8gocs" path="res://scenes/screen_overlay.gd" id="13_jej6c"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3v2ag"]
@@ -608,7 +613,10 @@ libraries/ = SubResource("AnimationLibrary_oprun")
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=374552710]
 replication_config = SubResource("SceneReplicationConfig_hn37q")
 
+[node name="CameraHolder" type="Node3D" parent="." unique_id=642830503]
+
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1853814499]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.51306, 0)
 
 [node name="Propulsion_shotgun" parent="Camera3D" unique_id=1602549375 instance=ExtResource("10_y4r1p")]
@@ -672,10 +680,25 @@ debug_shape_custom_color = Color(0, 0.57254905, 0, 1)
 [node name="StateMachine" type="Node" parent="." unique_id=1887064363 node_paths=PackedStringArray("initial_state")]
 unique_name_in_owner = true
 script = ExtResource("6_tuyoq")
-initial_state = NodePath("IdleState")
+initial_state = NodePath("JumpState")
+
+[node name="CrouchState" type="Node" parent="StateMachine" unique_id=1958051215]
+script = ExtResource("11_qfm1y")
 
 [node name="IdleState" type="Node" parent="StateMachine" unique_id=732515225]
 script = ExtResource("8_d2wvv")
+
+[node name="InairState" type="Node" parent="StateMachine" unique_id=1037845722]
+script = ExtResource("13_4r5pv")
+
+[node name="JumpState" type="Node" parent="StateMachine" unique_id=1930015094]
+script = ExtResource("10_a8ls1")
+
+[node name="RunState" type="Node" parent="StateMachine" unique_id=36696626]
+script = ExtResource("12_fulsm")
+
+[node name="WalkState" type="Node" parent="StateMachine" unique_id=105104002]
+script = ExtResource("9_3v2ag")
 
 [node name="HUD" type="Control" parent="." unique_id=886859724]
 layout_mode = 3
