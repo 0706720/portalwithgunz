@@ -4,13 +4,17 @@ extends Node
 @onready var pistolNode = ^"../Camera3D/Pistol"
 @onready var shotgunNode = ^"../Camera3D/Propulsion_shotgun"
 @onready var grappleNode = ^"../Camera3D/Grapple Hook"
+# non-initial weapon (sniper instance)
+@onready var sniperNode = ^"../Camera3D/M91"
 
 var weapons = ["Pistol", "Shotgun", "GrappleGun"]
 
 var paths = [
 	"res://scenes/models/Pistol.glb", 
 	"res://assets/images/Weapons/Shotgunz/spas12.FBX",
-	"res://assets/images/Weapons/Vacuum Cleanerz/vacuum3.fbx"]
+	"res://assets/images/Weapons/Vacuum Cleanerz/vacuum3.fbx",
+	"res://assets/images/Weapons/Sniperz/M91.fbx"
+	]
 
 var nodepaths = [^"../Camera3D/Pistol", ^"../Camera3D/Propulsion_shotgun", ^"../Camera3D/Grapple Hook"]
 
@@ -22,6 +26,7 @@ func _ready() -> void:
 func import_weapon(weaponname: String, nodepath: String):
 	weapons.append(weaponname)
 	nodepaths.append(nodepath)
+	#var scene = load("")
 	print('new weapons array: ' + str(weapons) + ' new nodepaths array: ' + str(nodepaths))
 	
 func print(weapon_index):
