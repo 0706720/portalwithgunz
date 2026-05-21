@@ -29,6 +29,9 @@ func applies(delta : float):
 	if play_char.is_on_floor():
 		if play_char.move_direction: transitioned.emit(self, play_char.walk_or_run)
 		else: transitioned.emit(self, "IdleState")
+	
+	if play_char.velocity.y < 0.0: transitioned.emit(self, "InairState")
+
 
 func input_management():
 	pass

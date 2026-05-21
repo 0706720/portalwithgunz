@@ -16,6 +16,7 @@
 [ext_resource type="Script" uid="uid://b23ugk3mrfmt1" path="res://Scripts/StateMachine/run_state.gd" id="12_fulsm"]
 [ext_resource type="Script" uid="uid://d2recx0hfql57" path="res://Scripts/StateMachine/inair_state.gd" id="13_4r5pv"]
 [ext_resource type="Script" uid="uid://bwjf6rau8gocs" path="res://scenes/screen_overlay.gd" id="13_jej6c"]
+[ext_resource type="Script" uid="uid://bfxl7ntayrnu2" path="res://scenes/spindash_state.gd" id="13_qfm1y"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3v2ag"]
 albedo_color = Color(1, 1, 0, 1)
@@ -696,6 +697,9 @@ script = ExtResource("10_a8ls1")
 
 [node name="RunState" type="Node" parent="StateMachine" unique_id=36696626]
 script = ExtResource("12_fulsm")
+
+[node name="SpindashState" type="Node" parent="StateMachine" unique_id=1804921026]
+script = ExtResource("13_qfm1y")
 
 [node name="WalkState" type="Node" parent="StateMachine" unique_id=105104002]
 script = ExtResource("9_3v2ag")

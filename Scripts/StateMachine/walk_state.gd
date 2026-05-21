@@ -27,10 +27,15 @@ func physics_update(delta : float):
 	move(delta)
 
 func applies(delta : float):
-	pass
+	if play_char.velocity.y < 0.0: transitioned.emit(self, "InairState")
 
 func input_management():
-	pass
+	if Input.is_action_just_pressed(play_char.jump_action):
+		print("jumped")
+		transitioned.emit(self, "JumpState")
+	
+	if Input.is_action_just_pressed(play_char.crouch_action):
+		transitioned.emit(self, "CrouchState")
 
 func move(delta : float):
 	play_char.input_direction = Input.get_vector(play_char.move_left_action, play_char.move_right_action, play_char.move_forward_action, play_char.move_backward_action)
