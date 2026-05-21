@@ -7,6 +7,21 @@ signal health_changed(health_value)
 
 var current_speed: float
 
+@export_group("Movement variables")
+var move_speed: float
+var move_accel: float
+var move_deccel: float
+var input_direction: Vector2
+var move_direction: Vector3
+var desired_move_speed: float
+@export var desired_move_speed_curve: Curve #accumulated speed
+@export var max_desired_move_speed: float = 30.0
+
+@export_group("Walk variables")
+@export var walk_speed: float = 9.0
+@export var walk_accel: float = 11.0
+@export var walk_deccel: float = 10.0
+
 @onready var weaponsManager = $weaponsManager
 @onready var camera = $Camera3D
 @onready var anim_player = $AnimationPlayer
@@ -28,8 +43,6 @@ var _using_crouch: bool = false
 var health = 99
 var spread = 10
 var knockback_force = 20.0
-var anim_playing = false
-
 
 #grapple hook
 @export var grapple_speed: float = 25.0
@@ -45,9 +58,6 @@ var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "mov
 #debug physics code V1
 var mouse_sensitivity = 0.002
 
-var input_direction: Vector2
-var move_direction: Vector3
-
 @onready var bulletSpawn = $Head/Camera3D/bulletSpawn
 var ammo : int = 5
 var player_health = 100
@@ -58,7 +68,6 @@ var canThrow = true
 @export var look_sensitivity : float = 0.006
 @export var auto_bhop := true
 
-@export var walk_speed := 7.0
 @export var sprint_speed := 8.5
 @export var ground_accel := 14.0
 @export var ground_deccel :=5.0
@@ -151,7 +160,7 @@ func build_default_keybinding() -> void:
 		move_backward_action : [Key.KEY_S, Key.KEY_DOWN],
 		move_left_action : [Key.KEY_A, Key.KEY_LEFT],
 		move_right_action : [Key.KEY_D, Key.KEY_RIGHT],
-		run_action : [Key.KEY_SHIFT],
+		run_action : [Key.KEY_CTRL],
 		crouch_action : [Key.KEY_C],
 		jump_action : [Key.KEY_SPACE],
 	}
@@ -218,18 +227,8 @@ func _unhandled_input(event):
 
 
 func _physics_process(delta):
-	var input_dir := Input.get_vector("left", "right", "up", "down").normalized()
-	movement_anim.play("Movement_animation")
-	wish_dir = self.global_transform.basis * Vector3(input_dir.x, 0., input_dir.y)
-	
-	
-	if input_dir != Vector2.ZERO:
-		if movement_anim.current_animation != "Movement_animation":
-			movement_anim.play("Movement_animation")
-	else:
-		if movement_anim.current_animation != "Idle":
-			movement_anim.play("Idle")
-		
+	#var input_dir := Input.get_vector("left", "right", "up", "down").normalized()
+	#wish_dir = self.global_transform.basis * Vector3(input_dir.x, 0., input_dir.y)
 		
 	if is_on_floor():
 		if Input.is_action_pressed("spin_dash") and !is_spin_rolling:

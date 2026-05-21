@@ -13,6 +13,7 @@ func enter(play_char_ref : CharacterBody3D):
 	verifications()
 	
 	print("Entered Idle")
+
 func verifications():
 	pass
 

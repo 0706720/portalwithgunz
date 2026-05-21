@@ -12,6 +12,9 @@ func enter(play_char_ref : CharacterBody3D):
 
 	verifications()
 
+	
+	verifications()
+	
 	print("Entered Run")
 func verifications():
 	pass
@@ -19,10 +22,17 @@ func verifications():
 func physics_update(delta : float):
 	applies(delta)
 
+
 	#play_char.gravity_apply(delta)
 
 	input_management()
 
+
+	
+	#play_char.gravity_apply(delta)
+	
+	input_management()
+	
 	move(delta)
 
 func applies(delta : float):
