@@ -13,6 +13,7 @@ func enter(play_char_ref : CharacterBody3D):
 	verifications()
 	
 	print("Entered Idle")
+
 func verifications():
 	pass
 
@@ -26,11 +27,10 @@ func physics_update(delta : float):
 	move(delta)
 
 func applies(delta : float):
-	pass
+	if play_char.velocity.y < 0.0: transitioned.emit(self, "InairState")
 
 func input_management():
 	if Input.is_action_just_pressed(play_char.jump_action):
-		print("jumped")
 		transitioned.emit(self, "JumpState")
 		
 	if Input.is_action_just_pressed(play_char.crouch_action):
@@ -39,7 +39,10 @@ func input_management():
 	if Input.is_action_just_pressed(play_char.run_action):
 		if play_char.walk_or_run == "WalkState": play_char.walk_or_run = "RunState"
 		elif play_char.walk_or_run == "RunState": play_char.walk_or_run = "WalkState"
-
+	
+	if play_char.is_on_floor():
+		if Input.is_action_just_pressed("spin_dash"):
+			transitioned.emit(self, "SpindashState")
 func move(delta : float):
 	#manage the character movement
 	
@@ -53,5 +56,4 @@ func move(delta : float):
 	
 	if play_char.move_direction and play_char.is_on_floor():
 		#transition to corresponding state
-		transitioned.emit(self, "WalkState")
-		print("Walking")
+		transitioned.emit(self, play_char.walk_or_run)
