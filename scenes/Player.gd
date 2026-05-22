@@ -204,9 +204,6 @@ func _unhandled_input(event):
 		rotate_y(-event.relative.x * .005)
 		camera.rotate_x(-event.relative.y * .005)
 		camera.rotation.x = clamp(camera.rotation.x, -PI/2, PI/2)
-		
-	if Input.is_action_just_pressed("crouch"):
-		toggle_crouch()
 	
 	if Input.is_action_just_pressed("shoot") \
 			and Global.currentWeapon == 'Pistol' \
@@ -356,10 +353,10 @@ func update_Rope():
 	rope.visible = true 
 	
 	
-	var dist =Player.global_position.distance_to(grapple_point)
+	#var dist =Player.global_position.distance_to(grapple_point)
 	
-	rope.look_at(grapple_point)
-	rope.scale = Vector3(1,1,dist)
+	#rope.look_at(grapple_point)
+	#rope.scale = Vector3(1,1,dist)
 func start_grapple():
 	raycast.global_transform = camera.global_transform
 	raycast.target_position = Vector3(0, 0, -max_grapple_distance)
@@ -524,25 +521,6 @@ func clip_velocity(normal: Vector3, overbounce : float, delta : float) -> void:
 	var adjust := self.velocity.dot(normal)
 	if adjust < 0.0:
 		self.velocity -= normal * adjust
-		
-func toggle_crouch():
-	if _is_crouching and !crouch_shapecast.is_colliding() and !_using_crouch:
-		#print("UNCROUCH")
-		# same as crouching, but the speed variable is * -1 to go backward. True makes it start from the end.
-		crouch_anim_player.play("Crouch", -1, -crouch_speed, true)
-	elif !_is_crouching and !_using_crouch:
-		#print("CROUCH")
-		crouch_anim_player.play("Crouch", -1, crouch_speed)
-
-func _on_crouch_animation_started(anim_name: StringName) -> void:
-	if anim_name == "Crouch":
-		_is_crouching = !_is_crouching
-		_using_crouch = true
-
-func _on_crouch_animation_finished(anim_name: StringName) -> void:
-	if anim_name == "Crouch":
-		_using_crouch = false
-
 
 func _on_spindash_animation_finished(anim_name: StringName) -> void:
 	pass # Replace with function body.
