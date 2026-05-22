@@ -20,7 +20,8 @@ var current_speed: float
 # crouch handlers
 @export var crouch_anim_player: AnimationPlayer
 @export var crouch_shapecast: Node3D
-@export_range(5, 10, 0.1) 
+@export_range(5, 10, 0.1)
+ 
 var crouch_speed : float = 4.0
 var _is_crouching: bool = false
 var _using_crouch: bool = false
@@ -346,7 +347,19 @@ func _physics_process(delta):
 	else:
 		apply_gravity(delta)
 
-
+func update_Rope():
+	if start_grapple():
+		rope.visible = false
+		return 
+	
+	
+	rope.visible = true 
+	
+	
+	var dist =Player.global_position.distance_to(grapple_point)
+	
+	rope.look_at(grapple_point)
+	rope.scale = Vector3(1,1,dist)
 func start_grapple():
 	raycast.global_transform = camera.global_transform
 	raycast.target_position = Vector3(0, 0, -max_grapple_distance)

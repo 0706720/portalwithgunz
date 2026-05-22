@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://cf1dcxwv6bvl3" path="res://scenes/models/Pistol.glb" id="2_4esil"]
 [ext_resource type="Texture2D" uid="uid://vwob30tkwej4" path="res://addons/kenney_particle_pack/star_06.png" id="3_27dhu"]
 [ext_resource type="Animation" uid="uid://c2y6nfvxis3xa" path="res://Scripts/Crouch.res" id="4_dqkch"]
+[ext_resource type="PackedScene" uid="uid://laqog3huoq3b" path="res://Rope.tscn" id="6_3v2ag"]
 [ext_resource type="Script" uid="uid://bo5enab2wen2s" path="res://Scripts/StateMachine/State_Machine.gd" id="6_tuyoq"]
 [ext_resource type="Script" uid="uid://vnpwjo05p8a2" path="res://Scripts/StateMachine/idle_state.gd" id="8_d2wvv"]
 [ext_resource type="Script" uid="uid://r8smofxec1bn" path="res://Scripts/StateMachine/walk_state.gd" id="9_3v2ag"]
@@ -565,8 +566,37 @@ collision_layer = 2
 script = ExtResource("1_2v3wm")
 crouch_anim_player = NodePath("CrouchAnimationPlayer")
 crouch_shapecast = NodePath("ShapeCast3D")
+crouch_speed = null
 grapple_speed = 500.0
 grapple_pull_strength = 500.0
+max_grapple_distance = null
+stop_distance = null
+rope_length = null
+JUMP_VELOCITY = null
+look_sensitivity = null
+auto_bhop = null
+walk_speed = null
+sprint_speed = null
+ground_accel = null
+ground_deccel = null
+ground_friction = null
+air_cap = null
+air_accel = null
+air_move_speed = null
+spin_charge_rate = null
+spin_max_power = null
+spin_min_release = null
+spin_friction = null
+spin_camera_tilt_amount = null
+spin_camera_tilt_speed = null
+move_forward_action = null
+move_backward_action = null
+move_left_action = null
+move_right_action = null
+run_action = null
+crouch_action = null
+jump_action = null
+check_on_ready_if_inputs_registered = null
 
 [node name="Player" type="Node3D" parent="." unique_id=444522863]
 transform = Transform3D(0.67, 0, 0, 0, 0.67, 0, 0, 0, 0.67, 0, 0, 0)
@@ -667,6 +697,10 @@ collision_mask = 2
 
 [node name="Grapple Hook" parent="Camera3D" unique_id=1356339492 instance=ExtResource("11_3v2ag")]
 transform = Transform3D(-1.3113417e-08, 0, -0.3, 0, 0.3, 0, 0.3, 0, -1.3113417e-08, 0, -0.431, -0.73)
+
+[node name="Rope" parent="Camera3D" unique_id=1275909854 instance=ExtResource("6_3v2ag")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.36858916, 0)
+visible = false
 
 [node name="CrouchAnimationPlayer" type="AnimationPlayer" parent="." unique_id=320549004]
 libraries/ = SubResource("AnimationLibrary_qlg0r")
