@@ -16,6 +16,8 @@ var move_direction: Vector3
 var desired_move_speed: float
 @export var desired_move_speed_curve: Curve #accumulated speed
 @export var max_desired_move_speed: float = 30.0
+@export var hit_ground_cooldown: float = 0.1 #amount of time the character keep his accumulated speed before losing it (while being on ground)
+var hit_ground_cooldown_ref: float
 
 @export_group("Walk variables")
 @export var walk_speed: float = 9.0
@@ -26,12 +28,12 @@ var desired_move_speed: float
 @onready var camera = %Camera3D
 @onready var anim_player = $AnimationPlayer
 @onready var movement_anim = $MovementAnimationPlayer
-@onready var muzzle_flash = $Camera3D/Pistol/MuzzleFlash
+@onready var muzzle_flash = $CameraHolder/Camera3D/Pistol/MuzzleFlash
 @onready var healthBar = $HUD/healthBar
-@onready var raycast = $CameraHolder/Camera3D/RayContainer
+@onready var raycast = $CameraHolder/Camera3D/RayContainer/RayCast3D
 @onready var ray_container = $Camera3D/RayContainer
 @onready var rope = Node3D
-@onready var ray = $CameraHolder/Camera3D/RayContainer/RayCast3D
+
 # crouch handlers
 @export var crouch_anim_player: AnimationPlayer
 @export var crouch_shapecast: Node3D
@@ -128,6 +130,9 @@ func _enter_tree():
 	set_multiplayer_authority(str(name).to_int())
 
 func _ready():
+	
+	hit_ground_cooldown_ref = hit_ground_cooldown
+	
 	weaponsManager.print(0)
 	if is_multiplayer_authority():
 		$Player/RightArm.hide()
@@ -273,6 +278,7 @@ func _physics_process(delta):
 
 
 	move_and_slide()
+	
 	if not is_multiplayer_authority(): return
 	
 	# Add the gravity.

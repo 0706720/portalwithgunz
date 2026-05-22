@@ -29,7 +29,11 @@ func physics_update(delta : float):
 	move(delta)
 
 func applies(delta : float):
-	if play_char.velocity.y < 0.0: transitioned.emit(self, "InairState")
+	if play_char.hit_ground_cooldown > 0.0: play_char.hit_ground_cooldown -= delta
+	
+	if !play_char.is_on_floor():
+		if play_char.velocity.y < 0.0: 
+			transitioned.emit(self, "InairState")
 
 func input_management():
 	if Input.is_action_just_pressed(play_char.crouch_action):
@@ -47,7 +51,7 @@ func move(delta : float):
 		play_char.velocity.x = lerp(play_char.velocity.x, play_char.move_direction.x * play_char.move_speed, play_char.move_accel * delta)
 		play_char.velocity.z = lerp(play_char.velocity.z, play_char.move_direction.z * play_char.move_speed, play_char.move_accel * delta)
 		
-		#if play_char.hit_ground_cooldown <= 0: play_char.desired_move_speed = play_char.velocity.length()
+		if play_char.hit_ground_cooldown <= 0: play_char.desired_move_speed = play_char.velocity.length()
 		
 	else:
 		transitioned.emit(self, "IdleState")
