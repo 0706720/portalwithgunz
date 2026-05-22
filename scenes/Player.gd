@@ -356,10 +356,7 @@ func update_Rope():
 	rope.visible = true 
 	
 	
-	var dist =Player.global_position.distance_to(grapple_point)
-	
-	rope.look_at(grapple_point)
-	rope.scale = Vector3(1,1,dist)
+
 func start_grapple():
 	raycast.global_transform = camera.global_transform
 	raycast.target_position = Vector3(0, 0, -max_grapple_distance)
