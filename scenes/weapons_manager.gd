@@ -1,9 +1,9 @@
 extends Node
 
 # .. is simply a reference to the parent node.
-@onready var pistolNode = ^"../Camera3D/Pistol"
-@onready var shotgunNode = ^"../Camera3D/Propulsion_shotgun"
-@onready var grappleNode = ^"../Camera3D/Grapple Hook"
+@onready var pistolNode = ^"../CameraHolder/Camera3D/Pistol"
+@onready var shotgunNode = ^"../CameraHolder/Camera3D/Propulsion_shotgun"
+@onready var grappleNode = ^"../CameraHolder/Camera3D/Grapple Hook"
 # non-initial weapon (sniper instance)
 @onready var sniperNode = ^"../Camera3D/M91"
 
@@ -16,7 +16,7 @@ var paths = [
 	"res://assets/images/Weapons/Sniperz/M91.fbx"
 	]
 
-var nodepaths = [^"../Camera3D/Pistol", ^"../Camera3D/Propulsion_shotgun", ^"../Camera3D/Grapple Hook"]
+var nodepaths = [^"../CameraHolder/Camera3D/Pistol", ^"../CameraHolder/Camera3D/Propulsion_shotgun", ^"../CameraHolder/Camera3D/Grapple Hook"]
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
