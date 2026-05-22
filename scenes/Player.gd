@@ -346,6 +346,7 @@ func _physics_process(delta):
 	else:
 		apply_gravity(delta)
 
+
 func start_grapple():
 	raycast.global_transform = camera.global_transform
 	raycast.target_position = Vector3(0, 0, -max_grapple_distance)
