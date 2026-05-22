@@ -33,7 +33,6 @@ func applies(delta : float):
 
 func input_management():
 	if Input.is_action_just_pressed(play_char.jump_action):
-		print("jumped")
 		transitioned.emit(self, "JumpState")
 	
 	if Input.is_action_just_pressed(play_char.crouch_action):

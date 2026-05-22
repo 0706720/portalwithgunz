@@ -12,6 +12,14 @@ func enter(play_char_ref : CharacterBody3D):
 	
 	verifications()
 	
+	if play_char._is_crouching and !play_char.crouch_shapecast.is_colliding() and !play_char._using_crouch:
+		#print("UNCROUCH")
+		# same as crouching, but the speed variable is * -1 to go backward. True makes it start from the end.
+		play_char.crouch_anim_player.play("Crouch", -1, -play_char.crouch_speed, true)
+	elif !play_char._is_crouching and !play_char._using_crouch:
+		#print("CROUCH")
+		play_char.crouch_anim_player.play("Crouch", -1, play_char.crouch_speed)
+		
 	print("Entered CrouchState")
 func verifications():
 	pass
@@ -35,4 +43,26 @@ func input_management():
 	pass
 
 func move(delta : float):
-	pass
+	play_char.input_direction = Input.get_vector(play_char.move_left_action, play_char.move_right_action, play_char.move_forward_action, play_char.move_backward_action)
+	play_char.move_direction = (play_char.cam_holder.global_basis * Vector3(play_char.input_direction.x, 0.0, play_char.input_direction.y)).normalized()
+	
+	play_char.desired_move_speed = clamp(play_char.desired_move_speed, 0.0, play_char.max_desired_move_speed)
+	
+	if play_char.move_direction and play_char.is_on_floor():
+		#apply smooth move
+		play_char.velocity.x = lerp(play_char.velocity.x, play_char.move_direction.x * play_char.crouch_speed, play_char.move_accel * delta)
+		play_char.velocity.z = lerp(play_char.velocity.z, play_char.move_direction.z * play_char.crouch_speed, play_char.move_accel * delta)
+		
+		#if play_char.hit_ground_cooldown <= 0: play_char.desired_move_speed = play_char.velocity.length()
+		
+	else:
+		transitioned.emit(self, "IdleState")
+
+func _on_crouch_animation_started(anim_name: StringName) -> void:
+	if anim_name == "Crouch":
+		play_char._is_crouching = !play_char._is_crouching
+		play_char._using_crouch = true
+
+func _on_crouch_animation_finished(anim_name: StringName) -> void:
+	if anim_name == "Crouch":
+		play_char._using_crouch = false
