@@ -32,9 +32,6 @@ func applies(delta : float):
 	if play_char.velocity.y < 0.0: transitioned.emit(self, "InairState")
 
 func input_management():
-	if Input.is_action_just_pressed(play_char.jump_action):
-		transitioned.emit(self, "JumpState")
-	
 	if Input.is_action_just_pressed(play_char.crouch_action):
 		transitioned.emit(self, "CrouchState")
 
