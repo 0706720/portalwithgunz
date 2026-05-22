@@ -16,7 +16,7 @@
 [ext_resource type="Script" uid="uid://b23ugk3mrfmt1" path="res://Scripts/StateMachine/run_state.gd" id="12_fulsm"]
 [ext_resource type="Script" uid="uid://d2recx0hfql57" path="res://Scripts/StateMachine/inair_state.gd" id="13_4r5pv"]
 [ext_resource type="Script" uid="uid://bwjf6rau8gocs" path="res://scenes/screen_overlay.gd" id="13_jej6c"]
-[ext_resource type="Script" uid="uid://bfxl7ntayrnu2" path="res://scenes/spindash_state.gd" id="13_qfm1y"]
+[ext_resource type="Script" path="res://scenes/spindash_state.gd" id="13_qfm1y"]
 
 [sub_resource type="Curve" id="Curve_qfm1y"]
 _limits = [0.0, 30.0, 0.0, 60.0]
@@ -858,5 +858,5 @@ layout_mode = 2
 text = "..................."
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
-[connection signal="animation_finished" from="CrouchAnimationPlayer" to="." method="_on_crouch_animation_finished"]
-[connection signal="animation_started" from="CrouchAnimationPlayer" to="." method="_on_crouch_animation_started"]
+[connection signal="animation_finished" from="CrouchAnimationPlayer" to="StateMachine/CrouchState" method="_on_crouch_animation_player_animation_finished"]
+[connection signal="animation_started" from="CrouchAnimationPlayer" to="StateMachine/CrouchState" method="_on_crouch_animation_player_animation_started"]
