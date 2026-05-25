@@ -47,35 +47,6 @@ mesh = SubResource("BoxMesh_xmqjy")
 
 [node name="Player" parent="Items(Interactable)" unique_id=820130408 instance=ExtResource("1_fasvf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.745, 3.8103828, 44.15152)
-walk_speed = 9.0
-crouch_speed = 4.0
-max_grapple_distance = 50.0
-stop_distance = 2.0
-rope_length = 0.0
-JUMP_VELOCITY = 10.0
-look_sensitivity = 0.006
-auto_bhop = true
-sprint_speed = 8.5
-ground_accel = 14.0
-ground_deccel = 5.0
-ground_friction = 5.0
-air_cap = 0.85
-air_accel = 800.0
-air_move_speed = 500.0
-spin_charge_rate = 25.0
-spin_max_power = 50.0
-spin_min_release = 10.0
-spin_friction = 20.0
-spin_camera_tilt_amount = 360.0
-spin_camera_tilt_speed = 200.0
-move_forward_action = &"play_char_move_forward_action"
-move_backward_action = &"play_char_move_backward_action"
-move_left_action = &"play_char_move_left_ation"
-move_right_action = &"play_char_move_right_action"
-run_action = &"play_char_run_action"
-crouch_action = &"play_char_crouch_action"
-jump_action = &"play_char_jump_action"
-check_on_ready_if_inputs_registered = true
 
 [node name="MovingPlatform" parent="Items(Interactable)" unique_id=1220480673 instance=ExtResource("2_xmqjy")]
 transform = Transform3D(3, 0, 0, 0, 1, 0, 0, 0, 3, -35, 0, 35)

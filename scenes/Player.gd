@@ -84,6 +84,7 @@ var headbob_time := 0.0
 @export var air_accel := 800.0
 @export var air_move_speed := 500.0
 
+#spindash variables
 var wish_dir := Vector3.ZERO
 @export var spin_charge_rate := 25.0
 @export var spin_max_power := 50.0
@@ -230,9 +231,10 @@ func _unhandled_input(event):
 
 
 func _physics_process(delta):
-	#var input_dir := Input.get_vector("left", "right", "up", "down").normalized()
-	#wish_dir = self.global_transform.basis * Vector3(input_dir.x, 0., input_dir.y)
-		
+	var input_dir := Input.get_vector("left", "right", "up", "down").normalized()
+	wish_dir = self.global_transform.basis * Vector3(input_dir.x, 0., input_dir.y)
+
+#spindash
 	if is_on_floor():
 		if Input.is_action_pressed("spin_dash") and !is_spin_rolling:
 			is_charging_spin = true
@@ -264,7 +266,7 @@ func _physics_process(delta):
 
 		if speed < walk_speed:
 			is_spin_rolling = false
-# Camera tilt while spinning
+#Camera tilt while spinning
 	var target_tilt = 0.0
 
 	if is_spin_rolling == true:
@@ -272,7 +274,7 @@ func _physics_process(delta):
 		current_camera_tilt = lerp(current_camera_tilt, target_tilt, spin_camera_tilt_speed * delta)
 		camera.rotation.x = current_camera_tilt
 		var current_camera_tilt := 0.0
-
+#end spindash
 
 	move_and_slide()
 	
@@ -508,11 +510,3 @@ func clip_velocity(normal: Vector3, overbounce : float, delta : float) -> void:
 	var adjust := self.velocity.dot(normal)
 	if adjust < 0.0:
 		self.velocity -= normal * adjust
-
-func _on_spindash_animation_finished(anim_name: StringName) -> void:
-	pass # Replace with function body.
-
-
-func _on_spindash_animation_started(anim_name: StringName) -> void:
-	pass # Replace with function body.
-	
