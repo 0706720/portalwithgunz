@@ -13,6 +13,9 @@ var spin_charge := 0.0
 var is_charging_spin := false
 var is_spin_rolling := false
 var spin_direction := Vector3.ZERO
+@export var spin_camera_tilt_amount := 360.0   
+@export var spin_camera_tilt_speed := 200.0
+var current_camera_tilt := 0.0
 
 func enter(play_char_ref : CharacterBody3D):
 	#pass the play char refrence 
@@ -70,3 +73,11 @@ func move(delta : float):
 			print(is_spin_rolling)
 		if speed < 1:
 			is_spin_rolling = false
+
+
+# Camera tilt while spinning
+	#var target_tilt = 0.0
+	#if is_spin_rolling == true:
+		#target_tilt = spin_camera_tilt_amount
+		#current_camera_tilt = lerp(current_camera_tilt, target_tilt, spin_camera_tilt_speed * delta)
+		#play_char.camera.rotation.x = current_camera_tilt
