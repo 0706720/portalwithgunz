@@ -233,49 +233,12 @@ func _unhandled_input(event):
 func _physics_process(delta):
 	var input_dir := Input.get_vector("left", "right", "up", "down").normalized()
 	wish_dir = self.global_transform.basis * Vector3(input_dir.x, 0., input_dir.y)
-
-#spindash
+	
 	if is_on_floor():
-		if Input.is_action_pressed("spin_dash") and !is_spin_rolling:
-			is_charging_spin = true
-			spin_direction = -global_transform.basis.z.normalized()
-			spin_charge += spin_charge_rate * delta
-			spin_charge = clamp(spin_charge, 0.0, spin_max_power)
-
-		if is_charging_spin and Input.is_action_just_released("spin_dash"):
-			if spin_charge > spin_min_release:
-				velocity = spin_direction * spin_charge
-				is_spin_rolling = true
-			spin_charge = 0.0
-			is_charging_spin = false
-
-		if !is_charging_spin and !is_spin_rolling:
-			_handle_ground_physics(delta)
+		_handle_ground_physics(delta)
 	else:
 		_handle_air_physics(delta)
-	if is_spin_rolling:
-		var horizontal_vel = Vector3(velocity.x, 0, velocity.z)
-		var speed = horizontal_vel.length()
-
-		if speed > 0:
-			speed = move_toward(speed, 0.0, spin_friction * delta)
-			horizontal_vel = horizontal_vel.normalized() * speed
-			velocity.x = horizontal_vel.x
-			velocity.z = horizontal_vel.z
-			print(is_spin_rolling)
-
-		if speed < walk_speed:
-			is_spin_rolling = false
-#Camera tilt while spinning
-	var target_tilt = 0.0
-
-	if is_spin_rolling == true:
-		target_tilt = spin_camera_tilt_amount
-		current_camera_tilt = lerp(current_camera_tilt, target_tilt, spin_camera_tilt_speed * delta)
-		camera.rotation.x = current_camera_tilt
-		var current_camera_tilt := 0.0
-#end spindash
-
+	
 	move_and_slide()
 	
 	if not is_multiplayer_authority(): return
