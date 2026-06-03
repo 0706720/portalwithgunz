@@ -48,15 +48,15 @@ mesh = SubResource("BoxMesh_xmqjy")
 [node name="Player" parent="Items(Interactable)" unique_id=820130408 instance=ExtResource("1_fasvf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.745, 3.8103828, 44.15152)
 
-[node name="MovingPlatform" parent="Items(Interactable)" unique_id=1220480673 instance=ExtResource("2_xmqjy")]
+[node name="MovingPlatform(Elevator)1" parent="Items(Interactable)" unique_id=1220480673 instance=ExtResource("2_xmqjy")]
 transform = Transform3D(3, 0, 0, 0, 1, 0, 0, 0, 3, -35, 0, 35)
 a = Vector3(-35, 48, 35)
 b = Vector3(-35, 48, 35)
 time = 30.0
 pause = 0.7
 
-[node name="MovingPlatform2" parent="Items(Interactable)" unique_id=224005684 instance=ExtResource("2_xmqjy")]
-transform = Transform3D(3, 0, 0, 0, 50, 0, 0, 0, 1, -35, 60, 20)
+[node name="MovingPlatform(Door)1" parent="Items(Interactable)" unique_id=224005684 instance=ExtResource("2_xmqjy")]
+transform = Transform3D(3, 0, 0, 0, 50, 0, 0, 0, 0.1, -35, 60, 20)
 a = Vector3(-35, 60, 20)
 b = Vector3(-35, 80, 20)
 time = 5.0
