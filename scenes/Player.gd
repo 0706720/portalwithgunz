@@ -125,7 +125,6 @@ const LOOK_SPEED = 5 # Adjust as needed for controller comfort
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = 9.8
-
 func _enter_tree():
 	print(name)
 	set_multiplayer_authority(str(name).to_int())
@@ -169,7 +168,7 @@ func build_default_keybinding() -> void:
 		move_right_action : [Key.KEY_D, Key.KEY_RIGHT],
 		run_action : [Key.KEY_CTRL],
 		crouch_action : [Key.KEY_C],
-		jump_action : [Key.KEY_SPACE],
+	jump_action : [Key.KEY_SPACE],
 	}
 	
 func input_actions_check() -> void:
@@ -184,7 +183,7 @@ func input_actions_check() -> void:
 		for input_action in input_actions_list:
 			if input_action == &"":
 				assert(false, "There's an undefined input action")
-				
+			
 			if not registered_input_actions.has(input_action):
 				var key_names = default_input_actions[input_action].map(func(key):
 					return OS.get_keycode_string(key)
