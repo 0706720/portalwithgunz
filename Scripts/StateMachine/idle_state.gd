@@ -20,7 +20,7 @@ func verifications():
 func physics_update(delta : float):
 	applies(delta)
 	
-	#play_char.gravity_apply(delta)
+	play_char.gravity_apply(delta)
 	
 	input_management()
 	
