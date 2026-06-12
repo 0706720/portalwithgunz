@@ -17,11 +17,11 @@ func enter(play_char_ref : CharacterBody3D):
 
 func crouchCheck():
 	if play_char._is_crouching and !play_char.crouch_shapecast.is_colliding() and !play_char._using_crouch:
-		#print("UNCROUCH")
+		# if crouch var is true, there are no obstruction above player, and crouch animation isn't running, the uncrouch.
 		# same as crouching, but the speed variable is * -1 to go backward. True makes it start from the end.
 		play_char.crouch_anim_player.play("Crouch", -1, -play_char.crouch_speed, true)
 	elif !play_char._is_crouching and !play_char._using_crouch and play_char.is_on_floor():
-		#print("CROUCH")
+		# if crouch var is false, crouch animation isn't running, and player is on floor, crouch.
 		play_char.crouch_anim_player.play("Crouch", -1, play_char.crouch_speed)
 		
 	print("Entered CrouchState")
@@ -65,10 +65,13 @@ func move(delta : float):
 
 func _on_crouch_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "Crouch":
+		# tell system that crouch animation is not being used (prevents overlapping animations)
 		play_char._using_crouch = false
 
 
 func _on_crouch_animation_player_animation_started(anim_name: StringName) -> void:
 	if anim_name == "Crouch":
+		# tell system player is currently crouching or uncrouching, based on what the boolean was prior.
 		play_char._is_crouching = !play_char._is_crouching
+		# tell system that crouch animation is being used (prevents overlapping animations)
 		play_char._using_crouch = true
