@@ -20,11 +20,16 @@ var desired_move_speed: float
 @export var hit_ground_cooldown: float = 0.1 #amount of time the character keep his accumulated speed before losing it (while being on ground)
 var hit_ground_cooldown_ref: float
 
-#Walk Variables
+@export_group("Air variables")
+var air_speed: float = 500
+var air_accel: float = 800
+var air_deccel: float = 0
+var air_cap: float = 0.85
+
 @export_group("Walk variables")
-@export var walk_speed: float = 9.0
-@export var walk_accel: float = 11.0
-@export var walk_deccel: float = 10.0
+var walk_speed: float = 9.0
+var walk_accel: float = 11.0
+var walk_deccel: float = 10.0
 
 #Objects
 @onready var weaponsManager = $weaponsManager
@@ -80,12 +85,13 @@ var canThrow = true
 const HEADBOB_MOVE_AMOUNT = 0.06
 const HEADBOB_FREQUENCY = 2.4 
 var headbob_time := 0.0
-@export var air_cap := 0.85
-@export var air_accel := 800.0
-@export var air_move_speed := 500.0
+
+#@export var air_cap := 0.85
+#@export var air_accel := 800.0
+#@export var air_move_speed := 500.0
 
 #spindash variables
-var wish_dir := Vector3.ZERO
+@export var wish_dir := Vector3.ZERO
 @export var spin_charge_rate := 25.0
 @export var spin_max_power := 50.0
 @export var spin_min_release := 10.0
@@ -119,9 +125,7 @@ var default_input_actions : Dictionary
 #const JUMP_VELOCITY = 10.0
 const LOOK_SPEED = 5 # Adjust as needed for controller comfort
 # Get the gravity from the project settings to be synced with RigidBody nodes.
-var gravity = 9.8
-
-
+var gravity = 19.6
 func _enter_tree():
 	print(name)
 	set_multiplayer_authority(str(name).to_int())
@@ -238,10 +242,6 @@ func _physics_process(delta):
 		_handle_air_physics(delta)
 	move_and_slide()
 	if not is_multiplayer_authority(): return
-	
-	# Add the gravity.
-	if not is_on_floor():
-		velocity.y -= gravity * delta
 
 	# --- New: Handle Camera Look (Right Stick) ---
 	# Get the controller stick input (Horizontal and Vertical)
@@ -291,10 +291,10 @@ func _physics_process(delta):
 	
 	if is_grappling:
 		process_grapple(delta)
-	else:
-		apply_gravity(delta)
 
-#GRAPPLE
+func gravity_apply(delta):
+	self.velocity.y -= gravity * delta
+
 func start_grapple():
 	raycast.global_transform = camera.global_transform
 	raycast.target_position = Vector3(0, 0, -max_grapple_distance)
@@ -334,12 +334,6 @@ func stop_grapple():
 	is_grappling = false
 	velocity *= 1.2
 
-
-func apply_gravity(delta):
-	if not is_on_floor():
-		velocity.y -= 9.8 * delta
-
-#Animations
 @rpc("call_local")
 func play_shoot_effects():
 	anim_player.stop()
@@ -365,7 +359,6 @@ func get_move_speed():
 	else:
 		return walk_speed
 
-
 func _handle_ground_physics(delta):
 	# simmilar to the air movement. Acceleration and friction on ground.
 	var cur_speed_in_wish_dir = self.velocity.dot(wish_dir)
@@ -390,16 +383,6 @@ func is_surface_too_steep(normal : Vector3) -> bool:
 	return false
 
 func _handle_air_physics(delta):
-	self.velocity.y -= ProjectSettings.get_setting("physics/3d/default_gravity") * delta
-	
-	var cur_speed_in_wish_dir = self.velocity.dot(wish_dir)
-	var capped_speed = min((air_move_speed * wish_dir).length(), air_cap)
-	var add_speed_till_cap = capped_speed - cur_speed_in_wish_dir
-	if add_speed_till_cap > 0:
-		var accel_speed = air_accel * air_move_speed * delta
-		accel_speed = min(accel_speed, add_speed_till_cap)
-		self.velocity += accel_speed * wish_dir
-	
 	if is_on_wall():
 		if is_surface_too_steep(get_wall_normal()):
 			self.motion_mode = CharacterBody3D.MOTION_MODE_FLOATING

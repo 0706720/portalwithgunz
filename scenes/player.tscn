@@ -808,7 +808,11 @@ text = "Current state: "
 
 [node name="VelocityLabel" type="Label" parent="Screen overlay/MarginContainer/PanelContainer/BoxContainer/VBoxContainer" unique_id=801373467]
 layout_mode = 2
-text = "Velocity Label: "
+text = "Velocity: "
+
+[node name="AirSpeedLabel" type="Label" parent="Screen overlay/MarginContainer/PanelContainer/BoxContainer/VBoxContainer" unique_id=40942030]
+layout_mode = 2
+text = "Air speed:"
 
 [node name="HSeparator" type="HSeparator" parent="Screen overlay/MarginContainer/PanelContainer/BoxContainer/VBoxContainer" unique_id=709748240]
 layout_mode = 2
@@ -832,6 +836,11 @@ layout_mode = 2
 text = "..................."
 
 [node name="VelocityLabelText" type="Label" parent="Screen overlay/MarginContainer/PanelContainer/BoxContainer/VBoxContainer2" unique_id=2087101603]
+unique_name_in_owner = true
+layout_mode = 2
+text = "..................."
+
+[node name="AirSpeedLabelText" type="Label" parent="Screen overlay/MarginContainer/PanelContainer/BoxContainer/VBoxContainer2" unique_id=1483527906]
 unique_name_in_owner = true
 layout_mode = 2
 text = "..................."

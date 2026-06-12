@@ -163,4 +163,4 @@ weapon5={
 
 [physics]
 
-3d/default_gravity=12.0
+3d/default_gravity=20.0
