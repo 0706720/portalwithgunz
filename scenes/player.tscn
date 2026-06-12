@@ -10,7 +10,7 @@
 [ext_resource type="Script" uid="uid://r8smofxec1bn" path="res://Scripts/StateMachine/walk_state.gd" id="9_3v2ag"]
 [ext_resource type="PackedScene" uid="uid://bg1xha1x7mh6l" path="res://propulsion_shotgun.tscn" id="10_y4r1p"]
 [ext_resource type="PackedScene" uid="uid://d4i7nb1k36bs3" path="res://Grapplehook.tscn" id="11_3v2ag"]
-[ext_resource type="Script" path="res://scenes/hud.gd" id="11_d2wvv"]
+[ext_resource type="Script" uid="uid://c8bg3xqpf178p" path="res://scenes/hud.gd" id="11_d2wvv"]
 [ext_resource type="Script" uid="uid://cmnednq1yfuee" path="res://Scripts/StateMachine/crouch_state.gd" id="11_qfm1y"]
 [ext_resource type="Script" uid="uid://bjam2q4r8dwcf" path="res://scenes/weapons_manager.gd" id="12_3v2ag"]
 [ext_resource type="Script" uid="uid://b23ugk3mrfmt1" path="res://Scripts/StateMachine/run_state.gd" id="12_fulsm"]
@@ -630,9 +630,11 @@ unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.51306, 0)
 
 [node name="Propulsion_shotgun" parent="CameraHolder/Camera3D" unique_id=1602549375 instance=ExtResource("10_y4r1p")]
+unique_name_in_owner = true
 transform = Transform3D(-1.5, 0, -1.3113416e-07, 0, 1.5, 0, 1.3113416e-07, 0, -1.5, -0.5, -0.35, -0.7)
 
 [node name="Pistol" parent="CameraHolder/Camera3D" unique_id=945160158 instance=ExtResource("2_4esil")]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, -0.25, -0.5)
 
 [node name="MuzzleFlash" type="GPUParticles3D" parent="CameraHolder/Camera3D/Pistol" unique_id=215553547]
@@ -676,6 +678,7 @@ target_position = Vector3(0, 0, -50)
 collision_mask = 2
 
 [node name="Grapple Hook" parent="CameraHolder/Camera3D" unique_id=1356339492 instance=ExtResource("11_3v2ag")]
+unique_name_in_owner = true
 transform = Transform3D(-1.3113417e-08, 0, -0.3, 0, 0.3, 0, 0.3, 0, -1.3113417e-08, 0, -0.431, -0.73)
 
 [node name="Rope" parent="CameraHolder/Camera3D" unique_id=1275909854 instance=ExtResource("6_3v2ag")]

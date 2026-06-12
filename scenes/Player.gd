@@ -41,6 +41,7 @@ var hit_ground_cooldown_ref: float
 @export var crouch_anim_player: AnimationPlayer
 @export var crouch_shapecast: Node3D
 @export_range(5, 10, 0.1)
+# crouch_speed is utilised for animation playback, and the booleans ensure the animation is uninterrupted.
 var crouch_speed : float = 4.0
 var _is_crouching: bool = false
 var _using_crouch: bool = false
@@ -128,6 +129,7 @@ func _enter_tree():
 func _ready():
 	hit_ground_cooldown_ref = hit_ground_cooldown
 	
+	# access the weapons manager script, and call the print function to set the current weapon to pistol
 	weaponsManager.print(0)
 	if is_multiplayer_authority():
 		$Player/RightArm.hide()
@@ -146,8 +148,8 @@ func _ready():
 	# ensure collision check ignores player collision shape
 	crouch_shapecast.add_exception($".")
 	# initialise hp for healthbar
-	# call damage to initialise healthbar, initialise max hp
 	healthBar.max_value = health
+	# call damage to initialise healthbar, initialise max hp
 	receive_damage(0)
 	randomize()
 	
@@ -268,6 +270,7 @@ func _physics_process(delta):
 		start_grapple()
 		print("Grapple")
 	
+	# the 'weapon' checks are just keybinds 1-5 bind to the weapon types. Each call the weapons manager script, and swap out current for new weapon.
 	if Input.is_action_just_pressed("weapon1"):
 		weaponsManager.print(0)
 		

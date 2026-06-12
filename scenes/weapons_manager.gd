@@ -16,13 +16,13 @@ var paths = [
 	"res://assets/images/Weapons/Sniperz/M91.fbx"
 	]
 
-var nodepaths = [^"../CameraHolder/Camera3D/Pistol", ^"../CameraHolder/Camera3D/Propulsion_shotgun", ^"../CameraHolder/Camera3D/Grapple Hook"]
+var nodepaths = ["%Pistol", "%Propulsion_shotgun", "%Grapple Hook"]
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	print(weapons[0])
 
-# this should automate new weapons being added.
+# this should automate new weapons being added, using unique node name and name of weapon.
 func import_weapon(weaponname: String, nodepath: String):
 	weapons.append(weaponname)
 	nodepaths.append(nodepath)
@@ -41,11 +41,14 @@ func print(weapon_index):
 		
 		var nodeReference = nodepaths[weapon_index]
 		weaponInstance = get_node(nodeReference)
+		# make desired weapon visible and move to right of camera
 		weaponInstance.visible = true
 		weaponInstance.position = Vector3(0.5, -0.25, -0.5)
+		# update global weapon name for player script firing checks (you shouldn't be able to fire a weapon you're not using)
 		Global.currentWeapon = weapons[weapon_index]
 		print(Global.currentWeapon)
 	else:
+		# if weapon not in arrays is requested using number keys
 		print('weapon index fetch unsuccessful')
 		
 func _process(delta: float) -> void:
