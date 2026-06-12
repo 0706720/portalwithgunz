@@ -84,6 +84,7 @@ var headbob_time := 0.0
 @export var air_accel := 800.0
 @export var air_move_speed := 500.0
 
+#spindash variables
 var wish_dir := Vector3.ZERO
 @export var spin_charge_rate := 25.0
 @export var spin_max_power := 50.0
@@ -124,7 +125,6 @@ const LOOK_SPEED = 5 # Adjust as needed for controller comfort
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = 9.8
-
 func _enter_tree():
 	print(name)
 	set_multiplayer_authority(str(name).to_int())
@@ -168,7 +168,7 @@ func build_default_keybinding() -> void:
 		move_right_action : [Key.KEY_D, Key.KEY_RIGHT],
 		run_action : [Key.KEY_CTRL],
 		crouch_action : [Key.KEY_C],
-		jump_action : [Key.KEY_SPACE],
+	jump_action : [Key.KEY_SPACE],
 	}
 	
 func input_actions_check() -> void:
@@ -183,7 +183,7 @@ func input_actions_check() -> void:
 		for input_action in input_actions_list:
 			if input_action == &"":
 				assert(false, "There's an undefined input action")
-				
+			
 			if not registered_input_actions.has(input_action):
 				var key_names = default_input_actions[input_action].map(func(key):
 					return OS.get_keycode_string(key)
@@ -230,50 +230,14 @@ func _unhandled_input(event):
 
 
 func _physics_process(delta):
-	#var input_dir := Input.get_vector("left", "right", "up", "down").normalized()
-	#wish_dir = self.global_transform.basis * Vector3(input_dir.x, 0., input_dir.y)
-		
+	var input_dir := Input.get_vector("left", "right", "up", "down").normalized()
+	wish_dir = self.global_transform.basis * Vector3(input_dir.x, 0., input_dir.y)
+	
 	if is_on_floor():
-		if Input.is_action_pressed("spin_dash") and !is_spin_rolling:
-			is_charging_spin = true
-			spin_direction = -global_transform.basis.z.normalized()
-			spin_charge += spin_charge_rate * delta
-			spin_charge = clamp(spin_charge, 0.0, spin_max_power)
-
-		if is_charging_spin and Input.is_action_just_released("spin_dash"):
-			if spin_charge > spin_min_release:
-				velocity = spin_direction * spin_charge
-				is_spin_rolling = true
-			spin_charge = 0.0
-			is_charging_spin = false
-
-		if !is_charging_spin and !is_spin_rolling:
-			_handle_ground_physics(delta)
+		_handle_ground_physics(delta)
 	else:
 		_handle_air_physics(delta)
-	if is_spin_rolling:
-		var horizontal_vel = Vector3(velocity.x, 0, velocity.z)
-		var speed = horizontal_vel.length()
-
-		if speed > 0:
-			speed = move_toward(speed, 0.0, spin_friction * delta)
-			horizontal_vel = horizontal_vel.normalized() * speed
-			velocity.x = horizontal_vel.x
-			velocity.z = horizontal_vel.z
-			print(is_spin_rolling)
-
-		if speed < walk_speed:
-			is_spin_rolling = false
-# Camera tilt while spinning
-	var target_tilt = 0.0
-
-	if is_spin_rolling == true:
-		target_tilt = spin_camera_tilt_amount
-		current_camera_tilt = lerp(current_camera_tilt, target_tilt, spin_camera_tilt_speed * delta)
-		camera.rotation.x = current_camera_tilt
-		var current_camera_tilt := 0.0
-
-
+	
 	move_and_slide()
 	
 	if not is_multiplayer_authority(): return
@@ -508,11 +472,3 @@ func clip_velocity(normal: Vector3, overbounce : float, delta : float) -> void:
 	var adjust := self.velocity.dot(normal)
 	if adjust < 0.0:
 		self.velocity -= normal * adjust
-
-func _on_spindash_animation_finished(anim_name: StringName) -> void:
-	pass # Replace with function body.
-
-
-func _on_spindash_animation_started(anim_name: StringName) -> void:
-	pass # Replace with function body.
-	
