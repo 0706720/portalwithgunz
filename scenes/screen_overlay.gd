@@ -11,6 +11,7 @@ class_name HUD
 @onready var frames_per_second_label_text: Label = %FramesPerSecondLabelText
 @onready var current_state_label_text: Label = %CurrentStateLabelText
 @onready var velocity_label_text: Label = %VelocityLabelText
+@onready var Air_speed_label_text: Label = %AirSpeedLabelText
 
 func _process(_delta : float) -> void:
 	display_current_FPS()
@@ -22,6 +23,7 @@ func display_properties() -> void:
 	desired_move_speed_label_text.set_text(str(round_to_3_decimals(play_char.desired_move_speed)))
 	is_on_floor_label_text.set_text(str(play_char.is_on_floor()))
 	velocity_label_text.set_text(str(round_to_3_decimals(play_char.velocity.length())))
+	Air_speed_label_text.set_text(str(round_to_3_decimals(play_char.move_speed)))
 
 func display_current_FPS() -> void:
 	frames_per_second_label_text.set_text(str(Engine.get_frames_per_second()))

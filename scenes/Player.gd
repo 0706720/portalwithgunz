@@ -7,6 +7,7 @@ signal health_changed(health_value)
 
 var current_speed: float
 
+#Movement Variables
 @export_group("Movement variables")
 var move_speed: float
 var move_accel: float
@@ -19,11 +20,18 @@ var desired_move_speed: float
 @export var hit_ground_cooldown: float = 0.1 #amount of time the character keep his accumulated speed before losing it (while being on ground)
 var hit_ground_cooldown_ref: float
 
-@export_group("Walk variables")
-@export var walk_speed: float = 9.0
-@export var walk_accel: float = 11.0
-@export var walk_deccel: float = 10.0
+@export_group("Air variables")
+var air_speed: float = 500
+var air_accel: float = 800
+var air_deccel: float = 0
+var air_cap: float = 0.85
 
+@export_group("Walk variables")
+var walk_speed: float = 9.0
+var walk_accel: float = 11.0
+var walk_deccel: float = 10.0
+
+#Objects
 @onready var weaponsManager = $weaponsManager
 @onready var camera = %Camera3D
 @onready var anim_player = $AnimationPlayer
@@ -38,11 +46,12 @@ var hit_ground_cooldown_ref: float
 @export var crouch_anim_player: AnimationPlayer
 @export var crouch_shapecast: Node3D
 @export_range(5, 10, 0.1)
- 
+# crouch_speed is utilised for animation playback, and the booleans ensure the animation is uninterrupted.
 var crouch_speed : float = 4.0
 var _is_crouching: bool = false
 var _using_crouch: bool = false
 
+#Other
 var health = 99
 var spread = 10
 var knockback_force = 20.0
@@ -53,7 +62,6 @@ var knockback_force = 20.0
 @export var grapple_pull_strength: float = 40.0
 @export var max_grapple_distance: float = 50.0
 @export var stop_distance: float = 2.0
-
 var is_grappling: bool = false
 var grapple_point: Vector3
 @export var rope_length = 0.0
@@ -61,51 +69,46 @@ var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "mov
 
 #debug physics code V1
 var mouse_sensitivity = 0.002
-
 @onready var bulletSpawn = $Head/Camera3D/bulletSpawn
 var ammo : int = 5
 var player_health = 100
 var canThrow = true
 @onready var my_label = $Label
-
 @export var look_sensitivity : float = 0.006
 @export var auto_bhop := true
 
+#Physics
 @export var sprint_speed := 8.5
 @export var ground_accel := 14.0
 @export var ground_deccel :=5.0
 @export var ground_friction := 5.0
-
 const HEADBOB_MOVE_AMOUNT = 0.06
 const HEADBOB_FREQUENCY = 2.4 
 var headbob_time := 0.0
 
-@export var air_cap := 0.85
-@export var air_accel := 800.0
-@export var air_move_speed := 500.0
+#@export var air_cap := 0.85
+#@export var air_accel := 800.0
+#@export var air_move_speed := 500.0
 
 #spindash variables
-var wish_dir := Vector3.ZERO
+@export var wish_dir := Vector3.ZERO
 @export var spin_charge_rate := 25.0
 @export var spin_max_power := 50.0
 @export var spin_min_release := 10.0
 @export var spin_friction := 20.0
-
 var spin_charge := 0.0
 var is_charging_spin := false
 var is_spin_rolling := false
 var spin_direction := Vector3.ZERO
-
 @export var spin_camera_tilt_amount := 360.0   
 @export var spin_camera_tilt_speed := 200.0
 var current_camera_tilt := 0.0
 
+#State Machine
 @onready var state_machine: StateMachine = %StateMachine
 @onready var cam_holder = %CameraHolder
-
 var walk_or_run: String = "WalkState" #keep in memory if play char was walking or running before being in the air
 #for states that require visible changes of the model
-
 @export_group("Keybind variables")
 @export var move_forward_action: StringName = "play_char_move_forward_action"
 @export var move_backward_action: StringName = "play_char_move_backward_action"
@@ -118,21 +121,19 @@ var walk_or_run: String = "WalkState" #keep in memory if play char was walking o
 run_action, crouch_action, jump_action]
 @export var check_on_ready_if_inputs_registered : bool = true
 var default_input_actions : Dictionary
-
 #const SPEED = 10.0
 #const JUMP_VELOCITY = 10.0
 const LOOK_SPEED = 5 # Adjust as needed for controller comfort
-
 # Get the gravity from the project settings to be synced with RigidBody nodes.
-var gravity = 9.8
+var gravity = 19.6
 func _enter_tree():
 	print(name)
 	set_multiplayer_authority(str(name).to_int())
 
 func _ready():
-	
 	hit_ground_cooldown_ref = hit_ground_cooldown
 	
+	# access the weapons manager script, and call the print function to set the current weapon to pistol
 	weaponsManager.print(0)
 	if is_multiplayer_authority():
 		$Player/RightArm.hide()
@@ -151,8 +152,8 @@ func _ready():
 	# ensure collision check ignores player collision shape
 	crouch_shapecast.add_exception($".")
 	# initialise hp for healthbar
-	# call damage to initialise healthbar, initialise max hp
 	healthBar.max_value = health
+	# call damage to initialise healthbar, initialise max hp
 	receive_damage(0)
 	randomize()
 	
@@ -170,7 +171,7 @@ func build_default_keybinding() -> void:
 		crouch_action : [Key.KEY_C],
 	jump_action : [Key.KEY_SPACE],
 	}
-	
+
 func input_actions_check() -> void:
 	#check if the input actions written in the editor are the same as the ones registered in the Input map, and if they are written correctly
 	#if not, add it to runtime Input map with default keybindings
@@ -197,7 +198,8 @@ func input_actions_check() -> void:
 					var input_event_key = InputEventKey.new()
 					input_event_key.physical_keycode = keycode
 					InputMap.action_add_event(input_action, input_event_key)
-					
+
+
 func _exit_tree() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
@@ -209,6 +211,7 @@ func _unhandled_input(event):
 		camera.rotate_x(-event.relative.y * .005)
 		camera.rotation.x = clamp(camera.rotation.x, -PI/2, PI/2)
 	
+	#Shoot
 	if Input.is_action_just_pressed("shoot") \
 			and Global.currentWeapon == 'Pistol' \
 				and anim_player.current_animation != "shoot":
@@ -217,8 +220,8 @@ func _unhandled_input(event):
 			var hit_player = raycast.get_collider()
 			if hit_player.is_in_group('Player'):
 				hit_player.receive_damage.rpc_id(hit_player.get_multiplayer_authority())
-			
-			
+	
+	#Shotgun
 	if anim_playing == false:
 		if Input.is_action_just_pressed("Fire_shotgun") and Global.currentWeapon == 'Shotgun':
 			anim_playing = true
@@ -237,25 +240,8 @@ func _physics_process(delta):
 		_handle_ground_physics(delta)
 	else:
 		_handle_air_physics(delta)
-	
 	move_and_slide()
-	
 	if not is_multiplayer_authority(): return
-	
-	# Add the gravity.
-	if not is_on_floor():
-		velocity.y -= gravity * delta
-
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
-	#var input_dir = Input.get_vector("left", "right", "up", "down")
-	#var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	#if direction:
-		#velocity.x = direction.x * SPEED
-		#velocity.z = direction.z * SPEED
-	#else:
-		#velocity.x = move_toward(velocity.x, 0, SPEED)
-		#velocity.z = move_toward(velocity.z, 0, SPEED)
 
 	# --- New: Handle Camera Look (Right Stick) ---
 	# Get the controller stick input (Horizontal and Vertical)
@@ -270,7 +256,7 @@ func _physics_process(delta):
 		
 		# Clamp camera pitch rotation (same as your mouse look code)
 		camera.rotation.x = clamp(camera.rotation.x, -PI/2, PI/2)
-
+	
 	if anim_player.current_animation == "shoot":
 		pass
 	elif input_dir != Vector2.ZERO and is_on_floor():
@@ -284,6 +270,7 @@ func _physics_process(delta):
 		start_grapple()
 		print("Grapple")
 	
+	# the 'weapon' checks are just keybinds 1-5 bind to the weapon types. Each call the weapons manager script, and swap out current for new weapon.
 	if Input.is_action_just_pressed("weapon1"):
 		weaponsManager.print(0)
 		
@@ -301,12 +288,12 @@ func _physics_process(delta):
 		
 	if Input.is_action_just_released("Grapple"):
 		stop_grapple()
-
+	
 	if is_grappling:
 		process_grapple(delta)
-	else:
-		apply_gravity(delta)
 
+func gravity_apply(delta):
+	self.velocity.y -= gravity * delta
 
 func start_grapple():
 	raycast.global_transform = camera.global_transform
@@ -314,14 +301,12 @@ func start_grapple():
 	raycast.force_raycast_update()
 	print("grapple")
 	print(raycast.is_colliding())
-
+	
 	if raycast.is_colliding():
 		grapple_point = raycast.get_collision_point()
 		rope_length = global_transform.origin.distance_to(grapple_point)
 		is_grappling = true
 		print("elpprag")
-
-
 
 func process_grapple(delta):
 	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
@@ -349,12 +334,6 @@ func stop_grapple():
 	is_grappling = false
 	velocity *= 1.2
 
-
-func apply_gravity(delta):
-	if not is_on_floor():
-		velocity.y -= 9.8 * delta
-
-
 @rpc("call_local")
 func play_shoot_effects():
 	anim_player.stop()
@@ -379,43 +358,6 @@ func get_move_speed():
 		return sprint_speed 
 	else:
 		return walk_speed
-	
-#func _ready():
-	#Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	#for child in %WorldModel.find_children ("*", "VisualInstance3D"):
-		#child.set_layer_mask_value(1, false)
-		#child.set_layer_mask_value(2, true)
-
-#func _unhandled_input(event):
-	#if event is InputEventMouseMotion:
-		#Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	#elif event.is_action_pressed("ui_cancel"):
-		#Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	
-	#if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
-		#if event is InputEventMouseMotion:
-			#rotate_y(-event.relative.x * mouse_sensitivity)
-			#%Camera3D.rotate_x(-event.relative.y * mouse_sensitivity)
-			#%Camera3D.rotation.x = clampf(%Camera3D.rotation.x, -deg_to_rad(90), deg_to_rad(90))
-
-	# Add the gravity.
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
-
-	#var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	#if direction:
-		#velocity.x = direction.x * SPEED
-		#velocity.z = direction.z * SPEED
-	#else:
-		#velocity.x = move_toward(velocity.x, 0, SPEED)
-		#velocity.z = move_toward(velocity.z, 0, SPEED)
-
-	
-	#for i in get_slide_collision_count():
-		#var collision = get_slide_collision(i)
-	#print("I collided with ", collision.get_collider().name)
-		#if collision.get_collider().is_in_group("enemy"):
-			#reduce_health(10)
 
 func _handle_ground_physics(delta):
 	# simmilar to the air movement. Acceleration and friction on ground.
@@ -441,16 +383,6 @@ func is_surface_too_steep(normal : Vector3) -> bool:
 	return false
 
 func _handle_air_physics(delta):
-	self.velocity.y -= ProjectSettings.get_setting("physics/3d/default_gravity") * delta
-	
-	var cur_speed_in_wish_dir = self.velocity.dot(wish_dir)
-	var capped_speed = min((air_move_speed * wish_dir).length(), air_cap)
-	var add_speed_till_cap = capped_speed - cur_speed_in_wish_dir
-	if add_speed_till_cap > 0:
-		var accel_speed = air_accel * air_move_speed * delta
-		accel_speed = min(accel_speed, add_speed_till_cap)
-		self.velocity += accel_speed * wish_dir
-	
 	if is_on_wall():
 		if is_surface_too_steep(get_wall_normal()):
 			self.motion_mode = CharacterBody3D.MOTION_MODE_FLOATING
