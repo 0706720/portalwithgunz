@@ -15,5 +15,9 @@ func _on_body_entered(body: Node3D) -> void:
 	# replace with groupname of bullet in future. Player is a placeholder.
 	if body.is_in_group("Player"):
 		# in future, add a dynamic parameter 
-		update_score.emit(1)
-		queue_free()
+		delete_target()
+		
+
+func delete_target():
+	update_score.emit(1)
+	queue_free()

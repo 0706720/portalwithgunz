@@ -216,10 +216,15 @@ func _unhandled_input(event):
 			and Global.currentWeapon == 'Pistol' \
 				and anim_player.current_animation != "shoot":
 		play_shoot_effects.rpc()
+		print('shot occured')
 		if raycast.is_colliding():
 			var hit_player = raycast.get_collider()
+			print('collided')
 			if hit_player.is_in_group('Player'):
 				hit_player.receive_damage.rpc_id(hit_player.get_multiplayer_authority())
+			if hit_player.is_in_group('target'):
+				print('recognised target')
+				hit_player.delete_target()
 	
 	#Shotgun
 	if anim_playing == false:

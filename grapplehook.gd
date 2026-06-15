@@ -1,4 +1,4 @@
-#extends Node3D
+extends Node3D
 #
 #@export var grapple_speed: float = 25.0
 #@export var grapple_pull_strength: float = 40.0

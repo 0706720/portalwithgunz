@@ -284,7 +284,7 @@ offset_bottom = 27.0
 value = 100.0
 
 [node name="Target" parent="." unique_id=647349676 instance=ExtResource("7_0f2yp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.657845, 1.0563881, 3.4984007)
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, -19.657845, 3.061267, 3.4984007)
 
 [node name="MeshInstance3D8" type="MeshInstance3D" parent="." unique_id=1919283481]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -129.9667, 0, -84.473885)
