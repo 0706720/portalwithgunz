@@ -24,6 +24,8 @@ func physics_update(delta : float):
 	
 	input_management()
 	
+	_handle_ground_physics(delta)
+	
 	move(delta)
 
 func applies(delta : float):
@@ -40,6 +42,30 @@ func input_management():
 	if play_char.is_on_floor():
 		if Input.is_action_just_pressed("spin_dash"):
 			transitioned.emit(self, "SpindashState")
+
+func get_move_speed():
+	if Input.is_action_just_pressed("sprint"):
+		return play_char.sprint_speed 
+	else:
+		return play_char.walk_speed
+
+func _handle_ground_physics(delta):
+# simmilar to the air movement. Acceleration and friction on ground.
+	var cur_speed_in_wish_dir = play_char.velocity.dot(play_char.wish_dir)
+	var add_speed_till_cap = get_move_speed() - cur_speed_in_wish_dir
+	if add_speed_till_cap > 0:
+		var accel_speed = play_char.ground_accel * delta * get_move_speed()
+		accel_speed = min(accel_speed, add_speed_till_cap)
+		play_char.velocity += accel_speed * play_char.wish_dir
+
+	# apply friction
+	var control = max(play_char.velocity.length(), play_char.ground_deccel)
+	var drop = control * play_char.ground_friction * delta
+	var new_speed = max(play_char.velocity.length() - drop, 0.0)
+	if play_char.velocity.length() > 0:
+		new_speed /= play_char.velocity.length()
+	play_char.velocity *= new_speed
+
 func move(delta : float):
 	#manage the character movement
 	
