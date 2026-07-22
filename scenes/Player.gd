@@ -86,10 +86,6 @@ const HEADBOB_MOVE_AMOUNT = 0.06
 const HEADBOB_FREQUENCY = 2.4 
 var headbob_time := 0.0
 
-#@export var air_cap := 0.85
-#@export var air_accel := 800.0
-#@export var air_move_speed := 500.0
-
 #spindash variables
 @export var wish_dir := Vector3.ZERO
 @export var spin_charge_rate := 25.0
@@ -126,6 +122,7 @@ var default_input_actions : Dictionary
 const LOOK_SPEED = 5 # Adjust as needed for controller comfort
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = 19.6
+
 func _enter_tree():
 	print(name)
 	set_multiplayer_authority(str(name).to_int())
@@ -240,11 +237,6 @@ func _unhandled_input(event):
 func _physics_process(delta):
 	var input_dir := Input.get_vector("left", "right", "up", "down").normalized()
 	wish_dir = self.global_transform.basis * Vector3(input_dir.x, 0., input_dir.y)
-	
-	if is_on_floor():
-		_handle_ground_physics(delta)
-	else:
-		_handle_air_physics(delta)
 	move_and_slide()
 	if not is_multiplayer_authority(): return
 
@@ -357,29 +349,6 @@ func receive_damage(amount):
 func _on_animation_player_animation_finished(anim_name):
 	if anim_name == "shoot":
 		crouch_anim_player.play("idle")
-
-func get_move_speed():
-	if Input.is_action_just_pressed("sprint"):
-		return sprint_speed 
-	else:
-		return walk_speed
-
-func _handle_ground_physics(delta):
-	# simmilar to the air movement. Acceleration and friction on ground.
-	var cur_speed_in_wish_dir = self.velocity.dot(wish_dir)
-	var add_speed_till_cap = get_move_speed() - cur_speed_in_wish_dir
-	if add_speed_till_cap > 0:
-		var accel_speed = ground_accel * delta * get_move_speed()
-		accel_speed = min(accel_speed, add_speed_till_cap)
-		self.velocity += accel_speed * wish_dir
-
-	# apply friction
-	var control = max(self.velocity.length(), ground_deccel)
-	var drop = control * ground_friction * delta
-	var new_speed = max(self.velocity.length() - drop, 0.0)
-	if self.velocity.length() > 0:
-		new_speed /= self.velocity.length()
-	self.velocity *= new_speed
 
 func is_surface_too_steep(normal : Vector3) -> bool:
 	var max_slope_ang_dot = Vector3(0, 1, 0).rotated(Vector3(1.0, 0, 0), self.floor_max_angle).dot(Vector3(0, 1, 0))
