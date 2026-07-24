@@ -17,6 +17,7 @@
 [ext_resource type="Script" uid="uid://d2recx0hfql57" path="res://Scripts/StateMachine/inair_state.gd" id="13_4r5pv"]
 [ext_resource type="Script" uid="uid://bwjf6rau8gocs" path="res://scenes/screen_overlay.gd" id="13_jej6c"]
 [ext_resource type="Script" uid="uid://bfxl7ntayrnu2" path="res://scenes/spindash_state.gd" id="13_qfm1y"]
+[ext_resource type="PackedScene" uid="uid://bxdwgb7v5tg61" path="res://assets/images/Weapons/portalGunz/portalGun.tscn" id="18_fulsm"]
 
 [sub_resource type="Curve" id="Curve_qfm1y"]
 _limits = [0.0, 30.0, 0.0, 60.0]
@@ -685,6 +686,10 @@ transform = Transform3D(-1.3113417e-08, 0, -0.3, 0, 0.3, 0, 0.3, 0, -1.3113417e-
 [node name="Rope" parent="CameraHolder/Camera3D" unique_id=1275909854 instance=ExtResource("6_3v2ag")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.36858916, 0)
 visible = false
+
+[node name="PortalGun" parent="CameraHolder/Camera3D" unique_id=160590813 instance=ExtResource("18_fulsm")]
+unique_name_in_owner = true
+transform = Transform3D(-0.29996273, 0, -0.0047294777, 0, 0.3, 0, 0.0047294777, 0, -0.29996273, 1.1062536, -0.25200891, -0.8642118)
 
 [node name="CrouchAnimationPlayer" type="AnimationPlayer" parent="." unique_id=320549004]
 libraries/ = SubResource("AnimationLibrary_qlg0r")
