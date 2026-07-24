@@ -1,6 +1,5 @@
 [gd_scene format=3 uid="uid://d4i7nb1k36bs3"]
 
-[ext_resource type="Script" uid="uid://ccubnasmgpn5b" path="res://grapplehook.gd" id="1_1w4tv"]
 [ext_resource type="PackedScene" uid="uid://bnwaxjn3kx02" path="res://assets/images/Weapons/Grapple Hook/hook_textuer.fbx" id="1_i1x4r"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1w4tv"]
@@ -10,7 +9,6 @@ albedo_color = Color(1, 0, 0, 1)
 material = SubResource("StandardMaterial3D_1w4tv")
 
 [node name="Grapple Hook" type="Node3D" unique_id=1356339492]
-script = ExtResource("1_1w4tv")
 
 [node name="hook_textuer" parent="." unique_id=1145913485 instance=ExtResource("1_i1x4r")]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
