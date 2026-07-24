@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://ctimbcajwderl"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q3jgx"]
+albedo_color = Color(1, 0, 0.8745098, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_cuis1"]
+material = SubResource("StandardMaterial3D_q3jgx")
+size = Vector2(1, 2)
+orientation = 0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_tjwye"]
+size = Vector2(0.9, 1.9)
+orientation = 0
+
+[node name="Node3D" type="Node3D" unique_id=376776516]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=30514420]
+mesh = SubResource("PlaneMesh_cuis1")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=1787197961]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.005815029, 0, 0)
+mesh = SubResource("PlaneMesh_tjwye")

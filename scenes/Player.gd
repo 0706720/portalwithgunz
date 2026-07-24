@@ -123,6 +123,10 @@ const LOOK_SPEED = 5 # Adjust as needed for controller comfort
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = 19.6
 
+#Portal location placeholders
+@export var Portal_one : float
+@export var Portal_two : float
+
 func _enter_tree():
 	print(name)
 	set_multiplayer_authority(str(name).to_int())
