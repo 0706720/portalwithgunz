@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://cj5unt7ykwulf" path="res://assets/images/brickwall.jpg" id="4_ud676"]
 [ext_resource type="Texture2D" uid="uid://bvu15qfr23noj" path="res://assets/images/blue.webp" id="5_6f7pb"]
 [ext_resource type="PackedScene" uid="uid://bcvf4hmrpkuno" path="res://scenes/MovingPlatform.tscn" id="5_v6avs"]
+[ext_resource type="PackedScene" uid="uid://bxdwgb7v5tg61" path="res://assets/images/Weapons/portalGunz/portalGun.tscn" id="6_iyc4w"]
 [ext_resource type="PackedScene" uid="uid://eeadoxxlvepj" path="res://scenes/Target.tscn" id="7_0f2yp"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_0f2yp"]
@@ -91,6 +92,8 @@ data = PackedVector3Array(-5, 50, 5, 5, 50, 5, -5, -50, 5, 5, 50, 5, 5, -50, 5, 
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_saq0m"]
 data = PackedVector3Array(-5, 50, 5, 5, 50, 5, -5, -50, 5, 5, 50, 5, 5, -50, 5, -5, -50, 5, 5, 50, -5, -5, 50, -5, 5, -50, -5, -5, 50, -5, -5, -50, -5, 5, -50, -5, 5, 50, 5, 5, 50, -5, 5, -50, 5, 5, 50, -5, 5, -50, -5, 5, -50, 5, -5, 50, -5, -5, 50, 5, -5, -50, -5, -5, 50, 5, -5, -50, 5, -5, -50, -5, 5, 50, 5, -5, 50, 5, 5, 50, -5, -5, 50, 5, -5, 50, -5, 5, 50, -5, -5, -50, 5, 5, -50, 5, -5, -50, -5, 5, -50, 5, 5, -50, -5, -5, -50, -5)
+
+[sub_resource type="Environment" id="Environment_cuis1"]
 
 [node name="Map" type="Node3D" unique_id=317795099]
 script = ExtResource("1_8qak7")
@@ -228,6 +231,9 @@ transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -20.303137, 0.25000483,
 a = Vector3(-20.303, 0.25, -3.525)
 b = Vector3(-20.3, 10.25, -3.525)
 
+[node name="PortalGun" parent="Items" unique_id=841262975 instance=ExtResource("6_iyc4w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2887499, 0)
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=994830642]
 transform = Transform3D(1, 0, 0, 0, 0.22399859, 0.97458947, 0, -0.97458947, 0.22399859, 0, 39.572945, 0)
 
@@ -303,6 +309,9 @@ mesh = SubResource("BoxMesh_vm4q1")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D9/StaticBody3D" unique_id=433673450]
 shape = SubResource("ConcavePolygonShape3D_saq0m")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1367806563]
+environment = SubResource("Environment_cuis1")
 
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/SinglePlayer" to="." method="_on_single_player_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/HostButton" to="." method="_on_host_button_pressed"]

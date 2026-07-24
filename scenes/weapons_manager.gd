@@ -4,19 +4,21 @@ extends Node
 @onready var pistolNode = ^"../CameraHolder/Camera3D/Pistol"
 @onready var shotgunNode = ^"../CameraHolder/Camera3D/Propulsion_shotgun"
 @onready var grappleNode = ^"../CameraHolder/Camera3D/Grapple Hook"
+@onready var portalNode = ^"../CameraHolder/Camera3D/PortalGun"
 # non-initial weapon (sniper instance)
 @onready var sniperNode = ^"../Camera3D/M91"
 
-var weapons = ["Pistol", "Shotgun", "GrappleGun"]
+var weapons = ["Pistol", "Shotgun", "GrappleGun", "PortalGun"]
 
 var paths = [
 	"res://scenes/models/Pistol.glb", 
 	"res://assets/images/Weapons/Shotgunz/spas12.FBX",
 	"res://assets/images/Weapons/Vacuum Cleanerz/vacuum3.fbx",
-	"res://assets/images/Weapons/Sniperz/M91.fbx"
+	"res://assets/images/Weapons/Sniperz/M91.fbx",
+	"res://assets/images/Weapons/portalGunz/portalgun2.obj"
 	]
 
-var nodepaths = ["%Pistol", "%Propulsion_shotgun", "%Grapple Hook"]
+var nodepaths = ["%Pistol", "%Propulsion_shotgun", "%Grapple Hook", "%PortalGun"]
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
