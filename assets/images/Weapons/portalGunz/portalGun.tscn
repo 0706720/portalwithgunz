@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://bxdwgb7v5tg61"]
+
+[ext_resource type="ArrayMesh" uid="uid://bga4jhfhfs16x" path="res://assets/images/Weapons/portalGunz/portalgun2.obj" id="1_0gted"]
+
+[node name="PortalGun" type="Node3D" unique_id=160590813]
+
+[node name="Portalgun2" type="MeshInstance3D" parent="." unique_id=7055702]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.28804836, 1.0668272, -0.1949997)
+mesh = ExtResource("1_0gted")
