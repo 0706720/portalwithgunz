@@ -681,6 +681,7 @@ collision_mask = 2
 [node name="Grapple Hook" parent="CameraHolder/Camera3D" unique_id=1356339492 instance=ExtResource("11_3v2ag")]
 unique_name_in_owner = true
 transform = Transform3D(-1.3113417e-08, 0, -0.3, 0, 0.3, 0, 0.3, 0, -1.3113417e-08, 0, -0.431, -0.73)
+script = null
 
 [node name="Rope" parent="CameraHolder/Camera3D" unique_id=1275909854 instance=ExtResource("6_3v2ag")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.36858916, 0)
@@ -815,6 +816,14 @@ text = "Velocity: "
 layout_mode = 2
 text = "Air speed:"
 
+[node name="PortalOne" type="Label" parent="Screen overlay/MarginContainer/PanelContainer/BoxContainer/VBoxContainer" unique_id=1398289137]
+layout_mode = 2
+text = "Portal 1:"
+
+[node name="PortalTwo" type="Label" parent="Screen overlay/MarginContainer/PanelContainer/BoxContainer/VBoxContainer" unique_id=918238220]
+layout_mode = 2
+text = "Portal 2:"
+
 [node name="HSeparator" type="HSeparator" parent="Screen overlay/MarginContainer/PanelContainer/BoxContainer/VBoxContainer" unique_id=709748240]
 layout_mode = 2
 
@@ -843,6 +852,14 @@ text = "..................."
 
 [node name="AirSpeedLabelText" type="Label" parent="Screen overlay/MarginContainer/PanelContainer/BoxContainer/VBoxContainer2" unique_id=1483527906]
 unique_name_in_owner = true
+layout_mode = 2
+text = "..................."
+
+[node name="PortalOneLabel" type="Label" parent="Screen overlay/MarginContainer/PanelContainer/BoxContainer/VBoxContainer2" unique_id=483033630]
+layout_mode = 2
+text = "..................."
+
+[node name="PortalTwoLabel" type="Label" parent="Screen overlay/MarginContainer/PanelContainer/BoxContainer/VBoxContainer2" unique_id=1571320687]
 layout_mode = 2
 text = "..................."
 

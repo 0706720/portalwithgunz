@@ -92,6 +92,8 @@ data = PackedVector3Array(-5, 50, 5, 5, 50, 5, -5, -50, 5, 5, 50, 5, 5, -50, 5, 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_saq0m"]
 data = PackedVector3Array(-5, 50, 5, 5, 50, 5, -5, -50, 5, 5, 50, 5, 5, -50, 5, -5, -50, 5, 5, 50, -5, -5, 50, -5, 5, -50, -5, -5, 50, -5, -5, -50, -5, 5, -50, -5, 5, 50, 5, 5, 50, -5, 5, -50, 5, 5, 50, -5, 5, -50, -5, 5, -50, 5, -5, 50, -5, -5, 50, 5, -5, -50, -5, -5, 50, 5, -5, -50, 5, -5, -50, -5, 5, 50, 5, -5, 50, 5, 5, 50, -5, -5, 50, 5, -5, 50, -5, 5, 50, -5, -5, -50, 5, 5, -50, 5, -5, -50, -5, 5, -50, 5, 5, -50, -5, -5, -50, -5)
 
+[sub_resource type="Environment" id="Environment_cuis1"]
+
 [node name="Map" type="Node3D" unique_id=317795099]
 script = ExtResource("1_8qak7")
 
@@ -303,6 +305,9 @@ mesh = SubResource("BoxMesh_vm4q1")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D9/StaticBody3D" unique_id=433673450]
 shape = SubResource("ConcavePolygonShape3D_saq0m")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1367806563]
+environment = SubResource("Environment_cuis1")
 
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/SinglePlayer" to="." method="_on_single_player_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/HostButton" to="." method="_on_host_button_pressed"]
