@@ -5,7 +5,15 @@
 [ext_resource type="Texture2D" uid="uid://cj5unt7ykwulf" path="res://assets/images/brickwall.jpg" id="4_ud676"]
 [ext_resource type="Texture2D" uid="uid://bvu15qfr23noj" path="res://assets/images/blue.webp" id="5_6f7pb"]
 [ext_resource type="PackedScene" uid="uid://bcvf4hmrpkuno" path="res://scenes/MovingPlatform.tscn" id="5_v6avs"]
+<<<<<<< Updated upstream
 [ext_resource type="PackedScene" uid="uid://bxdwgb7v5tg61" path="res://assets/images/Weapons/portalGunz/portalGun.tscn" id="6_iyc4w"]
+=======
+<<<<<<< HEAD
+[ext_resource type="Texture2D" uid="uid://ba3wlhugg5ilf" path="res://assets/images/pngaaa.com-858307.png" id="6_iyc4w"]
+=======
+[ext_resource type="PackedScene" uid="uid://bxdwgb7v5tg61" path="res://assets/images/Weapons/portalGunz/portalGun.tscn" id="6_iyc4w"]
+>>>>>>> 57f320f12fae308c667527a76dee24ed104259a2
+>>>>>>> Stashed changes
 [ext_resource type="PackedScene" uid="uid://eeadoxxlvepj" path="res://scenes/Target.tscn" id="7_0f2yp"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_0f2yp"]
@@ -310,8 +318,28 @@ mesh = SubResource("BoxMesh_vm4q1")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D9/StaticBody3D" unique_id=433673450]
 shape = SubResource("ConcavePolygonShape3D_saq0m")
 
+<<<<<<< Updated upstream
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1367806563]
 environment = SubResource("Environment_cuis1")
+=======
+<<<<<<< HEAD
+[node name="Crosshair" type="Node2D" parent="." unique_id=469536260]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Crosshair" unique_id=821337102]
+offset_left = 275.0
+offset_top = 178.0
+offset_right = 917.0
+offset_bottom = 516.0
+
+[node name="Pngaaa_com858307" type="Sprite2D" parent="Crosshair" unique_id=1843197102]
+position = Vector2(583.00006, 303)
+scale = Vector2(0.07, 0.05)
+texture = ExtResource("6_iyc4w")
+=======
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1367806563]
+environment = SubResource("Environment_cuis1")
+>>>>>>> 57f320f12fae308c667527a76dee24ed104259a2
+>>>>>>> Stashed changes
 
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/SinglePlayer" to="." method="_on_single_player_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/HostButton" to="." method="_on_host_button_pressed"]
