@@ -95,4 +95,4 @@ func remove_player(peer_id):
 
 
 func _on_map_1_pressed() -> void:
-	get_tree().change_scene_to_file("res://Map.tscn")
+	get_tree().change_scene_to_file("res://scenes/MAP(in_progress).tscn")
