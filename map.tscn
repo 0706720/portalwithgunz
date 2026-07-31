@@ -4,7 +4,10 @@
 [ext_resource type="Texture2D" uid="uid://bpih68xvt4l1c" path="res://assets/images/FloorTexture.jpg" id="2_urblq"]
 [ext_resource type="Texture2D" uid="uid://cj5unt7ykwulf" path="res://assets/images/brickwall.jpg" id="3_iw27f"]
 [ext_resource type="PackedScene" uid="uid://bcvf4hmrpkuno" path="res://scenes/MovingPlatform.tscn" id="4_p5pve"]
+<<<<<<< HEAD
 [ext_resource type="Texture2D" uid="uid://bvu15qfr23noj" path="res://assets/images/blue.webp" id="5_iw27f"]
+=======
+>>>>>>> parent of c296928 (Merge pull request #145 from Zac-Nordsvan/main2)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0f2yp"]
 albedo_texture = ExtResource("2_urblq")
@@ -194,6 +197,7 @@ transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -20.303137, 0.25000483,
 a = Vector3(-20.303, 0.25, -3.525)
 b = Vector3(-20.3, 10.25, -3.525)
 
+<<<<<<< HEAD
 [node name="Sky block 1" type="MeshInstance3D" parent="." unique_id=60539990]
 transform = Transform3D(1.7194, 0, 0, 0, 6.3151426, 0, 0, 0, 1, -71.9957, 14.403721, 9.265472)
 material_override = SubResource("StandardMaterial3D_8qak7")
@@ -270,6 +274,8 @@ mesh = SubResource("BoxMesh_ud676")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Spawner/StaticBody3D" unique_id=501736850]
 shape = SubResource("ConcavePolygonShape3D_ud676")
 
+=======
+>>>>>>> parent of c296928 (Merge pull request #145 from Zac-Nordsvan/main2)
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/SinglePlayer" to="." method="_on_single_player_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/HostButton" to="." method="_on_host_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/JoinButton" to="." method="_on_join_button_pressed"]

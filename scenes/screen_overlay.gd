@@ -12,7 +12,7 @@ class_name HUD
 @onready var current_state_label_text: Label = %CurrentStateLabelText
 @onready var velocity_label_text: Label = %VelocityLabelText
 @onready var Air_speed_label_text: Label = %AirSpeedLabelText
-@onready var Portal_one_Label_text: Label = %PortalOneLabelText
+@onready var Portal_two_Label_text: Label = %PortalOneLabelText
 @onready var Portal_two_Label_text: Label = %PortalTwoLabelText
 
 func _process(_delta : float) -> void:
@@ -26,8 +26,13 @@ func display_properties() -> void:
 	is_on_floor_label_text.set_text(str(play_char.is_on_floor()))
 	velocity_label_text.set_text(str(round_to_3_decimals(play_char.velocity.length())))
 	Air_speed_label_text.set_text(str(round_to_3_decimals(play_char.move_speed)))
+<<<<<<< HEAD
 	#Portal_two_Label_text.set_txt(str(round_to_3_decimals()))
 	#Portal_two_Label_text.set_txt(str(round_to_3_decimals()))
+=======
+	Portal_two_Label_text.set_txt(str(round_to_3_decimals()))
+	Portal_two_Label_text.set_txt(str(round_to_3_decimals()))
+>>>>>>> parent of c296928 (Merge pull request #145 from Zac-Nordsvan/main2)
 
 func display_current_FPS() -> void:
 	frames_per_second_label_text.set_text(str(Engine.get_frames_per_second()))
