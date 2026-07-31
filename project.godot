@@ -16,7 +16,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 
 config/name="PortalWithGunz"
 config/tags=PackedStringArray("multiplayer")
-run/main_scene="uid://qhlb5pdjedd1"
+run/main_scene="uid://c1j7an8woikyd"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="uid://557yev33xedo"
 
