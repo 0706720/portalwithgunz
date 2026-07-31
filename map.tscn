@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cjddue730snm" path="res://assets/images/WoodenTexture.jpg" id="2_urblq"]
 [ext_resource type="Texture2D" uid="uid://cj5unt7ykwulf" path="res://assets/images/brickwall.jpg" id="3_iw27f"]
 [ext_resource type="PackedScene" uid="uid://bcvf4hmrpkuno" path="res://scenes/MovingPlatform.tscn" id="4_p5pve"]
+[ext_resource type="PackedScene" uid="uid://eeadoxxlvepj" path="res://scenes/Target.tscn" id="5_urblq"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kyc3v"]
 albedo_texture = ExtResource("2_urblq")
@@ -162,6 +163,9 @@ value = 100.0
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -20.303137, 0.25000483, -3.525357)
 a = Vector3(-20.303, 0.25, -3.525)
 b = Vector3(-20.3, 10.25, -3.525)
+
+[node name="Target" parent="." unique_id=647349676 instance=ExtResource("5_urblq")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -7.9279113, 8.351347, 11.498916)
 
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/SinglePlayer" to="." method="_on_single_player_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/HostButton" to="." method="_on_host_button_pressed"]
