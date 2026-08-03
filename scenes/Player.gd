@@ -239,10 +239,13 @@ func _unhandled_input(event):
 
 
 func _physics_process(delta):
-	var input_dir := Input.get_vector("left", "right", "up", "down").normalized()
-	wish_dir = self.global_transform.basis * Vector3(input_dir.x, 0., input_dir.y)
-	move_and_slide()
-	if not is_multiplayer_authority(): return
+	if not is_multiplayer_authority(): 
+		return
+	else:
+		var input_dir := Input.get_vector("left", "right", "up", "down").normalized()
+		wish_dir = self.global_transform.basis * Vector3(input_dir.x, 0., input_dir.y)
+		move_and_slide()
+
 
 	# --- New: Handle Camera Look (Right Stick) ---
 	# Get the controller stick input (Horizontal and Vertical)
