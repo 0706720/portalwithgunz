@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://cldacmthhfvjt"]
+[gd_scene format=3 uid="uid://b73mvx1vwbgpq"]
 
 [ext_resource type="Script" uid="uid://demmf2hbrwaat" path="res://scenes/world.gd" id="1_p5pve"]
 [ext_resource type="Texture2D" uid="uid://bpih68xvt4l1c" path="res://assets/images/FloorTexture.jpg" id="2_v6avs"]
