@@ -567,6 +567,9 @@ font_size = 15
 
 [sub_resource type="LabelSettings" id="LabelSettings_oprun"]
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_7f1fr"]
+viewport_path = NodePath("SubViewport")
+
 [node name="Player" type="CharacterBody3D" unique_id=820130408 node_paths=PackedStringArray("crouch_anim_player", "crouch_shapecast") groups=["Player"]]
 collision_layer = 2
 script = ExtResource("1_2v3wm")
@@ -903,6 +906,18 @@ text = "..................."
 unique_name_in_owner = true
 layout_mode = 2
 text = "..................."
+
+[node name="EmoteBar" type="Sprite3D" parent="." unique_id=1177638455]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.1862776, -6.6410885)
+visible = false
+texture = SubResource("ViewportTexture_7f1fr")
+
+[node name="SubViewport" type="SubViewport" parent="." unique_id=2070693850]
+
+[node name="TextureRect" type="TextureRect" parent="SubViewport" unique_id=709868025]
+visible = false
+offset_right = 40.0
+offset_bottom = 40.0
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="animation_finished" from="CrouchAnimationPlayer" to="StateMachine/CrouchState" method="_on_crouch_animation_player_animation_finished"]
