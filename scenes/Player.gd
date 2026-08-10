@@ -127,12 +127,17 @@ var gravity = 19.6
 @export var Portal_one : float
 @export var Portal_two : float
 
+
+#Emote Wheel
+var texture = TextureRect
+
 func _enter_tree():
 	print(name)
 	set_multiplayer_authority(str(name).to_int())
 
 func _ready():
 	hit_ground_cooldown_ref = hit_ground_cooldown
+	
 	
 	# access the weapons manager script, and call the print function to set the current weapon to pistol
 	weaponsManager.print(0)
@@ -231,9 +236,8 @@ func _unhandled_input(event):
 	if anim_playing == false:
 		if Input.is_action_just_pressed("Fire_shotgun") and Global.currentWeapon == 'Shotgun':
 			anim_playing = true
-			print(raycast.is_colliding())
-			var shoot_dir = -camera.global_transform.basis.z.normalized()
-			velocity += -shoot_dir * knockback_force
+			var shoot_dir = camera.global_transform.basis.z.normalized()
+			velocity += shoot_dir * knockback_force
 			await get_tree().create_timer(1.0).timeout
 			anim_playing = false
 
@@ -260,6 +264,9 @@ func _physics_process(delta):
 		
 		# Clamp camera pitch rotation (same as your mouse look code)
 		camera.rotation.x = clamp(camera.rotation.x, -PI/2, PI/2)
+		
+	if Input.is_action_just_pressed("emote"):
+			texture = load("res://assets/images/WoodenTexture.jpg")
 	
 	if anim_player.current_animation == "shoot":
 		pass
