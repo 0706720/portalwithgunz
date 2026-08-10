@@ -14,9 +14,11 @@ uv1_triplanar = true
 albedo_texture = ExtResource("3_tbg6f")
 uv1_triplanar = true
 
-[sub_resource type="Environment" id="Environment_cuis1"]
+[sub_resource type="Sky" id="Sky_s85wv"]
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_0psjf"]
+[sub_resource type="Environment" id="Environment_k15v5"]
+background_mode = 2
+sky = SubResource("Sky_s85wv")
 
 [node name="Environment" unique_id=1851466389 instance=ExtResource("1_p4eel")]
 script = ExtResource("2_0psjf")
@@ -80,15 +82,24 @@ offset_right = 4.0
 offset_bottom = 27.0
 value = 100.0
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="." index="3" unique_id=1926211904]
-environment = SubResource("Environment_cuis1")
-
-[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." index="4" unique_id=1967260226]
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." index="3" unique_id=1967260226]
 spawn_path = NodePath("..")
 
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." index="5" unique_id=1670144604]
-root_path = NodePath("../MultiplayerSpawner")
-replication_config = SubResource("SceneReplicationConfig_0psjf")
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." index="4" unique_id=1347325339]
+environment = SubResource("Environment_k15v5")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." index="5" unique_id=1654056698]
+transform = Transform3D(0.8360182, -0.18189546, -0.517675, 0.44200325, 0.7822804, 0.43894237, 0.32512543, -0.595778, 0.73439914, -14.683933, 19.78864, 35.770844)
+light_energy = 2.0
+shadow_enabled = true
+
+[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="." index="6" unique_id=1721760373]
+transform = Transform3D(0.843892, 0.3418059, 0.41353986, -0.4809249, 0.14026213, 0.86546975, 0.23781863, -0.9292444, 0.28274903, 10.544916, 12.833935, 0)
+light_energy = 0.5
+
+[node name="DirectionalLight3D3" type="DirectionalLight3D" parent="." index="7" unique_id=159789974]
+transform = Transform3D(-1, 0, -8.742278e-08, -2.3327196e-08, 0.96374303, 0.26683202, 8.4253095e-08, 0.26683202, -0.96374303, -3.8784409, 8.169632, -19.913763)
+light_energy = 0.5
 
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/SinglePlayer" to="." method="_on_single_player_pressed"]
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/HostButton" to="." method="_on_host_button_pressed"]

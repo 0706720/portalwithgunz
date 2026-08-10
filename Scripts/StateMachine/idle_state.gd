@@ -20,7 +20,7 @@ func verifications():
 func physics_update(delta : float):
 	applies(delta)
 	
-	play_char.gravity_apply(delta)
+	#play_char.gravity_apply(delta)
 	
 	input_management()
 	
@@ -29,6 +29,8 @@ func physics_update(delta : float):
 	move(delta)
 
 func applies(delta : float):
+	if play_char.velocity.y == 0:
+		play_char.velocity.y == -0.1
 	if play_char.velocity.y < 0.0: transitioned.emit(self, "InairState")
 
 func input_management():
