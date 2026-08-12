@@ -32,7 +32,7 @@ func verifications():
 func physics_update(delta : float):
 	applies(delta)
 	
-	#play_char.gravity_apply(delta)
+	play_char.gravity_apply(delta)
 	
 	input_management()
 	
@@ -41,6 +41,10 @@ func physics_update(delta : float):
 	move(delta)
 
 func applies(delta : float):
+	if play_char.velocity.y < 0.0: 
+		crouchCheck()
+		transitioned.emit(self, "InairState")
+
 	if Input.is_action_just_pressed(play_char.crouch_action):
 		if play_char.is_on_floor():
 			# extra check so uncrouch is completed before changing state
@@ -53,12 +57,13 @@ func input_management():
 
 func handle_ground_physics(delta):
 # apply friction
-	var control = max(play_char.velocity.length(), play_char.ground_deccel)
-	var drop = control * play_char.ground_friction * delta
-	var new_speed = max(play_char.velocity.length() - drop, 0.0)
-	if play_char.velocity.length() > 0:
-		new_speed /= play_char.velocity.length()
-	play_char.velocity *= new_speed
+	if play_char.is_on_floor() == true:
+		var control = max(play_char.velocity.length(), play_char.ground_deccel)
+		var drop = control * play_char.ground_friction * delta
+		var new_speed = max(play_char.velocity.length() - drop, 0.0)
+		if play_char.velocity.length() > 0:
+			new_speed /= play_char.velocity.length()
+		play_char.velocity *= new_speed
 
 func move(delta : float):
 	play_char.input_direction = Input.get_vector(play_char.move_left_action, play_char.move_right_action, play_char.move_forward_action, play_char.move_backward_action)

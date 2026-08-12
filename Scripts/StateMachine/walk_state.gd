@@ -59,12 +59,13 @@ func _handle_ground_physics(delta):
 		play_char.velocity += accel_speed * play_char.wish_dir
 
 	# apply friction
-	var control = max(play_char.velocity.length(), play_char.ground_deccel)
-	var drop = control * play_char.ground_friction * delta
-	var new_speed = max(play_char.velocity.length() - drop, 0.0)
-	if play_char.velocity.length() > 0:
-		new_speed /= play_char.velocity.length()
-	play_char.velocity *= new_speed
+	if play_char.is_on_floor() == true:
+		var control = max(play_char.velocity.length(), play_char.ground_deccel)
+		var drop = control * play_char.ground_friction * delta
+		var new_speed = max(play_char.velocity.length() - drop, 0.0)
+		if play_char.velocity.length() > 0:
+			new_speed /= play_char.velocity.length()
+		play_char.velocity *= new_speed
 
 func move(delta : float):
 	play_char.movement_anim.play("Movement_animation")
@@ -80,7 +81,7 @@ func move(delta : float):
 		
 		if play_char.hit_ground_cooldown <= 0: play_char.desired_move_speed = play_char.velocity.length()
 		
-	else:
+	elif !play_char.velocity.x and play_char.velocity.z >= 0:
 		transitioned.emit(self, "IdleState")
 	
 	if play_char.input_dir != Vector2.ZERO:

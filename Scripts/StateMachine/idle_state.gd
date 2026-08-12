@@ -63,7 +63,7 @@ func _handle_ground_physics(delta):
 	#var control = max(play_char.velocity.length(), play_char.ground_deccel)
 	#var drop = control * play_char.ground_friction * delta
 	#var new_speed = max(play_char.velocity.length() - drop, 0.0)
-	#if play_char.velocity.length() > 0:
+	#if play_char.velocity.length() > 0.0:
 		#new_speed /= play_char.velocity.length()
 	#play_char.velocity *= new_speed
 
@@ -80,4 +80,6 @@ func move(delta : float):
 	
 	if play_char.move_direction and play_char.is_on_floor():
 		#transition to corresponding state
+		transitioned.emit(self, play_char.walk_or_run)
+	elif play_char.velocity.x or play_char.velocity.z or play_char.velocity.y > 0:
 		transitioned.emit(self, play_char.walk_or_run)
