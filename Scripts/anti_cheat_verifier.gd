@@ -1,11 +1,13 @@
 extends Node
 
+# the script that will be evaluated for inconsistency, which will be Player due to it's importance in the game
 const CRITICAL_SCRIPT_PATH: String = "res://scenes/Player.gd"
 var verified_peers: Dictionary = {}
 
 func _ready() -> void:
 	if multiplayer.is_server():
 		multiplayer.peer_connected.connect(_on_peer_connected)
+		print('connected to signal from anticheat')
 
 func _on_peer_connected(peer_id: int) -> void:
 	var challenge_nonce = str(randi()) + "_" + str(Time.get_unix_time_from_system())
