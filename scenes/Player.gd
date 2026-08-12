@@ -131,6 +131,7 @@ var gravity = 19.6
 #Emote Wheel
 var texture = TextureRect
 
+
 func _enter_tree():
 	print(name)
 	set_multiplayer_authority(str(name).to_int())
@@ -266,7 +267,9 @@ func _physics_process(delta):
 		camera.rotation.x = clamp(camera.rotation.x, -PI/2, PI/2)
 		
 	if Input.is_action_just_pressed("emote"):
-			texture = load("res://assets/images/WoodenTexture.jpg")
+		print("EMOTE")
+		$EmoteBar.show()
+		$EmoteBar.texture = load("res://assets/images/smiley-emoticon-with-glasses-emoji-3d-smiley-face-on-transparent-background-free-png.webp")
 	
 	if anim_player.current_animation == "shoot":
 		pass
