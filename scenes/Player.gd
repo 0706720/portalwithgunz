@@ -269,7 +269,10 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("emote"):
 		print("EMOTE")
 		$EmoteBar.show()
-		$EmoteBar.texture = load("res://assets/images/smiley-emoticon-with-glasses-emoji-3d-smiley-face-on-transparent-background-free-png.webp")
+		$EmoteBar.texture = load("res://assets/images/ThumbsUp.webp")
+		await get_tree().create_timer(2.0).timeout
+		$EmoteBar.hide()
+		$EmoteBar.texture = load("")
 	
 	if anim_player.current_animation == "shoot":
 		pass

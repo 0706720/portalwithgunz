@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cmwpt6gpdedi3"
-path="res://.godot/imported/smiley-emoticon-with-glasses-emoji-3d-smiley-face-on-transparent-background-free-png.webp-f6fdcb497bef6f8bccaaee0533266cd9.ctex"
+uid="uid://wy2hdd51kkgt"
+path="res://.godot/imported/ThumbsUp.webp-4a742f97baae9b579290db45696cdb15.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/smiley-emoticon-with-glasses-emoji-3d-smiley-face-on-transparent-background-free-png.webp"
-dest_files=["res://.godot/imported/smiley-emoticon-with-glasses-emoji-3d-smiley-face-on-transparent-background-free-png.webp-f6fdcb497bef6f8bccaaee0533266cd9.ctex"]
+source_file="res://assets/images/ThumbsUp.webp"
+dest_files=["res://.godot/imported/ThumbsUp.webp-4a742f97baae9b579290db45696cdb15.ctex"]
 
 [params]
 
