@@ -20,7 +20,7 @@ func verifications():
 func physics_update(delta : float):
 	applies(delta)
 	
-	#play_char.gravity_apply(delta)
+	play_char.gravity_apply(delta)
 	
 	input_management()
 	
@@ -29,9 +29,8 @@ func physics_update(delta : float):
 	move(delta)
 
 func applies(delta : float):
-	if play_char.velocity.y == 0:
-		play_char.velocity.y == -0.1
-	if play_char.velocity.y < 0.0: transitioned.emit(self, "InairState")
+	if play_char.velocity.y < 0.0: 
+		transitioned.emit(self, "InairState")
 
 func input_management():
 	if Input.is_action_just_pressed(play_char.crouch_action):
@@ -61,12 +60,12 @@ func _handle_ground_physics(delta):
 		play_char.velocity += accel_speed * play_char.wish_dir
 
 	# apply friction
-	var control = max(play_char.velocity.length(), play_char.ground_deccel)
-	var drop = control * play_char.ground_friction * delta
-	var new_speed = max(play_char.velocity.length() - drop, 0.0)
-	if play_char.velocity.length() > 0:
-		new_speed /= play_char.velocity.length()
-	play_char.velocity *= new_speed
+	#var control = max(play_char.velocity.length(), play_char.ground_deccel)
+	#var drop = control * play_char.ground_friction * delta
+	#var new_speed = max(play_char.velocity.length() - drop, 0.0)
+	#if play_char.velocity.length() > 0:
+		#new_speed /= play_char.velocity.length()
+	#play_char.velocity *= new_speed
 
 func move(delta : float):
 	#manage the character movement
