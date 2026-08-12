@@ -139,7 +139,10 @@ func _enter_tree():
 func _ready():
 	hit_ground_cooldown_ref = hit_ground_cooldown
 	
-	
+	if is_multiplayer_authority():
+		camera.current = true
+	else:
+		camera.current = false
 	# access the weapons manager script, and call the print function to set the current weapon to pistol
 	weaponsManager.print(0)
 	if is_multiplayer_authority():
@@ -155,7 +158,7 @@ func _ready():
 	if not is_multiplayer_authority(): return
 	
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	camera.current = true
+	
 	# ensure collision check ignores player collision shape
 	crouch_shapecast.add_exception($".")
 	# initialise hp for healthbar

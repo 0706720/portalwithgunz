@@ -23,7 +23,7 @@ sky = SubResource("Sky_s85wv")
 [node name="Environment" unique_id=1851466389 instance=ExtResource("1_p4eel")]
 script = ExtResource("2_0psjf")
 
-[node name="Plane" parent="." index="0" unique_id=1674415541]
+[node name="Plane" parent="." index="0" unique_id=1187717843]
 surface_material_override/0 = SubResource("StandardMaterial3D_if5ix")
 surface_material_override/1 = SubResource("StandardMaterial3D_jylvv")
 
@@ -83,6 +83,7 @@ offset_bottom = 27.0
 value = 100.0
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." index="3" unique_id=1967260226]
+_spawnable_scenes = PackedStringArray("uid://xcjrjq5cbn7y")
 spawn_path = NodePath("..")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." index="4" unique_id=1347325339]
