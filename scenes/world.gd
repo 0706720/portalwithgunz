@@ -4,7 +4,7 @@ extends Node
 @onready var address_entry = $CanvasLayer/MainMenu/MarginContainer/VBoxContainer/AddressEntry
 @onready var hud = $CanvasLayer/HUD
 
-@onready var PlayerScene := preload("res://scenes/player.tscn")
+@onready var PlayerScene := preload("res://FPSController/Player/player.tscn")
 
 const PORT := 9999
 var peer := ENetMultiplayerPeer.new()
