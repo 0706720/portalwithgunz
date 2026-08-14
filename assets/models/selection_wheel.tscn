@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://dckqpumpljncf"]
+
+[ext_resource type="Script" uid="uid://djwbqs2eq6jt8" path="res://selection_wheel.gd" id="1_ofd7g"]
+[ext_resource type="Script" uid="uid://dqjdqpr0mh0og" path="res://emote_wheel.gd" id="2_4lxda"]
+[ext_resource type="Texture2D" uid="uid://wy2hdd51kkgt" path="res://assets/images/ThumbsUp.webp" id="3_0isde"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6tlpn"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4lxda"]
+atlas = SubResource("AtlasTexture_6tlpn")
+script = ExtResource("2_4lxda")
+name = "none"
+metadata/_custom_type_script = "uid://dqjdqpr0mh0og"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v5lg8"]
+atlas = ExtResource("3_0isde")
+script = ExtResource("2_4lxda")
+name = "1"
+metadata/_custom_type_script = "uid://dqjdqpr0mh0og"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1yo78"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4l438"]
+atlas = SubResource("AtlasTexture_1yo78")
+script = ExtResource("2_4lxda")
+name = "2"
+metadata/_custom_type_script = "uid://dqjdqpr0mh0og"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5cebd"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pt43d"]
+atlas = SubResource("AtlasTexture_5cebd")
+script = ExtResource("2_4lxda")
+name = "3"
+metadata/_custom_type_script = "uid://dqjdqpr0mh0og"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dcoln"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vcnht"]
+atlas = SubResource("AtlasTexture_dcoln")
+script = ExtResource("2_4lxda")
+name = "4"
+metadata/_custom_type_script = "uid://dqjdqpr0mh0og"
+
+[node name="Selection Wheel" type="Control" unique_id=1283847130]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ofd7g")
+background_colour = Color(0.24313726, 0.24313726, 0.24313726, 1)
+options = Array[ExtResource("2_4lxda")]([SubResource("AtlasTexture_4lxda"), SubResource("AtlasTexture_v5lg8"), SubResource("AtlasTexture_4l438"), SubResource("AtlasTexture_pt43d"), SubResource("AtlasTexture_vcnht")])

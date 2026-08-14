@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cb71bca80dy2g"]
 
-[ext_resource type="Script" uid="uid://c176fhkbosjc2" path="res://settings_menu.gd" id="1_ufg0w"]
+[ext_resource type="Script" uid="uid://c176fhkbosjc2" path="res://settings_menu.gd" id="1_lao15"]
 
 [node name="Settings menu" type="Control" unique_id=2045956854]
 layout_mode = 3
@@ -13,7 +13,7 @@ offset_right = 6.0
 offset_bottom = 5.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_ufg0w")
+script = ExtResource("1_lao15")
 
 [node name="MainMenu" type="PanelContainer" parent="." unique_id=1255088514]
 layout_mode = 0
