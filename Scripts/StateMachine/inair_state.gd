@@ -19,13 +19,16 @@ func verifications():
 	play_char.move_deccel = play_char.walk_deccel
 
 func physics_update(delta : float):
-	applies(delta)
-	
-	play_char.gravity_apply(delta)
-	
-	input_management()
-	
-	move(delta)
+	if is_multiplayer_authority():
+		applies(delta)
+		
+		play_char.gravity_apply(delta)
+		
+		input_management()
+		
+		move(delta)
+	else:
+		pass
 
 func applies(delta : float):
 	if play_char.is_on_floor():

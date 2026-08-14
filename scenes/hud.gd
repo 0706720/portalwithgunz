@@ -10,7 +10,10 @@ func _ready():
 
 func _on_player_health_changed(health):
 	health_bar.value = health
-	health_disp.text = str(health)
+	if is_multiplayer_authority():
+		health_disp.text = str(health)
+	else:
+		hide()
 	var view_max = int(health_bar.max_value)
 	health_max.text = str(view_max)
 

@@ -20,15 +20,18 @@ func verifications():
 	play_char.move_deccel = play_char.walk_deccel
 
 func physics_update(delta : float):
-	applies(delta)
-	
-	play_char.gravity_apply(delta)
-	
-	input_management()
-	
-	_handle_ground_physics(delta)
-	
-	move(delta)
+	if is_multiplayer_authority():
+		applies(delta)
+		
+		play_char.gravity_apply(delta)
+		
+		input_management()
+		
+		_handle_ground_physics(delta)
+		
+		move(delta)
+	else:
+		pass
 	
 
 
