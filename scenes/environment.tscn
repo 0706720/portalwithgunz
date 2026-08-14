@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://bugwfwhpqfp1n" path="res://addons/kenney_prototype_textures/dark/texture_09.png" id="2_dpxbx"]
 [ext_resource type="Texture2D" uid="uid://1opha1cxcimy" path="res://addons/kenney_prototype_textures/orange/texture_10.png" id="3_tbg6f"]
 [ext_resource type="PackedScene" uid="uid://m1wd27j0gvt6" path="res://scenes/Lava.tscn" id="4_hlc4h"]
+[ext_resource type="PackedScene" uid="uid://cb71bca80dy2g" path="res://settings_menu.tscn" id="6_yw8f4"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_if5ix"]
 albedo_texture = ExtResource("2_dpxbx")
@@ -23,7 +24,7 @@ sky = SubResource("Sky_s85wv")
 [node name="Environment" unique_id=1851466389 instance=ExtResource("1_p4eel")]
 script = ExtResource("2_0psjf")
 
-[node name="Plane" parent="." index="0" unique_id=1187717843]
+[node name="Plane" parent="." index="0" unique_id=2135577384]
 surface_material_override/0 = SubResource("StandardMaterial3D_if5ix")
 surface_material_override/1 = SubResource("StandardMaterial3D_jylvv")
 
@@ -101,6 +102,9 @@ light_energy = 0.5
 [node name="DirectionalLight3D3" type="DirectionalLight3D" parent="." index="7" unique_id=159789974]
 transform = Transform3D(-1, 0, -8.742278e-08, -2.3327196e-08, 0.96374303, 0.26683202, 8.4253095e-08, 0.26683202, -0.96374303, -3.8784409, 8.169632, -19.913763)
 light_energy = 0.5
+
+[node name="Settings menu" parent="." index="8" unique_id=2045956854 instance=ExtResource("6_yw8f4")]
+visible = false
 
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/SinglePlayer" to="." method="_on_single_player_pressed"]
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/HostButton" to="." method="_on_host_button_pressed"]
