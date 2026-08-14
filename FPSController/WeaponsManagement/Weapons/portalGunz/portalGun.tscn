@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://bxdwgb7v5tg61"]
+
+[ext_resource type="ArrayMesh" uid="uid://bga4jhfhfs16x" path="res://FPSController/WeaponsManagement/Weapons/portalGunz/portalgun2.obj" id="1_0gted"]
+[ext_resource type="Script" uid="uid://bbjrq8s2mabs0" path="res://FPSController/WeaponsManagement/Weapons/portalGunz/portal_gun.gd" id="1_k7apl"]
+
+[node name="PortalGun" type="Node3D" unique_id=160590813]
+script = ExtResource("1_k7apl")
+
+[node name="Portalgun2" type="MeshInstance3D" parent="." unique_id=7055702]
+transform = Transform3D(0.9872275, 0.0065374817, 0.15918271, -0.006542383, 0.9999785, -0.00049327937, -0.15918252, -0.0005544716, 0.9872491, -0.28804836, 1.0668272, -0.1949997)
+mesh = ExtResource("1_0gted")
+
+[node name="Raycasts(portalgun)" type="Node3D" parent="." unique_id=1105158580]
+
+[node name="portalRaycast" type="RayCast3D" parent="Raycasts(portalgun)" unique_id=1264311307]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, -1.3113416e-07, 1, 0, -3, -4.371139e-08, 0, 0.102, 0.28017855)
+
+[node name="RayCast3D" type="RayCast3D" parent="Raycasts(portalgun)" unique_id=610985610]

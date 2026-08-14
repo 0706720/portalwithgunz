@@ -31,7 +31,9 @@ project/assembly_name="MultiplayerFPSTemplate"
 [file_customization]
 
 folder_colors={
-"res://Scripts/": "red",
+"res://FPSController/": "red",
+"res://FPSController/Player/": "red",
+"res://FPSController/StateMachine/": "red",
 "res://addons/": "green",
 "res://assets/": "purple",
 "res://scenes/": "blue"

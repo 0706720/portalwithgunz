@@ -1,0 +1,146 @@
+[gd_scene format=3 uid="uid://bg1xha1x7mh6l"]
+
+[ext_resource type="Script" uid="uid://bsws0dd6nmx0w" path="res://FPSController/WeaponsManagement/Weapons/Shotgunz/propulsion_shotgun.gd" id="1_imbo3"]
+[ext_resource type="PackedScene" uid="uid://xcu4pcj2p1s1" path="res://FPSController/WeaponsManagement/Weapons/Shotgunz/spas12.FBX" id="1_j20jc"]
+[ext_resource type="Texture2D" uid="uid://vwob30tkwej4" path="res://addons/kenney_particle_pack/star_06.png" id="3_mr3lb"]
+
+[sub_resource type="Animation" id="Animation_imbo3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Shotgun_model:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MuzzleFlash:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0.11565753, 0.2847079)]
+}
+
+[sub_resource type="Animation" id="Animation_mr3lb"]
+resource_name = "Shoot Shotgun"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Shotgun_model:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-0.2617994, 0, 0), Vector3(-0.5235988, 0, 0), Vector3(-0.2617994, 0, 0), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MuzzleFlash:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0.11565753, 0.2847079), Vector3(0, 0.18679498, 0.2438376), Vector3(0, 0.24276903, 0.18579113), Vector3(0, 0.187, 0.244), Vector3(0, 0.116, 0.285)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_chqbp"]
+_data = {
+&"RESET": SubResource("Animation_imbo3"),
+&"Shoot Shotgun": SubResource("Animation_mr3lb")
+}
+
+[sub_resource type="Gradient" id="Gradient_chqbp"]
+offsets = PackedFloat32Array(0, 0.141221, 1)
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_is51c"]
+gradient = SubResource("Gradient_chqbp")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_t66ci"]
+angle_min = 45.0
+angle_max = 45.0
+gravity = Vector3(0, 0, 0)
+color_ramp = SubResource("GradientTexture1D_is51c")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4smqo"]
+transparency = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_color = Color(1, 0.960784, 0.670588, 1)
+albedo_texture = ExtResource("3_mr3lb")
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_jfixm"]
+material = SubResource("StandardMaterial3D_4smqo")
+size = Vector2(0.5, 0.5)
+orientation = 2
+
+[node name="Propulsion_shotgun" type="Node3D" unique_id=1602549375 groups=["player"]]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
+script = ExtResource("1_imbo3")
+
+[node name="Shotgun_model" parent="." unique_id=546938671 instance=ExtResource("1_j20jc")]
+
+[node name="Raycasts(shotgun)" type="Node3D" parent="." unique_id=1689945132]
+
+[node name="RayCast3D" type="RayCast3D" parent="Raycasts(shotgun)" unique_id=648701779]
+transform = Transform3D(1, 0, 0, 0, -1.3113416e-07, 1, 0, -3, -4.371139e-08, 0, 0.102, 0.28017855)
+
+[node name="RayCast3D2" type="RayCast3D" parent="Raycasts(shotgun)" unique_id=962454393]
+transform = Transform3D(1, 0, 0, 0, -1.3113416e-07, 1, 0, -3, -4.371139e-08, 0, 0.102, 0.28017855)
+
+[node name="RayCast3D3" type="RayCast3D" parent="Raycasts(shotgun)" unique_id=1119116243]
+transform = Transform3D(1, 0, 0, 0, -1.3113416e-07, 1, 0, -3, -4.371139e-08, 0, 0.102, 0.28017855)
+
+[node name="RayCast3D4" type="RayCast3D" parent="Raycasts(shotgun)" unique_id=702176529]
+transform = Transform3D(1, 0, 0, 0, -1.3113416e-07, 1, 0, -3, -4.371139e-08, 0, 0.102, 0.28017855)
+
+[node name="RayCast3D5" type="RayCast3D" parent="Raycasts(shotgun)" unique_id=1132554519]
+transform = Transform3D(1, 0, 0, 0, -1.3113416e-07, 1, 0, -3, -4.371139e-08, 0, 0.102, 0.28017855)
+
+[node name="RayCast3D6" type="RayCast3D" parent="Raycasts(shotgun)" unique_id=778510338]
+transform = Transform3D(1, 0, 0, 0, -1.3113416e-07, 1, 0, -3, -4.371139e-08, 0, 0.102, 0.28017855)
+
+[node name="RayCast3D7" type="RayCast3D" parent="Raycasts(shotgun)" unique_id=230701084]
+transform = Transform3D(1, 0, 0, 0, -1.3113416e-07, 1, 0, -3, -4.371139e-08, 0, 0.102, 0.28017855)
+
+[node name="RayCast3D8" type="RayCast3D" parent="Raycasts(shotgun)" unique_id=689896016]
+transform = Transform3D(1, 0, 0, 0, -1.3113416e-07, 1, 0, -3, -4.371139e-08, 0, 0.102, 0.28017855)
+
+[node name="RayCast3D9" type="RayCast3D" parent="Raycasts(shotgun)" unique_id=661255347]
+transform = Transform3D(1, 0, 0, 0, -1.3113416e-07, 1, 0, -3, -4.371139e-08, 0, 0.102, 0.28017855)
+
+[node name="RayCast3D10" type="RayCast3D" parent="Raycasts(shotgun)" unique_id=1067688191]
+transform = Transform3D(1, 0, 0, 0, -1.3113416e-07, 1, 0, -3, -4.371139e-08, 0, 0.102, 0.28017855)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1014585390]
+libraries/ = SubResource("AnimationLibrary_chqbp")
+
+[node name="MuzzleFlash" type="GPUParticles3D" parent="." unique_id=1287853569]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.11565753, 0.2847079)
+emitting = false
+amount = 100
+lifetime = 0.2
+one_shot = true
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_t66ci")
+draw_pass_1 = SubResource("PlaneMesh_jfixm")

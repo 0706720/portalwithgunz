@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://d4i7nb1k36bs3"]
 
-[ext_resource type="PackedScene" uid="uid://bnwaxjn3kx02" path="res://assets/images/Weapons/Grapple Hook/hook_textuer.fbx" id="1_i1x4r"]
+[ext_resource type="PackedScene" uid="uid://bnwaxjn3kx02" path="res://FPSController/WeaponsManagement/Weapons/Grapple Hook/hook_textuer.fbx" id="1_i1x4r"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1w4tv"]
 albedo_color = Color(1, 0, 0, 1)
