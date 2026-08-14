@@ -30,15 +30,18 @@ func verifications():
 	pass
 
 func physics_update(delta : float):
-	applies(delta)
-	
-	play_char.gravity_apply(delta)
-	
-	input_management()
-	
-	handle_ground_physics(delta)
-	
-	move(delta)
+	if is_multiplayer_authority():
+		applies(delta)
+		
+		play_char.gravity_apply(delta)
+		
+		input_management()
+		
+		handle_ground_physics(delta)
+		
+		move(delta)
+	else:
+		pass
 
 func applies(delta : float):
 	if play_char.velocity.y < 0.0: 
