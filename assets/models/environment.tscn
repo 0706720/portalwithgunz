@@ -1,18 +1,18 @@
 [gd_scene format=3 uid="uid://c1j7an8woikyd"]
 
-[ext_resource type="PackedScene" uid="uid://ckf3250w8jpro" path="res://scenes/models/Environment.glb" id="1_p4eel"]
-[ext_resource type="Script" uid="uid://demmf2hbrwaat" path="res://scenes/world.gd" id="2_0psjf"]
-[ext_resource type="Texture2D" uid="uid://bugwfwhpqfp1n" path="res://addons/kenney_prototype_textures/dark/texture_09.png" id="2_dpxbx"]
-[ext_resource type="Texture2D" uid="uid://1opha1cxcimy" path="res://addons/kenney_prototype_textures/orange/texture_10.png" id="3_tbg6f"]
-[ext_resource type="PackedScene" uid="uid://m1wd27j0gvt6" path="res://scenes/Lava.tscn" id="4_hlc4h"]
-[ext_resource type="PackedScene" uid="uid://cb71bca80dy2g" path="res://settings_menu.tscn" id="6_yw8f4"]
+[ext_resource type="PackedScene" uid="uid://ckf3250w8jpro" path="res://assets/models/Environment.glb" id="1_ub5pq"]
+[ext_resource type="Script" uid="uid://demmf2hbrwaat" path="res://assets/AssetCode/world.gd" id="2_4pqxy"]
+[ext_resource type="Texture2D" uid="uid://bugwfwhpqfp1n" path="res://addons/kenney_prototype_textures/dark/texture_09.png" id="3_3vyp2"]
+[ext_resource type="Texture2D" uid="uid://1opha1cxcimy" path="res://addons/kenney_prototype_textures/orange/texture_10.png" id="4_ndj0g"]
+[ext_resource type="PackedScene" uid="uid://m1wd27j0gvt6" path="res://assets/models/Lava.tscn" id="5_ha0tb"]
+[ext_resource type="PackedScene" uid="uid://cb71bca80dy2g" path="res://assets/models/settings_menu.tscn" id="6_nxrbl"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_if5ix"]
-albedo_texture = ExtResource("2_dpxbx")
+albedo_texture = ExtResource("3_3vyp2")
 uv1_triplanar = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jylvv"]
-albedo_texture = ExtResource("3_tbg6f")
+albedo_texture = ExtResource("4_ndj0g")
 uv1_triplanar = true
 
 [sub_resource type="Sky" id="Sky_s85wv"]
@@ -21,14 +21,14 @@ uv1_triplanar = true
 background_mode = 2
 sky = SubResource("Sky_s85wv")
 
-[node name="Environment" unique_id=1851466389 instance=ExtResource("1_p4eel")]
-script = ExtResource("2_0psjf")
+[node name="Environment" unique_id=1851466389 instance=ExtResource("1_ub5pq")]
+script = ExtResource("2_4pqxy")
 
-[node name="Plane" parent="." index="0" unique_id=1674415541]
+[node name="Plane" parent="." index="0" unique_id=1138403792]
 surface_material_override/0 = SubResource("StandardMaterial3D_if5ix")
 surface_material_override/1 = SubResource("StandardMaterial3D_jylvv")
 
-[node name="Lava" parent="." index="1" unique_id=95045267 instance=ExtResource("4_hlc4h")]
+[node name="Lava" parent="." index="1" unique_id=95045267 instance=ExtResource("5_ha0tb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.88875, 2.3906674, 22.941969)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." index="2" unique_id=842382997]
@@ -103,7 +103,7 @@ light_energy = 0.5
 transform = Transform3D(-1, 0, -8.742278e-08, -2.3327196e-08, 0.96374303, 0.26683202, 8.4253095e-08, 0.26683202, -0.96374303, -3.8784409, 8.169632, -19.913763)
 light_energy = 0.5
 
-[node name="Settings menu" parent="." index="8" unique_id=2045956854 instance=ExtResource("6_yw8f4")]
+[node name="Settings menu" parent="." index="8" unique_id=2045956854 instance=ExtResource("6_nxrbl")]
 visible = false
 
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/SinglePlayer" to="." method="_on_single_player_pressed"]

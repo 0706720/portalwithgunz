@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://cldacmthhfvjt"]
 
-[ext_resource type="Script" uid="uid://demmf2hbrwaat" path="res://scenes/world.gd" id="1_p5pve"]
+[ext_resource type="Script" uid="uid://demmf2hbrwaat" path="res://assets/AssetCode/world.gd" id="1_p5pve"]
 [ext_resource type="Texture2D" uid="uid://bpih68xvt4l1c" path="res://assets/images/FloorTexture.jpg" id="2_v6avs"]
 [ext_resource type="Texture2D" uid="uid://cj5unt7ykwulf" path="res://assets/images/brickwall.jpg" id="3_iw27f"]
-[ext_resource type="PackedScene" uid="uid://bcvf4hmrpkuno" path="res://scenes/MovingPlatform.tscn" id="4_p5pve"]
+[ext_resource type="PackedScene" uid="uid://bcvf4hmrpkuno" path="res://assets/models/MovingPlatform.tscn" id="4_p5pve"]
 [ext_resource type="Texture2D" uid="uid://bvu15qfr23noj" path="res://assets/images/blue.webp" id="5_v6avs"]
-[ext_resource type="PackedScene" uid="uid://cb71bca80dy2g" path="res://settings_menu.tscn" id="6_41ykk"]
+[ext_resource type="PackedScene" uid="uid://cb71bca80dy2g" path="res://assets/models/settings_menu.tscn" id="6_41ykk"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0f2yp"]
 albedo_texture = ExtResource("2_v6avs")
