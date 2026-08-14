@@ -1,0 +1,62 @@
+[gd_scene format=3 uid="uid://eeadoxxlvepj"]
+
+[ext_resource type="Script" uid="uid://cof3kvcmagsqt" path="res://assets/AssetCode/target.gd" id="1_n13nt"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c5agv"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_c5agv"]
+material = SubResource("StandardMaterial3D_c5agv")
+height = 0.1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n13nt"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_n13nt"]
+material = SubResource("StandardMaterial3D_n13nt")
+top_radius = 0.3
+bottom_radius = 0.3
+height = 0.1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ligy1"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_3xmu0"]
+material = SubResource("StandardMaterial3D_ligy1")
+top_radius = 0.1
+bottom_radius = 0.1
+height = 0.1
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_c5agv"]
+height = 0.12468696
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_n13nt"]
+height = 0.11208496
+
+[node name="Target" type="Area3D" unique_id=647349676 groups=["target"]]
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("1_n13nt")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1023296682]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_c5agv")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=1445825561]
+transform = Transform3D(-4.3711385e-08, 0.99999994, 0, -0.99999994, -4.3711385e-08, 0, 0, 0, 1, 0.017879963, 0, 0)
+mesh = SubResource("CylinderMesh_n13nt")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="." unique_id=1147509348]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 0.033705473, 0, 0)
+mesh = SubResource("CylinderMesh_3xmu0")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=871325002]
+transform = Transform3D(-4.3711385e-08, 0.99999994, 0, -0.99999994, -4.3711385e-08, 0, 0, 0, 1, 0.0018385872, 2.6682905e-09, 0)
+shape = SubResource("CylinderShape3D_c5agv")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1493748668]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1867221087]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 6.1027706e-05, -2.6676439e-12, 0)
+shape = SubResource("CylinderShape3D_n13nt")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
