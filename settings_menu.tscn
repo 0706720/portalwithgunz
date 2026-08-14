@@ -66,6 +66,12 @@ offset_right = 1154.0
 offset_bottom = 28.0
 text = "X"
 
+[node name="CheckButton" type="CheckButton" parent="Advanced menu" unique_id=290940843]
+layout_mode = 0
+offset_right = 84.0
+offset_bottom = 50.0
+text = "Press button at your own risk "
+
 [connection signal="pressed" from="MainMenu/MarginContainer/VBoxContainer/return to game" to="." method="_on_return_to_game_pressed"]
 [connection signal="pressed" from="MainMenu/MarginContainer/VBoxContainer/Advanced settings" to="." method="_on_advanced_settings_pressed"]
 [connection signal="pressed" from="MainMenu/MarginContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]
