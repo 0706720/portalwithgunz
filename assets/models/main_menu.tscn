@@ -1,0 +1,95 @@
+[gd_scene format=3 uid="uid://b37autg56jlpg"]
+
+[ext_resource type="Texture2D" uid="uid://8ka2ui7sq36p" path="res://addons/kenney_particle_pack/circle_05.png" id="1_06t4h"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ujyws"]
+bg_color = Color(1, 0.117647, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cmecq"]
+bg_color = Color(0.00392157, 1, 0, 1)
+
+[node name="CanvasLayer" type="CanvasLayer" unique_id=387296170]
+
+[node name="MainMenu" type="PanelContainer" parent="." unique_id=94142317]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 423.0
+offset_top = 227.0
+offset_right = -423.0
+offset_bottom = -227.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MainMenu" unique_id=1372086688]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainMenu/MarginContainer" unique_id=1502406527]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Label" type="Label" parent="MainMenu/MarginContainer/VBoxContainer" unique_id=1197825734]
+layout_mode = 2
+text = "Main Menu"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SinglePlayer" type="Button" parent="MainMenu/MarginContainer/VBoxContainer" unique_id=75361086]
+layout_mode = 2
+text = "Single Player"
+
+[node name="HostButton" type="Button" parent="MainMenu/MarginContainer/VBoxContainer" unique_id=946819957]
+layout_mode = 2
+text = "Host"
+
+[node name="JoinButton" type="Button" parent="MainMenu/MarginContainer/VBoxContainer" unique_id=1782097023]
+layout_mode = 2
+text = "Join"
+
+[node name="AddressEntry" type="LineEdit" parent="MainMenu/MarginContainer/VBoxContainer" unique_id=1752698104]
+layout_mode = 2
+placeholder_text = "Enter Address to Join Here"
+alignment = 1
+
+[node name="HUD" type="Control" parent="." unique_id=294343522]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="TextureRect" type="TextureRect" parent="HUD" unique_id=967721023]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.03, 0.03)
+pivot_offset = Vector2(576, 324)
+texture = ExtResource("1_06t4h")
+stretch_mode = 5
+
+[node name="HealthBar" type="ProgressBar" parent="HUD" unique_id=951708552]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 330.0
+offset_top = 70.0
+offset_right = -330.0
+offset_bottom = -536.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_ujyws")
+theme_override_styles/fill = SubResource("StyleBoxFlat_cmecq")
+max_value = 3.0
+value = 3.0
+show_percentage = false

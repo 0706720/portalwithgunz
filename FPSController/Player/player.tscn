@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" uid="uid://byvoccpe1ihl7" path="res://FPSController/Player/Player.gd" id="1_do0ft"]
 [ext_resource type="PackedScene" uid="uid://bg1xha1x7mh6l" path="res://FPSController/WeaponsManagement/Weapons/Shotgunz/propulsion_shotgun.tscn" id="2_cw433"]
-[ext_resource type="PackedScene" uid="uid://cf1dcxwv6bvl3" path="res://scenes/models/Pistol.glb" id="3_5jtsq"]
+[ext_resource type="PackedScene" uid="uid://cf1dcxwv6bvl3" path="res://assets/models/Pistol.glb" id="3_5jtsq"]
 [ext_resource type="Texture2D" uid="uid://vwob30tkwej4" path="res://addons/kenney_particle_pack/star_06.png" id="4_wpatb"]
-[ext_resource type="PackedScene" uid="uid://d4i7nb1k36bs3" path="res://Grapplehook.tscn" id="5_e7m0m"]
+[ext_resource type="PackedScene" uid="uid://d4i7nb1k36bs3" path="res://FPSController/WeaponsManagement/Weapons/Grapple Hook/Grapplehook.tscn" id="5_e7m0m"]
 [ext_resource type="PackedScene" uid="uid://laqog3huoq3b" path="res://FPSController/WeaponsManagement/Weapons/Grapple Hook/Rope.tscn" id="6_j48a2"]
 [ext_resource type="PackedScene" uid="uid://bxdwgb7v5tg61" path="res://FPSController/WeaponsManagement/Weapons/portalGunz/portalGun.tscn" id="7_r0754"]
 [ext_resource type="Animation" uid="uid://c2y6nfvxis3xa" path="res://FPSController/Player/Crouch.res" id="8_qe01f"]
@@ -13,7 +13,7 @@
 [ext_resource type="Script" uid="uid://vnpwjo05p8a2" path="res://FPSController/StateMachine/idle_state.gd" id="11_evljc"]
 [ext_resource type="Script" uid="uid://d2recx0hfql57" path="res://FPSController/StateMachine/inair_state.gd" id="12_2ddww"]
 [ext_resource type="Script" uid="uid://b23ugk3mrfmt1" path="res://FPSController/StateMachine/run_state.gd" id="13_51ve3"]
-[ext_resource type="Script" uid="uid://bfxl7ntayrnu2" path="res://FPSController/StateMachine/spindash_state.gd" id="14_wd7pj"]
+[ext_resource type="Script" uid="uid://bfxl7ntayrnu2" path="res://FPSController/StateMachine/spindash_state.gd" id="14_do0ft"]
 [ext_resource type="Script" uid="uid://r8smofxec1bn" path="res://FPSController/StateMachine/walk_state.gd" id="15_00aet"]
 [ext_resource type="Script" uid="uid://c8bg3xqpf178p" path="res://FPSController/Player/ScreenOverlay/hud.gd" id="16_do0ft"]
 [ext_resource type="Script" uid="uid://bjam2q4r8dwcf" path="res://FPSController/WeaponsManagement/weapons_manager.gd" id="17_hjbpo"]
@@ -750,7 +750,7 @@ script = ExtResource("12_2ddww")
 script = ExtResource("13_51ve3")
 
 [node name="SpindashState" type="Node" parent="StateMachine" unique_id=1804921026]
-script = ExtResource("14_wd7pj")
+script = ExtResource("14_do0ft")
 
 [node name="WalkState" type="Node" parent="StateMachine" unique_id=105104002]
 script = ExtResource("15_00aet")

@@ -34,9 +34,10 @@ folder_colors={
 "res://FPSController/": "red",
 "res://FPSController/Player/": "red",
 "res://FPSController/StateMachine/": "red",
+"res://_admin/": "orange",
 "res://addons/": "green",
 "res://assets/": "purple",
-"res://scenes/": "blue"
+"res://assets/AssetCode/": "purple"
 }
 
 [filesystem]

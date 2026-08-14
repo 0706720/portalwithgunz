@@ -1,0 +1,107 @@
+[gd_scene format=3 uid="uid://c1j7an8woikyd"]
+
+[ext_resource type="PackedScene" uid="uid://ckf3250w8jpro" path="res://assets/models/Environment.glb" id="1_p4eel"]
+[ext_resource type="Script" uid="uid://demmf2hbrwaat" path="res://assets/AssetCode/world.gd" id="2_0psjf"]
+[ext_resource type="Texture2D" uid="uid://bugwfwhpqfp1n" path="res://addons/kenney_prototype_textures/dark/texture_09.png" id="2_dpxbx"]
+[ext_resource type="Texture2D" uid="uid://1opha1cxcimy" path="res://addons/kenney_prototype_textures/orange/texture_10.png" id="3_tbg6f"]
+[ext_resource type="PackedScene" uid="uid://m1wd27j0gvt6" path="res://assets/models/Lava.tscn" id="4_hlc4h"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_if5ix"]
+albedo_texture = ExtResource("2_dpxbx")
+uv1_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jylvv"]
+albedo_texture = ExtResource("3_tbg6f")
+uv1_triplanar = true
+
+[sub_resource type="Sky" id="Sky_s85wv"]
+
+[sub_resource type="Environment" id="Environment_k15v5"]
+background_mode = 2
+sky = SubResource("Sky_s85wv")
+
+[node name="Environment" unique_id=1851466389 instance=ExtResource("1_p4eel")]
+script = ExtResource("2_0psjf")
+
+[node name="Plane" parent="." index="0" unique_id=1348284961]
+surface_material_override/0 = SubResource("StandardMaterial3D_if5ix")
+surface_material_override/1 = SubResource("StandardMaterial3D_jylvv")
+
+[node name="Lava" parent="." index="1" unique_id=95045267 instance=ExtResource("4_hlc4h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.88875, 2.3906674, 22.941969)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." index="2" unique_id=842382997]
+
+[node name="MainMenu" type="PanelContainer" parent="CanvasLayer" index="0" unique_id=500018539]
+offset_right = 1154.0
+offset_bottom = 648.0
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/MainMenu" index="0" unique_id=1700317349]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MainMenu/MarginContainer" index="0" unique_id=1102447393]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/MainMenu/MarginContainer/VBoxContainer" index="0" unique_id=1193928821]
+layout_mode = 2
+text = "Main Menu"
+horizontal_alignment = 1
+
+[node name="SinglePlayer" type="Button" parent="CanvasLayer/MainMenu/MarginContainer/VBoxContainer" index="1" unique_id=2086078121]
+layout_mode = 2
+text = "Single Player"
+
+[node name="HostButton" type="Button" parent="CanvasLayer/MainMenu/MarginContainer/VBoxContainer" index="2" unique_id=1123939095]
+layout_mode = 2
+text = "Host"
+
+[node name="JoinButton" type="Button" parent="CanvasLayer/MainMenu/MarginContainer/VBoxContainer" index="3" unique_id=1840305797]
+layout_mode = 2
+text = "Join"
+
+[node name="AddressEntry" type="LineEdit" parent="CanvasLayer/MainMenu/MarginContainer/VBoxContainer" index="4" unique_id=1013915365]
+layout_mode = 2
+size_flags_vertical = 6
+placeholder_text = "Enter Address to Join Here"
+alignment = 1
+
+[node name="HUD" type="Control" parent="CanvasLayer" index="1" unique_id=76423508]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/HUD" index="0" unique_id=1010758565]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HealthBar" type="ProgressBar" parent="CanvasLayer/HUD" index="1" unique_id=1824159396]
+layout_mode = 0
+offset_right = 4.0
+offset_bottom = 27.0
+value = 100.0
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." index="3" unique_id=1967260226]
+spawn_path = NodePath("..")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." index="4" unique_id=1347325339]
+environment = SubResource("Environment_k15v5")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." index="5" unique_id=1654056698]
+transform = Transform3D(0.8360182, -0.18189546, -0.517675, 0.44200325, 0.7822804, 0.43894237, 0.32512543, -0.595778, 0.73439914, -14.683933, 19.78864, 35.770844)
+light_energy = 2.0
+shadow_enabled = true
+
+[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="." index="6" unique_id=1721760373]
+transform = Transform3D(0.843892, 0.3418059, 0.41353986, -0.4809249, 0.14026213, 0.86546975, 0.23781863, -0.9292444, 0.28274903, 10.544916, 12.833935, 0)
+light_energy = 0.5
+
+[node name="DirectionalLight3D3" type="DirectionalLight3D" parent="." index="7" unique_id=159789974]
+transform = Transform3D(-1, 0, -8.742278e-08, -2.3327196e-08, 0.96374303, 0.26683202, 8.4253095e-08, 0.26683202, -0.96374303, -3.8784409, 8.169632, -19.913763)
+light_energy = 0.5
+
+[connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/SinglePlayer" to="." method="_on_single_player_pressed"]
+[connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/HostButton" to="." method="_on_host_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/JoinButton" to="." method="_on_join_button_pressed"]
+[connection signal="spawned" from="MultiplayerSpawner" to="." method="_on_multiplayer_spawner_spawned"]

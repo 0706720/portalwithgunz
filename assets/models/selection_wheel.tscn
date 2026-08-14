@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://dckqpumpljncf"]
+
+[ext_resource type="Script" uid="uid://djwbqs2eq6jt8" path="res://assets/AssetCode/selection_wheel.gd" id="1_ndhov"]
+
+[node name="Selection Wheel" type="Control" unique_id=1283847130]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ndhov")
+background_colour = Color(0.24477637, 0.2447764, 0.24477637, 1)
+options = [null, null, null, null, null, null]
