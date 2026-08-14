@@ -9,7 +9,7 @@ const sprite_size = Vector2(32, 32)
 @export var inner_radius: int = 64
 @export var line_width: int = 4
 @export var options: Array[EmoteWheel] = []
-var select = 0
+var selection = 0
 
 func _draw():
 	
@@ -45,4 +45,15 @@ func _draw():
 			)
 
 func _process(delta):
+	var mouse_pos = get_local_mouse_position()
+	var mouse_radius = mouse_pos.length()
+	
+	if mouse_radius < inner_radius:
+		selection = 0
+	else:
+		var mouse_rads = fposmod(mouse_pos.angle() * -1, TAU)
+		selection = ceil(mouse_rads / TAU) * (len(options) - 1)
+	
+	print(selection)
+	
 	queue_redraw()
