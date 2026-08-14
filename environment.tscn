@@ -1,17 +1,17 @@
 [gd_scene format=3 uid="uid://c1j7an8woikyd"]
 
-[ext_resource type="PackedScene" uid="uid://ckf3250w8jpro" path="res://assets/models/Environment.glb" id="1_p4eel"]
-[ext_resource type="Script" uid="uid://demmf2hbrwaat" path="res://assets/AssetCode/world.gd" id="2_0psjf"]
-[ext_resource type="Texture2D" uid="uid://bugwfwhpqfp1n" path="res://addons/kenney_prototype_textures/dark/texture_09.png" id="2_dpxbx"]
-[ext_resource type="Texture2D" uid="uid://1opha1cxcimy" path="res://addons/kenney_prototype_textures/orange/texture_10.png" id="3_tbg6f"]
-[ext_resource type="PackedScene" uid="uid://m1wd27j0gvt6" path="res://assets/models/Lava.tscn" id="4_hlc4h"]
+[ext_resource type="PackedScene" uid="uid://ckf3250w8jpro" path="res://assets/models/Environment.glb" id="1_g4tgr"]
+[ext_resource type="Script" uid="uid://demmf2hbrwaat" path="res://assets/AssetCode/world.gd" id="2_dm4p5"]
+[ext_resource type="Texture2D" uid="uid://bugwfwhpqfp1n" path="res://addons/kenney_prototype_textures/dark/texture_09.png" id="3_pk5nr"]
+[ext_resource type="Texture2D" uid="uid://1opha1cxcimy" path="res://addons/kenney_prototype_textures/orange/texture_10.png" id="4_poig3"]
+[ext_resource type="PackedScene" uid="uid://m1wd27j0gvt6" path="res://assets/models/Lava.tscn" id="5_2eiut"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_if5ix"]
-albedo_texture = ExtResource("2_dpxbx")
+albedo_texture = ExtResource("3_pk5nr")
 uv1_triplanar = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jylvv"]
-albedo_texture = ExtResource("3_tbg6f")
+albedo_texture = ExtResource("4_poig3")
 uv1_triplanar = true
 
 [sub_resource type="Sky" id="Sky_s85wv"]
@@ -20,14 +20,14 @@ uv1_triplanar = true
 background_mode = 2
 sky = SubResource("Sky_s85wv")
 
-[node name="Environment" unique_id=1851466389 instance=ExtResource("1_p4eel")]
-script = ExtResource("2_0psjf")
+[node name="Environment" unique_id=1851466389 instance=ExtResource("1_g4tgr")]
+script = ExtResource("2_dm4p5")
 
-[node name="Plane" parent="." index="0" unique_id=1348284961]
+[node name="Plane" parent="." index="0" unique_id=1138403792]
 surface_material_override/0 = SubResource("StandardMaterial3D_if5ix")
 surface_material_override/1 = SubResource("StandardMaterial3D_jylvv")
 
-[node name="Lava" parent="." index="1" unique_id=95045267 instance=ExtResource("4_hlc4h")]
+[node name="Lava" parent="." index="1" unique_id=95045267 instance=ExtResource("5_2eiut")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.88875, 2.3906674, 22.941969)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." index="2" unique_id=842382997]
