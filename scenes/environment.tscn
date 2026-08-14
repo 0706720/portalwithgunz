@@ -24,7 +24,7 @@ sky = SubResource("Sky_s85wv")
 [node name="Environment" unique_id=1851466389 instance=ExtResource("1_p4eel")]
 script = ExtResource("2_0psjf")
 
-[node name="Plane" parent="." index="0" unique_id=2135577384]
+[node name="Plane" parent="." index="0" unique_id=1674415541]
 surface_material_override/0 = SubResource("StandardMaterial3D_if5ix")
 surface_material_override/1 = SubResource("StandardMaterial3D_jylvv")
 
