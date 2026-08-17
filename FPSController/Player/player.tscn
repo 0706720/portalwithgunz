@@ -16,6 +16,7 @@
 [ext_resource type="Script" uid="uid://bfxl7ntayrnu2" path="res://FPSController/StateMachine/spindash_state.gd" id="14_do0ft"]
 [ext_resource type="Script" uid="uid://r8smofxec1bn" path="res://FPSController/StateMachine/walk_state.gd" id="15_00aet"]
 [ext_resource type="Script" uid="uid://c8bg3xqpf178p" path="res://FPSController/Player/ScreenOverlay/hud.gd" id="16_do0ft"]
+[ext_resource type="PackedScene" uid="uid://dckqpumpljncf" path="res://assets/models/selection_wheel.tscn" id="17_cw433"]
 [ext_resource type="Script" uid="uid://bjam2q4r8dwcf" path="res://FPSController/WeaponsManagement/weapons_manager.gd" id="17_hjbpo"]
 [ext_resource type="Script" uid="uid://bwjf6rau8gocs" path="res://FPSController/Player/ScreenOverlay/screen_overlay.gd" id="18_do0ft"]
 
@@ -761,6 +762,9 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("16_do0ft")
+
+[node name="Selection Wheel" parent="HUD" unique_id=1283847130 instance=ExtResource("17_cw433")]
+layout_mode = 1
 
 [node name="healthBar" type="ProgressBar" parent="HUD" unique_id=288653942]
 custom_minimum_size = Vector2(100, 0)
