@@ -144,7 +144,7 @@ func _ready():
 	else:
 		camera.current = false
 	# access the weapons manager script, and call the print function to set the current weapon to pistol
-	weaponsManager.print(0)
+	weaponsManager.rpc_apply_weapon(0)
 	if is_multiplayer_authority():
 		$Player/RightArm.hide()
 		$Player/LeftArm.hide()
@@ -292,19 +292,19 @@ func _physics_process(delta):
 	
 	# the 'weapon' checks are just keybinds 1-5 bind to the weapon types. Each call the weapons manager script, and swap out current for new weapon.
 	if Input.is_action_just_pressed("weapon1"):
-		weaponsManager.print(0)
+		weaponsManager.rpc_apply_weapon(0)
 		
 	if Input.is_action_just_pressed("weapon2"):
-		weaponsManager.print(1)
+		weaponsManager.rpc_apply_weapon(1)
 		
 	if Input.is_action_just_pressed("weapon3"):
-		weaponsManager.print(2)
+		weaponsManager.rpc_apply_weapon(2)
 		
 	if Input.is_action_just_pressed("weapon4"):
-		weaponsManager.print(3)
+		weaponsManager.rpc_apply_weapon(3)
 		
 	if Input.is_action_just_pressed("weapon5"):
-		weaponsManager.print(4)
+		weaponsManager.rpc_apply_weapon(4)
 		
 	if Input.is_action_just_released("Grapple"):
 		stop_grapple()
