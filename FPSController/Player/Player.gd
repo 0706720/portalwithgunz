@@ -144,7 +144,7 @@ func _ready():
 	else:
 		camera.current = false
 	# access the weapons manager script, and call the print function to set the current weapon to pistol
-	weaponsManager.print(0)
+	weaponsManager.request_weapon_change(0)
 	if is_multiplayer_authority():
 		$Player/RightArm.hide()
 		$Player/LeftArm.hide()
@@ -263,7 +263,7 @@ func _physics_process(delta):
 		# Rotate Player (Yaw) - Horizontal movement of the stick
 		rotate_y(-look_dir.x * LOOK_SPEED * delta)
 		
-		# Rotate Camera (Pitch) - Vertical movement of the stick
+		# Rotate Camera (Pitch) - Vertical movement of the stickrpc_apply_weapon
 		camera.rotate_x(-look_dir.y * LOOK_SPEED * delta)
 		
 		# Clamp camera pitch rotation (same as your mouse look code)
@@ -292,19 +292,19 @@ func _physics_process(delta):
 	
 	# the 'weapon' checks are just keybinds 1-5 bind to the weapon types. Each call the weapons manager script, and swap out current for new weapon.
 	if Input.is_action_just_pressed("weapon1"):
-		weaponsManager.print(0)
+		weaponsManager.request_weapon_change(0)
 		
 	if Input.is_action_just_pressed("weapon2"):
-		weaponsManager.print(1)
+		weaponsManager.request_weapon_change(1)
 		
 	if Input.is_action_just_pressed("weapon3"):
-		weaponsManager.print(2)
+		weaponsManager.request_weapon_change(2)
 		
 	if Input.is_action_just_pressed("weapon4"):
-		weaponsManager.print(3)
+		weaponsManager.request_weapon_change(3)
 		
 	if Input.is_action_just_pressed("weapon5"):
-		weaponsManager.print(4)
+		weaponsManager.request_weapon_change(4)
 		
 	if Input.is_action_just_released("Grapple"):
 		stop_grapple()
