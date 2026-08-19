@@ -1,14 +1,15 @@
 extends Node
 class_name State
 
-signal transitioned(from, to)
+signal transitioned(from_state, to_state)
 
 var play_char: CharacterBody3D
 
 func enter(char: CharacterBody3D):
 	play_char = char
 
-func physics_update(delta):
+func physics_update(delta, char: CharacterBody3D):
+	# base does nothing; children override
 	pass
 
 ## state.gd

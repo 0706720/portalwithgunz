@@ -1,11 +1,13 @@
 extends State
 class_name InairState
 
+var state_name := "InairState"
+
 func enter(char: CharacterBody3D):
 	super.enter(char)
 	print("Entered Inair")
 
-func physics_update(delta):
+func physics_update(delta, play_char):
 	play_char.gravity_apply(delta)
 
 	var cur_speed_in_wish_dir = play_char.velocity.dot(play_char.wish_dir)
@@ -13,7 +15,7 @@ func physics_update(delta):
 	var add_speed_till_cap = capped_speed - cur_speed_in_wish_dir
 
 	if add_speed_till_cap > 0.0:
-		var accel_speed = play_char.air_accel * play_char.air_speed * delta
+		var accel_speed = play_char.air_accel * delta
 		accel_speed = min(accel_speed, add_speed_till_cap)
 		play_char.velocity += accel_speed * play_char.wish_dir
 

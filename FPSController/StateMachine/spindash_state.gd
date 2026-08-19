@@ -26,7 +26,7 @@ func enter(play_char_ref : CharacterBody3D):
 func verifications():
 	pass
 
-func physics_update(delta : float):
+func physics_update(delta, play_char):
 	applies(delta)
 	
 	#play_char.gravity_apply(delta)

@@ -1,16 +1,25 @@
 extends State
 class_name IdleState
 
+var state_name := "IdleState"
+
 func enter(char: CharacterBody3D):
 	super.enter(char)
 	print("Entered Idle")
 
-func physics_update(delta):
-	# transition to walk/run if there is input
-	if play_char.input_direction != Vector2.ZERO:
+func physics_update(delta, play_char):
+	play_char.gravity_apply(delta)
+
+	play_char.velocity.x = lerp(play_char.velocity.x, 0.0, play_char.ground_friction * delta)
+	play_char.velocity.z = lerp(play_char.velocity.z, 0.0, play_char.ground_friction * delta)
+
+	if Input.is_action_just_pressed(play_char.crouch_action):
+		transitioned.emit(self, "CrouchState")
+	elif play_char.input_direction != Vector2.ZERO:
 		transitioned.emit(self, play_char.walk_or_run)
-	elif play_char.velocity.y < 0.0:
+	elif !play_char.is_on_floor():
 		transitioned.emit(self, "InairState")
+
 
 #extends State
 #

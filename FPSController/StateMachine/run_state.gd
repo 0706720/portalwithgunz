@@ -21,7 +21,7 @@ func verifications():
 		print("Non-authority entered RunState")
 		pass
 
-func physics_update(delta):
+func physics_update(delta, play_char):
 # CLIENT: read input + predict movement
 	if is_local_player:
 		input_management()

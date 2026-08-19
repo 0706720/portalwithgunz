@@ -1,6 +1,8 @@
 extends State
 class_name WalkState
 
+var state_name := "WalkState"
+
 func enter(char: CharacterBody3D):
 	super.enter(char)
 	play_char.move_speed = play_char.walk_speed
@@ -8,27 +10,28 @@ func enter(char: CharacterBody3D):
 	play_char.move_deccel = play_char.walk_deccel
 	print("Entered Walk")
 
-func physics_update(delta):
-	# apply gravity
+func physics_update(delta, play_char):
 	play_char.gravity_apply(delta)
 
-	# ground movement
-	if play_char.wish_dir != Vector3.ZERO and play_char.is_on_floor():
-		play_char.velocity.x = lerp(
-			play_char.velocity.x,
-			play_char.wish_dir.x * play_char.move_speed,
-			play_char.move_accel * delta
-		)
-		play_char.velocity.z = lerp(
-			play_char.velocity.z,
-			play_char.wish_dir.z * play_char.move_speed,
-			play_char.move_accel * delta
-		)
+	if play_char.is_on_floor():
+		if play_char.wish_dir != Vector3.ZERO:
+			var target = play_char.wish_dir * play_char.move_speed
+			play_char.velocity.x = lerp(play_char.velocity.x, target.x, play_char.move_accel * delta)
+			play_char.velocity.z = lerp(play_char.velocity.z, target.z, play_char.move_accel * delta)
+		else:
+			play_char.velocity.x = lerp(play_char.velocity.x, 0.0, play_char.ground_friction * delta)
+			play_char.velocity.z = lerp(play_char.velocity.z, 0.0, play_char.ground_friction * delta)
 
-	if !play_char.is_on_floor():
+	if Input.is_action_just_pressed(play_char.crouch_action):
+		transitioned.emit(self, "CrouchState")
+	elif !play_char.is_on_floor():
 		transitioned.emit(self, "InairState")
-	elif play_char.input_direction == Vector2.ZERO and play_char.velocity.length() <= 0.1:
+	elif play_char.input_direction == Vector2.ZERO and Vector2(play_char.velocity.x, play_char.velocity.z).length() < 0.1:
 		transitioned.emit(self, "IdleState")
+
+
+
+
 
 
 

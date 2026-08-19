@@ -23,7 +23,8 @@ func _process(_delta : float) -> void:
 	
 func display_properties() -> void:
 	if is_multiplayer_authority():
-		current_state_label_text.set_text(str(play_char.state_machine.curr_state_name))
+		current_state_label_text.set_text(str(play_char.state_machine.current_state.state_name))
+		#current_state_label_text.set_text(str(play_char.state_machine.curr_state_name))
 		desired_move_speed_label_text.set_text(str(round_to_3_decimals(play_char.desired_move_speed)))
 		is_on_floor_label_text.set_text(str(play_char.is_on_floor()))
 		velocity_label_text.set_text(str(round_to_3_decimals(play_char.velocity.length())))

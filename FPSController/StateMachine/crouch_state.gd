@@ -1,44 +1,57 @@
 extends State
 class_name CrouchState
 
+var state_name := "CrouchState"
+
 func enter(char: CharacterBody3D):
 	super.enter(char)
+	play_char._is_crouching = true
+	play_char._using_crouch = true
 	_crouch_check()
 	print("Entered Crouch")
 
 func _crouch_check():
-	if play_char._is_crouching and !play_char.crouch_shapecast.is_colliding() and !play_char._using_crouch:
+	if play_char._is_crouching and !play_char.crouch_shapecast.is_colliding():
 		play_char.crouch_anim_player.play("Crouch", -1, -play_char.crouch_speed, true)
-	elif !play_char._is_crouching and !play_char._using_crouch and play_char.is_on_floor():
+	elif !play_char._is_crouching and play_char.is_on_floor():
 		play_char.crouch_anim_player.play("Crouch", -1, play_char.crouch_speed)
 
-func physics_update(delta):
+func physics_update(delta, play_char):
 	play_char.gravity_apply(delta)
 
+	# friction
 	if play_char.is_on_floor():
-		var control = max(play_char.velocity.length(), play_char.ground_deccel)
+		var horizontal_speed = Vector2(play_char.velocity.x, play_char.velocity.z).length()
+		var control = max(horizontal_speed, play_char.ground_deccel)
 		var drop = control * play_char.ground_friction * delta
-		var new_speed = max(play_char.velocity.length() - drop, 0.0)
+		var new_speed = max(horizontal_speed - drop, 0.0)
 
-		if play_char.velocity.length() > 0.0:
-			new_speed /= play_char.velocity.length()
+		if horizontal_speed > 0.0:
+			new_speed /= horizontal_speed
 
-		play_char.velocity *= new_speed
+		play_char.velocity.x *= new_speed
+		play_char.velocity.z *= new_speed
 
+
+	# crouch movement
 	if play_char.wish_dir != Vector3.ZERO and play_char.is_on_floor():
 		play_char.velocity.x = lerp(play_char.velocity.x, play_char.wish_dir.x * play_char.crouch_speed, play_char.move_accel * delta)
 		play_char.velocity.z = lerp(play_char.velocity.z, play_char.wish_dir.z * play_char.crouch_speed, play_char.move_accel * delta)
 
-	if play_char.velocity.y < 0.0:
-		_crouch_check()
-		transitioned.emit(self, "InairState")
+	# exit crouch
+	if Input.is_action_just_pressed(play_char.crouch_action):
+		play_char._is_crouching = false
+		play_char._using_crouch = false
 
-	if Input.is_action_just_pressed(play_char.crouch_action) and play_char.is_on_floor():
-		_crouch_check()
 		if play_char.wish_dir != Vector3.ZERO:
 			transitioned.emit(self, play_char.walk_or_run)
 		else:
 			transitioned.emit(self, "IdleState")
+
+	# falling
+	if !play_char.is_on_floor():
+		transitioned.emit(self, "InairState")
+
 
 #extends State
 #
