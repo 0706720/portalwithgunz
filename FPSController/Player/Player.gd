@@ -246,6 +246,7 @@ func _unhandled_input(event):
 			anim_playing = false
 
 
+
 func _physics_process(delta):
 	if not is_multiplayer_authority(): 
 		return
@@ -269,8 +270,32 @@ func _physics_process(delta):
 		# Clamp camera pitch rotation (same as your mouse look code)
 		camera.rotation.x = clamp(camera.rotation.x, -PI/2, PI/2)
 		
+		
+	#EMOTE WHEEL
+	var emote = $HUD/SelectionWheel.close()
+	
+	if emote == 1 and Input.is_action_just_released("emote"):
+		$EmoteBar.show()
+		$EmoteBar.texture = load("res://assets/images/ThumbsUp.webp")
+		$HUD/SelectionWheel.hide()
+		await get_tree().create_timer(2.0).timeout
+		$EmoteBar.hide()
+		$EmoteBar.texture = null
+	if emote == 2 and Input.is_action_just_released("emote"):
+		pass
+	if emote == 3 and Input.is_action_just_released("emote"):
+		pass
+	if emote == 4 and Input.is_action_just_released("emote"):
+		pass
+	if emote == 5 and Input.is_action_just_released("emote"):
+		pass
+	if emote == 6 and Input.is_action_just_released("emote"):
+		pass
+	if emote == 0 and Input.is_action_just_released("emote"):
+		pass
+	
+	
 	if Input.is_action_just_pressed("emote"):
-		print("EMOTE")
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		$HUD/SelectionWheel.show()
 	if Input.is_action_just_released("emote"):

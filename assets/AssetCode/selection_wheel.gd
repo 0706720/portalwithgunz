@@ -12,6 +12,10 @@ const sprite_size = Vector2(32, 32)
 @export var options: Array[EmoteWheel] = []
 var selection = 0
 
+func close():
+	return selection
+
+
 func _draw():
 	
 	var offset = sprite_size / -2
