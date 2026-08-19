@@ -21,8 +21,4 @@ func _on_player_health_changed(health):
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if Input.is_action_just_pressed("emote"):
-		$"Selection Wheel".show()
-	elif Input.is_action_just_released("emote"):
-		$"Selection Wheel".Close()
-	
+	pass
