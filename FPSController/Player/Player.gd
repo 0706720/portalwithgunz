@@ -271,11 +271,11 @@ func _physics_process(delta):
 		
 	if Input.is_action_just_pressed("emote"):
 		print("EMOTE")
-		$EmoteBar.show()
-		$EmoteBar.texture = load("res://assets/images/ThumbsUp.webp")
-		await get_tree().create_timer(2.0).timeout
-		$EmoteBar.hide()
-		$EmoteBar.texture = load("")
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		$HUD/SelectionWheel.show()
+	if Input.is_action_just_released("emote"):
+		$HUD/SelectionWheel.hide()
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	
 	if anim_player.current_animation == "shoot":
 		pass
