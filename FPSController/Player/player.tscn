@@ -517,13 +517,16 @@ _data = {
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_dqkch"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_wpatb"]
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_v5lg8"]
-atlas = ExtResource("19_e7m0m")
+atlas = SubResource("AtlasTexture_wpatb")
 script = ExtResource("18_wpatb")
 name = "1"
 metadata/_custom_type_script = "uid://dqjdqpr0mh0og"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1yo78"]
+atlas = ExtResource("19_e7m0m")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4l438"]
 atlas = SubResource("AtlasTexture_1yo78")
