@@ -2,7 +2,6 @@ extends State
 class_name RunState
 
 var state_name := "Run"
-var play_char : CharacterBody3D
 
 # Networking flags
 var is_server := false

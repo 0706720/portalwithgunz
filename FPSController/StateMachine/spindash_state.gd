@@ -3,7 +3,6 @@ extends State
 class_name SpindashState
 
 var state_name : String = "Spindash"
-var play_char : CharacterBody3D
 var wish_dir := Vector3.ZERO
 @export var spin_charge_rate := 75.0
 @export var spin_max_power := 100.0

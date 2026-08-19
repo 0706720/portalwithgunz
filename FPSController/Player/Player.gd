@@ -12,13 +12,19 @@ var current_speed: float
 var move_speed: float
 var move_accel: float
 var move_deccel: float
-var input_direction: Vector2
-var move_direction: Vector3
 var desired_move_speed: float
 @export var desired_move_speed_curve: Curve #accumulated speed
 @export var max_desired_move_speed: float = 30.0
 @export var hit_ground_cooldown: float = 0.1 #amount of time the character keep his accumulated speed before losing it (while being on ground)
 var hit_ground_cooldown_ref: float
+
+const POS_SMOOTH := 0.15
+const ROT_SMOOTH := 0.15
+const VEL_SMOOTH := 0.20
+
+var wish_dir: Vector3 = Vector3.ZERO
+var input_direction: Vector2 = Vector2.ZERO
+var move_direction: Vector3 = Vector3.ZERO
 
 @export_group("Air variables")
 var air_speed: float = 500
@@ -87,7 +93,7 @@ const HEADBOB_FREQUENCY = 2.4
 var headbob_time := 0.0
 
 #spindash variables
-@export var wish_dir := Vector3.ZERO
+#@export var wish_dir := Vector3.ZERO
 @export var spin_charge_rate := 25.0
 @export var spin_max_power := 50.0
 @export var spin_min_release := 10.0
@@ -245,30 +251,40 @@ func _unhandled_input(event):
 			await get_tree().create_timer(1.0).timeout
 			anim_playing = false
 
-
 func _physics_process(delta):
-	if not is_multiplayer_authority(): 
+	# Only the multiplayer authority runs full local logic
+	if not is_multiplayer_authority():
 		return
+
+	# 1) Collect movement input
+	input_direction = Input.get_vector("left", "right", "up", "down").normalized()
+
+	if input_direction != Vector2.ZERO:
+		move_direction = (global_transform.basis * Vector3(input_direction.x, 0.0, input_direction.y)).normalized()
 	else:
-		var input_dir := Input.get_vector("left", "right", "up", "down").normalized()
-		wish_dir = self.global_transform.basis * Vector3(input_dir.x, 0., input_dir.y)
-		move_and_slide()
+		move_direction = Vector3.ZERO
 
+	wish_dir = move_direction
 
-	# --- New: Handle Camera Look (Right Stick) ---
-	# Get the controller stick input (Horizontal and Vertical)
+	# 2) Let the state machine handle movement logic (Idle/Walk/Inair/Crouch/etc.)
+	if state_machine:
+		state_machine.physics_update(delta)
+	else:
+		# fallback: simple movement if state machine not wired
+		velocity = wish_dir * move_speed
+
+	# 3) Apply movement
+	move_and_slide()
+
+	# 4) Camera look (your existing code)
 	var look_dir = Input.get_vector("look_left", "look_right", "look_up", "look_down")
 	
 	if look_dir != Vector2.ZERO:
-		# Rotate Player (Yaw) - Horizontal movement of the stick
 		rotate_y(-look_dir.x * LOOK_SPEED * delta)
-		
-		# Rotate Camera (Pitch) - Vertical movement of the stickrpc_apply_weapon
 		camera.rotate_x(-look_dir.y * LOOK_SPEED * delta)
-		
-		# Clamp camera pitch rotation (same as your mouse look code)
 		camera.rotation.x = clamp(camera.rotation.x, -PI/2, PI/2)
-		
+	
+	# 5) Emote, grapple, weapons, animations (unchanged)
 	if Input.is_action_just_pressed("emote"):
 		print("EMOTE")
 		$EmoteBar.show()
@@ -279,38 +295,105 @@ func _physics_process(delta):
 	
 	if anim_player.current_animation == "shoot":
 		pass
-	elif input_dir != Vector2.ZERO and is_on_floor():
+	elif input_direction != Vector2.ZERO and is_on_floor():
 		anim_player.play("move")
 	else:
 		anim_player.play("idle")
-	var camera = $Camera3D
-	#move_and_slide()
 	
 	if Input.is_action_just_pressed("Grapple") and Global.currentWeapon == 'GrappleGun':
 		start_grapple()
 		print("Grapple")
 	
-	# the 'weapon' checks are just keybinds 1-5 bind to the weapon types. Each call the weapons manager script, and swap out current for new weapon.
 	if Input.is_action_just_pressed("weapon1"):
 		weaponsManager.request_weapon_change(0)
-		
 	if Input.is_action_just_pressed("weapon2"):
 		weaponsManager.request_weapon_change(1)
-		
 	if Input.is_action_just_pressed("weapon3"):
 		weaponsManager.request_weapon_change(2)
-		
 	if Input.is_action_just_pressed("weapon4"):
 		weaponsManager.request_weapon_change(3)
-		
 	if Input.is_action_just_pressed("weapon5"):
 		weaponsManager.request_weapon_change(4)
-		
+	
 	if Input.is_action_just_released("Grapple"):
 		stop_grapple()
 	
 	if is_grappling:
 		process_grapple(delta)
+
+	# 6) Networking: client sends input to server, server syncs transform
+	if !multiplayer.is_server():
+		# client → server: send input + wish_dir
+		rpc_id(1, "_server_receive_input", input_direction, wish_dir)
+	else:
+		# server → clients: authoritative transform + velocity
+		rpc("_client_sync_state", global_transform, velocity)
+
+#func _physics_process(delta):
+	#if not is_multiplayer_authority(): 
+		#return
+	#else:
+		#var input_dir := Input.get_vector("left", "right", "up", "down").normalized()
+		#wish_dir = self.global_transform.basis * Vector3(input_dir.x, 0., input_dir.y)
+		#move_and_slide()
+#
+#
+	## --- New: Handle Camera Look (Right Stick) ---
+	## Get the controller stick input (Horizontal and Vertical)
+	#var look_dir = Input.get_vector("look_left", "look_right", "look_up", "look_down")
+	#
+	#if look_dir != Vector2.ZERO:
+		## Rotate Player (Yaw) - Horizontal movement of the stick
+		#rotate_y(-look_dir.x * LOOK_SPEED * delta)
+		#
+		## Rotate Camera (Pitch) - Vertical movement of the stickrpc_apply_weapon
+		#camera.rotate_x(-look_dir.y * LOOK_SPEED * delta)
+		#
+		## Clamp camera pitch rotation (same as your mouse look code)
+		#camera.rotation.x = clamp(camera.rotation.x, -PI/2, PI/2)
+		#
+	#if Input.is_action_just_pressed("emote"):
+		#print("EMOTE")
+		#$EmoteBar.show()
+		#$EmoteBar.texture = load("res://assets/images/ThumbsUp.webp")
+		#await get_tree().create_timer(2.0).timeout
+		#$EmoteBar.hide()
+		#$EmoteBar.texture = load("")
+	#
+	#if anim_player.current_animation == "shoot":
+		#pass
+	#elif input_dir != Vector2.ZERO and is_on_floor():
+		#anim_player.play("move")
+	#else:
+		#anim_player.play("idle")
+	#var camera = $Camera3D
+	##move_and_slide()
+	#
+	#if Input.is_action_just_pressed("Grapple") and Global.currentWeapon == 'GrappleGun':
+		#start_grapple()
+		#print("Grapple")
+	#
+	## the 'weapon' checks are just keybinds 1-5 bind to the weapon types. Each call the weapons manager script, and swap out current for new weapon.
+	#if Input.is_action_just_pressed("weapon1"):
+		#weaponsManager.request_weapon_change(0)
+		#
+	#if Input.is_action_just_pressed("weapon2"):
+		#weaponsManager.request_weapon_change(1)
+		#
+	#if Input.is_action_just_pressed("weapon3"):
+		#weaponsManager.request_weapon_change(2)
+		#
+	#if Input.is_action_just_pressed("weapon4"):
+		#weaponsManager.request_weapon_change(3)
+		#
+	#if Input.is_action_just_pressed("weapon5"):
+		#weaponsManager.request_weapon_change(4)
+		#
+	#if Input.is_action_just_released("Grapple"):
+		#stop_grapple()
+	#
+	#if is_grappling:
+		#process_grapple(delta)
 
 func gravity_apply(delta):
 	self.velocity.y -= gravity * delta
@@ -360,6 +443,32 @@ func play_shoot_effects():
 	anim_player.play("shoot")
 	muzzle_flash.restart()
 	muzzle_flash.emitting = true
+
+@rpc("any_peer")
+func _server_receive_input(input_dir: Vector2, wish: Vector3):
+	# Server receives input from client and updates movement dirs
+	input_direction = input_dir
+	wish_dir = wish
+
+@rpc("authority")
+func _client_sync_state(server_transform: Transform3D, server_velocity: Vector3):
+	var current: Transform3D = global_transform
+	var target: Transform3D = server_transform
+
+	# smooth position
+	current.origin = current.origin.lerp(target.origin, POS_SMOOTH)
+
+	# smooth rotation using correct Godot 4 API
+	var cur_quat: Quaternion = current.basis.get_rotation_quaternion()
+	var tgt_quat: Quaternion = target.basis.get_rotation_quaternion()
+	var smooth_quat: Quaternion = cur_quat.slerp(tgt_quat, ROT_SMOOTH)
+	current.basis = Basis(smooth_quat)
+
+	# apply transform
+	global_transform = current
+
+	# smooth velocity
+	velocity = velocity.lerp(server_velocity, VEL_SMOOTH)
 
 @rpc("any_peer")
 func receive_damage(amount):

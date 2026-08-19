@@ -1,152 +1,44 @@
 extends State
 class_name CrouchState
 
-var state_name := "Crouch"
-var play_char : CharacterBody3D
+func enter(char: CharacterBody3D):
+	super.enter(char)
+	_crouch_check()
+	print("Entered Crouch")
 
-# Multiplayer flags
-var is_server := false
-var is_local_player := false
-
-func enter(play_char_ref : CharacterBody3D):
-	play_char = play_char_ref
-
-	is_server = multiplayer.is_server()
-	is_local_player = play_char.is_multiplayer_authority()
-
-	verifications()
-	crouchCheck()
-
-	print("Entered Crouch (server:", is_server, " local:", is_local_player, ")")
-
-func crouchCheck():
+func _crouch_check():
 	if play_char._is_crouching and !play_char.crouch_shapecast.is_colliding() and !play_char._using_crouch:
 		play_char.crouch_anim_player.play("Crouch", -1, -play_char.crouch_speed, true)
 	elif !play_char._is_crouching and !play_char._using_crouch and play_char.is_on_floor():
 		play_char.crouch_anim_player.play("Crouch", -1, play_char.crouch_speed)
 
-func verifications():
-	pass
-
 func physics_update(delta):
-	# CLIENT: prediction
-	if is_local_player:
-		input_management()
-		applies(delta)
-		play_char.gravity_apply(delta)
+	play_char.gravity_apply(delta)
 
-		# ensure wish_dir exists BEFORE physics
-		if play_char.move_direction:
-			play_char.wish_dir = play_char.move_direction
-		else:
-			play_char.wish_dir = Vector3.ZERO
-
-		handle_ground_physics(delta)
-		move(delta)
-
-		# send input to server
-		rpc_id(1, "_server_receive_input", play_char.input_direction, play_char.wish_dir)
-
-	# SERVER: authoritative movement
-	if is_server:
-		applies(delta)
-		play_char.gravity_apply(delta)
-
-		if play_char.move_direction:
-			play_char.wish_dir = play_char.move_direction
-		else:
-			play_char.wish_dir = Vector3.ZERO
-
-		handle_ground_physics(delta)
-		move(delta)
-
-		# sync transform to clients
-		rpc("_client_sync_transform", play_char.global_transform)
-
-func applies(delta):
-	if play_char.velocity.y < 0.0 and !play_char.is_on_floor():
-		crouchCheck()
-		transitioned.emit(self, "InairState")
-
-	if Input.is_action_just_pressed(play_char.crouch_action):
-		if play_char.is_on_floor():
-			crouchCheck()
-			#if play_char.move_direction:
-				#transitioned.emit(self, play_char.walk_or_run)
-			#else:
-				#transitioned.emit(self, "IdleState")
-
-func input_management():
-	pass
-
-func handle_ground_physics(delta):
 	if play_char.is_on_floor():
 		var control = max(play_char.velocity.length(), play_char.ground_deccel)
 		var drop = control * play_char.ground_friction * delta
 		var new_speed = max(play_char.velocity.length() - drop, 0.0)
 
-		if play_char.velocity.length() > 0:
+		if play_char.velocity.length() > 0.0:
 			new_speed /= play_char.velocity.length()
 
 		play_char.velocity *= new_speed
 
-func move(delta):
-	play_char.input_direction = Input.get_vector(
-		play_char.move_left_action,
-		play_char.move_right_action,
-		play_char.move_forward_action,
-		play_char.move_backward_action
-	)
+	if play_char.wish_dir != Vector3.ZERO and play_char.is_on_floor():
+		play_char.velocity.x = lerp(play_char.velocity.x, play_char.wish_dir.x * play_char.crouch_speed, play_char.move_accel * delta)
+		play_char.velocity.z = lerp(play_char.velocity.z, play_char.wish_dir.z * play_char.crouch_speed, play_char.move_accel * delta)
 
-	play_char.move_direction = (
-		play_char.cam_holder.global_basis *
-		Vector3(play_char.input_direction.x, 0.0, play_char.input_direction.y)
-	).normalized()
+	if play_char.velocity.y < 0.0:
+		_crouch_check()
+		transitioned.emit(self, "InairState")
 
-	play_char.desired_move_speed = clamp(
-		play_char.desired_move_speed,
-		0.0,
-		play_char.max_desired_move_speed
-	)
-
-	if play_char.move_direction and play_char.is_on_floor():
-		play_char.velocity.x = lerp(
-			play_char.velocity.x,
-			play_char.move_direction.x * play_char.crouch_speed,
-			play_char.move_accel * delta
-		)
-
-		play_char.velocity.z = lerp(
-			play_char.velocity.z,
-			play_char.move_direction.z * play_char.crouch_speed,
-			play_char.move_accel * delta
-		)
-
-# -------------------------
-# CROUCH ANIMATION SIGNALS
-# -------------------------
-
-func _on_crouch_animation_player_animation_finished(anim_name: StringName) -> void:
-	if anim_name == "Crouch":
-		play_char._using_crouch = false
-
-func _on_crouch_animation_player_animation_started(anim_name: StringName) -> void:
-	if anim_name == "Crouch":
-		play_char._is_crouching = !play_char._is_crouching
-		play_char._using_crouch = true
-
-# -------------------------
-# RPC SYNC HOOKS
-# -------------------------
-
-@rpc("any_peer")
-func _server_receive_input(input_dir, wish_dir):
-	play_char.input_direction = input_dir
-	play_char.wish_dir = wish_dir
-
-@rpc("authority")
-func _client_sync_transform(server_transform):
-	play_char.global_transform = server_transform
+	if Input.is_action_just_pressed(play_char.crouch_action) and play_char.is_on_floor():
+		_crouch_check()
+		if play_char.wish_dir != Vector3.ZERO:
+			transitioned.emit(self, play_char.walk_or_run)
+		else:
+			transitioned.emit(self, "IdleState")
 
 #extends State
 #
