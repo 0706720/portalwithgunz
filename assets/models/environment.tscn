@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://1opha1cxcimy" path="res://addons/kenney_prototype_textures/orange/texture_10.png" id="4_ndj0g"]
 [ext_resource type="PackedScene" uid="uid://m1wd27j0gvt6" path="res://assets/models/Lava.tscn" id="5_ha0tb"]
 [ext_resource type="PackedScene" uid="uid://cb71bca80dy2g" path="res://assets/models/settings_menu.tscn" id="6_nxrbl"]
+[ext_resource type="Script" uid="uid://cu4q12nc2xear" path="res://FPSController/Player/anti_cheat.gd" id="7_4pqxy"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_if5ix"]
 albedo_texture = ExtResource("3_3vyp2")
@@ -24,7 +25,7 @@ sky = SubResource("Sky_s85wv")
 [node name="Environment" unique_id=1851466389 instance=ExtResource("1_ub5pq")]
 script = ExtResource("2_4pqxy")
 
-[node name="Plane" parent="." index="0" unique_id=1986233116]
+[node name="Plane" parent="." index="0" unique_id=888736112]
 surface_material_override/0 = SubResource("StandardMaterial3D_if5ix")
 surface_material_override/1 = SubResource("StandardMaterial3D_jylvv")
 
@@ -105,6 +106,9 @@ light_energy = 0.5
 
 [node name="Settings menu" parent="." index="8" unique_id=2045956854 instance=ExtResource("6_nxrbl")]
 visible = false
+
+[node name="anti_cheat" type="Node" parent="." index="9" unique_id=1496734272]
+script = ExtResource("7_4pqxy")
 
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/SinglePlayer" to="." method="_on_single_player_pressed"]
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/HostButton" to="." method="_on_host_button_pressed"]

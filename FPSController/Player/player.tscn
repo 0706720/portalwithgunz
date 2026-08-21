@@ -774,6 +774,9 @@ visible = false
 unique_name_in_owner = true
 transform = Transform3D(-0.29996273, 0, -0.0047294777, 0, 0.3, 0, 0.0047294777, 0, -0.29996273, 1.1062536, -0.25200891, -0.8642118)
 
+[node name="Throwposs" type="Marker3D" parent="CameraHolder/Camera3D" unique_id=300913629]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+
 [node name="CrouchAnimationPlayer" type="AnimationPlayer" parent="." unique_id=320549004]
 libraries/ = SubResource("AnimationLibrary_qlg0r")
 
