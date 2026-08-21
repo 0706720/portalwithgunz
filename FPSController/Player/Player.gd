@@ -249,7 +249,9 @@ func simulate_movement(delta):
 			state_machine.physics_update(delta)
 		else:
 			velocity = wish_dir * move_speed
-      
+			
+		move_and_slide()
+	  
 func _physics_process(delta):
 	# 1) Local movement for this player only
 	simulate_movement(delta)
@@ -264,15 +266,6 @@ func _physics_process(delta):
 
 		# send our state to the other peer
 		rpc("_client_sync_state", global_transform, velocity)
-
-
-		# emote, grapple, weapons, animations (local only)
-		if Input.is_action_just_pressed("emote"):
-			$EmoteBar.show()
-			$EmoteBar.texture = load("res://assets/images/ThumbsUp.webp")
-			await get_tree().create_timer(2.0).timeout
-			$EmoteBar.hide()
-			$EmoteBar.texture = load("")
 
 		if anim_player.current_animation == "shoot":
 			pass
