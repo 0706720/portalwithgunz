@@ -121,6 +121,7 @@ var gravity = 19.6
 
 var texture = TextureRect
 
+var PortalThrow = preload("res://FPSController/WeaponsManagement/Weapons/portalGunz/throw_portal_gun.tscn")
 
 func _enter_tree():
 	print(name)
@@ -294,6 +295,9 @@ func _physics_process(delta):
 		if is_grappling:
 			process_grapple(delta)
 
+		if Input.is_action_just_pressed("throw"):
+			Throw()
+
 		# client → server input
 		Network.rpc_id(
 			1,
@@ -372,6 +376,17 @@ func stop_grapple():
 	is_grappling = false
 	velocity *= 1.2
 
+func Throw():
+	var PortalgunIns = PortalThrow.instantiate()
+	PortalgunIns.position = $CameraHolder/Camera3D/Throwposs.global_position
+	get_tree().current_scene.add_child(PortalgunIns)
+
+	var force = -18
+	var upDirection = 3.5
+	
+	var playerRotation = %Camera3D.global_transform.basis.z.normalized()
+	
+	PortalgunIns.apply_central_impulse(playerRotation * force + Vector3(0, upDirection, 0))
 
 @rpc("call_local")
 func play_shoot_effects():
