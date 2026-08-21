@@ -249,9 +249,7 @@ func simulate_movement(delta):
 			state_machine.physics_update(delta)
 		else:
 			velocity = wish_dir * move_speed
-
-		move_and_slide()
-
+      
 func _physics_process(delta):
 	# 1) Local movement for this player only
 	simulate_movement(delta)
@@ -311,11 +309,39 @@ func _physics_process(delta):
 			input_direction,
 			wish_dir
 		)
-
-
+		
+	#EMOTE WHEEL
+	var emote = $HUD/SelectionWheel.close()
+	
+	if emote == 1 and Input.is_action_just_released("emote"):
+		$EmoteBar.show()
+		$EmoteBar.texture = load("res://assets/images/ThumbsUp.webp")
+		$HUD/SelectionWheel.hide()
+		await get_tree().create_timer(2.0).timeout
+		$EmoteBar.hide()
+		$EmoteBar.texture = null
+	if emote == 2 and Input.is_action_just_released("emote"):
+		pass
+	if emote == 3 and Input.is_action_just_released("emote"):
+		pass
+	if emote == 4 and Input.is_action_just_released("emote"):
+		pass
+	if emote == 5 and Input.is_action_just_released("emote"):
+		pass
+	if emote == 6 and Input.is_action_just_released("emote"):
+		pass
+	if emote == 0 and Input.is_action_just_released("emote"):
+		pass
+	
+	if Input.is_action_just_pressed("emote"):
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		$HUD/SelectionWheel.show()
+	if Input.is_action_just_released("emote"):
+		$HUD/SelectionWheel.hide()
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	
 func gravity_apply(delta):
 	velocity.y -= gravity * delta
-
 
 func start_grapple():
 	raycast.global_transform = camera.global_transform
@@ -326,7 +352,6 @@ func start_grapple():
 		grapple_point = raycast.get_collision_point()
 		rope_length = global_transform.origin.distance_to(grapple_point)
 		is_grappling = true
-
 
 func process_grapple(delta):
 	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
@@ -346,7 +371,6 @@ func process_grapple(delta):
 		velocity -= direction * velocity_away
 
 	velocity += direction * grapple_pull_strength * delta
-
 
 func stop_grapple():
 	is_grappling = false

@@ -19,6 +19,8 @@
 [ext_resource type="PackedScene" uid="uid://dckqpumpljncf" path="res://assets/models/selection_wheel.tscn" id="17_cw433"]
 [ext_resource type="Script" uid="uid://bjam2q4r8dwcf" path="res://FPSController/WeaponsManagement/weapons_manager.gd" id="17_hjbpo"]
 [ext_resource type="Script" uid="uid://bwjf6rau8gocs" path="res://FPSController/Player/ScreenOverlay/screen_overlay.gd" id="18_do0ft"]
+[ext_resource type="Script" uid="uid://dqjdqpr0mh0og" path="res://assets/AssetCode/emote_wheel.gd" id="18_wpatb"]
+[ext_resource type="Texture2D" uid="uid://wy2hdd51kkgt" path="res://assets/images/ThumbsUp.webp" id="19_e7m0m"]
 
 [sub_resource type="Curve" id="Curve_qfm1y"]
 _limits = [0.0, 30.0, 0.0, 60.0]
@@ -515,6 +517,55 @@ _data = {
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_dqkch"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_wpatb"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v5lg8"]
+atlas = SubResource("AtlasTexture_wpatb")
+script = ExtResource("18_wpatb")
+name = "1"
+metadata/_custom_type_script = "uid://dqjdqpr0mh0og"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1yo78"]
+atlas = ExtResource("19_e7m0m")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4l438"]
+atlas = SubResource("AtlasTexture_1yo78")
+script = ExtResource("18_wpatb")
+name = "2"
+metadata/_custom_type_script = "uid://dqjdqpr0mh0og"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5cebd"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pt43d"]
+atlas = SubResource("AtlasTexture_5cebd")
+script = ExtResource("18_wpatb")
+name = "3"
+metadata/_custom_type_script = "uid://dqjdqpr0mh0og"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dcoln"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vcnht"]
+atlas = SubResource("AtlasTexture_dcoln")
+script = ExtResource("18_wpatb")
+name = "4"
+metadata/_custom_type_script = "uid://dqjdqpr0mh0og"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g48ct"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j48a2"]
+atlas = SubResource("AtlasTexture_g48ct")
+script = ExtResource("18_wpatb")
+name = "5"
+metadata/_custom_type_script = "uid://dqjdqpr0mh0og"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cahw7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r0754"]
+atlas = SubResource("AtlasTexture_cahw7")
+script = ExtResource("18_wpatb")
+name = "6"
+metadata/_custom_type_script = "uid://dqjdqpr0mh0og"
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3v2ag"]
 bg_color = Color(1, 0, 0, 1)
 
@@ -575,39 +626,10 @@ viewport_path = NodePath("SubViewport")
 collision_layer = 2
 script = ExtResource("1_do0ft")
 desired_move_speed_curve = SubResource("Curve_qfm1y")
-max_desired_move_speed = null
-hit_ground_cooldown = null
 crouch_anim_player = NodePath("CrouchAnimationPlayer")
 crouch_shapecast = NodePath("ShapeCast3D")
-crouch_speed = null
 grapple_speed = 500.0
 grapple_pull_strength = 500.0
-max_grapple_distance = null
-stop_distance = null
-rope_length = null
-look_sensitivity = null
-auto_bhop = null
-sprint_speed = null
-ground_accel = null
-ground_deccel = null
-ground_friction = null
-wish_dir = null
-spin_charge_rate = null
-spin_max_power = null
-spin_min_release = null
-spin_friction = null
-spin_camera_tilt_amount = null
-spin_camera_tilt_speed = null
-move_forward_action = null
-move_backward_action = null
-move_left_action = null
-move_right_action = null
-run_action = null
-crouch_action = null
-jump_action = null
-check_on_ready_if_inputs_registered = null
-Portal_one = null
-Portal_two = null
 
 [node name="Player" type="Node3D" parent="." unique_id=444522863]
 transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0, 0)
@@ -763,8 +785,16 @@ offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("16_do0ft")
 
-[node name="Selection Wheel" parent="HUD" unique_id=1283847130 instance=ExtResource("17_cw433")]
+[node name="SelectionWheel" parent="HUD" unique_id=1283847130 instance=ExtResource("17_cw433")]
+visible = false
 layout_mode = 1
+anchors_preset = -1
+anchor_left = 15.0
+anchor_top = 7.5
+anchor_right = 15.0
+anchor_bottom = 7.5
+highlight_colour = Color(0.11489672, 0.11489684, 0.11489674, 1)
+options = Array[ExtResource("18_wpatb")]([SubResource("AtlasTexture_v5lg8"), SubResource("AtlasTexture_4l438"), SubResource("AtlasTexture_pt43d"), SubResource("AtlasTexture_vcnht"), SubResource("AtlasTexture_v5lg8"), SubResource("AtlasTexture_j48a2"), SubResource("AtlasTexture_r0754")])
 
 [node name="healthBar" type="ProgressBar" parent="HUD" unique_id=288653942]
 custom_minimum_size = Vector2(100, 0)
