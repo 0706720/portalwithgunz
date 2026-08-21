@@ -353,7 +353,7 @@ func show_emote_remote(emote):
 			$EmoteBar.texture = load("res://assets/images/ThumbsUp.webp")
 		2.0:
 			pass
-	ss	3.0:
+		3.0:
 			pass
 		4.0:
 			pass
