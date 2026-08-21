@@ -3,6 +3,8 @@ extends Node
 var current_score = 0
 var health = 100
 
+var players := {}
+
 var player
 var currentWeapon = 'Pistol'
 # if status is true, increases the size of the window and scales on-screen elements to window size
