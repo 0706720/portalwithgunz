@@ -306,36 +306,66 @@ func _physics_process(delta):
 	#EMOTE WHEEL
 	var emote = $HUD/SelectionWheel.close()
 	
-	if emote == 1 and Input.is_action_just_released("emote"):
-		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-		$EmoteBar.show()
-		$EmoteBar.texture = load("res://assets/images/ThumbsUp.webp")
-		$HUD/SelectionWheel.hide()
-		await get_tree().create_timer(2.0).timeout
+	if is_multiplayer_authority():
+		if Input.is_action_just_pressed("emote"):
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+			$HUD/SelectionWheel.show()
+		if Input.is_action_just_released("emote"):
+			$HUD/SelectionWheel.hide()
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+			rpc("show_emote_remote", emote)
+			show_emote_local(emote)
+	
+func show_emote_local(emote):
+	print(emote)
+	match emote:
+		1.0:
+			$EmoteBar.show()
+			$EmoteBar.texture = load("res://assets/images/ThumbsUp.webp")
+		2.0:
+			pass
+		3.0:
+			pass
+		4.0:
+			pass
+		5.0:
+			pass
+		6.0:
+			pass
+		0:
+			pass
+	var timer := get_tree().create_timer(2.0)
+	timer.timeout.connect(func():
 		$EmoteBar.hide()
 		$EmoteBar.texture = null
-	if emote == 2 and Input.is_action_just_released("emote"):
-		pass
-	if emote == 3 and Input.is_action_just_released("emote"):
-		pass
-	if emote == 4 and Input.is_action_just_released("emote"):
-		pass
-	if emote == 5 and Input.is_action_just_released("emote"):
-		pass
-	if emote == 6 and Input.is_action_just_released("emote"):
-		pass
+	)
 
-#DO NOT EDIT
-	if emote == 0 and Input.is_action_just_released("emote"):
-		pass
-	
-	if Input.is_action_just_pressed("emote"):
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-		$HUD/SelectionWheel.show()
-	if Input.is_action_just_released("emote"):
-		$HUD/SelectionWheel.hide()
-		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	
+@rpc("any_peer")
+func show_emote_remote(emote):
+	print(emote)
+	match emote:
+		1.0:
+			$EmoteBar.show()
+			$EmoteBar.texture = load("res://assets/images/ThumbsUp.webp")
+		2.0:
+			pass
+		3.0:
+			pass
+		4.0:
+			pass
+		5.0:
+			pass
+		6.0:
+			pass
+		0:
+			pass
+	var timer := get_tree().create_timer(2.0)
+	timer.timeout.connect(func():
+		$EmoteBar.hide()
+		$EmoteBar.texture = null
+	)
+s
+
 func gravity_apply(delta):
 	velocity.y -= gravity * delta
 
