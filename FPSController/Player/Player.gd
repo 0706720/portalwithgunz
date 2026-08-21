@@ -353,7 +353,7 @@ func show_emote_remote(emote):
 			$EmoteBar.texture = load("res://assets/images/ThumbsUp.webp")
 		2.0:
 			pass
-		3.0:
+	ss	3.0:
 			pass
 		4.0:
 			pass
@@ -368,7 +368,7 @@ func show_emote_remote(emote):
 		$EmoteBar.hide()
 		$EmoteBar.texture = null
 	)
-s
+
 
 func gravity_apply(delta):
 	velocity.y -= gravity * delta
