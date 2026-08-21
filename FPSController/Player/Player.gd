@@ -105,10 +105,11 @@ var walk_or_run: String = "WalkState"
 @export var run_action: StringName = "play_char_run_action"
 @export var crouch_action: StringName = "play_char_crouch_action"
 @export var jump_action: StringName = "play_char_jump_action"
+@export var throw_action: StringName ="play_char_throw_action"
 @onready var input_actions_list : Array[StringName] = [
 	move_forward_action, move_backward_action,
 	move_left_action, move_right_action,
-	run_action, crouch_action, jump_action
+	run_action, crouch_action, jump_action, throw_action
 ]
 @export var check_on_ready_if_inputs_registered : bool = true
 var default_input_actions : Dictionary
@@ -121,7 +122,7 @@ var gravity = 19.6
 
 var texture = TextureRect
 
-var PortalThrow = preload("res://FPSController/WeaponsManagement/Weapons/portalGunz/throw_portal_gun.tscn")
+var PortalThrow: PackedScene = preload("res://FPSController/WeaponsManagement/Weapons/portalGunz/throw_portal_gun.tscn")
 
 func _enter_tree():
 	print(name)
@@ -167,6 +168,7 @@ func build_default_keybinding() -> void:
 		run_action : [Key.KEY_CTRL],
 		crouch_action : [Key.KEY_C],
 		jump_action : [Key.KEY_SPACE],
+		throw_action : [Key.KEY_Q]
 	}
 
 
@@ -296,7 +298,7 @@ func _physics_process(delta):
 			process_grapple(delta)
 
 		if Input.is_action_just_pressed("throw"):
-			Throw()
+			rpc_id(1, "request_spawn_projectile", global_position)
 
 		# client → server input
 		Network.rpc_id(
@@ -406,17 +408,16 @@ func stop_grapple():
 	is_grappling = false
 	velocity *= 1.2
 
-func Throw():
+@rpc("any_peer", "call_local", "reliable")
+func request_spawn_projectile(spawn_position: Vector2):
+	if not multiplayer.is_server():
+		return
 	var PortalgunIns = PortalThrow.instantiate()
 	PortalgunIns.position = $CameraHolder/Camera3D/Throwposs.global_position
 	get_tree().current_scene.add_child(PortalgunIns)
 
 	var force = -18
 	var upDirection = 3.5
-	
-	var playerRotation = %Camera3D.global_transform.basis.z.normalized()
-	
-	PortalgunIns.apply_central_impulse(playerRotation * force + Vector3(0, upDirection, 0))
 
 @rpc("call_local")
 func play_shoot_effects():
@@ -471,10 +472,8 @@ func _handle_air_physics(delta):
 			motion_mode = CharacterBody3D.MOTION_MODE_GROUNDED
 		clip_velocity(get_wall_normal(), 1, delta)
 
-
 func _process(delta):
 	pass
-
 
 func clip_velocity(normal: Vector3, overbounce : float, delta : float) -> void:
 	var backoff := velocity.dot(normal) * overbounce
