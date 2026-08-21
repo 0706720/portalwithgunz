@@ -275,6 +275,7 @@ func _physics_process(delta):
 	var emote = $HUD/SelectionWheel.close()
 	
 	if emote == 1 and Input.is_action_just_released("emote"):
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		$EmoteBar.show()
 		$EmoteBar.texture = load("res://assets/images/ThumbsUp.webp")
 		$HUD/SelectionWheel.hide()
@@ -291,6 +292,8 @@ func _physics_process(delta):
 		pass
 	if emote == 6 and Input.is_action_just_released("emote"):
 		pass
+
+#DO NOT EDIT
 	if emote == 0 and Input.is_action_just_released("emote"):
 		pass
 	
