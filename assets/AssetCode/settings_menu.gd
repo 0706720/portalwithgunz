@@ -9,7 +9,7 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("Settings menu"):
-		get_tree().change_scene_to_file("res://settings_menu.tscn")
+		get_tree().change_scene_to_file("res://assets/models/settings_menu.tscn")
 
 
 func _on_return_to_game_pressed() -> void:
