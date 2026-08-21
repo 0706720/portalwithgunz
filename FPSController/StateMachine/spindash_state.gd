@@ -3,7 +3,6 @@ extends State
 class_name SpindashState
 
 var state_name : String = "Spindash"
-var play_char : CharacterBody3D
 var wish_dir := Vector3.ZERO
 @export var spin_charge_rate := 75.0
 @export var spin_max_power := 100.0
@@ -27,7 +26,7 @@ func enter(play_char_ref : CharacterBody3D):
 func verifications():
 	pass
 
-func physics_update(delta : float):
+func physics_update(delta, play_char):
 	applies(delta)
 	
 	#play_char.gravity_apply(delta)

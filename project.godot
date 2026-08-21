@@ -23,6 +23,7 @@ config/icon="uid://557yev33xedo"
 [autoload]
 
 Global="*uid://c1xxttxh8shp6"
+Network="*uid://r8j6sp7df6v"
 
 [dotnet]
 
@@ -34,6 +35,7 @@ folder_colors={
 "res://FPSController/": "red",
 "res://FPSController/Player/": "red",
 "res://FPSController/StateMachine/": "red",
+"res://Network/": "teal",
 "res://_admin/": "orange",
 "res://addons/": "green",
 "res://assets/": "purple",
