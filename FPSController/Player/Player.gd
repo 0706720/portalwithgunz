@@ -329,7 +329,8 @@ func show_emote_local(emote):
 			$EmoteBar.show()
 			$EmoteBar.texture = load("res://assets/images/ThumbsUp.webp")
 		2.0:
-			pass
+			$EmoteBar.show()
+			$EmoteBar.texture = load("res://assets/images/Pelican.jpeg")
 		3.0:
 			pass
 		4.0:
@@ -354,7 +355,8 @@ func show_emote_remote(emote):
 			$EmoteBar.show()
 			$EmoteBar.texture = load("res://assets/images/ThumbsUp.webp")
 		2.0:
-			pass
+			$EmoteBar.show()
+			$EmoteBar.texture = load("res://assets/images/Pelican.jpeg")
 		3.0:
 			pass
 		4.0:
