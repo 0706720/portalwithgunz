@@ -21,7 +21,9 @@
 [ext_resource type="Script" uid="uid://bwjf6rau8gocs" path="res://FPSController/Player/ScreenOverlay/screen_overlay.gd" id="18_do0ft"]
 [ext_resource type="Script" uid="uid://dqjdqpr0mh0og" path="res://assets/AssetCode/emote_wheel.gd" id="18_wpatb"]
 [ext_resource type="Texture2D" uid="uid://wy2hdd51kkgt" path="res://assets/images/ThumbsUp.webp" id="19_e7m0m"]
+[ext_resource type="Texture2D" uid="uid://k7mvukti5jxy" path="res://assets/images/give-me-your-favorite-reaction-memes-v0-je7aot4ib6qe1.webp" id="19_r0754"]
 [ext_resource type="Texture2D" uid="uid://bfdyrk7i0ygu3" path="res://assets/images/Pelican.jpeg" id="20_e7m0m"]
+[ext_resource type="Texture2D" uid="uid://kpodjr2ek4pr" path="res://assets/images/8880154.jpg" id="21_j48a2"]
 
 [sub_resource type="Curve" id="Curve_qfm1y"]
 _limits = [0.0, 30.0, 0.0, 60.0]
@@ -518,12 +520,9 @@ _data = {
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_dqkch"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_wpatb"]
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_v5lg8"]
-atlas = SubResource("AtlasTexture_wpatb")
 script = ExtResource("18_wpatb")
-name = "4"
+name = "0"
 metadata/_custom_type_script = "uid://dqjdqpr0mh0og"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1yo78"]
@@ -545,6 +544,7 @@ name = "2"
 metadata/_custom_type_script = "uid://dqjdqpr0mh0og"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dcoln"]
+atlas = ExtResource("21_j48a2")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vcnht"]
 atlas = SubResource("AtlasTexture_dcoln")
@@ -552,17 +552,23 @@ script = ExtResource("18_wpatb")
 name = "3"
 metadata/_custom_type_script = "uid://dqjdqpr0mh0og"
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_g48ct"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_r0754"]
+atlas = ExtResource("19_r0754")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_j48a2"]
-atlas = SubResource("AtlasTexture_g48ct")
+atlas = SubResource("AtlasTexture_r0754")
+script = ExtResource("18_wpatb")
+name = "4"
+metadata/_custom_type_script = "uid://dqjdqpr0mh0og"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g48ct"]
 script = ExtResource("18_wpatb")
 name = "5"
 metadata/_custom_type_script = "uid://dqjdqpr0mh0og"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cahw7"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_r0754"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_qe01f"]
 atlas = SubResource("AtlasTexture_cahw7")
 script = ExtResource("18_wpatb")
 name = "6"
@@ -799,7 +805,7 @@ anchor_top = 7.5
 anchor_right = 15.0
 anchor_bottom = 7.5
 highlight_colour = Color(0.11489672, 0.11489684, 0.11489674, 1)
-options = Array[ExtResource("18_wpatb")]([SubResource("AtlasTexture_v5lg8"), SubResource("AtlasTexture_4l438"), SubResource("AtlasTexture_pt43d"), SubResource("AtlasTexture_vcnht"), SubResource("AtlasTexture_v5lg8"), SubResource("AtlasTexture_j48a2"), SubResource("AtlasTexture_r0754")])
+options = Array[ExtResource("18_wpatb")]([SubResource("AtlasTexture_v5lg8"), SubResource("AtlasTexture_4l438"), SubResource("AtlasTexture_pt43d"), SubResource("AtlasTexture_vcnht"), SubResource("AtlasTexture_j48a2"), SubResource("AtlasTexture_g48ct"), SubResource("AtlasTexture_qe01f")])
 
 [node name="healthBar" type="ProgressBar" parent="HUD" unique_id=288653942]
 custom_minimum_size = Vector2(100, 0)

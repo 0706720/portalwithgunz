@@ -332,9 +332,11 @@ func show_emote_local(emote):
 			$EmoteBar.show()
 			$EmoteBar.texture = load("res://assets/images/Pelican.jpeg")
 		3.0:
-			pass
+			$EmoteBar.show()
+			$EmoteBar.texture = load("res://assets/images/8880154.jpg")
 		4.0:
-			pass
+			$EmoteBar.show()
+			$EmoteBar.texture = load("res://assets/images/give-me-your-favorite-reaction-memes-v0-je7aot4ib6qe1.webp")
 		5.0:
 			pass
 		6.0:
@@ -358,9 +360,11 @@ func show_emote_remote(emote):
 			$EmoteBar.show()
 			$EmoteBar.texture = load("res://assets/images/Pelican.jpeg")
 		3.0:
-			pass
+			$EmoteBar.show()
+			$EmoteBar.texture = load("res://assets/images/8880154.jpg")
 		4.0:
-			pass
+			$EmoteBar.show()
+			$EmoteBar.texture = load("res://assets/images/give-me-your-favorite-reaction-memes-v0-je7aot4ib6qe1.webp")
 		5.0:
 			pass
 		6.0:
