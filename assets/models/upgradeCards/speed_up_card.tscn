@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://bc8ymt2wypdfj"]
+
+[ext_resource type="Texture2D" uid="uid://ctcrwyn562eq4" path="res://assets/images/upgradesSystem/cardoutline (1).png" id="1_gmw2h"]
+[ext_resource type="Texture2D" uid="uid://c4vcfktilhahl" path="res://assets/images/upgradesSystem/heart-shield.png" id="2_vklts"]
+[ext_resource type="FontFile" uid="uid://brl5hlu3dc40l" path="res://assets/images/upgradesSystem/Nunito/Nunito-Italic-VariableFont_wght.ttf" id="3_ddov1"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_8e42y"]
+font = ExtResource("3_ddov1")
+font_size = 20
+
+[node name="SpeedUpCard" type="Node2D" unique_id=1994179710]
+
+[node name="Cardoutline(1)" type="Sprite2D" parent="." unique_id=1121910638]
+position = Vector2(438, 255)
+texture = ExtResource("1_gmw2h")
+
+[node name="HeartShield" type="Sprite2D" parent="." unique_id=35630064]
+position = Vector2(322, 444.99997)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("2_vklts")
+
+[node name="Cardoutline(1)2" type="Sprite2D" parent="." unique_id=2127952059]
+position = Vector2(437.00003, 155.00002)
+scale = Vector2(0.8620688, 0.4065041)
+texture = ExtResource("1_gmw2h")
+
+[node name="Label" type="Label" parent="." unique_id=602760103]
+offset_left = 288.0
+offset_top = 256.0
+offset_right = 328.0
+offset_bottom = 279.0
+text = "HEALTH BONUS"
+label_settings = SubResource("LabelSettings_8e42y")
