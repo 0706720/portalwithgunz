@@ -1,6 +1,5 @@
 [gd_scene format=3 uid="uid://bprr7kn8s2bom"]
 
-[ext_resource type="Script" uid="uid://demmf2hbrwaat" path="res://assets/AssetCode/world.gd" id="1_ynhhp"]
 [ext_resource type="Script" uid="uid://b6n6uoylj1gpp" path="res://Network/metadata.gd" id="2_aijkt"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_g4v7s"]
@@ -11,8 +10,13 @@ size = Vector2(100, 100)
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_ynhhp"]
 data = PackedVector3Array(50, 0, 50, -50, 0, 50, 50, 0, -50, -50, 0, 50, -50, 0, -50, 50, 0, -50)
 
+[sub_resource type="BoxMesh" id="BoxMesh_wlk0u"]
+size = Vector3(2, 20, 100)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_aijkt"]
+data = PackedVector3Array(-1, 10, 50, 1, 10, 50, -1, -10, 50, 1, 10, 50, 1, -10, 50, -1, -10, 50, 1, 10, -50, -1, 10, -50, 1, -10, -50, -1, 10, -50, -1, -10, -50, 1, -10, -50, 1, 10, 50, 1, 10, -50, 1, -10, 50, 1, 10, -50, 1, -10, -50, 1, -10, 50, -1, 10, -50, -1, 10, 50, -1, -10, -50, -1, 10, 50, -1, -10, 50, -1, -10, -50, 1, 10, 50, -1, 10, 50, 1, 10, -50, -1, 10, 50, -1, 10, -50, 1, 10, -50, -1, -10, 50, 1, -10, 50, -1, -10, -50, 1, -10, 50, 1, -10, -50, -1, -10, -50)
+
 [node name="RoomPrefab1" type="Node3D" unique_id=943471774]
-script = ExtResource("1_ynhhp")
 
 [node name="Metadata" type="Node" parent="." unique_id=219482962]
 script = ExtResource("2_aijkt")
@@ -50,3 +54,21 @@ mesh = SubResource("PlaneMesh_yf5fn")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D" unique_id=756378829]
 shape = SubResource("ConcavePolygonShape3D_ynhhp")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=2072157407]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 10, 0)
+mesh = SubResource("BoxMesh_wlk0u")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D2" unique_id=453021049]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D2/StaticBody3D" unique_id=491529982]
+shape = SubResource("ConcavePolygonShape3D_aijkt")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="." unique_id=864671980]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50, 10, 0)
+mesh = SubResource("BoxMesh_wlk0u")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D3" unique_id=153693394]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D3/StaticBody3D" unique_id=191525696]
+shape = SubResource("ConcavePolygonShape3D_aijkt")

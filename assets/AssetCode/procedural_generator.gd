@@ -96,7 +96,7 @@ func get_room_length(room: Node3D) -> float:
 		return total_aabb.size.x
 	
 	# Fallback distance if no mesh geometry is found
-	return 100.0
+	return 100.0 
 
 func generate_level() -> void:
 	var current_attach_position := Vector3.ZERO

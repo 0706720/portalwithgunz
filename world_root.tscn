@@ -5,6 +5,8 @@
 [ext_resource type="Script" uid="uid://bi0pamcrbsvyv" path="res://Network/ai_director.gd" id="3_d8pbq"]
 [ext_resource type="Script" uid="uid://dkwcsqg2yfq6v" path="res://assets/AssetCode/player_spawner.gd" id="4_mtm5c"]
 
+[sub_resource type="Environment" id="Environment_cuis1"]
+
 [node name="WorldRoot" type="Node" unique_id=178156929]
 script = ExtResource("1_k4cn1")
 
@@ -25,3 +27,6 @@ script = ExtResource("2_m82b1")
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=1404446632]
 _spawnable_scenes = PackedStringArray("uid://xcjrjq5cbn7y")
 spawn_path = NodePath("..")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=852767747]
+environment = SubResource("Environment_cuis1")
