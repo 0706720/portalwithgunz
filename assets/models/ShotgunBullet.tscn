@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://dbl02j5ji12bo"]
+
+[ext_resource type="Script" uid="uid://b7sagds5r5c3m" path="res://assets/models/shotgun_bullet.gd" id="1_jd0f1"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_q313b"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_x8nrb"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_q313b"]
+
+[node name="ShotgunBullet" type="RigidBody3D" unique_id=285150044 groups=["Bullet"]]
+script = ExtResource("1_jd0f1")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=839336775]
+mesh = SubResource("SphereMesh_q313b")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1113370497]
+shape = SubResource("SphereShape3D_x8nrb")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=2142079440]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=462563090]
+shape = SubResource("SphereShape3D_q313b")

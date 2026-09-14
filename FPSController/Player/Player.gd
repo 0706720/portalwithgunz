@@ -119,6 +119,8 @@ var gravity = 19.6
 @export var Portal_one : float
 @export var Portal_two : float
 
+@export var ShotgunBullet:PackedScene
+
 var texture = TextureRect
 
 const PortalThrow: PackedScene = preload("res://FPSController/WeaponsManagement/Weapons/portalGunz/throw_portal_gun.tscn")
