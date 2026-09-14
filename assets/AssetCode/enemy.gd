@@ -24,6 +24,7 @@ func _physics_process(delta):
 	move_and_slide()
 
 func _on_difficulty_changed(modifiers):
-	aggression = modifiers.enemy_aggression
-	detection_radius = base_radius * (1.0 + aggression)
-	fire_rate = base_fire_rate * (1.0 + aggression)
+	#aggression = modifiers.enemy_aggression
+	#detection_radius = base_radius * (1.0 + aggression)
+	#fire_rate = base_fire_rate * (1.0 + aggression)
+	pass

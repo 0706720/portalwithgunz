@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://cucaacipgnu2y"]
+
+[ext_resource type="Script" uid="uid://b6n6uoylj1gpp" path="res://Network/metadata.gd" id="1_1cpm3"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_g4v7s"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ynhhp"]
+albedo_color = Color(1, 0, 1, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_yf5fn"]
+material = SubResource("StandardMaterial3D_ynhhp")
+size = Vector2(100, 100)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_1cpm3"]
+data = PackedVector3Array(50, 0, 50, -50, 0, 50, 50, 0, -50, -50, 0, 50, -50, 0, -50, 50, 0, -50)
+
+[node name="RoomPrefab2" type="Node3D" unique_id=1768685127]
+
+[node name="Metadata" type="Node" parent="." unique_id=939893820]
+script = ExtResource("1_1cpm3")
+
+[node name="Connectors" type="Node" parent="." unique_id=1117592292]
+
+[node name="Entry" type="Node3D" parent="Connectors" unique_id=1293632717]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -50)
+
+[node name="Exit" type="Node3D" parent="Connectors" unique_id=404926246]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 50)
+
+[node name="SpawnPoints" type="Node3D" parent="." unique_id=268442773]
+
+[node name="enemy_spawns" type="Node3D" parent="SpawnPoints" unique_id=800816673]
+
+[node name="spawn1" type="Node3D" parent="SpawnPoints/enemy_spawns" unique_id=703455805]
+
+[node name="resource_spawns" type="Node3D" parent="SpawnPoints" unique_id=609920733]
+
+[node name="spawn1" type="Node3D" parent="SpawnPoints/resource_spawns" unique_id=438799057]
+
+[node name="puzzle_spawns" type="Node3D" parent="SpawnPoints" unique_id=1170800451]
+
+[node name="spawn1" type="Node3D" parent="SpawnPoints/puzzle_spawns" unique_id=593188252]
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=1132041652]
+navigation_mesh = SubResource("NavigationMesh_g4v7s")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=636075812]
+mesh = SubResource("PlaneMesh_yf5fn")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D" unique_id=446821692]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D" unique_id=1934693828]
+shape = SubResource("ConcavePolygonShape3D_1cpm3")

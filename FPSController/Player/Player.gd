@@ -35,13 +35,12 @@ var walk_accel: float = 11.0
 var walk_deccel: float = 10.0
 
 @onready var weaponsManager = $weaponsManager
-@onready var camera = %Camera3D
 @onready var anim_player = $AnimationPlayer
 @onready var movement_anim = $MovementAnimationPlayer
-@onready var muzzle_flash = $CameraHolder/Camera3D/Pistol/MuzzleFlash
+@onready var muzzle_flash := $CameraHolder/Camera3D/Pistol/MuzzleFlash
 @onready var healthBar = $HUD/healthBar
-@onready var raycast = $CameraHolder/Camera3D/RayContainer/RayCast3D
-@onready var ray_container = $Camera3D/RayContainer
+@onready var raycast := $CameraHolder/Camera3D/RayContainer/RayCast3D
+@onready var ray_container := $CameraHolder/Camera3D/RayContainer
 @onready var rope = Node3D
 
 @export var crouch_anim_player: AnimationPlayer
@@ -65,7 +64,7 @@ var grapple_point: Vector3
 @export var rope_length = 0.0
 
 var mouse_sensitivity = 0.002
-@onready var bulletSpawn = $Head/Camera3D/bulletSpawn
+@onready var bulletSpawn := $CameraHolder/Camera3D/bulletSpawn
 var ammo : int = 5
 var player_health = 100
 var canThrow = true
@@ -89,12 +88,12 @@ var spin_charge := 0.0
 var is_charging_spin := false
 var is_spin_rolling := false
 var spin_direction := Vector3.ZERO
-@export var spin_camera_tilt_amount := 360.0   
-@export var spin_camera_tilt_speed := 200.0
-var current_camera_tilt := 0.0
+@export var spin_cam_tilt_amount := 360.0    
+@export var spin_cam_tilt_speed := 200.0
+var current_cam_tilt := 0.0
 
 @onready var state_machine: StateMachine = %StateMachine
-@onready var cam_holder = %CameraHolder
+@onready var cam_holder = %camHolder
 var walk_or_run: String = "WalkState"
 
 @export_group("Keybind variables")
@@ -124,40 +123,74 @@ var texture = TextureRect
 
 const PortalThrow: PackedScene = preload("res://FPSController/WeaponsManagement/Weapons/portalGunz/throw_portal_gun.tscn")
 
+@onready var cam := $CameraHolder/Camera3D
+
 func _enter_tree():
 	print(name)
-	set_multiplayer_authority(str(name).to_int())
 
+# ==============================================================================
+# UPDATED _ready() FUNCTION
+# ==============================================================================
+func _ready() -> void:
+	# Convert node name (e.g. "655412542") into integer peer ID authority
+	if name.is_valid_int():
+		set_multiplayer_authority(name.to_int())
 
-func _ready():
-	Global.players[multiplayer.get_unique_id()] = self
+	# Wait two frames for MultiplayerSpawner replication & authority sync
+	await get_tree().process_frame
+	await get_tree().process_frame
+
+	var local_id := multiplayer.get_unique_id()
+	var auth_id := get_multiplayer_authority()
+
+	print("PLAYER READY:", name, " | Local Peer ID:", local_id, " | Node Authority:", auth_id)
+
+	if is_multiplayer_authority():
+		cam.make_current()
+		print("Camera activated locally for peer:", local_id)
+		capture_mouse()
+		Global.player = self
+		
+		# Hide local first-person mesh nodes safely
+		if has_node("Player/RightArm"): $Player/RightArm.hide()
+		if has_node("Player/LeftArm"): $Player/LeftArm.hide()
+		if has_node("Player/RightLeg"): $Player/RightLeg.hide()
+		if has_node("Player/LeftLeg"): $Player/LeftLeg.hide()
+		if has_node("Player/Body"): $Player/Body.hide()
+		if has_node("Player/Head"): $Player/Head.hide()
+	else:
+		cam.current = false
+		# Ensure third-person mesh parts are VISIBLE for remote players
+		if has_node("Player/RightArm"): $Player/RightArm.show()
+		if has_node("Player/LeftArm"): $Player/LeftArm.show()
+		if has_node("Player/RightLeg"): $Player/RightLeg.show()
+		if has_node("Player/LeftLeg"): $Player/LeftLeg.show()
+		if has_node("Player/Body"): $Player/Body.show()
+		if has_node("Player/Head"): $Player/Head.show()
+
+	Global.players[auth_id] = self
 	hit_ground_cooldown_ref = hit_ground_cooldown
 
-	camera.current = is_multiplayer_authority()
-
-	weaponsManager.request_weapon_change(0)
-
-	if is_multiplayer_authority():
-		$Player/RightArm.hide()
-		$Player/LeftArm.hide()
-		$Player/RightLeg.hide()
-		$Player/LeftLeg.hide()
-		$Player/Body.hide()
-		$Player/Head.hide()
-
-	Global.player = self
-
-	if is_multiplayer_authority():
-		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-
-	crouch_shapecast.add_exception($".")
-	healthBar.max_value = health
+	if weaponsManager and is_multiplayer_authority():
+		weaponsManager.request_weapon_change(0)
+		
+	if crouch_shapecast:
+		crouch_shapecast.add_exception(self)
+	if healthBar and is_multiplayer_authority():
+		healthBar.max_value = health
 	receive_damage(0)
-	randomize()
 
 	build_default_keybinding()
 	input_actions_check()
 
+func capture_mouse() -> void:
+	if is_multiplayer_authority():
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_APPLICATION_FOCUS_IN:
+		if is_multiplayer_authority():
+			capture_mouse()
 
 func build_default_keybinding() -> void:
 	default_input_actions = {
@@ -170,7 +203,6 @@ func build_default_keybinding() -> void:
 		jump_action : [Key.KEY_SPACE],
 		throw_action : [Key.KEY_Q]
 	}
-
 
 func input_actions_check() -> void:
 	if check_on_ready_if_inputs_registered:
@@ -197,11 +229,9 @@ func input_actions_check() -> void:
 					input_event_key.physical_keycode = keycode
 					InputMap.action_add_event(input_action, input_event_key)
 
-
 func _exit_tree() -> void:
 	if is_multiplayer_authority():
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-
 
 func _unhandled_input(event):
 	if not is_multiplayer_authority():
@@ -209,10 +239,9 @@ func _unhandled_input(event):
 
 	if event is InputEventMouseMotion:
 		rotate_y(-event.relative.x * .005)
-		camera.rotate_x(-event.relative.y * .005)
-		camera.rotation.x = clamp(camera.rotation.x, -PI/2, PI/2)
+		cam.rotate_x(-event.relative.y * .005)
+		cam.rotation.x = clamp(cam.rotation.x, -PI/2, PI/2)
 
-	# shooting, etc. stays local‑only
 	if Input.is_action_just_pressed("shoot") \
 	and Global.currentWeapon == 'Pistol' \
 	and anim_player.current_animation != "shoot":
@@ -226,13 +255,12 @@ func _unhandled_input(event):
 
 	if anim_playing == false and Input.is_action_just_pressed("Fire_shotgun") and Global.currentWeapon == 'Shotgun':
 		anim_playing = true
-		var shoot_dir = camera.global_transform.basis.z.normalized()
+		var shoot_dir = cam.global_transform.basis.z.normalized()
 		velocity += shoot_dir * knockback_force
 		await get_tree().create_timer(1.0).timeout
 		anim_playing = false
 
 func simulate_movement(delta):
-	# Local movement (only for the authority of this character)
 	if is_multiplayer_authority():
 		input_direction = Input.get_vector(
 			move_left_action,
@@ -254,74 +282,69 @@ func simulate_movement(delta):
 			velocity = wish_dir * move_speed
 			
 		move_and_slide()
-	  
+
+# ==============================================================================
+# UPDATED _physics_process() FUNCTION
+# ==============================================================================
 func _physics_process(delta):
-	# 1) Local movement for this player only
+	# NON-AUTHORITY CLIENTS ONLY: Skip processing local inputs/HUD on unowned avatars
+	if not is_multiplayer_authority():
+		return
+
+	# 1) Local movement execution
 	simulate_movement(delta)
 
-	# 2) Local camera + input only for the authority
-	if is_multiplayer_authority():
-		var look_dir = Input.get_vector("look_left", "look_right", "look_up", "look_down")
-		if look_dir != Vector2.ZERO:
-			rotate_y(-look_dir.x * LOOK_SPEED * delta)
-			camera.rotate_x(-look_dir.y * LOOK_SPEED * delta)
-			camera.rotation.x = clamp(camera.rotation.x, -PI/2, PI/2)
+	# 2) Local camera keyboard rotation
+	var look_dir = Input.get_vector("look_left", "look_right", "look_up", "look_down")
+	if look_dir != Vector2.ZERO:
+		rotate_y(-look_dir.x * LOOK_SPEED * delta)
+		cam.rotate_x(-look_dir.y * LOOK_SPEED * delta)
+		cam.rotation.x = clamp(cam.rotation.x, -PI/2, PI/2)
 
-		# send our state to the other peer
-		rpc("_client_sync_state", global_transform, velocity)
+	# Broadcast state sync
+	rpc("_client_sync_state", global_transform, velocity)
 
-		if anim_player.current_animation == "shoot":
-			pass
-		elif input_direction != Vector2.ZERO and is_on_floor():
-			anim_player.play("move")
-		else:
-			anim_player.play("idle")
+	if anim_player.current_animation == "shoot":
+		pass
+	elif input_direction != Vector2.ZERO and is_on_floor():
+		anim_player.play("move")
+	else:
+		anim_player.play("idle")
 
-		if Input.is_action_just_pressed("Grapple") and Global.currentWeapon == 'GrappleGun':
-			start_grapple()
+	if Input.is_action_just_pressed("Grapple") and Global.currentWeapon == 'GrappleGun':
+		start_grapple()
 
-		if Input.is_action_just_pressed("weapon1"):
-			weaponsManager.request_weapon_change(0)
-		if Input.is_action_just_pressed("weapon2"):
-			weaponsManager.request_weapon_change(1)
-		if Input.is_action_just_pressed("weapon3"):
-			weaponsManager.request_weapon_change(2)
-		if Input.is_action_just_pressed("weapon4"):
-			weaponsManager.request_weapon_change(3)
-		if Input.is_action_just_pressed("weapon5"):
-			weaponsManager.request_weapon_change(4)
+	if Input.is_action_just_pressed("weapon1"):
+		weaponsManager.request_weapon_change(0)
+	if Input.is_action_just_pressed("weapon2"):
+		weaponsManager.request_weapon_change(1)
+	if Input.is_action_just_pressed("weapon3"):
+		weaponsManager.request_weapon_change(2)
+	if Input.is_action_just_pressed("weapon4"):
+		weaponsManager.request_weapon_change(3)
+	if Input.is_action_just_pressed("weapon5"):
+		weaponsManager.request_weapon_change(4)
 
-		if Input.is_action_just_released("Grapple"):
-			stop_grapple()
+	if Input.is_action_just_released("Grapple"):
+		stop_grapple()
 
-		if is_grappling:
-			process_grapple(delta)
+	if is_grappling:
+		process_grapple(delta)
 
-		if Input.is_action_just_pressed(throw_action):
-			throw_weapon()
+	if Input.is_action_just_pressed(throw_action):
+		throw_weapon()
 
-		# client → server input
-		Network.rpc_id(
-			1,
-			"server_receive_input",
-			multiplayer.get_unique_id(),
-			input_direction,
-			wish_dir
-		)
-		
-	#EMOTE WHEEL
+	# EMOTE WHEEL
 	var emote = $HUD/SelectionWheel.close()
-	
-	if is_multiplayer_authority():
-		if Input.is_action_just_pressed("emote"):
-			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-			$HUD/SelectionWheel.show()
-		if Input.is_action_just_released("emote"):
-			$HUD/SelectionWheel.hide()
-			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-			rpc("show_emote_remote", emote)
-			show_emote_local(emote)
-	
+	if Input.is_action_just_pressed("emote"):
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		$HUD/SelectionWheel.show()
+	if Input.is_action_just_released("emote"):
+		$HUD/SelectionWheel.hide()
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		rpc("show_emote_remote", emote)
+		show_emote_local(emote)
+
 func show_emote_local(emote):
 	print(emote)
 	match emote:
@@ -381,12 +404,11 @@ func show_emote_remote(emote):
 		$EmoteBar.texture = null
 	)
 
-
 func gravity_apply(delta):
 	velocity.y -= gravity * delta
 
 func start_grapple():
-	raycast.global_transform = camera.global_transform
+	raycast.global_transform = cam.global_transform
 	raycast.target_position = Vector3(0, 0, -max_grapple_distance)
 	raycast.force_raycast_update()
 
@@ -397,7 +419,7 @@ func start_grapple():
 
 func process_grapple(delta):
 	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
-	var cam_basis = camera.global_transform.basis
+	var cam_basis = cam.global_transform.basis
 	var move_dir = (cam_basis.x * input_dir.x + cam_basis.z * input_dir.y).normalized()
 	velocity += move_dir * 10.0 * delta
 	var to_grapple = grapple_point - global_transform.origin
@@ -418,32 +440,18 @@ func stop_grapple():
 	is_grappling = false
 	velocity *= 1.2
 
-
-# 1. Triggered on the client (e.g., when they press the throw button)
 func throw_weapon():
-	# Use Godot 4's callable syntax to send the position to the server
 	print("func_weapon called")
 	request_spawn_projectile.rpc_id(1, global_position)
 
-
-# 2. Executed ONLY on the server
 @rpc("any_peer", "reliable")
 func request_spawn_projectile(spawn_position: Vector2):
-	# Security check to ensure code only executes on the host/server
-	print("called instance")
 	if multiplayer.is_server():
 		print("Server: Spawning weapon at ", spawn_position)
-		
-		# Instantiate the weapon
 		var PortalgunIns = PortalThrow.instantiate()
 		PortalgunIns.global_position = spawn_position
-		
-		# CRITICAL: Add it to the node path monitored by your MultiplayerSpawner
-		# Replace GetNodePathToYourSpawnerContainer with your actual path
-		get_node("Throw_portal_gun").add_child(PortalgunIns)
-
-	var force = -18
-	var upDirection = 3.5
+		if has_node("Throw_portal_gun"):
+			get_node("Throw_portal_gun").add_child(PortalgunIns)
 
 @rpc("call_local")
 func play_shoot_effects():
@@ -452,22 +460,20 @@ func play_shoot_effects():
 	muzzle_flash.restart()
 	muzzle_flash.emitting = true
 
-@rpc("authority")
+@rpc("any_peer", "unreliable")
 func _client_sync_state(server_transform: Transform3D, server_velocity: Vector3):
-	# "server_transform" here is really "other player's transform"
-	var current: Transform3D = global_transform
-	var target: Transform3D = server_transform
+	# Interpolate remote character transforms on other peer screens
+	if not is_multiplayer_authority():
+		var current: Transform3D = global_transform
+		current.origin = current.origin.lerp(server_transform.origin, POS_SMOOTH)
 
-	current.origin = current.origin.lerp(target.origin, POS_SMOOTH)
+		var cur_quat: Quaternion = current.basis.get_rotation_quaternion()
+		var tgt_quat: Quaternion = server_transform.basis.get_rotation_quaternion()
+		var smooth_quat: Quaternion = cur_quat.slerp(tgt_quat, ROT_SMOOTH)
+		current.basis = Basis(smooth_quat)
 
-	var cur_quat: Quaternion = current.basis.get_rotation_quaternion()
-	var tgt_quat: Quaternion = target.basis.get_rotation_quaternion()
-	var smooth_quat: Quaternion = cur_quat.slerp(tgt_quat, ROT_SMOOTH)
-	current.basis = Basis(smooth_quat)
-
-	global_transform = current
-	velocity = velocity.lerp(server_velocity, VEL_SMOOTH)
-
+		global_transform = current
+		velocity = velocity.lerp(server_velocity, VEL_SMOOTH)
 
 @rpc("any_peer")
 func receive_damage(amount):
@@ -477,18 +483,15 @@ func receive_damage(amount):
 		position = Vector3.ZERO
 	health_changed.emit(health)
 
-
 func _on_animation_player_animation_finished(anim_name):
-	if anim_name == "shoot":
+	if anim_name == "shoot" and crouch_anim_player:
 		crouch_anim_player.play("idle")
-
 
 func is_surface_too_steep(normal : Vector3) -> bool:
 	var max_slope_ang_dot = Vector3(0, 1, 0).rotated(Vector3(1.0, 0, 0), floor_max_angle).dot(Vector3(0, 1, 0))
 	if normal.dot(Vector3(0, 1, 0)) < max_slope_ang_dot:
 		return false
 	return false
-
 
 func _handle_air_physics(delta):
 	if is_on_wall():
@@ -497,9 +500,6 @@ func _handle_air_physics(delta):
 		else:
 			motion_mode = CharacterBody3D.MOTION_MODE_GROUNDED
 		clip_velocity(get_wall_normal(), 1, delta)
-
-func _process(delta):
-	pass
 
 func clip_velocity(normal: Vector3, overbounce : float, delta : float) -> void:
 	var backoff := velocity.dot(normal) * overbounce

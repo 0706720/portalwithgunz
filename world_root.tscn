@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://0pkc3hr5jj02"]
+
+[ext_resource type="Script" uid="uid://wwy7wklajnl0" path="res://assets/AssetCode/world_root.gd" id="1_k4cn1"]
+[ext_resource type="Script" uid="uid://becawo6agqcir" path="res://assets/AssetCode/procedural_generator.gd" id="2_m82b1"]
+[ext_resource type="Script" uid="uid://bi0pamcrbsvyv" path="res://Network/ai_director.gd" id="3_d8pbq"]
+[ext_resource type="Script" uid="uid://dkwcsqg2yfq6v" path="res://assets/AssetCode/player_spawner.gd" id="4_mtm5c"]
+
+[node name="WorldRoot" type="Node" unique_id=178156929]
+script = ExtResource("1_k4cn1")
+
+[node name="RoomContainer" type="Node3D" parent="." unique_id=395290050]
+
+[node name="AI_Director" type="Node" parent="." unique_id=150566484]
+script = ExtResource("3_d8pbq")
+
+[node name="PlayerSpawner" type="Node3D" parent="." unique_id=1793986205]
+script = ExtResource("4_mtm5c")
+
+[node name="SpawnPoint" type="Node3D" parent="." unique_id=2094156297]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.9619553, 0)
+
+[node name="ProceduralGenerator" type="Node" parent="." unique_id=1172167322]
+script = ExtResource("2_m82b1")
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=1404446632]
+_spawnable_scenes = PackedStringArray("uid://xcjrjq5cbn7y")
+spawn_path = NodePath("..")

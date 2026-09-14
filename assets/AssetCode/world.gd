@@ -1,74 +1,8 @@
-extends Node
+extends Node3D
 
-@onready var main_menu = $CanvasLayer/MainMenu
-@onready var address_entry = $CanvasLayer/MainMenu/MarginContainer/VBoxContainer/AddressEntry
-@onready var hud = $CanvasLayer/HUD
-#var external_anticheat_script = "res://FPSController/Player/anti_cheat.gd"
-#var external_anticheat_handler = null
+func ready():
+	pass
 
-@onready var PlayerScene := preload("res://FPSController/Player/player.tscn")
-
-const PORT := 9999
-var peer := ENetMultiplayerPeer.new()
-
-func _ready():
-	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	multiplayer.peer_connected.connect(_on_peer_connected)
-	multiplayer.peer_disconnected.connect(_on_peer_disconnected)
-	
-	# anticheat path checker and instantiater
-	#if external_anticheat_script != "":
-		#var script_res = load(external_anticheat_script)
-		#if script_res:
-			#external_anticheat_handler = script_res.new()
-		#else:
-			#print("Warning: could not find script path for anticheat. Fix it bozo")
-#-------------------------
-#HOST
-#-------------------------
-
-func _on_host_button_pressed():
-	main_menu.hide()
-	hud.show()
-
-	peer.create_server(PORT)
-	multiplayer.multiplayer_peer = peer
-
-# Spawn host player
-	_spawn_player(multiplayer.get_unique_id())
-
-#-------------------------
-#CLIENT
-#-------------------------
-
-func _on_join_button_pressed():
-	main_menu.hide()
-	hud.show()
-
-	peer.create_client(address_entry.text, PORT)
-	multiplayer.multiplayer_peer = peer
-
-#-------------------------
-#SPAWNING
-#-------------------------
-
-func _on_peer_connected(id):
-	# check if 
-	#if external_anticheat_handler and external_anticheat_handler.has_method("_on_peer_connected"):
-		#external_anticheat_handler._on_peer_connected(id)
-		#return
-	_spawn_player(id)
-
-func _on_peer_disconnected(id):
-	var p := get_node_or_null(str(id))
-	if p:
-		p.queue_free()
-
-func _spawn_player(id):
-	var player := PlayerScene.instantiate()
-	player.name = str(id)
-	player.set_multiplayer_authority(id)
-	add_child(player)
 #extends Node
 #
 #@onready var main_menu = $CanvasLayer/MainMenu
@@ -172,3 +106,7 @@ func _spawn_player(id):
 #
 #func _on_single_player_pressed() -> void:
 	#pass # Replace with function body.
+
+
+func _on_multiplayer_spawner_spawned(node: Node) -> void:
+	pass # Replace with function body.

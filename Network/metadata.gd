@@ -1,6 +1,5 @@
-extends Resource
-class_name RoomData
+extends Node
 
-@export var difficulty_weight := 0.3
-@export var room_size := Vector3(20, 10, 20)
-@export var tags := []
+@export var difficulty_weight : float = 0.3
+@export var room_size : Vector3 = Vector3.ZERO
+@export var tags : Array[String] = []
