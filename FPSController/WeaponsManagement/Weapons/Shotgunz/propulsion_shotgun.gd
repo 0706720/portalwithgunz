@@ -8,6 +8,7 @@ var spread = 15
 @onready var raycasts = $"Raycasts(shotgun)"
 @onready var anim_player = $AnimationPlayer
 @onready var muzzle_flash = $MuzzleFlash
+@export var ShotgunBullet:PackedScene
 
 
 func _physics_process(delta):
@@ -21,6 +22,7 @@ func fire_shotgun():
 		if Input.is_action_just_pressed("Fire_shotgun") and Global.currentWeapon == 'Shotgun':
 			anim_playing = true
 			play_shoot_effects()
+			shoot_shotgun()
 			print("SHOTGUN FIRED")
 		#var shoot_dir = -camera.global_transform.basis.z.normalized()
 		#velocity += -shoot_dir * recoil_force
@@ -48,3 +50,6 @@ func play_shoot_effects():
 	anim_player.play("Shoot Shotgun")
 	muzzle_flash.restart()
 	muzzle_flash.emitting = true
+
+func shoot_shotgun():
+	var projectile

@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bsws0dd6nmx0w" path="res://FPSController/WeaponsManagement/Weapons/Shotgunz/propulsion_shotgun.gd" id="1_imbo3"]
 [ext_resource type="PackedScene" uid="uid://xcu4pcj2p1s1" path="res://FPSController/WeaponsManagement/Weapons/Shotgunz/spas12.FBX" id="1_j20jc"]
+[ext_resource type="PackedScene" uid="uid://dbl02j5ji12bo" path="res://assets/models/ShotgunBullet.tscn" id="2_n1ujq"]
 [ext_resource type="Texture2D" uid="uid://vwob30tkwej4" path="res://addons/kenney_particle_pack/star_06.png" id="3_mr3lb"]
 
 [sub_resource type="Animation" id="Animation_imbo3"]
@@ -97,6 +98,7 @@ orientation = 2
 [node name="Propulsion_shotgun" type="Node3D" unique_id=1602549375 groups=["player"]]
 transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
 script = ExtResource("1_imbo3")
+ShotgunBullet = ExtResource("2_n1ujq")
 
 [node name="Shotgun_model" parent="." unique_id=546938671 instance=ExtResource("1_j20jc")]
 
