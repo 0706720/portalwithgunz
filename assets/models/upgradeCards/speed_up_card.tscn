@@ -1,33 +1,63 @@
 [gd_scene format=3 uid="uid://bc8ymt2wypdfj"]
 
 [ext_resource type="Texture2D" uid="uid://ctcrwyn562eq4" path="res://assets/images/upgradesSystem/cardoutline (1).png" id="1_gmw2h"]
-[ext_resource type="Texture2D" uid="uid://c4vcfktilhahl" path="res://assets/images/upgradesSystem/heart-shield.png" id="2_vklts"]
+[ext_resource type="Texture2D" uid="uid://byw5l60pviokk" path="res://assets/images/upgradesSystem/jump-across.png" id="2_ddov1"]
 [ext_resource type="FontFile" uid="uid://brl5hlu3dc40l" path="res://assets/images/upgradesSystem/Nunito/Nunito-Italic-VariableFont_wght.ttf" id="3_ddov1"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_8e42y"]
-font = ExtResource("3_ddov1")
-font_size = 20
+[ext_resource type="FontFile" uid="uid://b1eo5a8at87ej" path="res://assets/images/upgradesSystem/Nunito/Nunito-VariableFont_wght.ttf" id="4_yh3x6"]
+[ext_resource type="Texture2D" uid="uid://cmwausg74bpcb" path="res://assets/images/upgradesSystem/hermes.jpeg" id="5_ytn23"]
 
 [node name="SpeedUpCard" type="Node2D" unique_id=1994179710]
 
 [node name="Cardoutline(1)" type="Sprite2D" parent="." unique_id=1121910638]
+visible = false
 position = Vector2(438, 255)
 texture = ExtResource("1_gmw2h")
 
 [node name="HeartShield" type="Sprite2D" parent="." unique_id=35630064]
 position = Vector2(322, 444.99997)
 scale = Vector2(0.1, 0.1)
-texture = ExtResource("2_vklts")
+texture = ExtResource("2_ddov1")
 
-[node name="Cardoutline(1)2" type="Sprite2D" parent="." unique_id=2127952059]
-position = Vector2(437.00003, 155.00002)
-scale = Vector2(0.8620688, 0.4065041)
-texture = ExtResource("1_gmw2h")
-
-[node name="Label" type="Label" parent="." unique_id=602760103]
+[node name="Label" type="RichTextLabel" parent="." unique_id=1421175198]
 offset_left = 288.0
 offset_top = 256.0
-offset_right = 328.0
-offset_bottom = 279.0
-text = "HEALTH BONUS"
-label_settings = SubResource("LabelSettings_8e42y")
+offset_right = 471.0
+offset_bottom = 294.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("3_ddov1")
+theme_override_fonts/bold_font = ExtResource("4_yh3x6")
+theme_override_font_sizes/normal_font_size = 24
+bbcode_enabled = true
+text = "[u]SPEED BONUS[u]"
+
+[node name="Label2" type="RichTextLabel" parent="." unique_id=880183712]
+offset_left = 288.0
+offset_top = 288.0
+offset_right = 585.0
+offset_bottom = 402.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("3_ddov1")
+theme_override_font_sizes/normal_font_size = 20
+bbcode_enabled = true
+text = "Recieve a 10% bonus to walking 
+speed"
+
+[node name="Polygon2D" type="Polygon2D" parent="." unique_id=1325875221]
+z_index = -1
+polygon = PackedVector2Array(304, 31, 286, 43, 286, 463, 301, 480, 577, 480, 590, 466, 590, 46, 576, 31)
+
+[node name="Line2D" type="Line2D" parent="." unique_id=137145650]
+points = PackedVector2Array(304, 31, 286, 43, 286, 463, 301, 480, 577, 480, 590, 466, 590, 46, 576, 31)
+width = 5.0
+default_color = Color(0, 0, 0, 1)
+
+[node name="Line2D2" type="Line2D" parent="." unique_id=1926877268]
+position = Vector2(1, 3)
+points = PackedVector2Array(576, 30, 302, 30)
+width = 5.0
+default_color = Color(0, 0, 0, 1)
+
+[node name="Hermes" type="Sprite2D" parent="." unique_id=1257186896]
+position = Vector2(451, 158)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("5_ytn23")
