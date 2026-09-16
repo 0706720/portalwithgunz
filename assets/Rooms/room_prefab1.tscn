@@ -24,7 +24,7 @@ script = ExtResource("2_aijkt")
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=2045793134]
 navigation_mesh = SubResource("NavigationMesh_g4v7s")
 
-[node name="Connectors" type="Node" parent="." unique_id=1948112049]
+[node name="Connectors" type="Node3D" parent="." unique_id=1131298840]
 
 [node name="Entry" type="Node3D" parent="Connectors" unique_id=1521203117]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -50)
