@@ -27,6 +27,7 @@
 [ext_resource type="Texture2D" uid="uid://kpodjr2ek4pr" path="res://assets/images/8880154.jpg" id="21_j48a2"]
 [ext_resource type="Texture2D" uid="uid://bvh3f5fu4hvow" path="res://assets/images/mort-meme.png" id="23_qe01f"]
 [ext_resource type="Texture2D" uid="uid://65i6bhs5c4l7" path="res://assets/images/chicken-rice-and-yoghurt-v0-7ria5b8ongi41.webp" id="24_cahw7"]
+[ext_resource type="Script" uid="uid://bjplljit7b0op" path="res://FPSController/Player/upgrades_system.gd" id="27_g48ct"]
 
 [sub_resource type="Curve" id="Curve_qfm1y"]
 _limits = [0.0, 30.0, 0.0, 60.0]
@@ -991,6 +992,7 @@ layout_mode = 2
 text = "..................."
 
 [node name="upgradesNode" type="Node" parent="Screen overlay" unique_id=1675702923]
+script = ExtResource("27_g48ct")
 
 [node name="upgradesContainer" type="BoxContainer" parent="Screen overlay/upgradesNode" unique_id=1898392707]
 offset_right = 40.0
