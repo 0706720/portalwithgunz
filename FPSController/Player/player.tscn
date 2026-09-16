@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://byvoccpe1ihl7" path="res://FPSController/Player/Player.gd" id="1_do0ft"]
 [ext_resource type="PackedScene" uid="uid://bg1xha1x7mh6l" path="res://FPSController/WeaponsManagement/Weapons/Shotgunz/propulsion_shotgun.tscn" id="2_cw433"]
+[ext_resource type="PackedScene" uid="uid://dbl02j5ji12bo" path="res://assets/models/ShotgunBullet.tscn" id="2_g48ct"]
 [ext_resource type="PackedScene" uid="uid://cf1dcxwv6bvl3" path="res://assets/models/Pistol.glb" id="3_5jtsq"]
 [ext_resource type="Texture2D" uid="uid://vwob30tkwej4" path="res://addons/kenney_particle_pack/star_06.png" id="4_wpatb"]
 [ext_resource type="PackedScene" uid="uid://d4i7nb1k36bs3" path="res://FPSController/WeaponsManagement/Weapons/Grapple Hook/Grapplehook.tscn" id="5_e7m0m"]
@@ -646,6 +647,7 @@ crouch_anim_player = NodePath("CrouchAnimationPlayer")
 crouch_shapecast = NodePath("ShapeCast3D")
 grapple_speed = 500.0
 grapple_pull_strength = 500.0
+ShotgunBullet = ExtResource("2_g48ct")
 
 [node name="Player" type="Node3D" parent="." unique_id=444522863]
 transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0, 0)
