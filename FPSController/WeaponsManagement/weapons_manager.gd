@@ -6,13 +6,14 @@ extends Node
 @onready var grapple_node   := $"../CameraHolder/Camera3D/Grapple Hook"
 @onready var portal_node    := $"../CameraHolder/Camera3D/PortalGun"
 @onready var sniper_node    := $"../Camera3D/M91"
+@onready var Shotgun_node   := $"../CameraHolder/Camera3D/Shotgun"
 
-var weapons = ["Pistol", "Shotgun", "GrappleGun", "PortalGun"]
+var weapons = ["Pistol", "Shotgun", "GrappleGun", "PortalGun", "shotgun"]
 var weapon_nodes: Array = []
 
 func _ready() -> void:
 	# build the nodes array so indexing matches weapons[]
-	weapon_nodes = [pistol_node, shotgun_node, grapple_node, portal_node]
+	weapon_nodes = [pistol_node, shotgun_node, grapple_node, portal_node, Shotgun_node]
 	# optionally include sniper_node where appropriate
 	print("weapons:", weapons)
 
