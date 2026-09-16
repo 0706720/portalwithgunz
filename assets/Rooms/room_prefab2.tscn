@@ -29,7 +29,7 @@ data = PackedVector3Array(-1, 10, 50, 1, 10, 50, -1, -10, 50, 1, 10, 50, 1, -10,
 [node name="Metadata" type="Node" parent="." unique_id=939893820]
 script = ExtResource("1_1cpm3")
 
-[node name="Connectors" type="Node" parent="." unique_id=1117592292]
+[node name="Connectors" type="Node3D" parent="." unique_id=1497390118]
 
 [node name="Entry" type="Node3D" parent="Connectors" unique_id=1293632717]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -50)

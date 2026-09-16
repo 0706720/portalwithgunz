@@ -29,6 +29,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2715378, 5.035372)
 [node name="Connectors" type="Node" parent="." unique_id=1945540734]
 
 [node name="Entry" type="Node3D" parent="Connectors" unique_id=1313963210]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
 
 [node name="Exit" type="Node3D" parent="Connectors" unique_id=406954462]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 20)
