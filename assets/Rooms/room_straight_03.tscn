@@ -1,0 +1,66 @@
+[gd_scene format=3 uid="uid://dgo5lbrwpv6vd"]
+
+[ext_resource type="Script" uid="uid://b6n6uoylj1gpp" path="res://Network/metadata.gd" id="1_dmokg"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tjwye"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_cuis1"]
+material = SubResource("StandardMaterial3D_tjwye")
+size = Vector2(20, 20)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_habcm"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_b8q42"]
+material = SubResource("StandardMaterial3D_habcm")
+size = Vector3(2, 10, 20)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dmokg"]
+size = Vector3(19.5, 2, 19.5)
+
+[node name="StraightPrefab2" type="Node3D" unique_id=1830555640]
+
+[node name="Connectors" type="Node3D" parent="." unique_id=974888739]
+
+[node name="Exit" type="Node3D" parent="Connectors" unique_id=1075669004]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 100)
+
+[node name="Entry" type="Node3D" parent="Connectors" unique_id=1527219973]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=750849885]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
+mesh = SubResource("PlaneMesh_cuis1")
+
+[node name="SpawnPoints" type="Node3D" parent="." unique_id=2115315750]
+
+[node name="enemy_spawns" type="Node3D" parent="SpawnPoints" unique_id=600508096]
+
+[node name="spawn1" type="Node3D" parent="SpawnPoints/enemy_spawns" unique_id=1677850747]
+
+[node name="resource_spawns" type="Node3D" parent="SpawnPoints" unique_id=534674160]
+
+[node name="spawn1" type="Node3D" parent="SpawnPoints/resource_spawns" unique_id=592937886]
+
+[node name="puzzle_spawns" type="Node3D" parent="SpawnPoints" unique_id=307160373]
+
+[node name="spawn1" type="Node3D" parent="SpawnPoints/puzzle_spawns" unique_id=44727330]
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=1195657451]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 5, 10)
+mesh = SubResource("BoxMesh_b8q42")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="." unique_id=473822060]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 5, 10)
+mesh = SubResource("BoxMesh_b8q42")
+
+[node name="MetaData" type="Node" parent="." unique_id=164889401]
+script = ExtResource("1_dmokg")
+difficulty_weight = 0.3
+room_type = Array[String](["\"straight\""])
+
+[node name="BoundsArea" type="Area3D" parent="." unique_id=1760441814]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BoundsArea" unique_id=621352527]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("BoxShape3D_dmokg")

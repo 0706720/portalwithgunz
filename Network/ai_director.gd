@@ -1,30 +1,24 @@
-#AI Director
 extends Node
-signal difficulty_changed(modifiers)
 
-var difficulty_score := 0.0
-var player_stats := {
-	"accuracy": 0.5,
-	"damage_taken_recent": 0.0,
-	"avg_puzzle_time": 1.0
-}
+# Target difficulty range (0.0 = Peaceful, 1.0 = Max Intensity)
+var dynamic_difficulty := 0.2
+var player_stress := 0.0
 
-var modifiers := {
-	"enemy_aggression": 0.0,
-	"puzzle_complexity": 0.0,
-	"resource_scarcity": 0.0
-}
+# Tracks pacing states: BUILDUP, PEAK, RELAX
+enum PacingState { BUILDUP, PEAK, RELAX }
+var current_pacing := PacingState.BUILDUP
 
-func update_difficulty(delta):
-	var acc = player_stats.accuracy
-	var dmg = player_stats.damage_taken_recent
-	var solve = player_stats.avg_puzzle_time
-
-	var raw = (acc * 0.4) + ((1.0 - dmg) * 0.3) + ((1.0 - solve) * 0.3)
-	difficulty_score = lerp(difficulty_score, raw, 0.1)
-
-	modifiers.enemy_aggression = difficulty_score
-	modifiers.puzzle_complexity = difficulty_score
-	modifiers.resource_scarcity = difficulty_score
-
-	emit_signal("difficulty_changed", modifiers)
+func update_director_state(player_health_pct: float, time_in_combat: float) -> void:
+	# Calculate stress based on player state
+	if player_health_pct < 0.3:
+		player_stress += 0.15
+	
+	player_stress += time_in_combat * 0.05
+	
+	# Adjust difficulty dynamically
+	if player_stress > 0.8:
+		current_pacing = PacingState.RELAX
+		dynamic_difficulty = max(0.1, dynamic_difficulty - 0.2)
+	elif player_stress < 0.3:
+		current_pacing = PacingState.BUILDUP
+		dynamic_difficulty = min(1.0, dynamic_difficulty + 0.1)

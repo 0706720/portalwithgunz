@@ -19,7 +19,7 @@ func shoot_shotgun():
 		var random_y = randf_range(-spread_angle, spread_angle)
 		var random_z = randf_range(-spread_angle, spread_angle)
 		var spread_direction = (forward_dir + Vector3(random_x, random_y, random_z)).normalized()
-		bullet.direction = spread_direction
+		#bullet.direction = spread_direction
 		bullet.global_transform = spawnPoint.global_transform
 
 

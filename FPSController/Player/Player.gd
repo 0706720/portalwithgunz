@@ -52,7 +52,7 @@ var _using_crouch: bool = false
 
 var health = 99
 var spread = 10
-var knockback_force = 20.0
+var knockback_force = 200.0
 @onready var anim_playing = false
 
 @export var grapple_speed: float = 25.0
@@ -255,7 +255,7 @@ func _unhandled_input(event):
 			if hit_player.is_in_group('target'):
 				hit_player.delete_target()
 
-	if anim_playing == false and Input.is_action_just_pressed("Fire_shotgun") and Global.currentWeapon == 'Shotgun':
+	if anim_playing == false and Input.is_action_just_pressed("superjump"):
 		anim_playing = true
 		var shoot_dir = cam.global_transform.basis.z.normalized()
 		velocity += shoot_dir * knockback_force
