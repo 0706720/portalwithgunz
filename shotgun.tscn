@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://b7hjjiuxpwwsq"]
+
+[ext_resource type="Script" uid="uid://dquxa4b8ntskv" path="res://shotgun.gd" id="1_5bb75"]
+[ext_resource type="PackedScene" uid="uid://xcu4pcj2p1s1" path="res://FPSController/WeaponsManagement/Weapons/Shotgunz/spas12.FBX" id="2_7oeqp"]
+
+[node name="Shotgun" type="Node3D" unique_id=1407172450]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+script = ExtResource("1_5bb75")
+
+[node name="Shotgun_model" parent="." unique_id=1593479005 instance=ExtResource("2_7oeqp")]
+
+[node name="Raycasts(shotgun)" type="Node3D" parent="." unique_id=84451511]
+
+[node name="RayCast3D" type="RayCast3D" parent="Raycasts(shotgun)" unique_id=2085282352]
+transform = Transform3D(1, 0, 0, 0, -1.3113416e-07, 1, 0, -3, -4.371139e-08, 0, 0.102, 0.28017855)
+
+[node name="RayCast3D2" type="RayCast3D" parent="Raycasts(shotgun)" unique_id=310214300]
+transform = Transform3D(1, 0, 0, 0, -1.3113416e-07, 1, 0, -3, -4.371139e-08, 0, 0.102, 0.28017855)
+
+[node name="RayCast3D3" type="RayCast3D" parent="Raycasts(shotgun)" unique_id=2024488747]
+transform = Transform3D(1, 0, 0, 0, -1.3113416e-07, 1, 0, -3, -4.371139e-08, 0, 0.102, 0.28017855)
+
+[node name="RayCast3D4" type="RayCast3D" parent="Raycasts(shotgun)" unique_id=1423246495]
+transform = Transform3D(1, 0, 0, 0, -1.3113416e-07, 1, 0, -3, -4.371139e-08, 0, 0.102, 0.28017855)
+
+[node name="RayCast3D5" type="RayCast3D" parent="Raycasts(shotgun)" unique_id=291772602]
+transform = Transform3D(1, 0, 0, 0, -1.3113416e-07, 1, 0, -3, -4.371139e-08, 0, 0.102, 0.28017855)
+
+[node name="RayCast3D6" type="RayCast3D" parent="Raycasts(shotgun)" unique_id=866362802]
+transform = Transform3D(1, 0, 0, 0, -1.3113416e-07, 1, 0, -3, -4.371139e-08, 0, 0.102, 0.28017855)
+
+[node name="RayCast3D7" type="RayCast3D" parent="Raycasts(shotgun)" unique_id=1990585404]
+transform = Transform3D(1, 0, 0, 0, -1.3113416e-07, 1, 0, -3, -4.371139e-08, 0, 0.102, 0.28017855)
+
+[node name="RayCast3D8" type="RayCast3D" parent="Raycasts(shotgun)" unique_id=131531852]
+transform = Transform3D(1, 0, 0, 0, -1.3113416e-07, 1, 0, -3, -4.371139e-08, 0, 0.102, 0.28017855)
+
+[node name="RayCast3D9" type="RayCast3D" parent="Raycasts(shotgun)" unique_id=302444759]
+transform = Transform3D(1, 0, 0, 0, -1.3113416e-07, 1, 0, -3, -4.371139e-08, 0, 0.102, 0.28017855)
+
+[node name="RayCast3D10" type="RayCast3D" parent="Raycasts(shotgun)" unique_id=1668063771]
+transform = Transform3D(1, 0, 0, 0, -1.3113416e-07, 1, 0, -3, -4.371139e-08, 0, 0.102, 0.28017855)
+
+[node name="spawnPoint" type="Node3D" parent="." unique_id=169504071]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.117637604, 0.28408223)

@@ -22,7 +22,6 @@ func fire_shotgun():
 		if Input.is_action_just_pressed("Fire_shotgun") and Global.currentWeapon == 'Shotgun':
 			anim_playing = true
 			play_shoot_effects()
-			shoot_shotgun()
 			print("SHOTGUN FIRED")
 		#var shoot_dir = -camera.global_transform.basis.z.normalized()
 		#velocity += -shoot_dir * recoil_force
@@ -33,10 +32,8 @@ func fire_shotgun():
 			# Apply spread
 				r.target_position.x = randf_range(-spread, spread)
 				r.target_position.y = randf_range(-spread, spread)
-
 			# Force update
 				r.force_raycast_update()
-
 			# Check hit
 				if r.is_colliding():
 					var collider = r.get_collider()
@@ -50,6 +47,3 @@ func play_shoot_effects():
 	anim_player.play("Shoot Shotgun")
 	muzzle_flash.restart()
 	muzzle_flash.emitting = true
-
-func shoot_shotgun():
-	var projectile
