@@ -150,7 +150,8 @@ func pick_room_for_director(room_index: int) -> PackedScene:
 
 func generate_level() -> void:
 	print_rich("[color=cyan][ProceduralGen] --- Starting Async Generation Target: %d Rooms ---[/color]" % room_count)
-
+	
+	var occupied_grid_cells: Dictionary = {}
 	var transform_history: Array[Transform3D] = []
 	var total_overlaps_rejected := 0
 	var backtracks_used := 0
@@ -187,19 +188,23 @@ func generate_level() -> void:
 			if i == 0:
 				room.global_transform = Transform3D.IDENTITY
 			else:
-				# Use GLOBAL transforms for connector math
-				var entry_global := entry.global_transform
-				var target_basis := current_attach_transform.basis * connector_flip * entry_global.basis.inverse()
-				var target_origin := current_attach_transform.origin - (target_basis * entry_global.origin)
-				room.global_transform = Transform3D(target_basis, target_origin)
+				var exit_global := current_attach_transform
+				var entry_local_inv := entry.transform.inverse()
+				
+				room.global_transform = exit_global * entry_local_inv
 
-
+			# Force update transform directly on the Node3D
 			room.force_update_transform()
+
+			var grid_pos := Vector3i(room.global_transform.origin.round())
+			if occupied_grid_cells.has(grid_pos):
+				total_overlaps_rejected += 1
+				room.queue_free()
+				continue
 
 			var bounds_area : Area3D = room.get_node_or_null("BoundsArea")
 			var collision_shape : CollisionShape3D = bounds_area.get_node_or_null("CollisionShape3D") if bounds_area else null
 			if bounds_area and collision_shape:
-				# Duplicate shape to prevent shared scaling
 				collision_shape.shape = collision_shape.shape.duplicate()
 				bounds_area.scale = Vector3.ONE
 				collision_shape.scale = Vector3.ONE
@@ -207,7 +212,7 @@ func generate_level() -> void:
 				collision_shape.force_update_transform()
 
 			await get_tree().process_frame
-			await get_tree().process_frame   # NEW — ensures physics shapes update
+			await get_tree().process_frame   # Ensures physics shapes update
 
 			if i > 0 and is_room_overlapping(room):
 				total_overlaps_rejected += 1
@@ -215,8 +220,22 @@ func generate_level() -> void:
 				room.queue_free()
 				continue
 
-			var exit_world_transform: Transform3D = exit.global_transform
+			occupied_grid_cells[grid_pos] = true
+
+			var connectors_node := room.get_node_or_null("Connectors") as Node3D
+			if connectors_node:
+				connectors_node.force_update_transform()
+			exit.force_update_transform()
+
+			# --- DEBUG PRINTS ---
+			print_rich("[color=magenta]DEBUG -> Exit Parent: %s | Exit Direct Local Position: %s[/color]" % [exit.get_parent().name, exit.position])
+			# --------------------
+
+			# Bypass tree propagation lag by multiplying the room's global transform by the exit's local transform
+			var exit_world_transform: Transform3D = room.global_transform * exit.transform
+			print_rich("[color=yellow]Exit World Position for Room #%d: %s[/color]" % [i, exit_world_transform.origin])
 			generated_rooms.append(room)
+			print_rich("[color=cyan]Room #%d -> Exit Local Pos: %s | Exit Global Pos: %s[/color]" % [i, exit.position, exit_world_transform.origin])
 			transform_history.append(exit_world_transform)
 
 			room_placed = true
@@ -228,6 +247,8 @@ func generate_level() -> void:
 				backtracks_used += 1
 				var last_room := generated_rooms.pop_back() as Node3D
 				if is_instance_valid(last_room):
+					var last_grid_pos := Vector3i(last_room.global_transform.origin.round())
+					occupied_grid_cells.erase(last_grid_pos)
 					last_room.queue_free()
 				if transform_history.size() > 0:
 					transform_history.pop_back()
@@ -237,25 +258,10 @@ func generate_level() -> void:
 
 
 func is_room_overlapping(room: Node3D) -> bool:
-	var bounds_area : Area3D = room.get_node_or_null("BoundsArea")
-	if bounds_area == null:
-		return false
+	var bounds_area := room.get_node("BoundsArea") as Area3D
+	var collision_shape := bounds_area.get_node("CollisionShape3D") as CollisionShape3D
 
-	var collision_shape : CollisionShape3D = bounds_area.get_node_or_null("CollisionShape3D")
-	if collision_shape == null or collision_shape.shape == null:
-		return false
-
-	# --- DEBUG VISUALIZATION (correct placement) ---
-	var debug_mesh := MeshInstance3D.new()
-	debug_mesh.mesh = collision_shape.shape.get_debug_mesh()
-	debug_mesh.material_override = StandardMaterial3D.new()
-	debug_mesh.material_override.albedo_color = Color(1, 0, 0, 0.3)
-	debug_mesh.global_transform = collision_shape.global_transform
-	room_container.add_child(debug_mesh)
-	print("Bounds size:", collision_shape.shape.size, " position:", collision_shape.position)
-	# ------------------------------------------------
-
-	var space_state : PhysicsDirectSpaceState3D = room.get_world_3d().direct_space_state
+	var space_state := room.get_world_3d().direct_space_state
 	var query := PhysicsShapeQueryParameters3D.new()
 
 	query.shape = collision_shape.shape
@@ -265,31 +271,20 @@ func is_room_overlapping(room: Node3D) -> bool:
 	query.collide_with_bodies = false
 
 	var results := space_state.intersect_shape(query, 32)
+	var parent_room: Node3D = generated_rooms.back() if not generated_rooms.is_empty() else null
+	var spawn_room: Node3D = generated_rooms[0] if not generated_rooms.is_empty() else null
+
 	for result in results:
-		var collider : Area3D = result.get("collider") as Area3D
+		var collider : Area3D = result["collider"] as Area3D
 		if collider and collider != bounds_area:
 			var parent : Node3D = collider.get_parent() as Node3D
-			if parent != room and generated_rooms.has(parent):
+			
+			# Ignore the immediate parent room and the spawn room (Room_0)
+			if parent == parent_room or parent == spawn_room:
+				continue
+				
+			if generated_rooms.has(parent):
 				return true
-
-	# --- AABB fallback ---
-	var room_aabb := collision_shape.shape.get_debug_mesh().get_aabb()
-	var room_world_aabb := collision_shape.global_transform * room_aabb
-	var expanded_room_aabb := room_world_aabb.grow(0.05)
-
-	for existing_room in generated_rooms:
-		if existing_room == room:
-			continue
-
-		var existing_bounds : Area3D = existing_room.get_node_or_null("BoundsArea")
-		if existing_bounds:
-			var existing_shape : CollisionShape3D = existing_bounds.get_node_or_null("CollisionShape3D")
-			if existing_shape and existing_shape.shape:
-				var existing_aabb := existing_shape.shape.get_debug_mesh().get_aabb()
-				var existing_world_aabb := existing_shape.global_transform * existing_aabb
-
-				if expanded_room_aabb.intersects(existing_world_aabb):
-					return true
 
 	return false
 

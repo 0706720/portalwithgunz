@@ -11,15 +11,22 @@ albedo_color = Color(1, 0, 1, 1)
 material = SubResource("StandardMaterial3D_ynhhp")
 size = Vector2(20, 20)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k15v5"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yypnt"]
 albedo_color = Color(1, 0, 1, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_1cpm3"]
-material = SubResource("StandardMaterial3D_k15v5")
+material = SubResource("StandardMaterial3D_yypnt")
+size = Vector3(2, 10, 20)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_08rus"]
+albedo_color = Color(1, 0, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_yypnt"]
+material = SubResource("StandardMaterial3D_08rus")
 size = Vector3(2, 10, 20)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_08rus"]
-size = Vector3(19.5, 2, 19.5)
+size = Vector3(8, 2, 8)
 
 [node name="StraightPrefab1" type="Node3D" unique_id=1768685127]
 
@@ -62,10 +69,13 @@ mesh = SubResource("BoxMesh_1cpm3")
 
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="." unique_id=2030303484]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 5, 10)
-mesh = SubResource("BoxMesh_1cpm3")
+mesh = SubResource("BoxMesh_yypnt")
 
-[node name="BoundsArea" type="Area3D" parent="." unique_id=207876105]
+[node name="BoundsArea" type="Area3D" parent="." unique_id=1115849771]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
+collision_layer = 3
+collision_mask = 3
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="BoundsArea" unique_id=1170042193]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BoundsArea" unique_id=1823630719]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("BoxShape3D_08rus")

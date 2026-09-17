@@ -2,65 +2,68 @@
 
 [ext_resource type="Script" uid="uid://b6n6uoylj1gpp" path="res://Network/metadata.gd" id="1_xojla"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tjwye"]
+[sub_resource type="NavigationMesh" id="NavigationMesh_g4v7s"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xojla"]
 albedo_color = Color(0, 0, 1, 1)
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_cuis1"]
-material = SubResource("StandardMaterial3D_tjwye")
+[sub_resource type="PlaneMesh" id="PlaneMesh_xojla"]
+material = SubResource("StandardMaterial3D_xojla")
 size = Vector2(20, 20)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6ef23"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yypnt"]
 albedo_color = Color(0, 0, 1, 1)
 
-[sub_resource type="BoxMesh" id="BoxMesh_cuis1"]
-material = SubResource("StandardMaterial3D_6ef23")
+[sub_resource type="BoxMesh" id="BoxMesh_ffa2s"]
+material = SubResource("StandardMaterial3D_yypnt")
 size = Vector3(2, 10, 20)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_xojla"]
-size = Vector3(19.5, 2, 19.5)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bk1tu"]
+albedo_color = Color(0, 0, 1, 1)
 
-[node name="ArenaPrefab2" type="Node3D" unique_id=1830555640]
+[sub_resource type="BoxMesh" id="BoxMesh_7vs8b"]
+material = SubResource("StandardMaterial3D_bk1tu")
+size = Vector3(2, 10, 20)
 
-[node name="Connectors" type="Node3D" parent="." unique_id=22694655]
+[node name="ArenaPrefab02" type="Node3D" unique_id=1768685127]
 
-[node name="Exit" type="Node3D" parent="Connectors" unique_id=1075669004]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 20)
-
-[node name="Entry" type="Node3D" parent="Connectors" unique_id=1527219973]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=750849885]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
-mesh = SubResource("PlaneMesh_cuis1")
-
-[node name="SpawnPoints" type="Node3D" parent="." unique_id=2115315750]
-
-[node name="enemy_spawns" type="Node3D" parent="SpawnPoints" unique_id=600508096]
-
-[node name="spawn1" type="Node3D" parent="SpawnPoints/enemy_spawns" unique_id=1677850747]
-
-[node name="resource_spawns" type="Node3D" parent="SpawnPoints" unique_id=534674160]
-
-[node name="spawn1" type="Node3D" parent="SpawnPoints/resource_spawns" unique_id=592937886]
-
-[node name="puzzle_spawns" type="Node3D" parent="SpawnPoints" unique_id=307160373]
-
-[node name="spawn1" type="Node3D" parent="SpawnPoints/puzzle_spawns" unique_id=44727330]
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=1007014533]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 5, 10)
-mesh = SubResource("BoxMesh_cuis1")
-
-[node name="MeshInstance3D3" type="MeshInstance3D" parent="." unique_id=1635109862]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 5, 10)
-mesh = SubResource("BoxMesh_cuis1")
-
-[node name="MetaData" type="Node" parent="." unique_id=286384762]
+[node name="Metadata" type="Node" parent="." unique_id=939893820]
 script = ExtResource("1_xojla")
 difficulty_weight = 0.8
 room_type = Array[String](["\"arena\""])
 
-[node name="BoundsArea" type="Area3D" parent="." unique_id=1111886280]
+[node name="Connectors" type="Node3D" parent="." unique_id=1497390118]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="BoundsArea" unique_id=1272725307]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("BoxShape3D_xojla")
+[node name="Entry" type="Node3D" parent="Connectors" unique_id=1293632717]
+
+[node name="Exit" type="Node3D" parent="Connectors" unique_id=404926246]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 20)
+
+[node name="SpawnPoints" type="Node3D" parent="." unique_id=268442773]
+
+[node name="enemy_spawns" type="Node3D" parent="SpawnPoints" unique_id=800816673]
+
+[node name="spawn1" type="Node3D" parent="SpawnPoints/enemy_spawns" unique_id=703455805]
+
+[node name="resource_spawns" type="Node3D" parent="SpawnPoints" unique_id=609920733]
+
+[node name="spawn1" type="Node3D" parent="SpawnPoints/resource_spawns" unique_id=438799057]
+
+[node name="puzzle_spawns" type="Node3D" parent="SpawnPoints" unique_id=1170800451]
+
+[node name="spawn1" type="Node3D" parent="SpawnPoints/puzzle_spawns" unique_id=593188252]
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=1132041652]
+navigation_mesh = SubResource("NavigationMesh_g4v7s")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=636075812]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
+mesh = SubResource("PlaneMesh_xojla")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=922063532]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 5, 10)
+mesh = SubResource("BoxMesh_ffa2s")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="." unique_id=2030303484]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 5, 10)
+mesh = SubResource("BoxMesh_7vs8b")
