@@ -1,0 +1,69 @@
+[gd_scene format=3 uid="uid://bprr7kn8s2bom"]
+
+[ext_resource type="Script" uid="uid://b6n6uoylj1gpp" path="res://Network/metadata.gd" id="1_inn36"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_g4v7s"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_inn36"]
+size = Vector2(20, 20)
+
+[sub_resource type="BoxMesh" id="BoxMesh_tj4kq"]
+size = Vector3(2, 10, 20)
+
+[sub_resource type="BoxMesh" id="BoxMesh_u55ya"]
+size = Vector3(2, 10, 20)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_inn36"]
+size = Vector3(8, 2, 8)
+
+[node name="ArenaPrefab01" type="Node3D" unique_id=1768685127]
+
+[node name="Metadata" type="Node" parent="." unique_id=939893820]
+script = ExtResource("1_inn36")
+difficulty_weight = 0.8
+room_type = Array[String](["\"arena\""])
+
+[node name="Connectors" type="Node3D" parent="." unique_id=1497390118]
+
+[node name="Entry" type="Node3D" parent="Connectors" unique_id=1293632717]
+
+[node name="Exit" type="Node3D" parent="Connectors" unique_id=404926246]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 20)
+
+[node name="SpawnPoints" type="Node3D" parent="." unique_id=268442773]
+
+[node name="enemy_spawns" type="Node3D" parent="SpawnPoints" unique_id=800816673]
+
+[node name="spawn1" type="Node3D" parent="SpawnPoints/enemy_spawns" unique_id=703455805]
+
+[node name="resource_spawns" type="Node3D" parent="SpawnPoints" unique_id=609920733]
+
+[node name="spawn1" type="Node3D" parent="SpawnPoints/resource_spawns" unique_id=438799057]
+
+[node name="puzzle_spawns" type="Node3D" parent="SpawnPoints" unique_id=1170800451]
+
+[node name="spawn1" type="Node3D" parent="SpawnPoints/puzzle_spawns" unique_id=593188252]
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=1132041652]
+navigation_mesh = SubResource("NavigationMesh_g4v7s")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=636075812]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
+mesh = SubResource("PlaneMesh_inn36")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=922063532]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 5, 10)
+mesh = SubResource("BoxMesh_tj4kq")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="." unique_id=2030303484]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 5, 10)
+mesh = SubResource("BoxMesh_u55ya")
+
+[node name="BoundsArea" type="Area3D" parent="." unique_id=1071726804]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BoundsArea" unique_id=1857133672]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("BoxShape3D_inn36")
