@@ -216,7 +216,7 @@ func generate_level() -> void:
 
 			if i > 0 and is_room_overlapping(room):
 				total_overlaps_rejected += 1
-				print_rich("[color=red][ProceduralGen] Overlap detected at Room #%d. Rejecting...[/color]" % i)
+				#print_rich("[color=red][ProceduralGen] Overlap detected at Room #%d. Rejecting...[/color]" % i)
 				room.queue_free()
 				continue
 
