@@ -87,8 +87,8 @@ shape = SubResource("ConcavePolygonShape3D_txqev")
 
 [node name="MetaData" type="Node" parent="." unique_id=435375148]
 script = ExtResource("1_y3w5q")
-difficulty_weight = 0.1
-room_type = Array[String](["\"corridor\""])
+difficulty_weight = 0.3
+room_type = Array[String](["\"safe\""])
 
 [node name="BoundsArea" type="Area3D" parent="." unique_id=1223170745]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
