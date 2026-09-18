@@ -25,19 +25,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2715378, 5.035372)
 [node name="Entry" type="Node3D" parent="Connectors" unique_id=1313963210]
 
 [node name="Exit" type="Node3D" parent="Connectors" unique_id=406954462]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 20)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 18)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=651987031]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8)
 mesh = SubResource("PlaneMesh_yf5fn")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D" unique_id=762623016]
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D" unique_id=2059881810]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D" unique_id=1279004216]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D" unique_id=518054639]
 shape = SubResource("ConcavePolygonShape3D_kl01i")
 
 [node name="BoundsArea" type="Area3D" parent="." unique_id=515526760]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8)
 collision_layer = 3
 collision_mask = 3
 
