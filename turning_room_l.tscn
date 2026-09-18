@@ -89,5 +89,5 @@ shape = SubResource("BoxShape3D_1hhv7")
 
 [node name="MetaData" type="Node" parent="." unique_id=560053847]
 script = ExtResource("1_gfcr4")
-difficulty_weight = 0.1
-room_type = Array[String](["\"corridor\""])
+difficulty_weight = 0.3
+room_type = Array[String](["\"safe\""])

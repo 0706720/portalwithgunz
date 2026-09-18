@@ -9,8 +9,8 @@ var generated_rooms: Array[Node3D] = []
 
 @export var room_count := 100
 @export_flags_3d_physics var room_bounds_layer := 2
-@export var max_attempts_per_room := 30
-@export var max_backtracks := 50
+@export var max_attempts_per_room := 15
+@export var max_backtracks := 20
 
 @onready var room_container: Node3D = $"../RoomContainer"
 @export var start_room_scene: PackedScene = preload("res://assets/Rooms/Special/spawn_room_prefab1.tscn")
@@ -211,12 +211,12 @@ func generate_level() -> void:
 				bounds_area.force_update_transform()
 				collision_shape.force_update_transform()
 
-			await get_tree().process_frame
+			#await get_tree().process_frame
 			await get_tree().process_frame   # Ensures physics shapes update
 
 			if i > 0 and is_room_overlapping(room):
 				total_overlaps_rejected += 1
-				print_rich("[color=red][ProceduralGen] Overlap detected at Room #%d. Rejecting...[/color]" % i)
+				#print_rich("[color=red][ProceduralGen] Overlap detected at Room #%d. Rejecting...[/color]" % i)
 				room.queue_free()
 				continue
 
