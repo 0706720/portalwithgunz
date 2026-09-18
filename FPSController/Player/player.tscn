@@ -804,6 +804,7 @@ script = ExtResource("14_do0ft")
 script = ExtResource("15_00aet")
 
 [node name="HUD" type="Control" parent="." unique_id=886859724]
+unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
