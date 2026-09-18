@@ -116,36 +116,82 @@ func pick_room_for_director(room_index: int) -> PackedScene:
 		return null
 
 	var current_diff: float = AI_Director.dynamic_difficulty if Engine.has_singleton("AI_Director") else 0.2
-	var pacing_state = AI_Director.current_pacing if Engine.has_singleton("AI_Director") else 0
+	var pacing: int = AI_Director.current_pacing if Engine.has_singleton("AI_Director") else 0
 
-	var candidate_pool: Array[PackedScene] = []
+	var scored_rooms: Array = []
 
 	for room_scene in all_rooms:
 		var inst := room_scene.instantiate() as Node3D
 		var meta := inst.get_node_or_null("Metadata")
 
-		var room_diff: float = meta.difficulty_weight if meta and "difficulty_weight" in meta else 0.0
-		var is_straight: bool = meta.has_type("straight") if meta and meta.has_method("has_type") else ("straight" in room_scene.resource_path.to_lower())
-		var is_safe: bool = meta.has_type("safe") if meta and meta.has_method("has_type") else false
-		var is_arena: bool = meta.has_type("arena") if meta and meta.has_method("has_type") else false
+		var diff: float = meta.difficulty_weight if meta else 0.0
+		var tags: Array[String] = []
+		if meta:
+			tags = meta.room_type
+		var lower_tags: Array[String] = []
+		for t in tags:
+			lower_tags.append(t.to_lower())
+
 
 		inst.queue_free()
 
-		if room_diff <= current_diff:
-			match pacing_state:
-				2: # RELAX
-					if is_straight or is_safe:
-						candidate_pool.append(room_scene)
-				1: # PEAK
-					if is_arena:
-						candidate_pool.append(room_scene)
-				_: # BUILDUP
-					candidate_pool.append(room_scene)
+		# --- BASE SCORE ---
+		var score: float = 1.0
 
-	if candidate_pool.is_empty():
+		# --- DIFFICULTY SCALING ---
+		var diff_delta := diff - current_diff
+		if diff_delta > 0.0:
+			score *= max(0.1, 1.0 - diff_delta)
+
+		# --- TAG WEIGHTING BASED ON PACING ---
+		match pacing:
+			AI_Director.PacingState.BUILDUP:
+				if "straight" in lower_tags or "corridor" in lower_tags:
+					score *= 2.0
+				if "arena" in lower_tags:
+					score *= 0.2
+				if "safe" in lower_tags:
+					score *= 0.5
+
+			AI_Director.PacingState.PEAK:
+				if "arena" in lower_tags:
+					score *= 3.0
+				if "straight" in lower_tags:
+					score *= 0.5
+				if "safe" in lower_tags:
+					score *= 0.1
+
+			AI_Director.PacingState.RELAX:
+				if "safe" in lower_tags or "straight" in lower_tags:
+					score *= 2.5
+				if "arena" in lower_tags:
+					score *= 0.1
+
+		# --- ENSURE MINIMUM SCORE ---
+		score = max(score, 0.05)
+
+		scored_rooms.append({
+			"scene": room_scene,
+			"score": score
+		})
+
+	# --- WEIGHTED RANDOM SELECTION ---
+	var total: float = 0.0
+	for r in scored_rooms:
+		total += r.score
+
+	if total <= 0.0:
 		return all_rooms[rng.randi() % all_rooms.size()]
 
-	return candidate_pool[rng.randi() % candidate_pool.size()]
+	var pick := rng.randf() * total
+	var accum := 0.0
+
+	for r in scored_rooms:
+		accum += r.score
+		if accum >= pick:
+			return r.scene
+
+	return all_rooms[rng.randi() % all_rooms.size()]
 
 
 func generate_level() -> void:
