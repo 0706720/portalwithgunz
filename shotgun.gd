@@ -9,7 +9,7 @@ extends Node3D
 @onready var spawnPoint7 = $spawnPoint7
 var pellet = preload("res://assets/models/ShotgunBullet.tscn")
 var pellet_count = 8
-var spread_angle = 0
+var spread_angle = 0.5
 @export var bullet_speed: float = 20.0
 var random_x = randf_range(-spread_angle, spread_angle)
 var random_y = randf_range(-spread_angle, spread_angle)
