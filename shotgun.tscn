@@ -41,5 +41,14 @@ transform = Transform3D(1, 0, 0, 0, -1.3113416e-07, 1, 0, -3, -4.371139e-08, 0, 
 [node name="RayCast3D10" type="RayCast3D" parent="Raycasts(shotgun)" unique_id=1668063771]
 transform = Transform3D(1, 0, 0, 0, -1.3113416e-07, 1, 0, -3, -4.371139e-08, 0, 0.102, 0.28017855)
 
-[node name="spawnPoint" type="Node3D" parent="." unique_id=169504071]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.117637604, 0.28408223)
+[node name="spawnPoint1" type="Node3D" parent="." unique_id=169504071]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -6.695911e-08, 0.117637604, 1.0500052)
+
+[node name="spawnPoint2" type="Node3D" parent="." unique_id=947322807]
+transform = Transform3D(-0.9659258, 0, -0.25881913, 0, 1, 0, 0.25881913, 0, -0.9659258, -6.695911e-08, 0.117637604, 1.0500052)
+
+[node name="spawnPoint3" type="Node3D" parent="." unique_id=928692243]
+transform = Transform3D(-0.9659258, 0, 0.25881907, 0, 1, 0, -0.25881907, 0, -0.9659258, -6.695911e-08, 0.117637604, 1.0500052)
+
+[node name="spawnPoint4" type="Node3D" parent="." unique_id=1308338050]
+transform = Transform3D(-1, -2.262668e-08, 8.444392e-08, 0, 0.9659258, 0.25881904, -8.742278e-08, 0.25881904, -0.9659258, -6.695911e-08, 0.117637604, 1.0500052)
