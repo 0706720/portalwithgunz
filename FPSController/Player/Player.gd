@@ -2,6 +2,7 @@ extends CharacterBody3D
 class_name PlayerCharacter
 
 signal health_changed(health_value)
+signal level_up(new_level)
 
 var current_speed: float
 
