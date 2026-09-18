@@ -1,6 +1,6 @@
 extends RigidBody3D
 
-@export var Bullet_Speed = 100.0
+@export var Bullet_Speed = 20.0
 @export var max_bullets: int = 10
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
