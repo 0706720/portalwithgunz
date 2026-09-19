@@ -6,16 +6,24 @@ var level_generated := false
 var rng := RandomNumberGenerator.new()
 var all_rooms: Array[PackedScene] = []
 var generated_rooms: Array[Node3D] = []
+var last_turn_direction := "" # Tracks "left" or "right"
 
 @export var room_count := 100
 @export_flags_3d_physics var room_bounds_layer := 2
 @export var max_attempts_per_room := 15
 @export var max_backtracks := 20
+@export var required_straights_after_turn := 10
+ # Change this to force more or fewer straights
 
 @onready var room_container: Node3D = $"../RoomContainer"
 
 # NOTE: Adjust this file path if your spawn room prefab is located elsewhere in your project directory
 @export var start_room_scene: PackedScene = preload("res://assets/Rooms/Special/spawn_room_prefab1.tscn")
+
+@export var enemy_scenes: Array[PackedScene] = [
+	preload("res://assets/models/enemy.tscn") # Adjust to your actual path
+]
+@export var enemy_spawn_chance := 0.7 # 70% chance for a marker to spawn an enemy
 
 
 func _ready() -> void:
@@ -121,7 +129,7 @@ func validate_prefab_structure(scene: PackedScene, path: String) -> bool:
 	return valid
 
 
-func pick_room_for_director(room_index: int) -> PackedScene:
+func pick_room_for_director(room_index: int, force_straight: bool = false) -> PackedScene:
 	if all_rooms.is_empty():
 		push_error("[ProceduralGen] Selection Error: 'all_rooms' is empty.")
 		return null
@@ -145,8 +153,30 @@ func pick_room_for_director(room_index: int) -> PackedScene:
 
 		inst.queue_free()
 
+		var is_straight := "straight" in lower_tags or "corridor" in lower_tags
+		var is_left_turn := "turn_left" in lower_tags or "left" in lower_tags
+		var is_right_turn := "turn_right" in lower_tags or "right" in lower_tags
+
+		# --- STRICT FILTER IF CHAINING REQUIRES A STRAIGHT ---
+		if force_straight and not is_straight:
+			continue
+		# -----------------------------------------------------
+
 		# --- BASE SCORE ---
 		var score: float = 1.0
+
+		# --- ANTI-COILING / ALTERNATING TURN LOGIC ---
+		if is_left_turn:
+			if last_turn_direction == "right":
+				score *= 3.0 # Reward alternating to break coiling loops
+			elif last_turn_direction == "left":
+				score *= 0.2 # Penalize repeating the same turn direction
+		elif is_right_turn:
+			if last_turn_direction == "left":
+				score *= 3.0
+			elif last_turn_direction == "right":
+				score *= 0.2
+		# ---------------------------------------------
 
 		# --- DIFFICULTY SCALING ---
 		var diff_delta := diff - current_diff
@@ -156,7 +186,7 @@ func pick_room_for_director(room_index: int) -> PackedScene:
 		# --- TAG WEIGHTING BASED ON PACING ---
 		match pacing:
 			AI_Director.PacingState.BUILDUP:
-				if "straight" in lower_tags or "corridor" in lower_tags:
+				if is_straight:
 					score *= 2.0
 				if "arena" in lower_tags:
 					score *= 0.2
@@ -166,13 +196,13 @@ func pick_room_for_director(room_index: int) -> PackedScene:
 			AI_Director.PacingState.PEAK:
 				if "arena" in lower_tags:
 					score *= 3.0
-				if "straight" in lower_tags:
+				if is_straight:
 					score *= 0.5
 				if "safe" in lower_tags:
 					score *= 0.1
 
 			AI_Director.PacingState.RELAX:
-				if "safe" in lower_tags or "straight" in lower_tags:
+				if "safe" in lower_tags or is_straight:
 					score *= 2.5
 				if "arena" in lower_tags:
 					score *= 0.1
@@ -184,6 +214,28 @@ func pick_room_for_director(room_index: int) -> PackedScene:
 			"scene": room_scene,
 			"score": score
 		})
+
+	# --- FIXED FALLBACK: GUARANTEE A STRAIGHT INSTEAD OF ALLOWING TURNS ---
+	if scored_rooms.is_empty() and force_straight:
+		var straight_fallbacks: Array[PackedScene] = []
+		for room_scene in all_rooms:
+			var inst := room_scene.instantiate() as Node3D
+			var meta := inst.get_node_or_null("Metadata")
+			var tags: Array = meta.room_type if meta else []
+			var is_s := false
+			for t in tags:
+				if t.to_lower() == "straight" or t.to_lower() == "corridor":
+					is_s = true
+			inst.queue_free()
+			if is_s:
+				straight_fallbacks.append(room_scene)
+		
+		if not straight_fallbacks.is_empty():
+			return straight_fallbacks[rng.randi() % straight_fallbacks.size()]
+		else:
+			push_warning("[ProceduralGen] Warning: No straight rooms exist in 'all_rooms' prefab array!")
+			return all_rooms[rng.randi() % all_rooms.size()]
+	# ---------------------------------------------------------------------
 
 	# --- WEIGHTED RANDOM SELECTION ---
 	var total: float = 0.0
@@ -218,32 +270,48 @@ func generate_spawn_room_first() -> void:
 
 
 func generate_level_aabb_layout() -> Dictionary:
-	print_rich("[color=cyan][ProceduralGen] --- Starting Fast AABB Layout Calculation ---[/color]")
+	print_rich("[color=cyan][ProceduralGen] --- Starting Linear AABB Layout Calculation ---[/color]")
 	
 	var placed_aabbs: Array[AABB] = []
 	var room_transforms: Array[Transform3D] = []
 	var room_scene_paths: Array[String] = []
 	
-	# Pre-calculate Room 0's exit transform to chain Room 1 properly from it
+	var forced_straight_count := 0
+	
 	var temp_start := start_room_scene.instantiate() as Node3D
 	var start_exit := temp_start.get_node("Connectors/Exit") as Node3D
 	var current_transform := temp_start.global_transform * start_exit.transform
 	
-	# Get Room 0's bounds AABB to block overlapping
 	var start_bounds = temp_start.get_node("BoundsArea/CollisionShape3D") as CollisionShape3D
 	if start_bounds and start_bounds.shape:
 		var s_aabb = start_bounds.shape.get_debug_mesh().get_aabb() if start_bounds.shape.has_method("get_debug_mesh") else AABB(Vector3(-5,-5,-5), Vector3(10,10,10))
 		placed_aabbs.append(s_aabb.abs())
+	
+	var last_room_position := temp_start.global_transform.origin
 	temp_start.queue_free()
 
 	for i in range(1, room_count):
-		var room_placed := false
+		var room_passed_rules := false
+		var selected_room_scene: PackedScene = null
+		var selected_temp_inst: Node3D = null
+		var candidate_transform := Transform3D.IDENTITY
+		var next_exit_transform := Transform3D.IDENTITY
+		var global_aabb := AABB()
 		
 		for attempt in range(max_attempts_per_room):
-			var room_scene: PackedScene = pick_room_for_director(i)
+			var must_be_straight := (forced_straight_count > 0)
+			var room_scene: PackedScene = pick_room_for_director(i, must_be_straight)
 			if room_scene == null: break
 			
 			var temp_inst = room_scene.instantiate() as Node3D
+			var meta = temp_inst.get_node_or_null("Metadata")
+			var tags: Array[String] = []
+			if meta and "room_type" in meta:
+				for t in meta.room_type:
+					tags.append(t.to_lower())
+			
+			var is_straight := "straight" in tags or "corridor" in tags
+			
 			var bounds_area = temp_inst.get_node_or_null("BoundsArea/CollisionShape3D") as CollisionShape3D
 			var exit_node = temp_inst.get_node_or_null("Connectors/Exit") as Node3D
 			var entry_node = temp_inst.get_node_or_null("Connectors/Entry") as Node3D
@@ -255,10 +323,19 @@ func generate_level_aabb_layout() -> Dictionary:
 			var local_aabb: AABB = bounds_area.shape.get_debug_mesh().get_aabb() if bounds_area.shape and bounds_area.shape.has_method("get_debug_mesh") else AABB(Vector3(-2,-2,-2), Vector3(4,4,4))
 			
 			var entry_local_inv: Transform3D = entry_node.transform.inverse()
-			var candidate_transform: Transform3D = current_transform * entry_local_inv
+			candidate_transform = current_transform * entry_local_inv
 			
-			var global_aabb := local_aabb.abs()
-			global_aabb.position += candidate_transform.origin
+			# --- ANTI-DOUBLING-BACK / FORWARD BIAS CHECK ---
+			var movement_vector = candidate_transform.origin - last_room_position
+			var forward_direction = current_transform.basis.z.normalized() # Adjust if your forward axis differs
+			
+			# If the room tries to double back sharply against the current facing direction, reject it
+			if i > 1 and movement_vector.normalized().dot(forward_direction) < -0.2:
+				temp_inst.queue_free()
+				continue
+			# -----------------------------------------------
+			
+			global_aabb = (candidate_transform * local_aabb).abs()
 			
 			var has_overlapping := false
 			for existing_aabb in placed_aabbs:
@@ -270,20 +347,42 @@ func generate_level_aabb_layout() -> Dictionary:
 				temp_inst.queue_free()
 				continue
 				
-			var next_exit_transform: Transform3D = candidate_transform * exit_node.transform
-			temp_inst.queue_free()
+			next_exit_transform = candidate_transform * exit_node.transform
 			
-			placed_aabbs.append(global_aabb)
-			room_transforms.append(candidate_transform)
-			room_scene_paths.append(room_scene.resource_path)
+			# Update chaining counters
+			if not is_straight:
+				forced_straight_count = required_straights_after_turn
+			else:
+				if forced_straight_count > 0:
+					forced_straight_count -= 1
 			
-			current_transform = next_exit_transform
-			room_placed = true
+			selected_room_scene = room_scene
+			selected_temp_inst = temp_inst
+			room_passed_rules = true
 			break
 			
-		if not room_placed:
+		if not room_passed_rules:
 			print_rich("[color=yellow][ProceduralGen] Reached dead-end at room index %d. Stopping layout generation early.[/color]" % i)
 			break
+			
+		# Extract tags and update turn direction state
+		var meta = selected_temp_inst.get_node_or_null("Metadata")
+		var selected_tags: Array[String] = []
+		if meta and "room_type" in meta:
+			for t in meta.room_type:
+				selected_tags.append(t.to_lower())
+
+		if "turn_left" in selected_tags or "left" in selected_tags:
+			last_turn_direction = "left"
+		elif "turn_right" in selected_tags or "right" in selected_tags:
+			last_turn_direction = "right"
+
+		last_room_position = candidate_transform.origin
+		selected_temp_inst.queue_free()
+		placed_aabbs.append(global_aabb)
+		room_transforms.append(candidate_transform)
+		room_scene_paths.append(selected_room_scene.resource_path)
+		current_transform = next_exit_transform
 
 	return { "paths": room_scene_paths, "transforms": room_transforms }
 
@@ -296,7 +395,7 @@ func instantiate_rooms_incrementally(paths: Array[String], transforms: Array[Tra
 		room_container.add_child(room)
 		room.global_transform = transforms[i]
 		generated_rooms.append(room)
-		
+		#spawn_enemies_in_room(room, i)
 		# Yield every 3 rooms to spread out instantiation work and avoid frame stuttering
 		if i % 3 == 0:
 			await get_tree().process_frame
@@ -306,6 +405,49 @@ func instantiate_rooms_incrementally(paths: Array[String], transforms: Array[Tra
 	# Give physics a final frame to settle all newly added room colliders
 	await get_tree().physics_frame
 
+
+func spawn_enemies_in_room(room: Node3D, room_index: int) -> void:
+	# Skip spawning enemies in the first room (spawn room)
+	if room_index == 0:
+		return
+		
+	# Check if the enemy_spawns container exists
+	var spawns_node = room.get_node_or_null("SpawnPoints/enemy_spawns")
+	if not spawns_node:
+		print_rich("[color=yellow][ProceduralGen] Warning: Room '%s' is missing 'SpawnPoints/enemy_spawns' node.[/color]" % room.name)
+		return
+		
+	# Check if you forgot to assign scenes in the Inspector array
+	if enemy_scenes.is_empty():
+		print_rich("[color=red][ProceduralGen] Error: 'enemy_scenes' array is empty! Assign your enemy PackedScenes in the Inspector.[/color]")
+		return
+		
+	var spawn_count := 0
+	var children = spawns_node.get_children()
+	
+	if children.is_empty():
+		print_rich("[color=yellow][ProceduralGen] Notice: 'enemy_spawns' in room '%s' has no child nodes.[/color]" % room.name)
+		return
+
+	for marker in children:
+		# Check if the node is actually a Marker3D (or Node3D if you used regular nodes)
+		if marker is Marker3D or marker is Node3D:
+			# Roll the dice to see if an enemy spawns at this marker
+			if rng.randf() <= enemy_spawn_chance:
+				var random_enemy_scene = enemy_scenes[rng.randi() % enemy_scenes.size()]
+				if random_enemy_scene:
+					var enemy = random_enemy_scene.instantiate() as Node3D
+					room.add_child(enemy)
+					enemy.global_transform = marker.global_transform
+					spawn_count += 1
+				else:
+					print_rich("[color=red][ProceduralGen] Error: One of the items in 'enemy_scenes' is null![/color]")
+			else:
+				print_rich("[color=gray][ProceduralGen] Info: Spawn skipped at marker due to 'enemy_spawn_chance' (%.2f).[/color]" % enemy_spawn_chance)
+		else:
+			print_rich("[color=yellow][ProceduralGen] Warning: Child under enemy_spawns is not a position node (Type: %s).[/color]" % marker.get_class())
+			
+	print_rich("[color=green][ProceduralGen] Room '%s': Successfully spawned %d enemies.[/color]" % [room.name, spawn_count])
 
 @rpc("any_peer", "reliable")
 func request_world_state(peer_id: int) -> void:

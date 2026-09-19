@@ -7,10 +7,10 @@ albedo_color = Color(1, 0.38431373, 0, 1)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_p5174"]
 material = SubResource("StandardMaterial3D_tkluk")
-size = Vector2(20, 20)
+size = Vector2(40, 20)
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_ophxo"]
-data = PackedVector3Array(10, 0, 10, -10, 0, 10, 10, 0, -10, -10, 0, 10, -10, 0, -10, 10, 0, -10)
+data = PackedVector3Array(20, 0, 10, -20, 0, 10, 20, 0, -10, -20, 0, 10, -20, 0, -10, 20, 0, -10)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2adyb"]
 albedo_color = Color(1, 0.38431373, 0, 1)
@@ -40,17 +40,17 @@ size = Vector3(8, 2, 8)
 [node name="Connectors" type="Node3D" parent="." unique_id=890660771]
 
 [node name="Exit" type="Node3D" parent="Connectors" unique_id=564544824]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -10, 0, 10)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, 20)
 
 [node name="Entry" type="Node3D" parent="Connectors" unique_id=2032005469]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1529472956]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 10)
 mesh = SubResource("PlaneMesh_p5174")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D" unique_id=1761245667]
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D" unique_id=635533655]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D" unique_id=1195682919]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D" unique_id=2118663941]
 shape = SubResource("ConcavePolygonShape3D_ophxo")
 
 [node name="SpawnPoints" type="Node3D" parent="." unique_id=409352592]
@@ -88,7 +88,7 @@ shape = SubResource("ConcavePolygonShape3D_txqev")
 [node name="MetaData" type="Node" parent="." unique_id=435375148]
 script = ExtResource("1_y3w5q")
 difficulty_weight = 0.3
-room_type = Array[String](["\"safe\""])
+room_type = Array[String](["\"right\""])
 
 [node name="BoundsArea" type="Area3D" parent="." unique_id=1223170745]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
@@ -98,3 +98,21 @@ collision_mask = 3
 [node name="CollisionShape3D" type="CollisionShape3D" parent="BoundsArea" unique_id=734787052]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("BoxShape3D_ophxo")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="." unique_id=156827493]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 5, 10)
+mesh = SubResource("BoxMesh_rs22w")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D4" unique_id=1377935146]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D4/StaticBody3D" unique_id=2033858543]
+shape = SubResource("ConcavePolygonShape3D_qx86r")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="." unique_id=477146911]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -20, 5, 1)
+mesh = SubResource("BoxMesh_rs22w")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D5" unique_id=979742913]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D5/StaticBody3D" unique_id=1542773069]
+shape = SubResource("ConcavePolygonShape3D_qx86r")
