@@ -13,6 +13,8 @@ var generated_rooms: Array[Node3D] = []
 @export var max_backtracks := 20
 
 @onready var room_container: Node3D = $"../RoomContainer"
+
+# NOTE: Adjust this file path if your spawn room prefab is located elsewhere in your project directory
 @export var start_room_scene: PackedScene = preload("res://assets/Rooms/Special/spawn_room_prefab1.tscn")
 
 
@@ -25,7 +27,15 @@ func _ready() -> void:
 		load_room_prefabs()
 
 		if validate_generator_setup():
-			await generate_level()
+			# 1. Spawn Room 0 and let physics/player spawner initialize safely
+			await generate_spawn_room_first()
+			
+			# 2. Calculate the rest of the map layout via fast AABB math in memory
+			var layout_data = generate_level_aabb_layout()
+			
+			# 3. Instantiate remaining rooms smoothly over multiple frames to avoid stutters
+			await instantiate_rooms_incrementally(layout_data["paths"], layout_data["transforms"])
+			
 			level_generated = true
 			emit_signal("world_ready")
 		else:
@@ -56,6 +66,7 @@ func validate_generator_setup() -> bool:
 
 func load_room_prefabs() -> void:
 	all_rooms.clear()
+	# NOTE: Adjust this folder path if your standard room prefabs are stored in a different directory
 	scan_folder_for_rooms("res://assets/Rooms/")
 	print_rich("[color=green][ProceduralGen] Prefab Loader: Loaded %d total usable room prefabs.[/color]" % all_rooms.size())
 
@@ -132,7 +143,6 @@ func pick_room_for_director(room_index: int) -> PackedScene:
 		for t in tags:
 			lower_tags.append(t.to_lower())
 
-
 		inst.queue_free()
 
 		# --- BASE SCORE ---
@@ -194,145 +204,107 @@ func pick_room_for_director(room_index: int) -> PackedScene:
 	return all_rooms[rng.randi() % all_rooms.size()]
 
 
-func generate_level() -> void:
-	print_rich("[color=cyan][ProceduralGen] --- Starting Async Generation Target: %d Rooms ---[/color]" % room_count)
+func generate_spawn_room_first() -> void:
+	var room := start_room_scene.instantiate() as Node3D
+	room.name = "Room_0"
+	room.global_transform = Transform3D.IDENTITY
+	room_container.add_child(room)
+	generated_rooms.append(room)
 	
-	var occupied_grid_cells: Dictionary = {}
-	var transform_history: Array[Transform3D] = []
-	var total_overlaps_rejected := 0
-	var backtracks_used := 0
-	var connector_flip := Basis(Vector3.UP, PI)
+	# Give physics 2 frames to register the floor collision so the player spawns safely
+	await get_tree().physics_frame
+	await get_tree().physics_frame
+	print_rich("[color=green][ProceduralGen] Spawn room loaded. Player can safely drop in.[/color]")
 
-	while generated_rooms.size() < room_count:
-		var i := generated_rooms.size()
+
+func generate_level_aabb_layout() -> Dictionary:
+	print_rich("[color=cyan][ProceduralGen] --- Starting Fast AABB Layout Calculation ---[/color]")
+	
+	var placed_aabbs: Array[AABB] = []
+	var room_transforms: Array[Transform3D] = []
+	var room_scene_paths: Array[String] = []
+	
+	# Pre-calculate Room 0's exit transform to chain Room 1 properly from it
+	var temp_start := start_room_scene.instantiate() as Node3D
+	var start_exit := temp_start.get_node("Connectors/Exit") as Node3D
+	var current_transform := temp_start.global_transform * start_exit.transform
+	
+	# Get Room 0's bounds AABB to block overlapping
+	var start_bounds = temp_start.get_node("BoundsArea/CollisionShape3D") as CollisionShape3D
+	if start_bounds and start_bounds.shape:
+		var s_aabb = start_bounds.shape.get_debug_mesh().get_aabb() if start_bounds.shape.has_method("get_debug_mesh") else AABB(Vector3(-5,-5,-5), Vector3(10,10,10))
+		placed_aabbs.append(s_aabb.abs())
+	temp_start.queue_free()
+
+	for i in range(1, room_count):
 		var room_placed := false
-		var current_attach_transform: Transform3D = transform_history.back() if not transform_history.is_empty() else Transform3D.IDENTITY
-
+		
 		for attempt in range(max_attempts_per_room):
-			var room_scene: PackedScene = start_room_scene if i == 0 and start_room_scene != null else pick_room_for_director(i)
-			if room_scene == null:
-				push_error("[ProceduralGen] Generation Aborted: Null room scene encountered at index %d." % i)
-				return
-
-			var room: Node3D = room_scene.instantiate() as Node3D
-			room.name = "Room_" + str(i)
-			room.set_meta("scene_path", room_scene.resource_path)
-
-			# Reset transforms to avoid inherited scaling
-			room.scale = Vector3.ONE
-
-			room_container.add_child(room)
-
-			var entry: Node3D = room.get_node_or_null("Connectors/Entry") as Node3D
-			var exit: Node3D = room.get_node_or_null("Connectors/Exit") as Node3D
-
-			if entry == null or exit == null:
-				push_error("[ProceduralGen] Room #%d missing required connector nodes." % i)
-				room.queue_free()
-				break
-
-			if i == 0:
-				room.global_transform = Transform3D.IDENTITY
-			else:
-				var exit_global := current_attach_transform
-				var entry_local_inv := entry.transform.inverse()
+			var room_scene: PackedScene = pick_room_for_director(i)
+			if room_scene == null: break
+			
+			var temp_inst = room_scene.instantiate() as Node3D
+			var bounds_area = temp_inst.get_node_or_null("BoundsArea/CollisionShape3D") as CollisionShape3D
+			var exit_node = temp_inst.get_node_or_null("Connectors/Exit") as Node3D
+			var entry_node = temp_inst.get_node_or_null("Connectors/Entry") as Node3D
+			
+			if not bounds_area or not exit_node or not entry_node:
+				temp_inst.queue_free()
+				continue
 				
-				room.global_transform = exit_global * entry_local_inv
-
-			# Force update transform directly on the Node3D
-			room.force_update_transform()
-
-			var grid_pos := Vector3i(room.global_transform.origin.round())
-			if occupied_grid_cells.has(grid_pos):
-				total_overlaps_rejected += 1
-				room.queue_free()
+			var local_aabb: AABB = bounds_area.shape.get_debug_mesh().get_aabb() if bounds_area.shape and bounds_area.shape.has_method("get_debug_mesh") else AABB(Vector3(-2,-2,-2), Vector3(4,4,4))
+			
+			var entry_local_inv: Transform3D = entry_node.transform.inverse()
+			var candidate_transform: Transform3D = current_transform * entry_local_inv
+			
+			var global_aabb := local_aabb.abs()
+			global_aabb.position += candidate_transform.origin
+			
+			var has_overlapping := false
+			for existing_aabb in placed_aabbs:
+				if existing_aabb.intersects(global_aabb):
+					has_overlapping = true
+					break
+			
+			if has_overlapping:
+				temp_inst.queue_free()
 				continue
-
-			var bounds_area : Area3D = room.get_node_or_null("BoundsArea")
-			var collision_shape : CollisionShape3D = bounds_area.get_node_or_null("CollisionShape3D") if bounds_area else null
-			if bounds_area and collision_shape:
-				collision_shape.shape = collision_shape.shape.duplicate()
-				bounds_area.scale = Vector3.ONE
-				collision_shape.scale = Vector3.ONE
-				bounds_area.force_update_transform()
-				collision_shape.force_update_transform()
-
-			#await get_tree().process_frame
-			await get_tree().process_frame   # Ensures physics shapes update
-
-			if i > 0 and is_room_overlapping(room):
-				total_overlaps_rejected += 1
-				#print_rich("[color=red][ProceduralGen] Overlap detected at Room #%d. Rejecting...[/color]" % i)
-				room.queue_free()
-				continue
-
-			occupied_grid_cells[grid_pos] = true
-
-			var connectors_node := room.get_node_or_null("Connectors") as Node3D
-			if connectors_node:
-				connectors_node.force_update_transform()
-			exit.force_update_transform()
-
-			# --- DEBUG PRINTS ---
-			print_rich("[color=magenta]DEBUG -> Exit Parent: %s | Exit Direct Local Position: %s[/color]" % [exit.get_parent().name, exit.position])
-			# --------------------
-
-			# Bypass tree propagation lag by multiplying the room's global transform by the exit's local transform
-			var exit_world_transform: Transform3D = room.global_transform * exit.transform
-			print_rich("[color=yellow]Exit World Position for Room #%d: %s[/color]" % [i, exit_world_transform.origin])
-			generated_rooms.append(room)
-			print_rich("[color=cyan]Room #%d -> Exit Local Pos: %s | Exit Global Pos: %s[/color]" % [i, exit.position, exit_world_transform.origin])
-			transform_history.append(exit_world_transform)
-
+				
+			var next_exit_transform: Transform3D = candidate_transform * exit_node.transform
+			temp_inst.queue_free()
+			
+			placed_aabbs.append(global_aabb)
+			room_transforms.append(candidate_transform)
+			room_scene_paths.append(room_scene.resource_path)
+			
+			current_transform = next_exit_transform
 			room_placed = true
-			print_rich("[color=green][ProceduralGen] Placed Room #%d at %s[/color]" % [i, room.global_transform.origin])
+			break
+			
+		if not room_placed:
+			print_rich("[color=yellow][ProceduralGen] Reached dead-end at room index %d. Stopping layout generation early.[/color]" % i)
 			break
 
-		if not room_placed:
-			if generated_rooms.size() > 0 and backtracks_used < max_backtracks:
-				backtracks_used += 1
-				var last_room := generated_rooms.pop_back() as Node3D
-				if is_instance_valid(last_room):
-					var last_grid_pos := Vector3i(last_room.global_transform.origin.round())
-					occupied_grid_cells.erase(last_grid_pos)
-					last_room.queue_free()
-				if transform_history.size() > 0:
-					transform_history.pop_back()
-			else:
-				push_error("[ProceduralGen] Deadlock reached at %d rooms." % generated_rooms.size())
-				break
+	return { "paths": room_scene_paths, "transforms": room_transforms }
 
 
-func is_room_overlapping(room: Node3D) -> bool:
-	var bounds_area := room.get_node("BoundsArea") as Area3D
-	var collision_shape := bounds_area.get_node("CollisionShape3D") as CollisionShape3D
-
-	var space_state := room.get_world_3d().direct_space_state
-	var query := PhysicsShapeQueryParameters3D.new()
-
-	query.shape = collision_shape.shape
-	query.transform = collision_shape.global_transform
-	query.collision_mask = room_bounds_layer
-	query.collide_with_areas = true
-	query.collide_with_bodies = false
-
-	var results := space_state.intersect_shape(query, 32)
-	var parent_room: Node3D = generated_rooms.back() if not generated_rooms.is_empty() else null
-	var spawn_room: Node3D = generated_rooms[0] if not generated_rooms.is_empty() else null
-
-	for result in results:
-		var collider : Area3D = result["collider"] as Area3D
-		if collider and collider != bounds_area:
-			var parent : Node3D = collider.get_parent() as Node3D
+func instantiate_rooms_incrementally(paths: Array[String], transforms: Array[Transform3D]) -> void:
+	for i in range(paths.size()):
+		var scene = load(paths[i]) as PackedScene
+		var room = scene.instantiate() as Node3D
+		room.name = "Room_" + str(i + 1)
+		room_container.add_child(room)
+		room.global_transform = transforms[i]
+		generated_rooms.append(room)
+		
+		# Yield every 3 rooms to spread out instantiation work and avoid frame stuttering
+		if i % 3 == 0:
+			await get_tree().process_frame
 			
-			# Ignore the immediate parent room and the spawn room (Room_0)
-			if parent == parent_room or parent == spawn_room:
-				continue
-				
-			if generated_rooms.has(parent):
-				return true
-
-	return false
+	print_rich("[color=green][ProceduralGen] Successfully built %d total rooms instantly via AABB math![/color]" % generated_rooms.size())
+	
+	# Give physics a final frame to settle all newly added room colliders
+	await get_tree().physics_frame
 
 
 @rpc("any_peer", "reliable")
