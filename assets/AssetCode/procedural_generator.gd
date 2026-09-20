@@ -19,6 +19,7 @@ signal world_ready
 @export_category("Enemy Point-Buy System")
 @export var enemy_spawn_chance := 0.7 # 70% chance to populate an available marker
 @export var enemy_pool: Array[Dictionary] = [
+	{"scene": preload("res://assets/Enemies/bat.tscn"), "cost": 4},
 	{ "scene": preload("res://assets/Enemies/goblin.tscn"), "cost": 5 },
 	{ "scene": preload("res://assets/Enemies/skeleton_archer.tscn"), "cost": 10 },
 	{ "scene": preload("res://assets/Enemies/sorcerer.tscn"), "cost": 15 },
