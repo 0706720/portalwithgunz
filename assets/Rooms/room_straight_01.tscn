@@ -31,6 +31,7 @@ size = Vector3(8, 2, 8)
 script = ExtResource("1_inn36")
 difficulty_weight = 0.8
 room_type = Array[String](["\"arena\""])
+enemy_budget = 40.0
 
 [node name="Connectors" type="Node3D" parent="." unique_id=1497390118]
 
@@ -45,6 +46,21 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 20)
 
 [node name="spawn1" type="Node3D" parent="SpawnPoints/enemy_spawns" unique_id=703455805]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 10)
+
+[node name="spawn2" type="Node3D" parent="SpawnPoints/enemy_spawns" unique_id=224745444]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 5)
+
+[node name="spawn3" type="Node3D" parent="SpawnPoints/enemy_spawns" unique_id=1938333865]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 5, 5)
+
+[node name="spawn4" type="Node3D" parent="SpawnPoints/enemy_spawns" unique_id=2007624928]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 5, 5)
+
+[node name="spawn5" type="Node3D" parent="SpawnPoints/enemy_spawns" unique_id=1915651495]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 5, 10)
+
+[node name="spawn6" type="Node3D" parent="SpawnPoints/enemy_spawns" unique_id=98460993]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 5, 10)
 
 [node name="resource_spawns" type="Node3D" parent="SpawnPoints" unique_id=609920733]
 

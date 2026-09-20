@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://drstk7mws4svt"]
 
-[ext_resource type="Script" uid="uid://b6n6uoylj1gpp" path="res://Network/metadata.gd" id="1_y3w5q"]
+[ext_resource type="Script" uid="uid://b6n6uoylj1gpp" path="res://Network/metadata.gd" id="1_ophxo"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tkluk"]
 albedo_color = Color(1, 0.38431373, 0, 1)
@@ -86,7 +86,7 @@ mesh = SubResource("BoxMesh_uiejs")
 shape = SubResource("ConcavePolygonShape3D_txqev")
 
 [node name="MetaData" type="Node" parent="." unique_id=435375148]
-script = ExtResource("1_y3w5q")
+script = ExtResource("1_ophxo")
 difficulty_weight = 0.3
 room_type = Array[String](["\"right\""])
 

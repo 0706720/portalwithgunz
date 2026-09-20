@@ -1,4 +1,4 @@
-extends CharacterBody3D
+extends Node3D
 
 @onready var nav_agent = $NavigationAgent3D
 var SPEED = 3.0
@@ -19,9 +19,9 @@ func _physics_process(delta):
 	# Vector Maths
 	var new_veloicty = (next_location-current_location).normalized() * SPEED
 
-	velocity = new_veloicty
+	#velocity = new_veloicty
 	
-	move_and_slide()
+	#move_and_slide()
 
 func _on_difficulty_changed(modifiers):
 	#aggression = modifiers.enemy_aggression
