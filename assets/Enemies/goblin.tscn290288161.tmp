@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://5k1o5ctvtah6"]
+
+[ext_resource type="Script" uid="uid://f4pnbc3ykgbk" path="res://assets/AssetCode/enemy.gd" id="1_t2qjf"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_g4v7s"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xw0op"]
+albedo_color = Color(0, 1, 0, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_an04p"]
+material = SubResource("StandardMaterial3D_xw0op")
+
+[node name="Goblin" type="Node3D" unique_id=808913026 groups=["enemy"]]
+
+[node name="Timer" type="Timer" parent="." unique_id=160823595]
+wait_time = 2.0
+autostart = true
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1564113235]
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="." unique_id=929128806]
+script = ExtResource("1_t2qjf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D" unique_id=899935191]
+shape = SubResource("CapsuleShape3D_g4v7s")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D" unique_id=1496695776]
+mesh = SubResource("CapsuleMesh_an04p")
+skeleton = NodePath("../..")

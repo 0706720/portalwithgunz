@@ -640,7 +640,7 @@ font_size = 15
 [sub_resource type="ViewportTexture" id="ViewportTexture_ls4r7"]
 viewport_path = NodePath("SubViewport")
 
-[node name="Player" type="CharacterBody3D" unique_id=820130408 node_paths=PackedStringArray("crouch_anim_player", "crouch_shapecast") groups=["Player"]]
+[node name="Player" type="CharacterBody3D" unique_id=820130408 node_paths=PackedStringArray("crouch_anim_player", "crouch_shapecast") groups=["Player", "player"]]
 collision_layer = 2
 script = ExtResource("1_do0ft")
 desired_move_speed_curve = SubResource("Curve_qfm1y")
