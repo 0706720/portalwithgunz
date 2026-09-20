@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://de3irmg5566t5"]
+
+[ext_resource type="Script" uid="uid://f4pnbc3ykgbk" path="res://assets/AssetCode/enemy.gd" id="1_j1leh"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yf5fn"]
+albedo_color = Color(0.63529414, 0, 0.19607843, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_g4v7s"]
+material = SubResource("StandardMaterial3D_yf5fn")
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ppxvq"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_ckhkr"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
+[node name="Sorcerer" type="CharacterBody3D" unique_id=1541934135]
+script = ExtResource("1_j1leh")
+speed = 6.5
+aggro_range = 90.0
+min_preferred_distance = 35.0
+max_preferred_distance = 60.0
+strafe_speed_multiplier = 1.3
+separation_weight = 1.5
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=685794949]
+mesh = SubResource("CapsuleMesh_g4v7s")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=584272031]
+shape = SubResource("CapsuleShape3D_ppxvq")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=58806512]
+replication_config = SubResource("SceneReplicationConfig_ckhkr")

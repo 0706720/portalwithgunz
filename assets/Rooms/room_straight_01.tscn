@@ -2,8 +2,6 @@
 
 [ext_resource type="Script" uid="uid://b6n6uoylj1gpp" path="res://Network/metadata.gd" id="1_inn36"]
 
-[sub_resource type="NavigationMesh" id="NavigationMesh_g4v7s"]
-
 [sub_resource type="PlaneMesh" id="PlaneMesh_inn36"]
 size = Vector2(20, 20)
 
@@ -31,6 +29,7 @@ size = Vector3(8, 2, 8)
 script = ExtResource("1_inn36")
 difficulty_weight = 0.8
 room_type = Array[String](["\"arena\""])
+enemy_budget = 200.0
 
 [node name="Connectors" type="Node3D" parent="." unique_id=1497390118]
 
@@ -44,6 +43,22 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 20)
 [node name="enemy_spawns" type="Node3D" parent="SpawnPoints" unique_id=800816673]
 
 [node name="spawn1" type="Node3D" parent="SpawnPoints/enemy_spawns" unique_id=703455805]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 10)
+
+[node name="spawn2" type="Node3D" parent="SpawnPoints/enemy_spawns" unique_id=224745444]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 5)
+
+[node name="spawn3" type="Node3D" parent="SpawnPoints/enemy_spawns" unique_id=1938333865]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 5, 5)
+
+[node name="spawn4" type="Node3D" parent="SpawnPoints/enemy_spawns" unique_id=2007624928]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 5, 5)
+
+[node name="spawn5" type="Node3D" parent="SpawnPoints/enemy_spawns" unique_id=1915651495]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 5, 10)
+
+[node name="spawn6" type="Node3D" parent="SpawnPoints/enemy_spawns" unique_id=98460993]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 5, 10)
 
 [node name="resource_spawns" type="Node3D" parent="SpawnPoints" unique_id=609920733]
 
@@ -52,9 +67,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 20)
 [node name="puzzle_spawns" type="Node3D" parent="SpawnPoints" unique_id=1170800451]
 
 [node name="spawn1" type="Node3D" parent="SpawnPoints/puzzle_spawns" unique_id=593188252]
-
-[node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=1132041652]
-navigation_mesh = SubResource("NavigationMesh_g4v7s")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=636075812]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
@@ -91,3 +103,17 @@ collision_mask = 3
 [node name="CollisionShape3D" type="CollisionShape3D" parent="BoundsArea" unique_id=1857133672]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("BoxShape3D_inn36")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=1367241878]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 5, 10)
+light_color = Color(1, 0.50980395, 0.21568628, 1)
+light_energy = 5.0
+shadow_enabled = true
+omni_range = 25.0
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="." unique_id=1094583791]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 5, 10)
+light_color = Color(1, 0.50980395, 0.21568628, 1)
+light_energy = 5.0
+shadow_enabled = true
+omni_range = 25.0

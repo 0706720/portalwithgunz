@@ -3,7 +3,8 @@
 [ext_resource type="Script" uid="uid://demmf2hbrwaat" path="res://assets/AssetCode/world.gd" id="1_ctiuy"]
 [ext_resource type="PackedScene" uid="uid://c1j7an8woikyd" path="res://assets/models/environment.tscn" id="2_fr3vy"]
 [ext_resource type="Texture2D" uid="uid://8ka2ui7sq36p" path="res://addons/kenney_particle_pack/circle_05.png" id="3_hbot1"]
-[ext_resource type="PackedScene" uid="uid://5k1o5ctvtah6" path="res://assets/models/enemy.tscn" id="3_nule3"]
+[ext_resource type="PackedScene" uid="uid://5k1o5ctvtah6" path="res://assets/Enemies/goblin.tscn" id="3_nule3"]
+
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_u5pdl"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)

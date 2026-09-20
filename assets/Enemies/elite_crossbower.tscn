@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://b6kda0owxvwb0"]
+
+[ext_resource type="Script" uid="uid://f4pnbc3ykgbk" path="res://assets/AssetCode/enemy.gd" id="1_xu037"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yf5fn"]
+albedo_color = Color(0.27387273, 0.27387273, 0.27387273, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_g4v7s"]
+material = SubResource("StandardMaterial3D_yf5fn")
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_aqd2m"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_wqxog"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
+[node name="EliteCrossbower" type="CharacterBody3D" unique_id=1747760098]
+script = ExtResource("1_xu037")
+speed = 8.0
+aggro_range = 140.0
+min_preferred_distance = 40.0
+max_preferred_distance = 80.0
+strafe_speed_multiplier = 1.2
+separation_weight = 1.5
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=872748471]
+mesh = SubResource("CapsuleMesh_g4v7s")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=250665420]
+shape = SubResource("CapsuleShape3D_aqd2m")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=901621125]
+replication_config = SubResource("SceneReplicationConfig_wqxog")
