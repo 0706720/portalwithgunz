@@ -49,6 +49,9 @@ uv1_triplanar = true
 material = SubResource("StandardMaterial3D_5lud1")
 size = Vector3(40, 0.1, 20)
 
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_o30tn"]
+data = PackedVector3Array(-20, 0.049999997, 10, 20, 0.049999997, 10, -20, -0.049999997, 10, 20, 0.049999997, 10, 20, -0.049999997, 10, -20, -0.049999997, 10, 20, 0.049999997, -10, -20, 0.049999997, -10, 20, -0.049999997, -10, -20, 0.049999997, -10, -20, -0.049999997, -10, 20, -0.049999997, -10, 20, 0.049999997, 10, 20, 0.049999997, -10, 20, -0.049999997, 10, 20, 0.049999997, -10, 20, -0.049999997, -10, 20, -0.049999997, 10, -20, 0.049999997, -10, -20, 0.049999997, 10, -20, -0.049999997, -10, -20, 0.049999997, 10, -20, -0.049999997, 10, -20, -0.049999997, -10, 20, 0.049999997, 10, -20, 0.049999997, 10, 20, 0.049999997, -10, -20, 0.049999997, 10, -20, 0.049999997, -10, 20, 0.049999997, -10, -20, -0.049999997, 10, 20, -0.049999997, 10, -20, -0.049999997, -10, 20, -0.049999997, 10, 20, -0.049999997, -10, -20, -0.049999997, -10)
+
 [node name="TurningRoomL" type="Node3D" unique_id=1160821041]
 
 [node name="Connectors" type="Node3D" parent="." unique_id=890660771]
@@ -72,6 +75,7 @@ shape = SubResource("ConcavePolygonShape3D_gfcr4")
 [node name="enemy_spawns" type="Node3D" parent="SpawnPoints" unique_id=2141860867]
 
 [node name="spawn1" type="Node3D" parent="SpawnPoints/enemy_spawns" unique_id=1402797742]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 4, 10)
 
 [node name="resource_spawns" type="Node3D" parent="SpawnPoints" unique_id=95093346]
 
@@ -143,6 +147,11 @@ shape = SubResource("ConcavePolygonShape3D_c5a4v")
 [node name="Torch" parent="LeftBackWall" unique_id=867491360 instance=ExtResource("3_5lud1")]
 transform = Transform3D(-0.8660254, -0.5, 8.742278e-08, -0.5, 0.8660254, 0, -7.5710346e-08, -4.371139e-08, -1, -1, 0, 0)
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=1151075021]
+[node name="Floor2" type="MeshInstance3D" parent="." unique_id=1151075021]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 10, 10)
 mesh = SubResource("BoxMesh_kqlpf")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Floor2" unique_id=637948605]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor2/StaticBody3D" unique_id=631264687]
+shape = SubResource("ConcavePolygonShape3D_o30tn")

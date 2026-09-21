@@ -36,6 +36,7 @@ var all_rooms: Array[PackedScene] = []
 var generated_rooms: Array[Node3D] = []
 var last_turn_direction := "" # Tracks "left" or "right" to prevent coiling loops
 var enemy_spawn_tallies: Dictionary = {}
+var room_spawn_tallies: Dictionary = {}
 
 
 # ==============================================================================
@@ -353,7 +354,14 @@ func generate_level_aabb_layout() -> Dictionary:
 		selected_temp_inst.queue_free()
 		placed_aabbs.append(global_aabb)
 		room_transforms.append(candidate_transform)
+		var room_path = selected_room_scene.resource_path
 		room_scene_paths.append(selected_room_scene.resource_path)
+		
+		var clean_room_name = room_path.get_file().get_basename()
+		if not room_spawn_tallies.has(clean_room_name):
+			room_spawn_tallies[clean_room_name] = 0
+		room_spawn_tallies[clean_room_name] += 1
+		
 		current_transform = next_exit_transform
 
 	return { "paths": room_scene_paths, "transforms": room_transforms }
@@ -380,6 +388,16 @@ func instantiate_rooms_incrementally(paths: Array[String], transforms: Array[Tra
 			
 	print_rich("[color=green][ProceduralGen] Successfully built %d total rooms instantly via AABB math![/color]" % generated_rooms.size())
 	
+	# Task: Output final telemetry report tracking total room spawn counts
+	print_rich("[color=orange]========================================[/color]")
+	print_rich("[color=orange][ProceduralGen] --- FINAL ROOM SPAWN TALLY ---[/color]")
+	if room_spawn_tallies.is_empty():
+		print_rich("[color=yellow]No rooms were recorded during generation.[/color]")
+	else:
+		for room_name in room_spawn_tallies.keys():
+			print_rich("[color=white]  • %s: [color=cyan]%d[/color] total placed[/color]" % [room_name, room_spawn_tallies[room_name]])
+	print_rich("[color=orange]========================================[/color]")
+
 	# Task: Output final telemetry report tracking total enemy spawn counts
 	print_rich("[color=cyan]========================================[/color]")
 	print_rich("[color=cyan][ProceduralGen] --- FINAL ENEMY SPAWN TALLY ---[/color]")
