@@ -1,7 +1,7 @@
 extends RigidBody3D
 
-@export var Bullet_Speed = 20.0
-@export var max_bullets: int = 10
+@export var Bullet_Speed = 120
+@export var max_bullets: int = 7
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
@@ -19,3 +19,8 @@ func on_hit_area_entered(body):
 		body.queue_free()
 		queue_free()
 	pass
+
+
+func _on_timer_timeout() -> void:
+	var bullets = get_tree().get_nodes_in_group("Bullet")
+	queue_free()

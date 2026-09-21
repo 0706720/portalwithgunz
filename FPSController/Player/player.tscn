@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://bxdwgb7v5tg61" path="res://FPSController/WeaponsManagement/Weapons/portalGunz/portalGun.tscn" id="7_r0754"]
 [ext_resource type="Animation" uid="uid://c2y6nfvxis3xa" path="res://FPSController/Player/Crouch.res" id="8_qe01f"]
 [ext_resource type="Script" uid="uid://bo5enab2wen2s" path="res://FPSController/StateMachine/State_Machine.gd" id="9_cahw7"]
-[ext_resource type="PackedScene" uid="uid://b7hjjiuxpwwsq" path="res://shotgun.tscn" id="9_evljc"]
+[ext_resource type="PackedScene" uid="uid://b7hjjiuxpwwsq" path="res://assets/models/shotgun.tscn" id="9_evljc"]
 [ext_resource type="Script" uid="uid://cmnednq1yfuee" path="res://FPSController/StateMachine/crouch_state.gd" id="10_g48ct"]
 [ext_resource type="Script" uid="uid://vnpwjo05p8a2" path="res://FPSController/StateMachine/idle_state.gd" id="11_evljc"]
 [ext_resource type="Script" uid="uid://d2recx0hfql57" path="res://FPSController/StateMachine/inair_state.gd" id="12_2ddww"]
