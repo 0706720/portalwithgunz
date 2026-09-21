@@ -7,8 +7,8 @@ extends Node3D
 @onready var spawnPoint5 = $spawnPoint5
 @onready var spawnPoint6 = $spawnPoint6
 @onready var spawnPoint7 = $spawnPoint7
+@onready var timer = $Timer
 var pellet = preload("res://assets/models/ShotgunBullet.tscn")
-var pellet_count = 8
 var spread_angle = 0.5
 @export var bullet_speed: float = 20.0
 var random_x = randf_range(-spread_angle, spread_angle)
@@ -19,7 +19,11 @@ func _ready() -> void:
 	pass
 
 func shoot_shotgun():
-	if Input.is_action_just_pressed("shoot"):
+	if Input.is_action_just_pressed("shoot") and Global.currentWeapon == 'shotgun':
+		#timer.start()
+		var random_x = randf_range(-spread_angle, spread_angle)
+		var random_y = randf_range(-spread_angle, spread_angle)
+		var random_z = randf_range(-spread_angle, spread_angle)
 		var bullet1 = pellet.instantiate()
 		get_tree().root.add_child(bullet1)
 		bullet1.global_transform = spawnPoint1.global_transform

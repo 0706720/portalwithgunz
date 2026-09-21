@@ -10,7 +10,6 @@
 
 [node name="ShotgunBullet" type="RigidBody3D" unique_id=285150044 groups=["Bullet"]]
 script = ExtResource("1_jd0f1")
-max_bullets = 7
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=839336775]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
@@ -25,3 +24,9 @@ shape = SubResource("SphereShape3D_x8nrb")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=462563090]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
 shape = SubResource("SphereShape3D_q313b")
+
+[node name="Timer" type="Timer" parent="." unique_id=189634789]
+wait_time = 2.0
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
