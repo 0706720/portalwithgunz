@@ -1,15 +1,15 @@
 [gd_scene format=3 uid="uid://bprr7kn8s2bom"]
 
-[ext_resource type="Script" uid="uid://b6n6uoylj1gpp" path="res://Network/metadata.gd" id="1_inn36"]
-[ext_resource type="PackedScene" uid="uid://dlx6jlni62p4y" path="res://assets/models/torch.tscn" id="2_tj4kq"]
-[ext_resource type="Texture2D" uid="uid://vw4d70xv6yno" path="res://assets/images/wall_dungeon.jpeg" id="2_u55ya"]
-[ext_resource type="Texture2D" uid="uid://cs1ibjwvbhsss" path="res://assets/images/dungeo_floor.jpg" id="2_y3eg4"]
-[ext_resource type="Texture2D" uid="uid://deky0tl44tiju" path="res://assets/images/Darkwood.png" id="5_bqy4i"]
-[ext_resource type="PackedScene" uid="uid://cpvj6f2k4t4va" path="res://assets/models/wood_beam.tscn" id="6_vwdrm"]
-[ext_resource type="PackedScene" uid="uid://bkn4mfuxefhuq" path="res://assets/models/wooden_ramp.tscn" id="7_45kln"]
+[ext_resource type="Script" uid="uid://b6n6uoylj1gpp" path="res://Network/metadata.gd" id="1_27py7"]
+[ext_resource type="Texture2D" uid="uid://cs1ibjwvbhsss" path="res://assets/images/dungeo_floor.jpg" id="2_q7d6m"]
+[ext_resource type="Texture2D" uid="uid://vw4d70xv6yno" path="res://assets/images/wall_dungeon.jpeg" id="3_v7hwv"]
+[ext_resource type="PackedScene" uid="uid://dlx6jlni62p4y" path="res://assets/models/torch.tscn" id="4_mpfe2"]
+[ext_resource type="Texture2D" uid="uid://deky0tl44tiju" path="res://assets/images/Darkwood.png" id="5_w3ks3"]
+[ext_resource type="PackedScene" uid="uid://cpvj6f2k4t4va" path="res://assets/models/wood_beam.tscn" id="6_4qqh0"]
+[ext_resource type="PackedScene" uid="uid://bkn4mfuxefhuq" path="res://assets/models/wooden_ramp.tscn" id="7_65jox"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vwdrm"]
-albedo_texture = ExtResource("2_y3eg4")
+albedo_texture = ExtResource("2_q7d6m")
 uv1_scale = Vector3(0.2, 0.2, 0.2)
 uv1_triplanar = true
 
@@ -22,7 +22,7 @@ size = Vector2(40, 40)
 data = PackedVector3Array(20, 0, 20, -20, 0, 20, 20, 0, -20, -20, 0, 20, -20, 0, -20, 20, 0, -20)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y3eg4"]
-albedo_texture = ExtResource("2_u55ya")
+albedo_texture = ExtResource("3_v7hwv")
 uv1_scale = Vector3(0.1, 0.1, 0.1)
 uv1_triplanar = true
 
@@ -40,7 +40,7 @@ size = Vector3(8, 2, 8)
 data = PackedVector3Array(-1, 5, 20, 1, 5, 20, -1, -5, 20, 1, 5, 20, 1, -5, 20, -1, -5, 20, 1, 5, -20, -1, 5, -20, 1, -5, -20, -1, 5, -20, -1, -5, -20, 1, -5, -20, 1, 5, 20, 1, 5, -20, 1, -5, 20, 1, 5, -20, 1, -5, -20, 1, -5, 20, -1, 5, -20, -1, 5, 20, -1, -5, -20, -1, 5, 20, -1, -5, 20, -1, -5, -20, 1, 5, 20, -1, 5, 20, 1, 5, -20, -1, 5, 20, -1, 5, -20, 1, 5, -20, -1, -5, 20, 1, -5, 20, -1, -5, -20, 1, -5, 20, 1, -5, -20, -1, -5, -20)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bqy4i"]
-albedo_texture = ExtResource("2_u55ya")
+albedo_texture = ExtResource("3_v7hwv")
 uv1_scale = Vector3(0.1, 0.1, 0.1)
 uv1_triplanar = true
 
@@ -52,7 +52,7 @@ size = Vector3(10, 10, 2)
 data = PackedVector3Array(-5, 5, 1, 5, 5, 1, -5, -5, 1, 5, 5, 1, 5, -5, 1, -5, -5, 1, 5, 5, -1, -5, 5, -1, 5, -5, -1, -5, 5, -1, -5, -5, -1, 5, -5, -1, 5, 5, 1, 5, 5, -1, 5, -5, 1, 5, 5, -1, 5, -5, -1, 5, -5, 1, -5, 5, -1, -5, 5, 1, -5, -5, -1, -5, 5, 1, -5, -5, 1, -5, -5, -1, 5, 5, 1, -5, 5, 1, 5, 5, -1, -5, 5, 1, -5, 5, -1, 5, 5, -1, -5, -5, 1, 5, -5, 1, -5, -5, -1, 5, -5, 1, 5, -5, -1, -5, -5, -1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_45kln"]
-albedo_texture = ExtResource("5_bqy4i")
+albedo_texture = ExtResource("5_w3ks3")
 uv1_scale = Vector3(0.1, 0.1, 0.1)
 uv1_triplanar = true
 
@@ -66,7 +66,7 @@ data = PackedVector3Array(-21, 0.049999997, 20, 21, 0.049999997, 20, -21, -0.049
 [node name="ArenaPrefab01" type="Node3D" unique_id=1768685127]
 
 [node name="Metadata" type="Node" parent="." unique_id=939893820]
-script = ExtResource("1_inn36")
+script = ExtResource("1_27py7")
 difficulty_weight = 0.8
 room_type = Array[String](["\"arena\""])
 enemy_budget = 40.0
@@ -121,10 +121,10 @@ shape = SubResource("ConcavePolygonShape3D_y3eg4")
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 20, 5, 20)
 mesh = SubResource("BoxMesh_tj4kq")
 
-[node name="Torch" parent="LeftWall" unique_id=744360467 instance=ExtResource("2_tj4kq")]
+[node name="Torch" parent="LeftWall" unique_id=744360467 instance=ExtResource("4_mpfe2")]
 transform = Transform3D(1.3113416e-07, 0.5, 0.8660254, 0, 0.8660254, -0.5, -1, 6.556708e-08, 1.1356552e-07, 1, 0, -10)
 
-[node name="Torch2" parent="LeftWall" unique_id=2025342509 instance=ExtResource("2_tj4kq")]
+[node name="Torch2" parent="LeftWall" unique_id=2025342509 instance=ExtResource("4_mpfe2")]
 transform = Transform3D(1.3113416e-07, 0.5, 0.8660254, 0, 0.8660254, -0.5, -1, 6.556708e-08, 1.1356552e-07, 1, 0, 10)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="LeftWall" unique_id=2076329562]
@@ -145,10 +145,10 @@ shape = SubResource("BoxShape3D_inn36")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 5, 20)
 mesh = SubResource("BoxMesh_tj4kq")
 
-[node name="Torch" parent="RightWall" unique_id=87086880 instance=ExtResource("2_tj4kq")]
+[node name="Torch" parent="RightWall" unique_id=87086880 instance=ExtResource("4_mpfe2")]
 transform = Transform3D(1.3113416e-07, 0.5, 0.8660254, 0, 0.8660254, -0.5, -1, 6.556708e-08, 1.1356552e-07, 1, 0, -10)
 
-[node name="Torch2" parent="RightWall" unique_id=762646734 instance=ExtResource("2_tj4kq")]
+[node name="Torch2" parent="RightWall" unique_id=762646734 instance=ExtResource("4_mpfe2")]
 transform = Transform3D(1.3113416e-07, 0.5, 0.8660254, 0, 0.8660254, -0.5, -1, 6.556708e-08, 1.1356552e-07, 1, 0, 10)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="RightWall" unique_id=995901550]
@@ -165,7 +165,7 @@ mesh = SubResource("BoxMesh_57qmd")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="LeftBackwall/StaticBody3D" unique_id=1039445160]
 shape = SubResource("ConcavePolygonShape3D_45kln")
 
-[node name="Torch" parent="LeftBackwall" unique_id=1252547464 instance=ExtResource("2_tj4kq")]
+[node name="Torch" parent="LeftBackwall" unique_id=1252547464 instance=ExtResource("4_mpfe2")]
 transform = Transform3D(1, 0, 0, 0, 0.8660254, -0.5, 0, 0.5, 0.8660254, 0, 0, 1)
 
 [node name="RightBackWall" type="MeshInstance3D" parent="." unique_id=246119342]
@@ -177,7 +177,7 @@ mesh = SubResource("BoxMesh_57qmd")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RightBackWall/StaticBody3D" unique_id=379334024]
 shape = SubResource("ConcavePolygonShape3D_45kln")
 
-[node name="Torch" parent="RightBackWall" unique_id=1899960168 instance=ExtResource("2_tj4kq")]
+[node name="Torch" parent="RightBackWall" unique_id=1899960168 instance=ExtResource("4_mpfe2")]
 transform = Transform3D(1, 0, 0, 0, 0.8660254, -0.5, 0, 0.5, 0.8660254, 0, 0, 1)
 
 [node name="LeftFrontwall" type="MeshInstance3D" parent="." unique_id=790686123]
@@ -189,7 +189,7 @@ mesh = SubResource("BoxMesh_57qmd")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="LeftFrontwall/StaticBody3D" unique_id=292853767]
 shape = SubResource("ConcavePolygonShape3D_45kln")
 
-[node name="Torch" parent="LeftFrontwall" unique_id=1868336239 instance=ExtResource("2_tj4kq")]
+[node name="Torch" parent="LeftFrontwall" unique_id=1868336239 instance=ExtResource("4_mpfe2")]
 transform = Transform3D(1, 0, 0, 0, 0.8660254, -0.5, 0, 0.5, 0.8660254, 0, 0, 1)
 
 [node name="RightFrontwall" type="MeshInstance3D" parent="." unique_id=1210107063]
@@ -201,17 +201,17 @@ mesh = SubResource("BoxMesh_57qmd")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RightFrontwall/StaticBody3D" unique_id=2046593921]
 shape = SubResource("ConcavePolygonShape3D_45kln")
 
-[node name="Torch" parent="RightFrontwall" unique_id=216366039 instance=ExtResource("2_tj4kq")]
+[node name="Torch" parent="RightFrontwall" unique_id=216366039 instance=ExtResource("4_mpfe2")]
 transform = Transform3D(1, 0, 0, 0, 0.8660254, -0.5, 0, 0.5, 0.8660254, 0, 0, 1)
 
 [node name="RightWall2" type="MeshInstance3D" parent="." unique_id=2128439614]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 15, 20)
 mesh = SubResource("BoxMesh_tj4kq")
 
-[node name="Torch" parent="RightWall2" unique_id=1936835992 instance=ExtResource("2_tj4kq")]
+[node name="Torch" parent="RightWall2" unique_id=1936835992 instance=ExtResource("4_mpfe2")]
 transform = Transform3D(1.3113416e-07, 0.5, 0.8660254, 0, 0.8660254, -0.5, -1, 6.556708e-08, 1.1356552e-07, 1, 0, -10)
 
-[node name="Torch2" parent="RightWall2" unique_id=1106090278 instance=ExtResource("2_tj4kq")]
+[node name="Torch2" parent="RightWall2" unique_id=1106090278 instance=ExtResource("4_mpfe2")]
 transform = Transform3D(1.3113416e-07, 0.5, 0.8660254, 0, 0.8660254, -0.5, -1, 6.556708e-08, 1.1356552e-07, 1, 0, 10)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="RightWall2" unique_id=1071992381]
@@ -223,10 +223,10 @@ shape = SubResource("ConcavePolygonShape3D_vwdrm")
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 20, 15, 20)
 mesh = SubResource("BoxMesh_tj4kq")
 
-[node name="Torch" parent="LeftWall2" unique_id=357537906 instance=ExtResource("2_tj4kq")]
+[node name="Torch" parent="LeftWall2" unique_id=357537906 instance=ExtResource("4_mpfe2")]
 transform = Transform3D(1.3113416e-07, 0.5, 0.8660254, 0, 0.8660254, -0.5, -1, 6.556708e-08, 1.1356552e-07, 1, 0, -10)
 
-[node name="Torch2" parent="LeftWall2" unique_id=1363824022 instance=ExtResource("2_tj4kq")]
+[node name="Torch2" parent="LeftWall2" unique_id=1363824022 instance=ExtResource("4_mpfe2")]
 transform = Transform3D(1.3113416e-07, 0.5, 0.8660254, 0, 0.8660254, -0.5, -1, 6.556708e-08, 1.1356552e-07, 1, 0, 10)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="LeftWall2" unique_id=985244769]
@@ -261,20 +261,20 @@ mesh = SubResource("BoxMesh_g4v7s")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Roof/StaticBody3D" unique_id=579791717]
 shape = SubResource("ConcavePolygonShape3D_6b58k")
 
-[node name="WoodBeam" parent="." unique_id=1370154369 instance=ExtResource("6_vwdrm")]
+[node name="WoodBeam" parent="." unique_id=1370154369 instance=ExtResource("6_4qqh0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 11, 20)
 
-[node name="WoodBeam2" parent="." unique_id=1728088204 instance=ExtResource("6_vwdrm")]
+[node name="WoodBeam2" parent="." unique_id=1728088204 instance=ExtResource("6_4qqh0")]
 transform = Transform3D(-0.9848077, 0, 0.1736483, 0, 1, 0, -0.1736483, 0, -0.9848077, -5.5, 11, 20)
 
-[node name="WoodBeam3" parent="." unique_id=375731037 instance=ExtResource("6_vwdrm")]
+[node name="WoodBeam3" parent="." unique_id=375731037 instance=ExtResource("6_4qqh0")]
 transform = Transform3D(-0.76604444, 0, -0.80348456, 0, 1, 0, 0.64278764, 0, -0.95755553, 5, 12, 19)
 
-[node name="WoodBeam4" parent="." unique_id=167071019 instance=ExtResource("6_vwdrm")]
+[node name="WoodBeam4" parent="." unique_id=167071019 instance=ExtResource("6_4qqh0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 11, 20)
 
-[node name="WoodenRamp" parent="." unique_id=2061466378 instance=ExtResource("7_45kln")]
+[node name="WoodenRamp" parent="." unique_id=2061466378 instance=ExtResource("7_65jox")]
 transform = Transform3D(0.76604444, 0, 0.6427876, 0, 1, 0, -0.6427876, 0, 0.76604444, -3.7, 12, 12.5)
 
-[node name="WoodenRamp2" parent="." unique_id=280952127 instance=ExtResource("7_45kln")]
+[node name="WoodenRamp2" parent="." unique_id=280952127 instance=ExtResource("7_65jox")]
 transform = Transform3D(-0.7660444, 0, -0.6427876, 0, 1, 0, 0.6427876, 0, -0.7660444, 9.2, 12, 20)
