@@ -1,5 +1,6 @@
 extends Node
 
+
 var current_score = 0
 var health = 100
 
