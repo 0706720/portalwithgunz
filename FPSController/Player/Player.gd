@@ -53,7 +53,7 @@ var _using_crouch: bool = false
 
 var health = 99
 var spread = 10
-var knockback_force = 200.0
+var knockback_force = -30
 @onready var anim_playing = false
 
 @export var grapple_speed: float = 25.0
