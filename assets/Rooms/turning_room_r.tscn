@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cs1ibjwvbhsss" path="res://assets/images/dungeo_floor.jpg" id="1_txqev"]
 [ext_resource type="Texture2D" uid="uid://vw4d70xv6yno" path="res://assets/images/wall_dungeon.jpeg" id="2_5l2yf"]
 [ext_resource type="PackedScene" uid="uid://dlx6jlni62p4y" path="res://assets/models/torch.tscn" id="3_5l2yf"]
+[ext_resource type="Texture2D" uid="uid://deky0tl44tiju" path="res://assets/images/Darkwood.png" id="5_6sh3q"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tkluk"]
 albedo_texture = ExtResource("1_txqev")
@@ -31,6 +32,15 @@ data = PackedVector3Array(-1, 5, 10, 1, 5, 10, -1, -5, 10, 1, 5, 10, 1, -5, 10, 
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ophxo"]
 size = Vector3(8, 2, 8)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qddge"]
+albedo_texture = ExtResource("5_6sh3q")
+uv1_scale = Vector3(0.1, 0.1, 0.1)
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_g4v7s"]
+material = SubResource("StandardMaterial3D_qddge")
+size = Vector3(40, 0.1, 20)
 
 [node name="TurningRoomR" type="Node3D" unique_id=1160821041]
 
@@ -125,3 +135,7 @@ shape = SubResource("ConcavePolygonShape3D_qx86r")
 
 [node name="Torch" parent="LeftFrontWall" unique_id=760689123 instance=ExtResource("3_5l2yf")]
 transform = Transform3D(-0.8660254, 0.5, -8.742278e-08, 0.5, 0.8660254, 0, 7.5710346e-08, -4.371139e-08, -1, 1, 0, 0)
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=1365830704]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 10, 10)
+mesh = SubResource("BoxMesh_g4v7s")

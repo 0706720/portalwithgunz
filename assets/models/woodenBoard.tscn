@@ -7,18 +7,17 @@ albedo_texture = ExtResource("1_uu5de")
 
 [sub_resource type="BoxMesh" id="BoxMesh_uui7c"]
 material = SubResource("StandardMaterial3D_ab1dc")
-size = Vector3(2, 0.2, 1)
+size = Vector3(3, 0.1, 1)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_76sh4"]
-size = Vector3(2.020752, 0.20672607, 1)
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_gu6wf"]
+data = PackedVector3Array(-1, 0.049999997, 0.25, 1, 0.049999997, 0.25, -1, -0.049999997, 0.25, 1, 0.049999997, 0.25, 1, -0.049999997, 0.25, -1, -0.049999997, 0.25, 1, 0.049999997, -0.25, -1, 0.049999997, -0.25, 1, -0.049999997, -0.25, -1, 0.049999997, -0.25, -1, -0.049999997, -0.25, 1, -0.049999997, -0.25, 1, 0.049999997, 0.25, 1, 0.049999997, -0.25, 1, -0.049999997, 0.25, 1, 0.049999997, -0.25, 1, -0.049999997, -0.25, 1, -0.049999997, 0.25, -1, 0.049999997, -0.25, -1, 0.049999997, 0.25, -1, -0.049999997, -0.25, -1, 0.049999997, 0.25, -1, -0.049999997, 0.25, -1, -0.049999997, -0.25, 1, 0.049999997, 0.25, -1, 0.049999997, 0.25, 1, 0.049999997, -0.25, -1, 0.049999997, 0.25, -1, 0.049999997, -0.25, 1, 0.049999997, -0.25, -1, -0.049999997, 0.25, 1, -0.049999997, 0.25, -1, -0.049999997, -0.25, 1, -0.049999997, 0.25, 1, -0.049999997, -0.25, -1, -0.049999997, -0.25)
 
 [node name="WoodenBoard" type="Node3D" unique_id=734749239]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1310484749]
 mesh = SubResource("BoxMesh_uui7c")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D" unique_id=1357047658]
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D" unique_id=2041037206]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D" unique_id=1226766418]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0052490234, -0.0007019043, 0)
-shape = SubResource("BoxShape3D_76sh4")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D" unique_id=728395977]
+shape = SubResource("ConcavePolygonShape3D_gu6wf")

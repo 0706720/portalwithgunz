@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://cpvj6f2k4t4va"]
+
+[ext_resource type="Texture2D" uid="uid://deky0tl44tiju" path="res://assets/images/Darkwood.png" id="1_j4waj"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tfc38"]
+albedo_texture = ExtResource("1_j4waj")
+uv1_scale = Vector3(0.2, 0.2, 0.2)
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_yf5fn"]
+material = SubResource("StandardMaterial3D_tfc38")
+size = Vector3(2.5, 1, 38)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_j4waj"]
+data = PackedVector3Array(-1.25, 0.5, 19, 1.25, 0.5, 19, -1.25, -0.5, 19, 1.25, 0.5, 19, 1.25, -0.5, 19, -1.25, -0.5, 19, 1.25, 0.5, -19, -1.25, 0.5, -19, 1.25, -0.5, -19, -1.25, 0.5, -19, -1.25, -0.5, -19, 1.25, -0.5, -19, 1.25, 0.5, 19, 1.25, 0.5, -19, 1.25, -0.5, 19, 1.25, 0.5, -19, 1.25, -0.5, -19, 1.25, -0.5, 19, -1.25, 0.5, -19, -1.25, 0.5, 19, -1.25, -0.5, -19, -1.25, 0.5, 19, -1.25, -0.5, 19, -1.25, -0.5, -19, 1.25, 0.5, 19, -1.25, 0.5, 19, 1.25, 0.5, -19, -1.25, 0.5, 19, -1.25, 0.5, -19, 1.25, 0.5, -19, -1.25, -0.5, 19, 1.25, -0.5, 19, -1.25, -0.5, -19, 1.25, -0.5, 19, 1.25, -0.5, -19, -1.25, -0.5, -19)
+
+[node name="WoodBeam" type="Node3D" unique_id=1370154369]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1228899670]
+mesh = SubResource("BoxMesh_yf5fn")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D" unique_id=1545809713]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D" unique_id=875459286]
+shape = SubResource("ConcavePolygonShape3D_j4waj")
