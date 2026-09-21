@@ -1,19 +1,26 @@
 [gd_scene format=3 uid="uid://k5kkgvwpluw8"]
 
+[ext_resource type="Texture2D" uid="uid://cs1ibjwvbhsss" path="res://assets/images/dungeo_floor.jpg" id="1_exnrb"]
 [ext_resource type="Script" uid="uid://b6n6uoylj1gpp" path="res://Network/metadata.gd" id="1_gfcr4"]
+[ext_resource type="Texture2D" uid="uid://vw4d70xv6yno" path="res://assets/images/wall_dungeon.jpeg" id="2_o30tn"]
+[ext_resource type="PackedScene" uid="uid://dlx6jlni62p4y" path="res://assets/models/torch.tscn" id="3_5lud1"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tjwye"]
-albedo_color = Color(0.54509807, 0, 1, 1)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kqlpf"]
+albedo_texture = ExtResource("1_exnrb")
+uv1_scale = Vector3(0.2, 0.2, 0.2)
+uv1_triplanar = true
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_cuis1"]
-material = SubResource("StandardMaterial3D_tjwye")
+material = SubResource("StandardMaterial3D_kqlpf")
 size = Vector2(40, 20)
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_gfcr4"]
 data = PackedVector3Array(20, 0, 10, -20, 0, 10, 20, 0, -10, -20, 0, 10, -20, 0, -10, 20, 0, -10)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_heln8"]
-albedo_color = Color(0.54509807, 0, 1, 1)
+albedo_texture = ExtResource("2_o30tn")
+uv1_scale = Vector3(0.1, 0.1, 0.1)
+uv1_triplanar = true
 
 [sub_resource type="BoxMesh" id="BoxMesh_67xsk"]
 material = SubResource("StandardMaterial3D_heln8")
@@ -41,13 +48,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 20)
 
 [node name="Entry" type="Node3D" parent="Connectors" unique_id=2032005469]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1529472956]
+[node name="Floor" type="MeshInstance3D" parent="." unique_id=1529472956]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 10)
 mesh = SubResource("PlaneMesh_cuis1")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D" unique_id=1286375870]
+[node name="StaticBody3D" type="StaticBody3D" parent="Floor" unique_id=1286375870]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D" unique_id=452585647]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor/StaticBody3D" unique_id=452585647]
 shape = SubResource("ConcavePolygonShape3D_gfcr4")
 
 [node name="SpawnPoints" type="Node3D" parent="." unique_id=409352592]
@@ -64,23 +71,29 @@ shape = SubResource("ConcavePolygonShape3D_gfcr4")
 
 [node name="spawn1" type="Node3D" parent="SpawnPoints/puzzle_spawns" unique_id=1587511202]
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=2102068090]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 5, 10)
+[node name="RightSideWall" type="MeshInstance3D" parent="." unique_id=2102068090]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 5, 10)
 mesh = SubResource("BoxMesh_67xsk")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D2" unique_id=1345211057]
+[node name="StaticBody3D" type="StaticBody3D" parent="RightSideWall" unique_id=1345211057]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D2/StaticBody3D" unique_id=1198657145]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RightSideWall/StaticBody3D" unique_id=1198657145]
 shape = SubResource("ConcavePolygonShape3D_c5a4v")
 
-[node name="MeshInstance3D3" type="MeshInstance3D" parent="." unique_id=1795786384]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 5, 20)
+[node name="Torch" parent="RightSideWall" unique_id=744360467 instance=ExtResource("3_5lud1")]
+transform = Transform3D(-0.8660254, 0.5, -8.742278e-08, 0.5, 0.8660254, 0, 7.5710346e-08, -4.371139e-08, -1, 1, 0, 0)
+
+[node name="RightFrontWall" type="MeshInstance3D" parent="." unique_id=1795786384]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 5, 19)
 mesh = SubResource("BoxMesh_67xsk")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D3" unique_id=1901694951]
+[node name="StaticBody3D" type="StaticBody3D" parent="RightFrontWall" unique_id=1901694951]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D3/StaticBody3D" unique_id=1591564148]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RightFrontWall/StaticBody3D" unique_id=1591564148]
 shape = SubResource("ConcavePolygonShape3D_p2jly")
+
+[node name="Torch" parent="RightFrontWall" unique_id=1726382255 instance=ExtResource("3_5lud1")]
+transform = Transform3D(-0.8660254, 0.5, -8.742278e-08, 0.5, 0.8660254, 0, 7.5710346e-08, -4.371139e-08, -1, 1, 0, 0)
 
 [node name="BoundsArea" type="Area3D" parent="." unique_id=923924758]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
@@ -96,20 +109,26 @@ script = ExtResource("1_gfcr4")
 difficulty_weight = 0.3
 room_type = Array[String](["\"left\""])
 
-[node name="MeshInstance3D4" type="MeshInstance3D" parent="." unique_id=2127544343]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 5, 10)
+[node name="LeftSideWall" type="MeshInstance3D" parent="." unique_id=2127544343]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31, 5, 10)
 mesh = SubResource("BoxMesh_67xsk")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D4" unique_id=874964947]
+[node name="StaticBody3D" type="StaticBody3D" parent="LeftSideWall" unique_id=874964947]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D4/StaticBody3D" unique_id=1525244781]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LeftSideWall/StaticBody3D" unique_id=1525244781]
 shape = SubResource("ConcavePolygonShape3D_c5a4v")
 
-[node name="MeshInstance3D5" type="MeshInstance3D" parent="." unique_id=1967196541]
+[node name="Torch" parent="LeftSideWall" unique_id=1250359610 instance=ExtResource("3_5lud1")]
+transform = Transform3D(-0.8660254, -0.5, 8.742278e-08, -0.5, 0.8660254, 0, -7.5710346e-08, -4.371139e-08, -1, -1, 0, 0)
+
+[node name="LeftBackWall" type="MeshInstance3D" parent="." unique_id=1967196541]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 20, 5, 1)
 mesh = SubResource("BoxMesh_gfcr4")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D5" unique_id=902190082]
+[node name="StaticBody3D" type="StaticBody3D" parent="LeftBackWall" unique_id=902190082]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D5/StaticBody3D" unique_id=453453082]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LeftBackWall/StaticBody3D" unique_id=453453082]
 shape = SubResource("ConcavePolygonShape3D_c5a4v")
+
+[node name="Torch" parent="LeftBackWall" unique_id=867491360 instance=ExtResource("3_5lud1")]
+transform = Transform3D(-0.8660254, -0.5, 8.742278e-08, -0.5, 0.8660254, 0, -7.5710346e-08, -4.371139e-08, -1, -1, 0, 0)
