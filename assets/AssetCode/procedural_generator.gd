@@ -6,7 +6,7 @@ signal world_ready
 # 1. EXPORTED CONFIGURATION & VARIABLES
 # ==============================================================================
 @export_category("Dungeon Generation Settings")
-@export var room_count := 100
+@export var room_count := 20
 @export_flags_3d_physics var room_bounds_layer := 2
 @export var max_attempts_per_room := 15
 @export var max_backtracks := 20

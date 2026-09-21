@@ -2,13 +2,13 @@
 
 [ext_resource type="Script" uid="uid://dc3u8ckutqrs2" path="res://assets/Enemies/flying_enemy.gd" id="1_pblot"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yf5fn"]
-albedo_color = Color(0.48301584, 0.29702783, 2.8878452e-07, 1)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pblot"]
+albedo_color = Color(0.53995657, 0.20760706, 2.8878452e-07, 1)
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_g4v7s"]
-material = SubResource("StandardMaterial3D_yf5fn")
+[sub_resource type="SphereMesh" id="SphereMesh_45kln"]
+material = SubResource("StandardMaterial3D_pblot")
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_57qmd"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_pblot"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_sfnse"]
 properties/0/path = NodePath(".:position")
@@ -23,10 +23,10 @@ script = ExtResource("1_pblot")
 speed = 4.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=661030915]
-mesh = SubResource("CapsuleMesh_g4v7s")
+mesh = SubResource("SphereMesh_45kln")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1487910360]
-shape = SubResource("CapsuleShape3D_57qmd")
+shape = SubResource("SphereShape3D_pblot")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=248909803]
 replication_config = SubResource("SceneReplicationConfig_sfnse")

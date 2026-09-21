@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://dlx6jlni62p4y"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_lv4u5"]
+top_radius = 0.2
+bottom_radius = 0.1
+height = 1.0
+
+[sub_resource type="PrismMesh" id="PrismMesh_lv4u5"]
+left_to_right = 0.1
+size = Vector3(0.1, 0.5, 0.1)
+
+[node name="Torch" type="Node3D" unique_id=744360467]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=861808354]
+mesh = SubResource("CylinderMesh_lv4u5")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=1385674298]
+transform = Transform3D(0.9848077, -0.17364818, 0, 0.17364818, 0.9848077, 0, 0, 0, 1, -0.25, 0.7, 0)
+mesh = SubResource("PrismMesh_lv4u5")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="." unique_id=1326878514]
+transform = Transform3D(-0.98480767, 0.17364816, -8.742278e-08, 0.17364816, 0.98480767, 0, 8.6094616e-08, -1.5180804e-08, -1, 0.25, 0.7, 0)
+mesh = SubResource("PrismMesh_lv4u5")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="." unique_id=829868720]
+transform = Transform3D(-4.3047308e-08, 7.590402e-09, 1, 0.17364816, 0.98480767, 0, -0.98480767, 0.17364816, -4.371139e-08, 0, 0.7, 0.25)
+mesh = SubResource("PrismMesh_lv4u5")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="." unique_id=255977591]
+transform = Transform3D(-4.3047308e-08, 7.590402e-09, -1, 0.17364816, 0.98480767, 0, 0.98480767, -0.17364816, -4.371139e-08, 0, 0.7, -0.25)
+mesh = SubResource("PrismMesh_lv4u5")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=422171351]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+light_color = Color(1, 0.50980395, 0.21568628, 1)
+light_energy = 5.0
+omni_range = 25.0
