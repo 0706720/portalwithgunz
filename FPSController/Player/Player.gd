@@ -135,6 +135,8 @@ func _enter_tree():
 # UPDATED _ready() FUNCTION
 # ==============================================================================
 func _ready() -> void:
+	# Make sure both host and client players join the group
+	add_to_group("player")
 	# Convert node name (e.g. "655412542") into integer peer ID authority
 	if name.is_valid_int():
 		set_multiplayer_authority(name.to_int())

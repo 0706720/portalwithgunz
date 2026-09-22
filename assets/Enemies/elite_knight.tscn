@@ -10,14 +10,6 @@ material = SubResource("StandardMaterial3D_57qmd")
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_u0u62"]
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_khguh"]
-properties/0/path = NodePath(".:position")
-properties/0/spawn = true
-properties/0/replication_mode = 1
-properties/1/path = NodePath(".:rotation")
-properties/1/spawn = true
-properties/1/replication_mode = 1
-
 [node name="EliteKnight" type="CharacterBody3D" unique_id=1178554218 groups=["Enemy"]]
 script = ExtResource("1_vrgw3")
 speed = 5.0
@@ -31,6 +23,3 @@ mesh = SubResource("CapsuleMesh_g4v7s")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=880498250]
 shape = SubResource("CapsuleShape3D_u0u62")
-
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=2045333345]
-replication_config = SubResource("SceneReplicationConfig_khguh")

@@ -16,12 +16,10 @@ var is_aggroed := false
 var movement_timer := 0.0
 var current_wander_dir := Vector3.ZERO
 var wall_hit_cooldown := 0.0 
+var target_refresh_timer := 0.0
 
 func _ready() -> void:
-	if multiplayer.has_multiplayer_peer() and not multiplayer.is_server():
-		set_physics_process(false)
-		return
-
+	# Physics process is left active so the MultiplayerSynchronizer can update clients
 	await get_tree().physics_frame
 	find_player()
 	# Randomize initial timer so enemies don't sync up on spawn
@@ -29,11 +27,32 @@ func _ready() -> void:
 	pick_new_wander_direction()
 
 func find_player() -> void:
-	target_player = get_tree().get_first_node_in_group("player")
+	var players = get_tree().get_nodes_in_group("player")
+	print("[Enemy Debug] Total players found in 'player' group: ", players.size())
+	
+	if players.is_empty():
+		target_player = null
+		print("[Enemy Debug] Warning: No players found in the group!")
+		return
+		
+	var closest_player = players[0]
+	var min_distance = global_position.distance_to(closest_player.global_position)
+	print("[Enemy Debug] Checking player 0 at position: ", closest_player.global_position, " | Distance: ", min_distance)
+	
+	for i in range(1, players.size()):
+		var p = players[i]
+		if is_instance_valid(p):
+			var dist = global_position.distance_to(p.global_position)
+			print("[Enemy Debug] Checking player ", i, " at position: ", p.global_position, " | Distance: ", dist)
+			if dist < min_distance:
+				min_distance = dist
+				closest_player = p
+				
+	target_player = closest_player
+	print("[Enemy Debug] Selected closest target player. Position: ", target_player.global_position)
 
 func pick_new_wander_direction() -> void:
-	# Pick a random movement blend (mix of forward/backward and sideways angles)
-	var random_angle = randf_range(-PI / 2.0, PI / 2.0) # Varies between hard left/right and diagonal forward/back
+	var random_angle = randf_range(-PI / 2.0, PI / 2.0)
 	var base_dir = Vector3(randf_range(-1.0, 1.0), 0, randf_range(-1.0, 1.0)).normalized()
 	current_wander_dir = base_dir
 
@@ -41,8 +60,13 @@ func _physics_process(delta: float) -> void:
 	if not multiplayer.is_server() and multiplayer.has_multiplayer_peer():
 		return
 
-	if not target_player or not is_instance_valid(target_player):
+	# Periodically re-evaluate the closest player every 1.0 seconds
+	target_refresh_timer -= delta
+	if target_refresh_timer <= 0.0 or not target_player or not is_instance_valid(target_player):
+		target_refresh_timer = 1.0
 		find_player()
+
+	if not target_player:
 		return
 
 	if wall_hit_cooldown > 0.0:
@@ -73,7 +97,7 @@ func _physics_process(delta: float) -> void:
 	# 3. Randomize movement intent timer (variable timing)
 	movement_timer -= delta
 	if movement_timer <= 0.0:
-		movement_timer = randf_range(1.5, 4.0) # Random duration for this behavior state
+		movement_timer = randf_range(1.5, 4.0)
 		pick_new_wander_direction()
 
 	# 4. Core vectors toward the player
@@ -100,18 +124,14 @@ func _physics_process(delta: float) -> void:
 	var target_velocity := Vector3.ZERO
 
 	if distance_to_player > max_preferred_distance:
-		# Too far: Strongly chase player, mixed with slight organic weaving
 		var final_move_dir = (forward_backward_vector + (current_wander_dir * 0.4) + (separation_force * separation_weight)).normalized()
 		target_velocity = final_move_dir * speed
 		
 	elif distance_to_player < min_preferred_distance:
-		# Too close: Strongly back away, mixed with organic weaving
 		var final_move_dir = (-forward_backward_vector + (current_wander_dir * 0.4) + (separation_force * separation_weight)).normalized()
 		target_velocity = final_move_dir * speed
 		
 	else:
-		# INSIDE THE 10-20 "SWEET SPOT": Organic free-roam weaving
-		# They drift back and forth, side to side, maintaining the range band dynamically.
 		var final_move_dir = (current_wander_dir + (separation_force * separation_weight)).normalized()
 		target_velocity = final_move_dir * (speed * strafe_speed_multiplier)
 
@@ -121,11 +141,21 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 
+	move_and_slide()
+
+	if multiplayer.is_server():
+		rpc("sync_enemy_transform", global_transform)
+
 	# 8. Wall collision unstick handler
 	if get_slide_collision_count() > 0 and wall_hit_cooldown <= 0.0:
 		for i in range(get_slide_collision_count()):
 			var collision = get_slide_collision(i)
 			if collision.get_collider() is not CharacterBody3D:
-				pick_new_wander_direction() # Pick a completely new random direction to escape the wall
+				pick_new_wander_direction()
 				wall_hit_cooldown = 0.5 
 				break
+
+
+@rpc("authority", "unreliable")
+func sync_enemy_transform(new_transform: Transform3D) -> void:
+	global_transform = new_transform
