@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://dtrwsg8t583xb"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vliu7"]
+albedo_color = Color(1, 0.63584566, 0.7547807, 1)
+metallic = 1.0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_it6mq"]
+material = SubResource("StandardMaterial3D_vliu7")
+size = Vector2(20, 20)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_kl01i"]
+data = PackedVector3Array(10, 0, 10, -10, 0, 10, 10, 0, -10, -10, 0, 10, -10, 0, -10, 10, 0, -10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kl01i"]
+size = Vector3(8, 2, 8)
+
+[node name="TreasureRoomPrefab" type="Node3D" unique_id=1067759415]
+
+[node name="Connectors" type="Node3D" parent="." unique_id=1707349763]
+
+[node name="Entry" type="Node3D" parent="Connectors" unique_id=1313963210]
+
+[node name="Exit" type="Node3D" parent="Connectors" unique_id=406954462]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 18)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=651987031]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
+mesh = SubResource("PlaneMesh_it6mq")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D" unique_id=2059881810]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D" unique_id=518054639]
+shape = SubResource("ConcavePolygonShape3D_kl01i")
+
+[node name="BoundsArea" type="Area3D" parent="." unique_id=515526760]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8)
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BoundsArea" unique_id=1344650141]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("BoxShape3D_kl01i")
