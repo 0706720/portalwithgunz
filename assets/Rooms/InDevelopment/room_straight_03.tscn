@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dgo5lbrwpv6vd"]
 
-[ext_resource type="Script" uid="uid://b6n6uoylj1gpp" path="res://Network/metadata.gd" id="1_dmokg"]
+[ext_resource type="Script" uid="uid://b6n6uoylj1gpp" path="res://Network/metadata.gd" id="1_6ite5"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_g4v7s"]
 
@@ -40,7 +40,7 @@ size = Vector3(8, 2, 8)
 [node name="StraightPrefab2" type="Node3D" unique_id=1768685127]
 
 [node name="Metadata" type="Node" parent="." unique_id=939893820]
-script = ExtResource("1_dmokg")
+script = ExtResource("1_6ite5")
 difficulty_weight = 0.3
 room_type = Array[String](["\"straight\""])
 

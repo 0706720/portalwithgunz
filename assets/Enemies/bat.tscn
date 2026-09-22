@@ -2,12 +2,6 @@
 
 [ext_resource type="Script" uid="uid://dc3u8ckutqrs2" path="res://assets/Enemies/flying_enemy.gd" id="1_pblot"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pblot"]
-albedo_color = Color(0.53995657, 0.20760706, 2.8878452e-07, 1)
-
-[sub_resource type="SphereMesh" id="SphereMesh_45kln"]
-material = SubResource("StandardMaterial3D_pblot")
-
 [sub_resource type="SphereShape3D" id="SphereShape3D_pblot"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_sfnse"]
@@ -18,15 +12,50 @@ properties/1/path = NodePath(".:rotation")
 properties/1/spawn = true
 properties/1/replication_mode = 1
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_57qmd"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_g4v7s"]
+material = SubResource("StandardMaterial3D_57qmd")
+radius = 0.1
+height = 0.3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yf5fn"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_g4v7s"]
+material = SubResource("StandardMaterial3D_yf5fn")
+radius = 0.3
+height = 0.6
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pblot"]
+albedo_color = Color(0.53995657, 0.20760706, 2.8878452e-07, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_45kln"]
+material = SubResource("StandardMaterial3D_pblot")
+
 [node name="Bat" type="CharacterBody3D" unique_id=1845121343]
 script = ExtResource("1_pblot")
 speed = 4.0
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=661030915]
-mesh = SubResource("SphereMesh_45kln")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1487910360]
 shape = SubResource("SphereShape3D_pblot")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=248909803]
 replication_config = SubResource("SceneReplicationConfig_sfnse")
+
+[node name="MeshHolder" type="Node3D" parent="." unique_id=1017910723]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="MeshHolder" unique_id=1554759847]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.50899994)
+mesh = SubResource("CapsuleMesh_g4v7s")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="MeshHolder" unique_id=474977132]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.3)
+mesh = SubResource("SphereMesh_g4v7s")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MeshHolder" unique_id=661030915]
+mesh = SubResource("SphereMesh_45kln")
+skeleton = NodePath("../..")
