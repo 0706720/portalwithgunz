@@ -335,23 +335,23 @@ func pick_room_for_director(room_index: int, force_straight: bool, last_was_aren
 	return valid_pool[rng.randi() % valid_pool.size()]
 
 
-func spawn_enemies_in_room(room: Node3D, room_index: int) -> void:
-	if room_index == 0: return
-	var spawns_node = room.get_node_or_null("SpawnPoints/enemy_spawns")
-	if not spawns_node or enemy_pool.is_empty(): return
-	
-	var meta = room.get_node_or_null("Metadata")
-	var budget: int = meta.enemy_budget if meta and "enemy_budget" in meta else 40
-	
-	for marker in spawns_node.get_children():
-		if budget <= 0: break
-		var affordable = enemy_pool.filter(func(e): return e["cost"] <= budget)
-		if affordable.is_empty(): break
-		
-		var chosen = affordable[rng.randi() % affordable.size()]
-		var enemy = chosen["scene"].instantiate() as Node3D
-		room.add_child(enemy)
-		enemy.global_transform = marker.global_transform
+#func spawn_enemies_in_room(room: Node3D, room_index: int) -> void:
+	#if room_index == 0: return
+	#var spawns_node = room.get_node_or_null("SpawnPoints/enemy_spawns")
+	#if not spawns_node or enemy_pool.is_empty(): return
+	#
+	#var meta = room.get_node_or_null("Metadata")
+	#var budget: int = meta.enemy_budget if meta and "enemy_budget" in meta else 40
+	#
+	#for marker in spawns_node.get_children():
+		#if budget <= 0: break
+		#var affordable = enemy_pool.filter(func(e): return e["cost"] <= budget)
+		#if affordable.is_empty(): break
+		#
+		#var chosen = affordable[rng.randi() % affordable.size()]
+		#var enemy = chosen["scene"].instantiate() as Node3D
+		#room.add_child(enemy)
+		#enemy.global_transform = marker.global_transform
 
 
 func is_room_arena(room_scene: PackedScene) -> bool:
@@ -410,27 +410,79 @@ func instantiate_rooms_incrementally(layout_data: Dictionary) -> void:
 			await get_tree().process_frame
 
 
+func spawn_enemies_in_room(room: Node3D, room_index: int) -> void:
+	if room_index == 0: return
+	var spawns_node = room.get_node_or_null("SpawnPoints/enemy_spawns")
+	if not spawns_node or enemy_pool.is_empty(): return
+	
+	var meta = room.get_node_or_null("Metadata")
+	var budget: int = meta.enemy_budget if meta and "enemy_budget" in meta else 40
+	
+	for marker in spawns_node.get_children():
+		if budget <= 0: break
+		var affordable = enemy_pool.filter(func(e): return e["cost"] <= budget)
+		if affordable.is_empty(): break
+		
+		var chosen = affordable[rng.randi() % affordable.size()]
+		var enemy_scene = chosen["scene"] as PackedScene
+		if enemy_scene:
+			budget -= chosen["cost"]
+			
+			# 1. Instantiate locally on the server
+			var enemy = enemy_scene.instantiate() as Node3D
+			room.add_child(enemy)
+			enemy.global_transform = marker.global_transform
+			enemy.add_to_group("network_enemies") # Tag it for easy syncing
+			
+			# 2. Broadcast to all connected clients live
+			rpc("rpc_spawn_enemy_remote", room.name, enemy_scene.resource_path, marker.global_transform)
+
+
 @rpc("any_peer", "reliable")
 func request_world_state(peer_id: int) -> void:
 	if not multiplayer.is_server(): return
+	
+	# 1. Send all rooms first so the structure exists on the client
+	for i in range(generated_rooms.size()):
+		var room = generated_rooms[i]
+		rpc_id(peer_id, "rpc_spawn_room_remote", room.scene_file_path, room.global_transform, room.name)
+		
+	# 2. Wait briefly for rooms to instantiate, then sync their enemies
+	await get_tree().create_timer(0.5).timeout
 	for room in generated_rooms:
-		rpc_id(peer_id, "rpc_spawn_room_remote", room.scene_file_path, room.global_transform)
+		for child in room.get_children():
+			if child.is_in_group("network_enemies"):
+				rpc_id(peer_id, "rpc_spawn_enemy_remote", room.name, child.scene_file_path, child.global_transform)
+				
+	# 3. Tell the client the world is fully built and ready!
 	rpc_id(peer_id, "remote_world_ready")
 
+
 @rpc("authority", "call_remote", "reliable")
-func rpc_spawn_room_remote(path: String, tf: Transform3D) -> void:
+func rpc_spawn_room_remote(path: String, tf: Transform3D, r_name: String) -> void:
 	var room = load(path).instantiate() as Node3D
+	room.name = r_name
 	room_container.add_child(room)
 	room.global_transform = tf
 	generated_rooms.append(room)
 
+
 @rpc("authority", "call_remote", "reliable")
 func rpc_spawn_enemy_remote(r_name: String, e_path: String, tf: Transform3D) -> void:
 	var room = room_container.get_node_or_null(r_name)
+	if not room:
+		# If the room hasn't finished instantiating yet, wait a frame and try once more
+		await get_tree().process_frame
+		room = room_container.get_node_or_null(r_name)
+		
 	if room:
 		var enemy = load(e_path).instantiate() as Node3D
 		room.add_child(enemy)
 		enemy.global_transform = tf
+		enemy.add_to_group("network_enemies")
+	else:
+		print("[Gen] Warning: Failed to spawn enemy because room node '", r_name, "' was not found.")
+
 
 @rpc("authority", "call_remote", "reliable")
 func remote_world_ready() -> void:

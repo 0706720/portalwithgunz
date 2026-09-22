@@ -27,7 +27,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.9619553, 0)
 [node name="ProceduralGenerator" type="Node" parent="." unique_id=1172167322]
 script = ExtResource("2_m82b1")
 
-[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=1404446632]
+[node name="PlayerSpawnerSignal" type="MultiplayerSpawner" parent="." unique_id=1404446632]
 _spawnable_scenes = PackedStringArray("uid://xcjrjq5cbn7y")
 spawn_path = NodePath("..")
 
