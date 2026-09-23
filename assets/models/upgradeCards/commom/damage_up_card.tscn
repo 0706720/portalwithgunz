@@ -6,26 +6,42 @@
 [ext_resource type="FontFile" uid="uid://brl5hlu3dc40l" path="res://assets/images/upgradesSystem/Nunito/Nunito-Italic-VariableFont_wght.ttf" id="4_vd51b"]
 [ext_resource type="FontFile" uid="uid://b1eo5a8at87ej" path="res://assets/images/upgradesSystem/Nunito/Nunito-VariableFont_wght.ttf" id="5_4r32b"]
 
-[node name="DamageUpCard" type="Node2D" unique_id=360493950]
+[node name="DamageUpCard" type="Control" unique_id=189113893]
+layout_mode = 3
+anchors_preset = 0
 
-[node name="cardAssets" type="Node" parent="." unique_id=1438782627]
+[node name="cardAssets" type="Control" parent="." unique_id=865342378]
+anchors_preset = 0
 
-[node name="Hermes" type="Sprite2D" parent="cardAssets" unique_id=852059518]
-position = Vector2(440, 153)
+[node name="Hermes" type="TextureRect" parent="cardAssets" unique_id=2095722429]
+layout_mode = 0
+offset_left = 344.0
+offset_top = 113.0
+offset_right = 1045.0
+offset_bottom = 479.0
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("1_0v7ip")
 
-[node name="Cardoutline(1)" type="Sprite2D" parent="cardAssets" unique_id=247015828]
+[node name="Cardoutline(1)" type="TextureRect" parent="cardAssets" unique_id=965248472]
 visible = false
-position = Vector2(438, 255)
+layout_mode = 0
+offset_left = 438.0
+offset_top = 255.0
+offset_right = 438.0
+offset_bottom = 255.0
 texture = ExtResource("2_rbceu")
 
-[node name="HeartShield" type="Sprite2D" parent="cardAssets" unique_id=77293697]
-position = Vector2(322, 444.99997)
+[node name="HeartShield" type="TextureRect" parent="cardAssets" unique_id=730218328]
+layout_mode = 0
+offset_left = 306.00003
+offset_top = 420.99997
+offset_right = 818.0
+offset_bottom = 933.0
 scale = Vector2(0.1, 0.1)
 texture = ExtResource("3_40pxh")
 
 [node name="Label" type="RichTextLabel" parent="cardAssets" unique_id=801611469]
+layout_mode = 0
 offset_left = 333.0
 offset_top = 256.0
 offset_right = 549.0
@@ -39,6 +55,7 @@ text = "[u]DAMAGE BONUS[u]"
 horizontal_alignment = 1
 
 [node name="Label2" type="RichTextLabel" parent="cardAssets" unique_id=1532496665]
+layout_mode = 0
 offset_left = 288.0
 offset_top = 288.0
 offset_right = 585.0

@@ -6,26 +6,42 @@
 [ext_resource type="FontFile" uid="uid://brl5hlu3dc40l" path="res://assets/images/upgradesSystem/Nunito/Nunito-Italic-VariableFont_wght.ttf" id="4_tdl4h"]
 [ext_resource type="FontFile" uid="uid://b1eo5a8at87ej" path="res://assets/images/upgradesSystem/Nunito/Nunito-VariableFont_wght.ttf" id="5_raiev"]
 
-[node name="HealthUpCard" type="Node2D" unique_id=1540290719]
+[node name="HealthUpCard" type="Control" unique_id=521011015]
+layout_mode = 3
+anchors_preset = 0
 
-[node name="cardAssets" type="Node" parent="." unique_id=1487023182]
+[node name="cardAssets" type="Control" parent="." unique_id=384543229]
+anchors_preset = 0
 
-[node name="Hermes" type="Sprite2D" parent="cardAssets" unique_id=377715105]
-position = Vector2(440, 153)
+[node name="Hermes" type="TextureRect" parent="cardAssets" unique_id=2006106001]
+layout_mode = 0
+offset_left = 367.99997
+offset_top = 105.0
+offset_right = 568.0
+offset_bottom = 305.0
 scale = Vector2(0.67, 0.67)
 texture = ExtResource("1_yfl1k")
 
-[node name="Cardoutline(1)" type="Sprite2D" parent="cardAssets" unique_id=90850748]
+[node name="Cardoutline(1)" type="TextureRect" parent="cardAssets" unique_id=1047617386]
 visible = false
-position = Vector2(438, 255)
+layout_mode = 0
+offset_left = 438.0
+offset_top = 255.0
+offset_right = 438.0
+offset_bottom = 255.0
 texture = ExtResource("2_oykge")
 
-[node name="HeartShield" type="Sprite2D" parent="cardAssets" unique_id=98534214]
-position = Vector2(322, 444.99997)
+[node name="HeartShield" type="TextureRect" parent="cardAssets" unique_id=269686088]
+layout_mode = 0
+offset_left = 306.00003
+offset_top = 420.99997
+offset_right = 818.0
+offset_bottom = 933.0
 scale = Vector2(0.1, 0.1)
 texture = ExtResource("3_oykge")
 
 [node name="Label" type="RichTextLabel" parent="cardAssets" unique_id=142743519]
+layout_mode = 0
 offset_left = 345.0
 offset_top = 256.0
 offset_right = 528.0
@@ -39,6 +55,7 @@ text = "[u]HEALTH BONUS[u]"
 horizontal_alignment = 1
 
 [node name="Label2" type="RichTextLabel" parent="cardAssets" unique_id=1498761960]
+layout_mode = 0
 offset_left = 288.0
 offset_top = 288.0
 offset_right = 585.0
