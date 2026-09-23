@@ -6,26 +6,42 @@
 [ext_resource type="FontFile" uid="uid://b1eo5a8at87ej" path="res://assets/images/upgradesSystem/Nunito/Nunito-VariableFont_wght.ttf" id="4_yh3x6"]
 [ext_resource type="Texture2D" uid="uid://cmwausg74bpcb" path="res://assets/images/upgradesSystem/hermes.jpeg" id="5_ytn23"]
 
-[node name="SpeedUpCard" type="Node2D" unique_id=1994179710]
+[node name="SpeedUpCard" type="Control" unique_id=2130296331]
+layout_mode = 3
+anchors_preset = 0
 
-[node name="cardAssets" type="Node" parent="." unique_id=1206171695]
+[node name="cardAssets" type="Control" parent="." unique_id=108678941]
+anchors_preset = 0
 
-[node name="Hermes" type="Sprite2D" parent="cardAssets" unique_id=1257186896]
-position = Vector2(451, 158)
+[node name="Hermes" type="TextureRect" parent="cardAssets" unique_id=71788179]
+layout_mode = 0
+offset_left = 363.0
+offset_top = 86.0
+offset_right = 723.0
+offset_bottom = 382.0
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("5_ytn23")
 
-[node name="Cardoutline(1)" type="Sprite2D" parent="cardAssets" unique_id=1121910638]
+[node name="Cardoutline(1)" type="TextureRect" parent="cardAssets" unique_id=1455631084]
 visible = false
-position = Vector2(438, 255)
+layout_mode = 0
+offset_left = 438.0
+offset_top = 255.0
+offset_right = 438.0
+offset_bottom = 255.0
 texture = ExtResource("1_gmw2h")
 
-[node name="HeartShield" type="Sprite2D" parent="cardAssets" unique_id=35630064]
-position = Vector2(322, 444.99997)
+[node name="HeartShield" type="TextureRect" parent="cardAssets" unique_id=1371344192]
+layout_mode = 0
+offset_left = 306.00003
+offset_top = 420.99997
+offset_right = 818.0
+offset_bottom = 933.0
 scale = Vector2(0.1, 0.1)
 texture = ExtResource("2_ddov1")
 
 [node name="Label" type="RichTextLabel" parent="cardAssets" unique_id=1421175198]
+layout_mode = 0
 offset_left = 352.0
 offset_top = 256.0
 offset_right = 535.0
@@ -38,6 +54,7 @@ bbcode_enabled = true
 text = "[u]SPEED BONUS[u]"
 
 [node name="Label2" type="RichTextLabel" parent="cardAssets" unique_id=880183712]
+layout_mode = 0
 offset_left = 288.0
 offset_top = 288.0
 offset_right = 585.0

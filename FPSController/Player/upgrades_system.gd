@@ -9,7 +9,7 @@ extends Node
 	{ "scene": preload("res://assets/models/upgradeCards/commom/speed_up_card.tscn"), "rarity": 1 },
 	{ "scene": preload("res://assets/models/upgradeCards/commom/health_up_card.tscn"), "rarity": 1 },
 	{ "scene": preload("res://assets/models/upgradeCards/commom/damage_up_card.tscn"), "rarity": 1 },
-	{ "scene": preload("res://assets/models/upgradeCards/rare/unlock_jump.tscn"), "rarity": 2 },
+	{ "scene": preload("res://assets/models/upgradeCards/rare/unlock_jump_card.tscn"), "rarity": 2 },
 ]
 
 const speedupcard = preload("res://assets/models/upgradeCards/commom/speed_up_card.tscn")
@@ -33,9 +33,10 @@ func _add_options(input):
 	# how many upgrades per person
 	var options = 3
 	var spawned_card
+	
+	# this should ensure random output is different every run
+	randomize()
 	for index in options:
-		# this should ensure random output is different every run
-		randomize()
 		# this will be used for weighting: 0-7 means a common spawns whilst 8-10 means rare
 		var rng = randi_range(0, 10)
 		if rng <= 7:
@@ -51,6 +52,16 @@ func _add_options(input):
 		
 		#var spawned_card = speedupcard.instantiate()
 		# Center the card in the viewport
-		spawned_card.position = screen_center
+		var pos
+		match index:
+			0:
+				pos = -220
+			1:
+				pos = 130
+			2:
+				pos = 480
+
+		spawned_card.position = Vector2(pos, 80)
 		UI.add_child(spawned_card)
+		print("card: " + str(spawned_card.position))
 		
