@@ -3,7 +3,7 @@ extends CanvasLayer
 const PORT := 9000
 const SERVER_IP := "127.0.0.1"
 
-@onready var address_entry = $CanvasLayer/MainMenu/MarginContainer/VBoxContainer/AddressEntry
+@onready var address_entry = $MainMenu/MarginContainer/VBoxContainer/AddressEntry
 
 func _ready() -> void:
 	multiplayer.peer_connected.connect(_on_peer_connected)
