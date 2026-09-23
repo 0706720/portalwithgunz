@@ -3,6 +3,8 @@ extends CanvasLayer
 const PORT := 9000
 const SERVER_IP := "127.0.0.1"
 
+@onready var address_entry = $MainMenu/MarginContainer/VBoxContainer/AddressEntry
+
 func _ready() -> void:
 	multiplayer.peer_connected.connect(_on_peer_connected)
 	multiplayer.peer_disconnected.connect(_on_peer_disconnected)
@@ -33,11 +35,20 @@ func _on_host_button_pressed() -> void:
 
 func _on_join_button_pressed() -> void:
 	print("JOIN pressed")
+	
+	# Get the IP from the LineEdit, or fallback to the constant if empty
+	var ip_to_use = address_entry.text.strip_edges()
+	if ip_to_use.is_empty():
+		ip_to_use = SERVER_IP
+		print("Address entry empty, using default: ", SERVER_IP)
+	else:
+		print("Attempting to connect to: ", ip_to_use)
+
 	if multiplayer and multiplayer.multiplayer_peer:
 		multiplayer.multiplayer_peer.close()
 
 	var peer := ENetMultiplayerPeer.new()
-	var err := peer.create_client(SERVER_IP, PORT)
+	var err := peer.create_client(ip_to_use, PORT)
 	if err != OK:
 		push_error("Failed to join.")
 		return
