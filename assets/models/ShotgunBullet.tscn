@@ -7,7 +7,7 @@
 [sub_resource type="SphereShape3D" id="SphereShape3D_x8nrb"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_q313b"]
-radius = 0.620959
+radius = 0.50268996
 
 [node name="ShotgunBullet" type="Area3D" unique_id=1152042040 groups=["Bullet"]]
 script = ExtResource("1_jd0f1")
