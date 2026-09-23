@@ -1,4 +1,4 @@
-extends RigidBody3D
+extends Area3D
 
 @export var Bullet_Speed = 120
 @export var max_bullets: int = 7
@@ -9,18 +9,8 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	move_and_collide(-transform.basis.z * delta * Bullet_Speed)
-	var bullets = get_tree().get_nodes_in_group("Bullet")
-	if bullets.size() > max_bullets:
-		bullets[0].queue_free()
+	global_translate(-global_transform.basis.z * Bullet_Speed * delta)
 
-func on_hit_area_entered(body):
+func _on_body_entered(body: Node3D) -> void:
 	if body.is_in_group("Object"):
-		body.queue_free()
 		queue_free()
-	pass
-
-
-func _on_timer_timeout() -> void:
-	var bullets = get_tree().get_nodes_in_group("Bullet")
-	queue_free()
