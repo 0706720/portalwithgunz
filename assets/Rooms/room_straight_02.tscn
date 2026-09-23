@@ -3,7 +3,6 @@
 [ext_resource type="Script" uid="uid://b6n6uoylj1gpp" path="res://Network/metadata.gd" id="1_ptlgb"]
 [ext_resource type="Texture2D" uid="uid://cs1ibjwvbhsss" path="res://assets/images/dungeo_floor.jpg" id="2_fb6wg"]
 [ext_resource type="Texture2D" uid="uid://vw4d70xv6yno" path="res://assets/images/wall_dungeon.jpeg" id="3_vpwjj"]
-[ext_resource type="Texture2D" uid="uid://deky0tl44tiju" path="res://assets/images/Darkwood.png" id="4_fb6wg"]
 [ext_resource type="PackedScene" uid="uid://dlx6jlni62p4y" path="res://assets/models/torch.tscn" id="4_vpwjj"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_g4v7s"]
@@ -48,7 +47,8 @@ data = PackedVector3Array(-1, 5, 10, 1, 5, 10, -1, -5, 10, 1, 5, 10, 1, -5, 10, 
 size = Vector3(8, 2, 8)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vpwjj"]
-albedo_texture = ExtResource("4_fb6wg")
+albedo_texture = ExtResource("2_fb6wg")
+metallic = 1.0
 uv1_scale = Vector3(0.1, 0.1, 0.1)
 uv1_triplanar = true
 

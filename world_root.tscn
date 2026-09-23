@@ -37,4 +37,4 @@ environment = SubResource("Environment_cuis1")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1305743073]
 transform = Transform3D(0.70710677, -0.70710677, 0, 0.49999997, 0.49999997, 0.70710677, -0.49999997, -0.49999997, 0.70710677, 0, 0, 0)
 light_color = Color(0.44840753, 0.7695819, 1, 1)
-light_energy = 0.1
+light_energy = 0.5

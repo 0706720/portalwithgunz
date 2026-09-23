@@ -200,4 +200,5 @@ superjump={
 
 [rendering]
 
+lights_and_shadows/tighter_shadow_caster_culling=false
 occlusion_culling/use_occlusion_culling=true

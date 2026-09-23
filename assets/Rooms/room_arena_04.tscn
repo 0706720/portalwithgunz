@@ -52,7 +52,8 @@ size = Vector3(10, 10, 2)
 data = PackedVector3Array(-5, 5, 1, 5, 5, 1, -5, -5, 1, 5, 5, 1, 5, -5, 1, -5, -5, 1, 5, 5, -1, -5, 5, -1, 5, -5, -1, -5, 5, -1, -5, -5, -1, 5, -5, -1, 5, 5, 1, 5, 5, -1, 5, -5, 1, 5, 5, -1, 5, -5, -1, 5, -5, 1, -5, 5, -1, -5, 5, 1, -5, -5, -1, -5, 5, 1, -5, -5, 1, -5, -5, -1, 5, 5, 1, -5, 5, 1, 5, 5, -1, -5, 5, 1, -5, 5, -1, 5, 5, -1, -5, -5, 1, 5, -5, 1, -5, -5, -1, 5, -5, 1, 5, -5, -1, -5, -5, -1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_45kln"]
-albedo_texture = ExtResource("5_snbpy")
+albedo_texture = ExtResource("2_xqbu7")
+metallic = 1.0
 uv1_scale = Vector3(0.1, 0.1, 0.1)
 uv1_triplanar = true
 
@@ -165,10 +166,7 @@ transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 20, 
 mesh = SubResource("BoxMesh_tj4kq")
 
 [node name="Torch" parent="LeftWall" unique_id=744360467 instance=ExtResource("4_n3ri0")]
-transform = Transform3D(1.3113416e-07, 0.5, 0.8660254, 0, 0.8660254, -0.5, -1, 6.556708e-08, 1.1356552e-07, 1, 0, -10)
-
-[node name="Torch2" parent="LeftWall" unique_id=2025342509 instance=ExtResource("4_n3ri0")]
-transform = Transform3D(1.3113416e-07, 0.5, 0.8660254, 0, 0.8660254, -0.5, -1, 6.556708e-08, 1.1356552e-07, 1, 0, 10)
+transform = Transform3D(1.3113416e-07, 0.5, 0.8660254, 0, 0.8660254, -0.5, -1, 6.556708e-08, 1.1356552e-07, 1, 0, 0)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="LeftWall" unique_id=2076329562]
 
@@ -189,10 +187,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 5, 20)
 mesh = SubResource("BoxMesh_tj4kq")
 
 [node name="Torch" parent="RightWall" unique_id=87086880 instance=ExtResource("4_n3ri0")]
-transform = Transform3D(1.3113416e-07, 0.5, 0.8660254, 0, 0.8660254, -0.5, -1, 6.556708e-08, 1.1356552e-07, 1, 0, -10)
-
-[node name="Torch2" parent="RightWall" unique_id=762646734 instance=ExtResource("4_n3ri0")]
-transform = Transform3D(1.3113416e-07, 0.5, 0.8660254, 0, 0.8660254, -0.5, -1, 6.556708e-08, 1.1356552e-07, 1, 0, 10)
+transform = Transform3D(1.3113416e-07, 0.5, 0.8660254, 0, 0.8660254, -0.5, -1, 6.556708e-08, 1.1356552e-07, 1, 0, 0)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="RightWall" unique_id=995901550]
 
@@ -252,10 +247,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 15, 20)
 mesh = SubResource("BoxMesh_tj4kq")
 
 [node name="Torch" parent="RightWall2" unique_id=1936835992 instance=ExtResource("4_n3ri0")]
-transform = Transform3D(1.3113416e-07, 0.5, 0.8660254, 0, 0.8660254, -0.5, -1, 6.556708e-08, 1.1356552e-07, 1, 0, -10)
-
-[node name="Torch2" parent="RightWall2" unique_id=1106090278 instance=ExtResource("4_n3ri0")]
-transform = Transform3D(1.3113416e-07, 0.5, 0.8660254, 0, 0.8660254, -0.5, -1, 6.556708e-08, 1.1356552e-07, 1, 0, 10)
+transform = Transform3D(1.3113416e-07, 0.5, 0.8660254, 0, 0.8660254, -0.5, -1, 6.556708e-08, 1.1356552e-07, 1, 0, 0)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="RightWall2" unique_id=1071992381]
 
@@ -267,10 +259,7 @@ transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 20, 
 mesh = SubResource("BoxMesh_tj4kq")
 
 [node name="Torch" parent="LeftWall2" unique_id=357537906 instance=ExtResource("4_n3ri0")]
-transform = Transform3D(1.3113416e-07, 0.5, 0.8660254, 0, 0.8660254, -0.5, -1, 6.556708e-08, 1.1356552e-07, 1, 0, -10)
-
-[node name="Torch2" parent="LeftWall2" unique_id=1363824022 instance=ExtResource("4_n3ri0")]
-transform = Transform3D(1.3113416e-07, 0.5, 0.8660254, 0, 0.8660254, -0.5, -1, 6.556708e-08, 1.1356552e-07, 1, 0, 10)
+transform = Transform3D(1.3113416e-07, 0.5, 0.8660254, 0, 0.8660254, -0.5, -1, 6.556708e-08, 1.1356552e-07, 1, 0, 0)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="LeftWall2" unique_id=985244769]
 
