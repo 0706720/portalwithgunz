@@ -52,6 +52,7 @@ import/blender/enabled=false
 player=""
 Bullet=""
 Enemy=""
+Object=""
 
 [input]
 
