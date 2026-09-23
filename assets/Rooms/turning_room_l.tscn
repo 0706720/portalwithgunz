@@ -4,7 +4,6 @@
 [ext_resource type="Script" uid="uid://b6n6uoylj1gpp" path="res://Network/metadata.gd" id="1_gfcr4"]
 [ext_resource type="Texture2D" uid="uid://vw4d70xv6yno" path="res://assets/images/wall_dungeon.jpeg" id="2_o30tn"]
 [ext_resource type="PackedScene" uid="uid://dlx6jlni62p4y" path="res://assets/models/torch.tscn" id="3_5lud1"]
-[ext_resource type="Texture2D" uid="uid://deky0tl44tiju" path="res://assets/images/Darkwood.png" id="5_o30tn"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kqlpf"]
 albedo_texture = ExtResource("1_exnrb")
@@ -41,7 +40,8 @@ material = SubResource("StandardMaterial3D_heln8")
 size = Vector3(2, 10, 20)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5lud1"]
-albedo_texture = ExtResource("5_o30tn")
+albedo_texture = ExtResource("1_exnrb")
+metallic = 1.0
 uv1_scale = Vector3(0.1, 0.1, 0.1)
 uv1_triplanar = true
 
@@ -94,9 +94,6 @@ mesh = SubResource("BoxMesh_67xsk")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RightSideWall/StaticBody3D" unique_id=1198657145]
 shape = SubResource("ConcavePolygonShape3D_c5a4v")
 
-[node name="Torch" parent="RightSideWall" unique_id=744360467 instance=ExtResource("3_5lud1")]
-transform = Transform3D(-0.8660254, 0.5, -8.742278e-08, 0.5, 0.8660254, 0, 7.5710346e-08, -4.371139e-08, -1, 1, 0, 0)
-
 [node name="RightFrontWall" type="MeshInstance3D" parent="." unique_id=1795786384]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 5, 19)
 mesh = SubResource("BoxMesh_67xsk")
@@ -131,9 +128,6 @@ mesh = SubResource("BoxMesh_67xsk")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="LeftSideWall/StaticBody3D" unique_id=1525244781]
 shape = SubResource("ConcavePolygonShape3D_c5a4v")
-
-[node name="Torch" parent="LeftSideWall" unique_id=1250359610 instance=ExtResource("3_5lud1")]
-transform = Transform3D(-0.8660254, -0.5, 8.742278e-08, -0.5, 0.8660254, 0, -7.5710346e-08, -4.371139e-08, -1, -1, 0, 0)
 
 [node name="LeftBackWall" type="MeshInstance3D" parent="." unique_id=1967196541]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 20, 5, 1)

@@ -4,7 +4,6 @@
 [ext_resource type="Texture2D" uid="uid://cs1ibjwvbhsss" path="res://assets/images/dungeo_floor.jpg" id="1_txqev"]
 [ext_resource type="Texture2D" uid="uid://vw4d70xv6yno" path="res://assets/images/wall_dungeon.jpeg" id="2_5l2yf"]
 [ext_resource type="PackedScene" uid="uid://dlx6jlni62p4y" path="res://assets/models/torch.tscn" id="3_5l2yf"]
-[ext_resource type="Texture2D" uid="uid://deky0tl44tiju" path="res://assets/images/Darkwood.png" id="5_6sh3q"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tkluk"]
 albedo_texture = ExtResource("1_txqev")
@@ -34,7 +33,8 @@ data = PackedVector3Array(-1, 5, 10, 1, 5, 10, -1, -5, 10, 1, 5, 10, 1, -5, 10, 
 size = Vector3(8, 2, 8)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qddge"]
-albedo_texture = ExtResource("5_6sh3q")
+albedo_texture = ExtResource("1_txqev")
+metallic = 1.0
 uv1_scale = Vector3(0.1, 0.1, 0.1)
 uv1_triplanar = true
 
@@ -87,9 +87,6 @@ mesh = SubResource("BoxMesh_rs22w")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="LeftSideWall/StaticBody3D" unique_id=499913912]
 shape = SubResource("ConcavePolygonShape3D_qx86r")
 
-[node name="Torch" parent="LeftSideWall" unique_id=744360467 instance=ExtResource("3_5l2yf")]
-transform = Transform3D(-0.8660254, -0.5, 8.742278e-08, -0.5, 0.8660254, 0, -7.5710346e-08, -4.371139e-08, -1, -1, 0, 0)
-
 [node name="MetaData" type="Node" parent="." unique_id=435375148]
 script = ExtResource("1_ophxo")
 difficulty_weight = 0.3
@@ -112,9 +109,6 @@ mesh = SubResource("BoxMesh_rs22w")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RightSideWall/StaticBody3D" unique_id=2033858543]
 shape = SubResource("ConcavePolygonShape3D_qx86r")
-
-[node name="Torch" parent="RightSideWall" unique_id=1473714750 instance=ExtResource("3_5l2yf")]
-transform = Transform3D(-0.8660254, 0.5, -8.742278e-08, 0.5, 0.8660254, 0, 7.5710346e-08, -4.371139e-08, -1, 1, 0, 0)
 
 [node name="RightBackWall" type="MeshInstance3D" parent="." unique_id=477146911]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -20, 5, 1)

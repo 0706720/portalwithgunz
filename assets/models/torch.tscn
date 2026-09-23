@@ -34,4 +34,4 @@ mesh = SubResource("PrismMesh_lv4u5")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 light_color = Color(1, 0.50980395, 0.21568628, 1)
 light_energy = 5.0
-omni_range = 25.0
+omni_range = 20.0
