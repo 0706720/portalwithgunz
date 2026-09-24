@@ -335,25 +335,6 @@ func pick_room_for_director(room_index: int, force_straight: bool, last_was_aren
 	return valid_pool[rng.randi() % valid_pool.size()]
 
 
-#func spawn_enemies_in_room(room: Node3D, room_index: int) -> void:
-	#if room_index == 0: return
-	#var spawns_node = room.get_node_or_null("SpawnPoints/enemy_spawns")
-	#if not spawns_node or enemy_pool.is_empty(): return
-	#
-	#var meta = room.get_node_or_null("Metadata")
-	#var budget: int = meta.enemy_budget if meta and "enemy_budget" in meta else 40
-	#
-	#for marker in spawns_node.get_children():
-		#if budget <= 0: break
-		#var affordable = enemy_pool.filter(func(e): return e["cost"] <= budget)
-		#if affordable.is_empty(): break
-		#
-		#var chosen = affordable[rng.randi() % affordable.size()]
-		#var enemy = chosen["scene"].instantiate() as Node3D
-		#room.add_child(enemy)
-		#enemy.global_transform = marker.global_transform
-
-
 func is_room_arena(room_scene: PackedScene) -> bool:
 	if "arena" in room_scene.resource_path.to_lower(): return true
 	var inst := room_scene.instantiate() as Node3D
