@@ -13,6 +13,18 @@ data = PackedVector3Array(10, 0, 10, -10, 0, 10, 10, 0, -10, -10, 0, 10, -10, 0,
 [sub_resource type="BoxShape3D" id="BoxShape3D_kl01i"]
 size = Vector3(8, 2, 8)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_svdvv"]
+albedo_color = Color(0, 0.46963003, 1, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_g4v7s"]
+material = SubResource("StandardMaterial3D_svdvv")
+radius = 1.0
+height = 5.0
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_g4v7s"]
+radius = 1.0
+height = 5.0
+
 [node name="EndRoomPrefab" type="Node3D" unique_id=1067759415]
 
 [node name="Connectors" type="Node3D" parent="." unique_id=1707349763]
@@ -39,3 +51,14 @@ collision_mask = 3
 [node name="CollisionShape3D" type="CollisionShape3D" parent="BoundsArea" unique_id=1344650141]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("BoxShape3D_kl01i")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=2092189577]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 4)
+mesh = SubResource("CapsuleMesh_g4v7s")
+
+[node name="PortalArea" type="Area3D" parent="MeshInstance3D2" unique_id=2092152315]
+collision_layer = 255
+collision_mask = 255
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D2/PortalArea" unique_id=1641400858]
+shape = SubResource("CapsuleShape3D_g4v7s")

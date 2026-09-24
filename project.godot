@@ -49,7 +49,6 @@ import/blender/enabled=false
 
 [global_group]
 
-player=""
 Bullet=""
 Enemy=""
 Object=""

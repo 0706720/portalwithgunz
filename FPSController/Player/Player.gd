@@ -134,7 +134,13 @@ func _enter_tree():
 # ==============================================================================
 # UPDATED _ready() FUNCTION
 # ==============================================================================
+@onready var my_collision_shape: CollisionShape3D = $CollisionShape3D # Adjust if your path is different
+
 func _ready() -> void:
+	if my_collision_shape:
+		print("[Player Debug] Collision shape node found! Shape asset: ", my_collision_shape.shape)
+	else:
+		print("[Player Debug] ERROR: Could not find CollisionShape3D node!")
 	# Make sure both host and client players join the group
 	add_to_group("player")
 	# Convert node name (e.g. "655412542") into integer peer ID authority
@@ -487,6 +493,17 @@ func receive_damage(amount):
 		health = 99
 		position = Vector3.ZERO
 	health_changed.emit(health)
+
+
+@rpc("authority", "call_local", "reliable")
+func rpc_teleport_player(target_transform: Transform3D) -> void:
+	global_transform = target_transform
+	velocity = Vector3.ZERO
+	# Reset interpolation/smoothing variables if applicable
+	if has_node("StateMachine"):
+		# Optional: Force state machine to neutral or ground state if needed
+		pass
+
 
 func _on_animation_player_animation_finished(anim_name):
 	if anim_name == "shoot" and crouch_anim_player:
