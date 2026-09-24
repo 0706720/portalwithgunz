@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://becawo6agqcir" path="res://assets/AssetCode/procedural_generator.gd" id="2_m82b1"]
 [ext_resource type="Script" uid="uid://bi0pamcrbsvyv" path="res://Network/ai_director.gd" id="3_d8pbq"]
 [ext_resource type="Script" uid="uid://dkwcsqg2yfq6v" path="res://assets/AssetCode/player_spawner.gd" id="4_mtm5c"]
+[ext_resource type="PackedScene" uid="uid://dyhdh556qmjip" path="res://loading_screen.tscn" id="5_bpw3s"]
 
 [sub_resource type="Environment" id="Environment_cuis1"]
 background_mode = 2
@@ -22,7 +23,7 @@ script = ExtResource("3_d8pbq")
 script = ExtResource("4_mtm5c")
 
 [node name="SpawnPoint" type="Node3D" parent="." unique_id=2094156297]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.9619553, 0)
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 4, 0)
 
 [node name="ProceduralGenerator" type="Node" parent="." unique_id=1172167322]
 script = ExtResource("2_m82b1")
@@ -37,4 +38,8 @@ environment = SubResource("Environment_cuis1")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1305743073]
 transform = Transform3D(-0.70710665, 0.70710677, -6.181723e-08, 0.49999994, 0.49999994, 0.7071067, 0.5, 0.49999988, -0.7071067, 0, 0, 0)
 light_color = Color(0.44840753, 0.7695819, 1, 1)
-light_energy = 0.5
+light_energy = 0.2
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1269018179]
+
+[node name="LoadingScreen" parent="CanvasLayer" unique_id=626300901 instance=ExtResource("5_bpw3s")]

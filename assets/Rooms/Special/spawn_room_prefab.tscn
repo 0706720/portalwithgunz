@@ -16,7 +16,6 @@ size = Vector3(8, 2, 8)
 [node name="SpawnRoomPrefab1" type="Node3D" unique_id=1067759415]
 
 [node name="SpawnPoints" type="Node3D" parent="." unique_id=1319249313]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2715378, 5.035372)
 
 [node name="PlayerSpawn" type="Node3D" parent="SpawnPoints" unique_id=2134919627]
 
