@@ -63,42 +63,38 @@ func _ready() -> void:
 	
 	set_process_input(true)
 	
-	# Only the server handles procedural generation to maintain a single source of truth
 	if multiplayer.is_server():
 		rng.randomize()
 		load_room_prefabs()
 		
 		if validate_generator_setup():
+			# 1. Generate the layout and instantly build everything behind the loading screen
 			await generate_spawn_room_first()
-			
-			# Calculate all positions via fast AABB math before instantiating visually
 			var layout_data = generate_level_aabb_layout()
-			
-			# FIX: Pass the full dictionary so branches and treasure rooms get instantiated!
-			await instantiate_rooms_incrementally(layout_data)
+			instantiate_rooms_incrementally(layout_data)
 			
 			level_generated = true
+			
+			# 2. Everything is built! Tell the game we are ready to remove the loading screen and spawn the player
 			emit_signal("world_ready")
 		else:
 			push_error("[ProceduralGen] Generator setup validation failed.")
 	else:
-		# Clients request the compiled layout state from the server
 		rpc_id(1, "request_world_state", multiplayer.get_unique_id())
 
 
 func load_room_prefabs() -> void:
 	all_rooms.clear()
 	scan_folder_for_rooms("res://assets/Rooms/")
-	print("[Gen] Total valid rooms loaded: ", all_rooms.size())
+	print("[Gen] Total valid rooms preloaded into memory: ", all_rooms.size())
 
 
 func validate_generator_setup() -> bool:
 	return room_container != null and not all_rooms.is_empty()
 
 
-# Recursively scans directory for usable room .tscn files while filtering out special prefabs and work-in-progress folders
+# Recursively scans directory for usable room .tscn files and caches them as PackedScenes
 func scan_folder_for_rooms(dir_path: String) -> void:
-	# Skip the InDevelopment folder entirely
 	if "InDevelopment" in dir_path:
 		return
 		
@@ -116,7 +112,6 @@ func scan_folder_for_rooms(dir_path: String) -> void:
 			if file_name.ends_with(".tscn"):
 				var full_path := dir_path + file_name
 				
-				# Safely skip special prefabs (Start, End, Splitter, Treasure) so they aren't added to the random pool
 				var skip := false
 				if start_room_scene != null and full_path == start_room_scene.resource_path: skip = true
 				if end_room_scene != null and full_path == end_room_scene.resource_path: skip = true
@@ -134,11 +129,10 @@ func scan_folder_for_rooms(dir_path: String) -> void:
 		file_name = dir.get_next()
 	dir.list_dir_end()
 
+
 func validate_prefab_structure(scene: PackedScene) -> bool:
 	var inst := scene.instantiate() as Node3D
 	var valid = inst.has_node("Connectors/Entry") and inst.has_node("Connectors/Exit") and inst.has_node("BoundsArea/CollisionShape3D")
-	if not valid:
-		print("[Gen] Room failed validation: ", scene.resource_path)
 	inst.queue_free()
 	return valid
 
@@ -156,13 +150,13 @@ func generate_spawn_room_first() -> void:
 	await get_tree().physics_frame
 
 
-# REUSABLE BUILDER: Handles main dungeon path and side branches cleanly
+# REUSABLE BUILDER: Stores actual PackedScene references instead of strings to prevent disk lag
 func build_room_sequence(start_tf: Transform3D, count: int, is_branch: bool, placed_aabbs: Array) -> Dictionary:
 	var current_tf = start_tf
 	var last_was_arena = false
 	var forced_straight_count = 0
 	var room_transforms: Array[Transform3D] = []
-	var room_scene_paths: Array[String] = []
+	var room_scenes: Array[PackedScene] = []
 	
 	for i in range(1, count + 1):
 		var selected_scene: PackedScene = null
@@ -178,8 +172,8 @@ func build_room_sequence(start_tf: Transform3D, count: int, is_branch: bool, pla
 			var inst = selected_scene.instantiate() as Node3D
 			var bounds = inst.get_node("BoundsArea/CollisionShape3D") as CollisionShape3D
 			var entry = inst.get_node("Connectors/Entry") as Node3D
-			var exit_a = inst.get_node("Connectors/ExitA") as Node3D
 			var exit_b = inst.get_node("Connectors/ExitB") as Node3D
+			var exit_a = inst.get_node("Connectors/ExitA") as Node3D
 			
 			var local_aabb = bounds.shape.get_debug_mesh().get_aabb() if bounds.shape.has_method("get_debug_mesh") else AABB(Vector3(-2,-2,-2), Vector3(4,4,4))
 			candidate_tf = current_tf * entry.transform.inverse()
@@ -192,13 +186,12 @@ func build_room_sequence(start_tf: Transform3D, count: int, is_branch: bool, pla
 			if not overlapping:
 				placed_aabbs.append(global_aabb)
 				room_transforms.append(candidate_tf)
-				room_scene_paths.append(selected_scene.resource_path)
+				room_scenes.append(selected_scene)
 				
 				var splitter_name = selected_scene.resource_path.get_file().get_basename()
 				room_spawn_tallies[splitter_name] = room_spawn_tallies.get(splitter_name, 0) + 1
 				inst.queue_free()
 				
-				# Build Branch B independently and store it in our global tracking array
 				var branch_data = build_room_sequence(candidate_tf * exit_b.transform, 5, true, placed_aabbs)
 				all_branches.append(branch_data)
 				
@@ -236,7 +229,6 @@ func build_room_sequence(start_tf: Transform3D, count: int, is_branch: bool, pla
 				if ex.intersects(global_aabb): overlapping = true; break
 			if overlapping: inst.queue_free(); continue
 			
-			# Arena Rules Split Logic
 			var is_arena = is_room_arena(scene)
 			if is_branch:
 				var force_arena = (i == 2 or i == 4)
@@ -259,19 +251,16 @@ func build_room_sequence(start_tf: Transform3D, count: int, is_branch: bool, pla
 			room_found = true
 			break
 			
-		if not room_found: 
-			print("[Gen] Failed to find a valid room at index: ", i, " on path (is_branch: ", is_branch, ")")
-			break
+		if not room_found: break
 		
 		selected_inst.queue_free()
 		placed_aabbs.append(global_aabb)
 		room_transforms.append(candidate_tf)
 		
-		# If this is the very last room of a side branch, force it to be the Treasure Room!
 		if is_branch and i == count and treasure_room_scene != null:
-			room_scene_paths.append(treasure_room_scene.resource_path)
+			room_scenes.append(treasure_room_scene)
 		else:
-			room_scene_paths.append(selected_scene.resource_path)
+			room_scenes.append(selected_scene)
 		
 		var is_arena = is_room_arena(selected_scene)
 		if is_arena:
@@ -284,7 +273,7 @@ func build_room_sequence(start_tf: Transform3D, count: int, is_branch: bool, pla
 		room_spawn_tallies[name_key] = room_spawn_tallies.get(name_key, 0) + 1
 		current_tf = next_tf
 		
-	return { "paths": room_scene_paths, "transforms": room_transforms }
+	return { "scenes": room_scenes, "transforms": room_transforms }
 
 
 func generate_level_aabb_layout() -> Dictionary:
@@ -300,16 +289,14 @@ func generate_level_aabb_layout() -> Dictionary:
 		placed_aabbs.append((start_bounds.shape.get_debug_mesh().get_aabb()).abs())
 	temp_start.queue_free()
 
-	# 1. Run main path generation sequence
 	var main_layout = build_room_sequence(initial_tf, room_count, false, placed_aabbs)
-	var room_scene_paths = main_layout["paths"]
+	var room_scenes = main_layout["scenes"]
 	var room_transforms = main_layout["transforms"]
 
-	# 2. Force the designated End Room onto the absolute final slot of the primary path
-	if end_room_scene != null and not room_scene_paths.is_empty():
-		room_scene_paths[room_scene_paths.size() - 1] = end_room_scene.resource_path
+	if end_room_scene != null and not room_scenes.is_empty():
+		room_scenes[room_scenes.size() - 1] = end_room_scene
 
-	return { "paths": room_scene_paths, "transforms": room_transforms, "branches": all_branches }
+	return { "scenes": room_scenes, "transforms": room_transforms, "branches": all_branches }
 
 
 # ==============================================================================
@@ -355,13 +342,13 @@ func is_room_arena(room_scene: PackedScene) -> bool:
 # 5. INCREMENTAL INSTANTIATION & MULTIPLAYER SYNCHRONIZATION
 # ==============================================================================
 func instantiate_rooms_incrementally(layout_data: Dictionary) -> void:
-	var paths: Array = layout_data["paths"]
+	var scenes: Array = layout_data["scenes"]
 	var transforms: Array = layout_data["transforms"]
 	var branches: Array = layout_data.get("branches", [])
 	
-	# Instantiate Main Path
-	for i in range(paths.size()):
-		var scene = load(paths[i]) as PackedScene
+	# Build all main rooms instantly (hidden behind the loading screen)
+	for i in range(scenes.size()):
+		var scene: PackedScene = scenes[i]
 		var room = scene.instantiate() as Node3D
 		room.name = "Room_" + str(i + 1)
 		room_container.add_child(room)
@@ -369,17 +356,15 @@ func instantiate_rooms_incrementally(layout_data: Dictionary) -> void:
 		generated_rooms.append(room)
 		
 		spawn_enemies_in_room(room, i)
-		
-		if i % 3 == 0: await get_tree().process_frame
 
-	# Instantiate Side Branches (including the Treasure Room at the end of each branch)
+	# Build all branch rooms instantly
 	for b_idx in range(branches.size()):
 		var branch = branches[b_idx]
-		var b_paths = branch["paths"]
+		var b_scenes = branch["scenes"]
 		var b_transforms = branch["transforms"]
 		
-		for i in range(b_paths.size()):
-			var scene = load(b_paths[i]) as PackedScene
+		for i in range(b_scenes.size()):
+			var scene: PackedScene = b_scenes[i]
 			var room = scene.instantiate() as Node3D
 			room.name = "Branch_" + str(b_idx + 1) + "_Room_" + str(i + 1)
 			room_container.add_child(room)
@@ -387,8 +372,6 @@ func instantiate_rooms_incrementally(layout_data: Dictionary) -> void:
 			generated_rooms.append(room)
 			
 			spawn_enemies_in_room(room, i + 1)
-			
-			await get_tree().process_frame
 
 
 func spawn_enemies_in_room(room: Node3D, room_index: int) -> void:
@@ -409,13 +392,11 @@ func spawn_enemies_in_room(room: Node3D, room_index: int) -> void:
 		if enemy_scene:
 			budget -= chosen["cost"]
 			
-			# 1. Instantiate locally on the server
 			var enemy = enemy_scene.instantiate() as Node3D
 			room.add_child(enemy)
 			enemy.global_transform = marker.global_transform
-			enemy.add_to_group("network_enemies") # Tag it for easy syncing
+			enemy.add_to_group("network_enemies")
 			
-			# 2. Broadcast to all connected clients live
 			rpc("rpc_spawn_enemy_remote", room.name, enemy_scene.resource_path, marker.global_transform)
 
 
@@ -423,19 +404,16 @@ func spawn_enemies_in_room(room: Node3D, room_index: int) -> void:
 func request_world_state(peer_id: int) -> void:
 	if not multiplayer.is_server(): return
 	
-	# 1. Send all rooms first so the structure exists on the client
 	for i in range(generated_rooms.size()):
 		var room = generated_rooms[i]
 		rpc_id(peer_id, "rpc_spawn_room_remote", room.scene_file_path, room.global_transform, room.name)
 		
-	# 2. Wait briefly for rooms to instantiate, then sync their enemies
 	await get_tree().create_timer(0.5).timeout
 	for room in generated_rooms:
 		for child in room.get_children():
 			if child.is_in_group("network_enemies"):
 				rpc_id(peer_id, "rpc_spawn_enemy_remote", room.name, child.scene_file_path, child.global_transform)
 				
-	# 3. Tell the client the world is fully built and ready!
 	rpc_id(peer_id, "remote_world_ready")
 
 
@@ -452,7 +430,6 @@ func rpc_spawn_room_remote(path: String, tf: Transform3D, r_name: String) -> voi
 func rpc_spawn_enemy_remote(r_name: String, e_path: String, tf: Transform3D) -> void:
 	var room = room_container.get_node_or_null(r_name)
 	if not room:
-		# If the room hasn't finished instantiating yet, wait a frame and try once more
 		await get_tree().process_frame
 		room = room_container.get_node_or_null(r_name)
 		
@@ -461,8 +438,6 @@ func rpc_spawn_enemy_remote(r_name: String, e_path: String, tf: Transform3D) -> 
 		room.add_child(enemy)
 		enemy.global_transform = tf
 		enemy.add_to_group("network_enemies")
-	else:
-		print("[Gen] Warning: Failed to spawn enemy because room node '", r_name, "' was not found.")
 
 
 @rpc("authority", "call_remote", "reliable")

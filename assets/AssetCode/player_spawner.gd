@@ -14,11 +14,16 @@ func spawn_player(peer_id: int) -> void:
 	player.name = str(peer_id)
 	player.set_multiplayer_authority(peer_id)
 
-	var spawn_point = scene_root.get_node_or_null("SpawnPoint") as Node3D
+	# Look for a spawn point inside the start room, or fall back to a root-level one
+	var spawn_point = scene_root.get_node_or_null("Room_0/SpawnPoint") as Node3D
+	if not spawn_point:
+		spawn_point = scene_root.get_node_or_null("SpawnPoint") as Node3D
+
 	if spawn_point:
-		player.global_transform.origin = spawn_point.global_transform.origin + Vector3(0, 2.0, 0)
+		# Copy full transform so position AND rotation (facing direction) match perfectly
+		player.global_transform = spawn_point.global_transform
 	else:
-		player.global_transform.origin = Vector3(0, 5.0, 0)
+		player.global_transform = Transform3D(Basis(), Vector3(0, 2.0, 0))
 
 	scene_root.add_child(player, true)
 

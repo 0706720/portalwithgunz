@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://dyhdh556qmjip"]
+
+[ext_resource type="Script" uid="uid://y171cuk723yu" path="res://loading_screen.gd" id="1_mggpi"]
+
+[node name="LoadingScreen" type="Control" unique_id=99709410]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_mggpi")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=2085052936]
+layout_mode = 0
+offset_right = 1154.0
+offset_bottom = 644.0
+color = Color(0, 0, 0, 1)
+
+[node name="Label" type="Label" parent="." unique_id=788185675]
+layout_mode = 0
+offset_left = 503.0
+offset_top = 306.0
+offset_right = 543.0
+offset_bottom = 329.0
+text = "Dungeon Generating..."

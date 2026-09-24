@@ -31,28 +31,28 @@ func _ready() -> void:
 
 func find_player() -> void:
 	var players = get_tree().get_nodes_in_group("player")
-	print("[Enemy Debug] Total players found in 'player' group: ", players.size())
+	#print("[Enemy Debug] Total players found in 'player' group: ", players.size())
 	
 	if players.is_empty():
 		target_player = null
-		print("[Enemy Debug] Warning: No players found in the group!")
+		#print("[Enemy Debug] Warning: No players found in the group!")
 		return
 		
 	var closest_player = players[0]
 	var min_distance = global_position.distance_to(closest_player.global_position)
-	print("[Enemy Debug] Checking player 0 at position: ", closest_player.global_position, " | Distance: ", min_distance)
+	#print("[Enemy Debug] Checking player 0 at position: ", closest_player.global_position, " | Distance: ", min_distance)
 	
 	for i in range(1, players.size()):
 		var p = players[i]
 		if is_instance_valid(p):
 			var dist = global_position.distance_to(p.global_position)
-			print("[Enemy Debug] Checking player ", i, " at position: ", p.global_position, " | Distance: ", dist)
+			#print("[Enemy Debug] Checking player ", i, " at position: ", p.global_position, " | Distance: ", dist)
 			if dist < min_distance:
 				min_distance = dist
 				closest_player = p
 				
 	target_player = closest_player
-	print("[Enemy Debug] Selected closest target player. Position: ", target_player.global_position)
+	#print("[Enemy Debug] Selected closest target player. Position: ", target_player.global_position)
 
 func pick_new_wander_direction() -> void:
 	var random_angle = randf_range(-PI / 2.0, PI / 2.0)
