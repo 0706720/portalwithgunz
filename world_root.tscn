@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://dkwcsqg2yfq6v" path="res://assets/AssetCode/player_spawner.gd" id="4_mtm5c"]
 
 [sub_resource type="Environment" id="Environment_cuis1"]
-background_mode = 1
+background_mode = 2
 background_color = Color(0.03529412, 0, 0.06666667, 1)
 ssao_enabled = true
 
@@ -35,6 +35,6 @@ spawn_path = NodePath("..")
 environment = SubResource("Environment_cuis1")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1305743073]
-transform = Transform3D(0.70710677, -0.70710677, 0, 0.49999997, 0.49999997, 0.70710677, -0.49999997, -0.49999997, 0.70710677, 0, 0, 0)
+transform = Transform3D(-0.70710665, 0.70710677, -6.181723e-08, 0.49999994, 0.49999994, 0.7071067, 0.5, 0.49999988, -0.7071067, 0, 0, 0)
 light_color = Color(0.44840753, 0.7695819, 1, 1)
 light_energy = 0.5

@@ -9,6 +9,9 @@ extends CharacterBody3D
 @export var strafe_speed_multiplier : float
 @export var separation_weight : float        
 
+@export var max_spawn_distance := 45.0
+@export var despawn_distance := 60.0
+
 var target_player: Node3D = null
 var is_aggroed := false
 
@@ -59,6 +62,22 @@ func pick_new_wander_direction() -> void:
 func _physics_process(delta: float) -> void:
 	if not multiplayer.is_server() and multiplayer.has_multiplayer_peer():
 		return
+
+	# Periodically check distance between players and inactive enemy spawn points
+	for spawner in get_tree().get_nodes_in_group("enemy_spawners"):
+		var closest_dist = INF
+		for player in get_tree().get_nodes_in_group("player"):
+			if is_instance_valid(player):
+				var dist = spawner.global_position.distance_to(player.global_position)
+				if dist < closest_dist:
+					closest_dist = dist
+					
+		# Spawn if a player gets close enough and enemy isn't active yet
+		if closest_dist <= max_spawn_distance and not spawner.is_enemy_active:
+			spawner.spawn_enemy()
+		# Despawn/deactivate if players walk far away
+		elif closest_dist > despawn_distance and spawner.is_enemy_active:
+			spawner.despawn_enemy()
 
 	# Periodically re-evaluate the closest player every 1.0 seconds
 	target_refresh_timer -= delta
@@ -138,8 +157,6 @@ func _physics_process(delta: float) -> void:
 	# 7. Smooth velocity interpolation
 	velocity.x = move_toward(velocity.x, target_velocity.x, speed * delta * 6.0)
 	velocity.z = move_toward(velocity.z, target_velocity.z, speed * delta * 6.0)
-
-	move_and_slide()
 
 	move_and_slide()
 
