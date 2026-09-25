@@ -344,6 +344,9 @@ func _physics_process(delta):
 
 	if Input.is_action_just_pressed(throw_action):
 		throw_weapon()
+	
+	if Input.is_action_just_pressed("LevelUp"):
+		level_up.emit(1)
 
 	# EMOTE WHEEL
 	var emote = $HUD/SelectionWheel.close()
