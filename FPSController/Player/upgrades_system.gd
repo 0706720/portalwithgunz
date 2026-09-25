@@ -43,7 +43,7 @@ func _add_options(input):
 	for index in options:
 		# this will be used for weighting: 0-7 means a common spawns whilst 8-10 means rare
 		var rarity_rng = randi_range(0, 10)
-		if rarity_rng >= 8:
+		if rarity_rng <= 8:
 			spawned_card = validate_index(1)["scene"].instantiate()
 		else:
 			spawned_card = validate_index(2)["scene"].instantiate()

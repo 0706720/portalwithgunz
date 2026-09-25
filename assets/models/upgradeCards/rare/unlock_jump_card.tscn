@@ -64,7 +64,7 @@ theme_override_colors/default_color = Color(0, 0, 0, 1)
 theme_override_fonts/normal_font = ExtResource("4_0db3u")
 theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
-text = "Unlock the ability to rapidly ascend upward (~)"
+text = "Unlock the ability to rapidly ascend upward (~)[color=blue](Unique)[/color]"
 horizontal_alignment = 1
 
 [node name="Polygon2D" type="Polygon2D" parent="cardAssets" unique_id=1235605486]

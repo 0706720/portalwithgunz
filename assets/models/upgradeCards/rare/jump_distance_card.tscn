@@ -1,0 +1,97 @@
+[gd_scene format=3 uid="uid://olefi4mqgwh4"]
+
+[ext_resource type="Texture2D" uid="uid://bqlwrhoyfbapn" path="res://assets/images/upgradesSystem/32e82c300b6786a.webp" id="1_xqa7m"]
+[ext_resource type="Texture2D" uid="uid://ctcrwyn562eq4" path="res://assets/images/upgradesSystem/cardoutline (1).png" id="2_t0hc7"]
+[ext_resource type="Texture2D" uid="uid://byw5l60pviokk" path="res://assets/images/upgradesSystem/jump-across.png" id="3_w5h2g"]
+[ext_resource type="FontFile" uid="uid://brl5hlu3dc40l" path="res://assets/images/upgradesSystem/Nunito/Nunito-Italic-VariableFont_wght.ttf" id="4_obx40"]
+[ext_resource type="FontFile" uid="uid://b1eo5a8at87ej" path="res://assets/images/upgradesSystem/Nunito/Nunito-VariableFont_wght.ttf" id="5_m2ydf"]
+[ext_resource type="Texture2D" uid="uid://dtyn5dqvisj54" path="res://assets/images/upgradesSystem/plus.png" id="6_t0hc7"]
+
+[node name="JumpDistanceCard" type="Control" unique_id=1430794549]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="cardAssets" type="Control" parent="." unique_id=1866817754]
+anchors_preset = 0
+
+[node name="Hermes" type="TextureRect" parent="cardAssets" unique_id=1073774134]
+layout_mode = 0
+offset_left = 344.0
+offset_top = 89.0
+offset_right = 1528.0
+offset_bottom = 1273.0
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("1_xqa7m")
+
+[node name="Cardoutline(1)" type="TextureRect" parent="cardAssets" unique_id=1669284690]
+visible = false
+layout_mode = 0
+offset_left = 438.0
+offset_top = 255.0
+offset_right = 438.0
+offset_bottom = 255.0
+texture = ExtResource("2_t0hc7")
+
+[node name="HeartShield" type="TextureRect" parent="cardAssets" unique_id=1710636229]
+layout_mode = 0
+offset_left = 306.00003
+offset_top = 420.99997
+offset_right = 818.0
+offset_bottom = 933.0
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("3_w5h2g")
+
+[node name="Label" type="RichTextLabel" parent="cardAssets" unique_id=1869508067]
+layout_mode = 0
+offset_left = 333.0
+offset_top = 256.0
+offset_right = 549.0
+offset_bottom = 294.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("4_obx40")
+theme_override_fonts/bold_font = ExtResource("5_m2ydf")
+theme_override_font_sizes/normal_font_size = 24
+bbcode_enabled = true
+text = "[u]MODIFY: JUMP[u]"
+horizontal_alignment = 1
+
+[node name="Label2" type="RichTextLabel" parent="cardAssets" unique_id=1149255829]
+layout_mode = 0
+offset_left = 288.0
+offset_top = 288.0
+offset_right = 585.0
+offset_bottom = 402.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("4_obx40")
+theme_override_font_sizes/normal_font_size = 20
+bbcode_enabled = true
+text = "Jump goes 50% further than normal [color=blue](Unique)[/color]"
+horizontal_alignment = 1
+
+[node name="Polygon2D" type="Polygon2D" parent="cardAssets" unique_id=2050360842]
+z_index = -1
+polygon = PackedVector2Array(304, 31, 286, 43, 286, 463, 301, 480, 577, 480, 590, 466, 590, 46, 576, 31)
+
+[node name="Line2D" type="Line2D" parent="cardAssets" unique_id=583520600]
+points = PackedVector2Array(304, 31, 286, 43, 286, 463, 301, 480, 577, 480, 590, 466, 590, 46, 576, 31)
+width = 5.0
+default_color = Color(0.25490198, 0.14117648, 0.6039216, 1)
+
+[node name="Line2D2" type="Line2D" parent="cardAssets" unique_id=1711700879]
+position = Vector2(1, 3)
+points = PackedVector2Array(576, 30, 302, 30)
+width = 5.0
+default_color = Color(0.25490198, 0.14117648, 0.6039216, 1)
+
+[node name="TextureRect" type="TextureRect" parent="cardAssets" unique_id=1747784803]
+layout_mode = 0
+offset_left = 463.99997
+offset_top = 127.99999
+offset_right = 908.0
+offset_bottom = 578.0
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("6_t0hc7")
