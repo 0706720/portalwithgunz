@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b7hjjiuxpwwsq"]
 
-[ext_resource type="Script" uid="uid://dquxa4b8ntskv" path="res://assets/models/shotgun.gd" id="1_j0m5k"]
+[ext_resource type="Script" uid="uid://dquxa4b8ntskv" path="res://assets/AssetCode/shotgun.gd" id="1_j0m5k"]
 [ext_resource type="PackedScene" uid="uid://xcu4pcj2p1s1" path="res://FPSController/WeaponsManagement/Weapons/Shotgunz/spas12.FBX" id="2_7oeqp"]
 
 [node name="Shotgun" type="Node3D" unique_id=1407172450]
