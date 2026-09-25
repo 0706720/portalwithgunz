@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://dcmb7yndsjj5x"]
+
+[ext_resource type="PackedScene" uid="uid://t37a0r6vvckd" path="res://assets/models/GrenadeLauncher/m79_grenade_launcher.glb" id="1_r57si"]
+
+[node name="Sketchfab_Scene" unique_id=176883729 instance=ExtResource("1_r57si")]
+
+[node name="Sketchfab_model" parent="." index="0" unique_id=542103836]
+transform = Transform3D(1, 0, 0, 0, 2.220446e-16, 1, 0, -1, 2.220446e-16, -180, -400, 0)
