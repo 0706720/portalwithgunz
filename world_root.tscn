@@ -9,6 +9,7 @@
 [sub_resource type="Environment" id="Environment_cuis1"]
 background_mode = 2
 background_color = Color(0.03529412, 0, 0.06666667, 1)
+ambient_light_color = Color(0.14135897, 0.00027270883, 0.29568216, 1)
 ssao_enabled = true
 
 [node name="WorldRoot" type="Node" unique_id=178156929]
@@ -39,7 +40,13 @@ environment = SubResource("Environment_cuis1")
 transform = Transform3D(-0.70710665, 0.70710677, -6.181723e-08, 0.49999994, 0.49999994, 0.7071067, 0.5, 0.49999988, -0.7071067, 0, 0, 0)
 light_color = Color(0.44840753, 0.7695819, 1, 1)
 light_energy = 0.2
+shadow_enabled = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1269018179]
 
 [node name="LoadingScreen" parent="CanvasLayer" unique_id=626300901 instance=ExtResource("5_bpw3s")]
+
+[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="." unique_id=192350852]
+transform = Transform3D(-0.7660445, 0.3213938, -0.55667037, 0, 0.8660254, 0.5, 0.6427876, 0.38302225, -0.663414, 0, 0, 0)
+light_color = Color(0.2250965, 0.00058539025, 0.40424407, 1)
+light_energy = 0.1
