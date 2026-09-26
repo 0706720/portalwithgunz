@@ -7,8 +7,12 @@ albedo_color = Color(0.27387273, 0.27387273, 0.27387273, 1)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_g4v7s"]
 material = SubResource("StandardMaterial3D_yf5fn")
+radius = 1.0
+height = 4.0
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_aqd2m"]
+radius = 1.0
+height = 4.0
 
 [node name="EliteCrossbower" type="CharacterBody3D" unique_id=1747760098]
 script = ExtResource("1_xu037")

@@ -7,8 +7,12 @@ albedo_color = Color(0.34117648, 0, 1, 1)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_g4v7s"]
 material = SubResource("StandardMaterial3D_yf5fn")
+radius = 1.0
+height = 4.0
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_g4v7s"]
+radius = 1.0
+height = 4.0
 
 [node name="Warlock" type="CharacterBody3D" unique_id=1119142624]
 script = ExtResource("1_2syac")

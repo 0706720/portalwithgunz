@@ -3,27 +3,30 @@
 [ext_resource type="Script" uid="uid://dc3u8ckutqrs2" path="res://assets/Enemies/flying_enemy.gd" id="1_pblot"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_pblot"]
+radius = 1.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_57qmd"]
 albedo_color = Color(0, 0, 0, 1)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_g4v7s"]
 material = SubResource("StandardMaterial3D_57qmd")
-radius = 0.1
-height = 0.3
+radius = 0.2
+height = 0.6
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yf5fn"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_g4v7s"]
 material = SubResource("StandardMaterial3D_yf5fn")
-radius = 0.3
-height = 0.6
+radius = 0.6
+height = 1.2
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pblot"]
 albedo_color = Color(0.53995657, 0.20760706, 2.8878452e-07, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_45kln"]
 material = SubResource("StandardMaterial3D_pblot")
+radius = 1.0
+height = 2.0
 
 [node name="Bat" type="CharacterBody3D" unique_id=1845121343]
 script = ExtResource("1_pblot")
@@ -36,12 +39,12 @@ shape = SubResource("SphereShape3D_pblot")
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="MeshHolder" unique_id=1554759847]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.50899994)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.018)
 mesh = SubResource("CapsuleMesh_g4v7s")
 skeleton = NodePath("../..")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="MeshHolder" unique_id=474977132]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.3)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.6)
 mesh = SubResource("SphereMesh_g4v7s")
 skeleton = NodePath("../..")
 

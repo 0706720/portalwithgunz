@@ -7,8 +7,12 @@ albedo_color = Color(0, 1, 0, 1)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_an04p"]
 material = SubResource("StandardMaterial3D_xw0op")
+radius = 1.0
+height = 4.0
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_yf5fn"]
+radius = 1.0
+height = 4.0
 
 [node name="Goblin" type="CharacterBody3D" unique_id=525620555 groups=["Enemy", "enemy"]]
 script = ExtResource("1_t2qjf")

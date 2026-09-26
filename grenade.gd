@@ -28,6 +28,10 @@ func explode() -> void:
 	$CollisionShape3D.disabled = true
 	var overlapping_bodies = explosion_area.get_overlapping_bodies()
 	for body in overlapping_bodies:
+		if body.is_in_group('target'):
+				# If the enemy has a receive_damage function, call it via RPC (passing damage amount, e.g., 25)
+				if body.has_method("receive_damage"):
+					body.receive_damage.rpc(25)
 		if body is RigidBody3D:
 			var force_dir = (body.global_position - global_position).normalized()
 			body.apply_central_impulse(force_dir * explosion_power)

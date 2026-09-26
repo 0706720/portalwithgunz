@@ -3,8 +3,12 @@
 [ext_resource type="Script" uid="uid://f4pnbc3ykgbk" path="res://assets/Enemies/enemy.gd" id="1_5d0my"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_yf5fn"]
+radius = 1.0
+height = 4.0
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_g4v7s"]
+radius = 1.0
+height = 4.0
 
 [node name="SkeletonArcher" type="CharacterBody3D" unique_id=1686824275]
 script = ExtResource("1_5d0my")
