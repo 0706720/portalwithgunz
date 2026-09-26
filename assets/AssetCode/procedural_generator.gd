@@ -436,47 +436,31 @@ func restart_and_scale_dungeon() -> void:
 	dungeon_loop += 1
 	print("[Gen] Portal entered! Resetting dungeon for Loop tier: ", dungeon_loop)
 	
-	for room in generated_rooms:
-		if is_instance_valid(room):
-			room.queue_free()
-	generated_rooms.clear()
+	# 1. Tell all clients to wipe their old rooms
+	rpc("rpc_clear_client_dungeon")
+	await get_tree().process_frame 
 	
-	main_arena_count = 0
-	branch_arena_count = 0
-	splitter_has_spawned = false
-	
-	# 1. Generate start room and yield a frame to settle its transform
+	# 2. Generate start room & full layout on server
 	await generate_spawn_room_first()
 	await get_tree().physics_frame
 	
-	# 2. Generate the full level layout and instantiate all rooms first
 	var layout_data = generate_level_aabb_layout()
 	instantiate_rooms_incrementally(layout_data)
 	
-	# 3. Now that Room_0 is guaranteed to be sitting properly in the tree, grab its spawn point
+	# 3. Teleport server host player immediately
 	var spawn_room = room_container.get_node_or_null("Room_0")
-	var target_transform = Transform3D.IDENTITY
-	
 	if spawn_room:
 		var spawn_marker = spawn_room.get_node_or_null("SpawnPoints/PlayerSpawn")
-		if spawn_marker:
-			target_transform = spawn_marker.global_transform
-		else:
-			target_transform = spawn_room.global_transform
-		target_transform.origin += Vector3(0, 1.0, 0) # Lift safely above floor
-	
-	# 4. Teleport all active players to the start room
-	var all_peers: Array = [1]
-	for p in multiplayer.get_peers():
-		all_peers.append(p)
+		var target_transform = spawn_marker.global_transform if spawn_marker else spawn_room.global_transform
+		target_transform.origin += Vector3(0, 1.0, 0)
 		
-	for peer_id in all_peers:
-		if Global.players.has(peer_id):
-			var player_node = Global.players[peer_id]
-			if is_instance_valid(player_node):
-				player_node.rpc_id(peer_id, "rpc_teleport_player", target_transform)
+		if Global.players.has(1):
+			var host_player = Global.players[1]
+			if is_instance_valid(host_player):
+				host_player.global_transform = target_transform
+				host_player.velocity = Vector3.ZERO
 	
-	# 5. Broadcast the newly generated world layout state to all connected clients
+	# 4. Broadcast layout state to clients (which triggers remote_world_ready and client auto-snap)
 	for peer in multiplayer.get_peers():
 		request_world_state(peer)
 
@@ -496,6 +480,22 @@ func request_world_state(peer_id: int) -> void:
 				rpc_id(peer_id, "rpc_spawn_enemy_remote", room.name, child.scene_file_path, child.global_transform)
 				
 	rpc_id(peer_id, "remote_world_ready")
+
+
+@rpc("authority", "call_local", "reliable")
+func rpc_clear_client_dungeon() -> void:
+	# Optional: Show your loading screen here if you have a loading screen controller reference
+	# e.g., LoadingScreen.show()
+	
+	for room in generated_rooms:
+		if is_instance_valid(room):
+			room.queue_free()
+	generated_rooms.clear()
+	
+	main_arena_count = 0
+	branch_arena_count = 0
+	splitter_has_spawned = false
+
 
 func data_sync_delay() -> void:
 	await get_tree().create_timer(0.5).timeout
@@ -527,3 +527,11 @@ func rpc_spawn_enemy_remote(r_name: String, e_path: String, tf: Transform3D) -> 
 @rpc("authority", "call_remote", "reliable")
 func remote_world_ready() -> void:
 	emit_signal("world_ready")
+	# Once the client's world is ready, find Room_0 locally and snap the local player to it
+	var spawn_room = room_container.get_node_or_null("Room_0")
+	if spawn_room and Global.player:
+		var spawn_marker = spawn_room.get_node_or_null("SpawnPoints/PlayerSpawn")
+		var target_transform = spawn_marker.global_transform if spawn_marker else spawn_room.global_transform
+		target_transform.origin += Vector3(0, 1.0, 0)
+		Global.player.global_transform = target_transform
+		Global.player.velocity = Vector3.ZERO
