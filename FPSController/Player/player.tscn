@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://laqog3huoq3b" path="res://FPSController/WeaponsManagement/Weapons/Grapple Hook/Rope.tscn" id="6_j48a2"]
 [ext_resource type="PackedScene" uid="uid://bxdwgb7v5tg61" path="res://FPSController/WeaponsManagement/Weapons/portalGunz/portalGun.tscn" id="7_r0754"]
 [ext_resource type="Animation" uid="uid://c2y6nfvxis3xa" path="res://FPSController/Player/Crouch.res" id="8_qe01f"]
+[ext_resource type="PackedScene" uid="uid://5lhut7xy0nhh" path="res://grenade_launcher.tscn" id="9_51ve3"]
 [ext_resource type="Script" uid="uid://bo5enab2wen2s" path="res://FPSController/StateMachine/State_Machine.gd" id="9_cahw7"]
 [ext_resource type="PackedScene" uid="uid://b7hjjiuxpwwsq" path="res://assets/models/shotgun.tscn" id="9_evljc"]
 [ext_resource type="Script" uid="uid://cmnednq1yfuee" path="res://FPSController/StateMachine/crouch_state.gd" id="10_g48ct"]
@@ -764,6 +765,9 @@ visible = false
 [node name="PortalGun" parent="CameraHolder/Camera3D" unique_id=160590813 instance=ExtResource("7_r0754")]
 unique_name_in_owner = true
 transform = Transform3D(-0.29996273, 0, -0.0047294777, 0, 0.3, 0, 0.0047294777, 0, -0.29996273, 1.1062536, -0.25200891, -0.8642118)
+
+[node name="GrenadeLauncher" parent="CameraHolder/Camera3D" unique_id=1455398463 instance=ExtResource("9_51ve3")]
+unique_name_in_owner = true
 
 [node name="Shotgun" parent="CameraHolder/Camera3D" unique_id=1407172450 instance=ExtResource("9_evljc")]
 unique_name_in_owner = true

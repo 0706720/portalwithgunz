@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dbl02j5ji12bo"]
 
-[ext_resource type="Script" uid="uid://b7sagds5r5c3m" path="res://assets/models/shotgun_bullet.gd" id="1_jd0f1"]
+[ext_resource type="Script" uid="uid://b7sagds5r5c3m" path="res://assets/AssetCode/shotgun_bullet.gd" id="1_jd0f1"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_q313b"]
 

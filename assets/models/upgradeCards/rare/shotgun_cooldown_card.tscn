@@ -1,0 +1,97 @@
+[gd_scene format=3 uid="uid://264od1srwoy3"]
+
+[ext_resource type="Texture2D" uid="uid://bnv62h322w048" path="res://assets/images/upgradesSystem/boomstick.png" id="1_8g074"]
+[ext_resource type="Texture2D" uid="uid://ctcrwyn562eq4" path="res://assets/images/upgradesSystem/cardoutline (1).png" id="2_hm3qa"]
+[ext_resource type="Texture2D" uid="uid://cg6wleqmqqa26" path="res://assets/images/upgradesSystem/revolver.png" id="3_gnvft"]
+[ext_resource type="FontFile" uid="uid://brl5hlu3dc40l" path="res://assets/images/upgradesSystem/Nunito/Nunito-Italic-VariableFont_wght.ttf" id="4_3wt5d"]
+[ext_resource type="FontFile" uid="uid://b1eo5a8at87ej" path="res://assets/images/upgradesSystem/Nunito/Nunito-VariableFont_wght.ttf" id="5_eddi3"]
+[ext_resource type="Texture2D" uid="uid://dtyn5dqvisj54" path="res://assets/images/upgradesSystem/plus.png" id="6_254nv"]
+
+[node name="ShotgunCooldownCard" type="Control" unique_id=590551445]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="cardAssets" type="Control" parent="." unique_id=711151133]
+anchors_preset = 0
+
+[node name="Hermes" type="TextureRect" parent="cardAssets" unique_id=2123502935]
+layout_mode = 0
+offset_left = 352.0
+offset_top = 153.0
+offset_right = 3871.9998
+offset_bottom = 1337.0
+scale = Vector2(0.05, 0.05)
+texture = ExtResource("1_8g074")
+
+[node name="Cardoutline(1)" type="TextureRect" parent="cardAssets" unique_id=1571439700]
+visible = false
+layout_mode = 0
+offset_left = 438.0
+offset_top = 255.0
+offset_right = 438.0
+offset_bottom = 255.0
+texture = ExtResource("2_hm3qa")
+
+[node name="HeartShield" type="TextureRect" parent="cardAssets" unique_id=244701547]
+layout_mode = 0
+offset_left = 306.00003
+offset_top = 420.99997
+offset_right = 818.0
+offset_bottom = 933.0
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("3_gnvft")
+
+[node name="Label" type="RichTextLabel" parent="cardAssets" unique_id=1552696707]
+layout_mode = 0
+offset_left = 318.0
+offset_top = 256.0
+offset_right = 559.0
+offset_bottom = 294.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("4_3wt5d")
+theme_override_fonts/bold_font = ExtResource("5_eddi3")
+theme_override_font_sizes/normal_font_size = 24
+bbcode_enabled = true
+text = "[u]MODIFY: SHOTUGUN[u]"
+horizontal_alignment = 1
+
+[node name="Label2" type="RichTextLabel" parent="cardAssets" unique_id=625566356]
+layout_mode = 0
+offset_left = 288.0
+offset_top = 288.0
+offset_right = 585.0
+offset_bottom = 402.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("4_3wt5d")
+theme_override_font_sizes/normal_font_size = 20
+bbcode_enabled = true
+text = "Shotgun cooldown recieves a 10% reduction [color=blue](Unique)[/color]"
+horizontal_alignment = 1
+
+[node name="Polygon2D" type="Polygon2D" parent="cardAssets" unique_id=974068810]
+z_index = -1
+polygon = PackedVector2Array(304, 31, 286, 43, 286, 463, 301, 480, 577, 480, 590, 466, 590, 46, 576, 31)
+
+[node name="Line2D" type="Line2D" parent="cardAssets" unique_id=2097060143]
+points = PackedVector2Array(304, 31, 286, 43, 286, 463, 301, 480, 577, 480, 590, 466, 590, 46, 576, 31)
+width = 5.0
+default_color = Color(0.25490198, 0.14117648, 0.6039216, 1)
+
+[node name="Line2D2" type="Line2D" parent="cardAssets" unique_id=395597154]
+position = Vector2(1, 3)
+points = PackedVector2Array(576, 30, 302, 30)
+width = 5.0
+default_color = Color(0.25490198, 0.14117648, 0.6039216, 1)
+
+[node name="TextureRect" type="TextureRect" parent="cardAssets" unique_id=1594917498]
+layout_mode = 0
+offset_left = 487.99994
+offset_top = 103.99999
+offset_right = 931.99994
+offset_bottom = 554.0
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("6_254nv")
