@@ -15,6 +15,11 @@ extends CharacterBody3D
 @export var float_bob_speed := 3.0       
 @export var float_bob_intensity := 0.4   
 
+@export_category("Combat & Health")
+@export var max_health: int = 50
+@onready var current_health: int = max_health
+var is_dead := false
+
 var target_player: Node3D = null
 var is_aggroed := false
 
@@ -24,6 +29,7 @@ var time_passed := 0.0
 var target_refresh_timer := 0.0
 
 func _ready() -> void:
+	add_to_group("target")
 	# Physics process is left active so the MultiplayerSynchronizer can update clients
 	await get_tree().physics_frame
 	find_player()
@@ -151,6 +157,36 @@ func _physics_process(delta: float) -> void:
 
 	if multiplayer.is_server():
 		rpc("sync_enemy_transform", global_transform)
+
+
+@rpc("any_peer", "call_local", "reliable")
+func receive_damage(amount: int) -> void:
+	# Only the server should calculate and track health changes
+	if not multiplayer.is_server():
+		return
+		
+	if is_dead:
+		return
+
+	current_health -= amount
+	print("[Enemy] Took ", amount, " damage. Remaining health: ", current_health)
+
+	if current_health <= 0:
+		die()
+
+func die() -> void:
+	if is_dead:
+		return
+	is_dead = true
+	
+	# Tell all clients to clean up this enemy instance
+	rpc("rpc_client_die")
+	queue_free()
+
+@rpc("authority", "call_remote", "reliable")
+func rpc_client_die() -> void:
+	# Client-side cleanup if needed (e.g., spawn particle effects, drop loot)
+	queue_free()
 
 
 @rpc("authority", "unreliable")

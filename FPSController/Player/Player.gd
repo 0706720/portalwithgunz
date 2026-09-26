@@ -259,10 +259,15 @@ func _unhandled_input(event):
 		play_shoot_effects.rpc()
 		if raycast.is_colliding():
 			var hit_player = raycast.get_collider()
-			if hit_player.is_in_group('Player'):
-				hit_player.receive_damage.rpc_id(hit_player.get_multiplayer_authority())
+			#if hit_player.is_in_group('Player'):
+				#hit_player.receive_damage.rpc_id(hit_player.get_multiplayer_authority())
+			#if hit_player.is_in_group('target'):
+				#hit_player.delete_target()
+			# Check if we hit an enemy/target
 			if hit_player.is_in_group('target'):
-				hit_player.delete_target()
+				# If the enemy has a receive_damage function, call it via RPC (passing damage amount, e.g., 25)
+				if hit_player.has_method("receive_damage"):
+					hit_player.receive_damage.rpc(25)
 
 	if anim_playing == false and Input.is_action_just_pressed("superjump"):
 		anim_playing = true

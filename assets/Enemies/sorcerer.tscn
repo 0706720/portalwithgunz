@@ -7,8 +7,12 @@ albedo_color = Color(0.63529414, 0, 0.19607843, 1)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_g4v7s"]
 material = SubResource("StandardMaterial3D_yf5fn")
+radius = 1.0
+height = 4.0
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ppxvq"]
+radius = 1.0
+height = 4.0
 
 [node name="Sorcerer" type="CharacterBody3D" unique_id=1541934135]
 script = ExtResource("1_j1leh")
