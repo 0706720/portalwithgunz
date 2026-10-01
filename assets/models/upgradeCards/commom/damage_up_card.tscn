@@ -1,14 +1,34 @@
 [gd_scene format=3 uid="uid://ci7yciu5a2nqo"]
 
 [ext_resource type="Texture2D" uid="uid://b2co5h7q3cxjb" path="res://assets/images/upgradesSystem/undertaker.webp" id="1_0v7ip"]
+[ext_resource type="Script" uid="uid://ddv2kn6tliwtw" path="res://assets/AssetCode/cards/damage_up_card.gd" id="1_rbceu"]
 [ext_resource type="Texture2D" uid="uid://ctcrwyn562eq4" path="res://assets/images/upgradesSystem/cardoutline (1).png" id="2_rbceu"]
 [ext_resource type="Texture2D" uid="uid://cg6wleqmqqa26" path="res://assets/images/upgradesSystem/revolver.png" id="3_40pxh"]
 [ext_resource type="FontFile" uid="uid://brl5hlu3dc40l" path="res://assets/images/upgradesSystem/Nunito/Nunito-Italic-VariableFont_wght.ttf" id="4_vd51b"]
 [ext_resource type="FontFile" uid="uid://b1eo5a8at87ej" path="res://assets/images/upgradesSystem/Nunito/Nunito-VariableFont_wght.ttf" id="5_4r32b"]
 
-[node name="DamageUpCard" type="Control" unique_id=189113893]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_gq8m4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b3r6a"]
+bg_color = Color(0.16470589, 0.6745098, 0.8352941, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0v7ip"]
+bg_color = Color(0.23137255, 0.6784314, 0.78039217, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+
+[node name="DamageUpCard" type="Control" unique_id=189113893 groups=["Card"]]
 layout_mode = 3
 anchors_preset = 0
+script = ExtResource("1_rbceu")
 
 [node name="cardAssets" type="Control" parent="." unique_id=865342378]
 anchors_preset = 0
@@ -81,3 +101,19 @@ position = Vector2(1, 3)
 points = PackedVector2Array(576, 30, 302, 30)
 width = 5.0
 default_color = Color(0, 0, 0, 1)
+
+[node name="Button" type="Button" parent="cardAssets" unique_id=614759254]
+material = SubResource("CanvasItemMaterial_gq8m4")
+layout_mode = 0
+offset_left = 376.0
+offset_top = 421.0
+offset_right = 447.0
+offset_bottom = 446.5
+scale = Vector2(2, 2)
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_b3r6a")
+theme_override_styles/hover = SubResource("StyleBoxFlat_0v7ip")
+text = "SELECT"
+
+[connection signal="pressed" from="cardAssets/Button" to="." method="_on_button_pressed"]

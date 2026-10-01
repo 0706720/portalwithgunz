@@ -76,6 +76,7 @@ func _add_options(input):
 		spawned_card.position = Vector2(pos, 80)
 		UI.add_child(spawned_card)
 		print("card: " + str(spawned_card.position))
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 func validate_index(rarity):
 	failsafe += 1

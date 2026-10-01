@@ -1,14 +1,34 @@
 [gd_scene format=3 uid="uid://o5m6v4dfw6y7"]
 
+[ext_resource type="Script" uid="uid://b5sfahx2s3hix" path="res://assets/AssetCode/cards/unlock_jump_card.gd" id="1_t1831"]
 [ext_resource type="Texture2D" uid="uid://bqlwrhoyfbapn" path="res://assets/images/upgradesSystem/32e82c300b6786a.webp" id="1_xml3r"]
 [ext_resource type="Texture2D" uid="uid://ctcrwyn562eq4" path="res://assets/images/upgradesSystem/cardoutline (1).png" id="2_c1pic"]
 [ext_resource type="Texture2D" uid="uid://byw5l60pviokk" path="res://assets/images/upgradesSystem/jump-across.png" id="3_r2ie1"]
 [ext_resource type="FontFile" uid="uid://brl5hlu3dc40l" path="res://assets/images/upgradesSystem/Nunito/Nunito-Italic-VariableFont_wght.ttf" id="4_0db3u"]
 [ext_resource type="FontFile" uid="uid://b1eo5a8at87ej" path="res://assets/images/upgradesSystem/Nunito/Nunito-VariableFont_wght.ttf" id="5_sa0i3"]
 
-[node name="UnlockJump" type="Control" unique_id=1121325683]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_5jahm"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t1831"]
+bg_color = Color(0.16470589, 0.6745098, 0.8352941, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nth4y"]
+bg_color = Color(0.23137255, 0.6784314, 0.78039217, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+
+[node name="UnlockJump" type="Control" unique_id=1121325683 groups=["Card"]]
 layout_mode = 3
 anchors_preset = 0
+script = ExtResource("1_t1831")
 
 [node name="cardAssets" type="Control" parent="." unique_id=1108460647]
 anchors_preset = 0
@@ -81,3 +101,19 @@ position = Vector2(1, 3)
 points = PackedVector2Array(576, 30, 302, 30)
 width = 5.0
 default_color = Color(0.25490198, 0.14117648, 0.6039216, 1)
+
+[node name="Button" type="Button" parent="cardAssets" unique_id=4093221]
+material = SubResource("CanvasItemMaterial_5jahm")
+layout_mode = 0
+offset_left = 376.0
+offset_top = 421.0
+offset_right = 447.0
+offset_bottom = 446.5
+scale = Vector2(2, 2)
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_t1831")
+theme_override_styles/hover = SubResource("StyleBoxFlat_nth4y")
+text = "SELECT"
+
+[connection signal="pressed" from="cardAssets/Button" to="." method="_on_button_pressed"]

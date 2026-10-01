@@ -52,6 +52,7 @@ import/blender/enabled=false
 Bullet=""
 Enemy=""
 Object=""
+Card=""
 
 [input]
 

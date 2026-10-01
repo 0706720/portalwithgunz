@@ -855,19 +855,25 @@ text = "/"
 
 [node name="healthVar" type="Label" parent="HUD" unique_id=1547088208]
 layout_mode = 0
-offset_left = 586.0
+offset_left = 578.0
 offset_top = 7.0
-offset_right = 626.0
+offset_right = 618.0
 offset_bottom = 30.0
 text = "00"
 
 [node name="healthMax" type="Label" parent="HUD" unique_id=1475800816]
 layout_mode = 0
-offset_left = 612.0
+offset_left = 620.0
 offset_top = 7.0
-offset_right = 652.0
+offset_right = 660.0
 offset_bottom = 30.0
 text = "00"
+
+[node name="cardHolder" type="Control" parent="HUD" unique_id=1310383515]
+unique_name_in_owner = true
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
 [node name="weaponsManager" type="Node" parent="." unique_id=828943716]
 script = ExtResource("17_hjbpo")
