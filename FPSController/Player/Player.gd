@@ -1,7 +1,7 @@
 extends CharacterBody3D
 class_name PlayerCharacter
 
-signal health_changed(health_value)
+signal health_changed(health_value, max_health_value)
 signal level_up(new_level)
 
 var current_speed: float
@@ -52,6 +52,7 @@ var _is_crouching: bool = false
 var _using_crouch: bool = false
 
 var health = 99
+var max_health = 99
 var spread = 10
 var knockback_force = -30
 @onready var anim_playing = false
@@ -67,6 +68,7 @@ var grapple_point: Vector3
 var mouse_sensitivity = 0.002
 @onready var bulletSpawn := $CameraHolder/Camera3D/bulletSpawn
 var ammo : int = 5
+var pistol_damage = 10
 var player_health = 100
 var canThrow = true
 @onready var my_label = $Label
@@ -500,7 +502,16 @@ func receive_damage(amount):
 	if health <= 0:
 		health = 99
 		position = Vector3.ZERO
-	health_changed.emit(health)
+	health_changed.emit(health, max_health)
+
+@rpc("any_peer")
+func change_max_hp(amount):
+	# round up to avoid decimals
+	amount = ceil(amount)
+	max_health += amount
+	# give player health according to max boost and signal HUD to reflect it
+	# negative amount is for positive gain
+	receive_damage(-amount)
 
 
 @rpc("authority", "call_local", "reliable")

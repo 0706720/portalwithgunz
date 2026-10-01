@@ -8,12 +8,13 @@ extends Control
 func _ready():
 	player.health_changed.connect(_on_player_health_changed)
 
-func _on_player_health_changed(health):
-	health_bar.value = health
+func _on_player_health_changed(health, maxhealth):
 	if is_multiplayer_authority():
 		health_disp.text = str(health)
+		health_bar.max_value = maxhealth
 		var view_max = int(health_bar.max_value)
 		health_max.text = str(view_max)
+		health_bar.value = health
 	else:
 		hide()
 
