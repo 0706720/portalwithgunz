@@ -1006,7 +1006,8 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "..................."
 
-[node name="upgradesNode" type="Node" parent="Screen overlay" unique_id=1675702923]
+[node name="upgradesNode" type="Node" parent="Screen overlay" unique_id=1675702923 groups=["upgrade"]]
+unique_name_in_owner = true
 script = ExtResource("27_g48ct")
 
 [node name="upgradesContainer" type="BoxContainer" parent="Screen overlay/upgradesNode" unique_id=1898392707]
