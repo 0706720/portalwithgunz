@@ -1,19 +1,39 @@
 [gd_scene format=3 uid="uid://cql82rch5pqxx"]
 
 [ext_resource type="Texture2D" uid="uid://bqlwrhoyfbapn" path="res://assets/images/upgradesSystem/32e82c300b6786a.webp" id="1_o12ge"]
+[ext_resource type="Script" uid="uid://doq5bbbgjsjxg" path="res://assets/AssetCode/cards/jump_cooldown_card.gd" id="1_w7m6s"]
 [ext_resource type="Texture2D" uid="uid://ctcrwyn562eq4" path="res://assets/images/upgradesSystem/cardoutline (1).png" id="2_g3acd"]
 [ext_resource type="Texture2D" uid="uid://byw5l60pviokk" path="res://assets/images/upgradesSystem/jump-across.png" id="3_w7m6s"]
 [ext_resource type="FontFile" uid="uid://brl5hlu3dc40l" path="res://assets/images/upgradesSystem/Nunito/Nunito-Italic-VariableFont_wght.ttf" id="4_40ocx"]
 [ext_resource type="FontFile" uid="uid://b1eo5a8at87ej" path="res://assets/images/upgradesSystem/Nunito/Nunito-VariableFont_wght.ttf" id="5_wj7bj"]
 [ext_resource type="Texture2D" uid="uid://dtyn5dqvisj54" path="res://assets/images/upgradesSystem/plus.png" id="6_g3acd"]
 
-[node name="JumpCooldownCard" type="Control" unique_id=805313438]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_40ocx"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wj7bj"]
+bg_color = Color(0.16470589, 0.6745098, 0.8352941, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6jcmx"]
+bg_color = Color(0.23137255, 0.6784314, 0.78039217, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+
+[node name="JumpCooldownCard" type="Control" unique_id=805313438 groups=["Card"]]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_w7m6s")
 
 [node name="cardAssets" type="Control" parent="." unique_id=1110734834]
 anchors_preset = 0
@@ -95,3 +115,19 @@ offset_right = 908.0
 offset_bottom = 578.0
 scale = Vector2(0.1, 0.1)
 texture = ExtResource("6_g3acd")
+
+[node name="Button" type="Button" parent="cardAssets" unique_id=966843710]
+material = SubResource("CanvasItemMaterial_40ocx")
+layout_mode = 0
+offset_left = 376.0
+offset_top = 421.0
+offset_right = 447.0
+offset_bottom = 446.5
+scale = Vector2(2, 2)
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_wj7bj")
+theme_override_styles/hover = SubResource("StyleBoxFlat_6jcmx")
+text = "SELECT"
+
+[connection signal="pressed" from="cardAssets/Button" to="." method="_on_button_pressed"]

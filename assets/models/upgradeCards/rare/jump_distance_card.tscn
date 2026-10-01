@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://olefi4mqgwh4"]
 
+[ext_resource type="Script" uid="uid://b4jieindsu5f7" path="res://assets/AssetCode/cards/jump_distance_card.gd" id="1_w5h2g"]
 [ext_resource type="Texture2D" uid="uid://bqlwrhoyfbapn" path="res://assets/images/upgradesSystem/32e82c300b6786a.webp" id="1_xqa7m"]
 [ext_resource type="Texture2D" uid="uid://ctcrwyn562eq4" path="res://assets/images/upgradesSystem/cardoutline (1).png" id="2_t0hc7"]
 [ext_resource type="Texture2D" uid="uid://byw5l60pviokk" path="res://assets/images/upgradesSystem/jump-across.png" id="3_w5h2g"]
@@ -7,13 +8,32 @@
 [ext_resource type="FontFile" uid="uid://b1eo5a8at87ej" path="res://assets/images/upgradesSystem/Nunito/Nunito-VariableFont_wght.ttf" id="5_m2ydf"]
 [ext_resource type="Texture2D" uid="uid://dtyn5dqvisj54" path="res://assets/images/upgradesSystem/plus.png" id="6_t0hc7"]
 
-[node name="JumpDistanceCard" type="Control" unique_id=1430794549]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_obx40"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m2ydf"]
+bg_color = Color(0.16470589, 0.6745098, 0.8352941, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_87hcb"]
+bg_color = Color(0.23137255, 0.6784314, 0.78039217, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+
+[node name="JumpDistanceCard" type="Control" unique_id=1430794549 groups=["Card"]]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_w5h2g")
 
 [node name="cardAssets" type="Control" parent="." unique_id=1866817754]
 anchors_preset = 0
@@ -95,3 +115,19 @@ offset_right = 908.0
 offset_bottom = 578.0
 scale = Vector2(0.1, 0.1)
 texture = ExtResource("6_t0hc7")
+
+[node name="Button" type="Button" parent="cardAssets" unique_id=679035065]
+material = SubResource("CanvasItemMaterial_obx40")
+layout_mode = 0
+offset_left = 376.0
+offset_top = 421.0
+offset_right = 447.0
+offset_bottom = 446.5
+scale = Vector2(2, 2)
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_m2ydf")
+theme_override_styles/hover = SubResource("StyleBoxFlat_87hcb")
+text = "SELECT"
+
+[connection signal="pressed" from="cardAssets/Button" to="." method="_on_button_pressed"]

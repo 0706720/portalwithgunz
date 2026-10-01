@@ -6,15 +6,14 @@ extends Node
 
 # rarity values are as follows: 1 for common, 2 for rare, 3 for legendary (if we do those).
 @export var card_pool: Array[Dictionary] = [
-	{ "scene": preload("res://assets/models/upgradeCards/commom/speed_up_card.tscn"), "rarity": 1 },
-	{ "scene": preload("res://assets/models/upgradeCards/commom/health_up_card.tscn"), "rarity": 1 },
-	{ "scene": preload("res://assets/models/upgradeCards/commom/damage_up_card.tscn"), "rarity": 1 },
-	{ "scene": preload("res://assets/models/upgradeCards/rare/unlock_jump_card.tscn"), "rarity": 2 },
+	{ "scene": preload("res://assets/models/upgradeCards/commom/speed_up_card.tscn"), "rarity": 1, "unique": false },
+	{ "scene": preload("res://assets/models/upgradeCards/commom/health_up_card.tscn"), "rarity": 1, "unique": false },
+	{ "scene": preload("res://assets/models/upgradeCards/commom/damage_up_card.tscn"), "rarity": 1, "unique": false },
+	{ "scene": preload("res://assets/models/upgradeCards/rare/unlock_jump_card.tscn"), "rarity": 2, "unique": true },
+	{ "scene": preload("res://assets/models/upgradeCards/rare/unlock_grenade_launcher.tscn"), "rarity": 2, "unique": true },
+	{ "scene": preload("res://assets/models/upgradeCards/rare/unlock_shotgun.tscn"), "rarity": 2, "unique": true },
 ]
 
-const speedupcard = preload("res://assets/models/upgradeCards/commom/speed_up_card.tscn")
-const healthupcard = preload("res://assets/models/upgradeCards/commom/health_up_card.tscn")
-const damageupcard = preload("res://assets/models/upgradeCards/commom/damage_up_card.tscn")
 var failsafe = 0
 var modified_cards
 
@@ -38,15 +37,18 @@ func _add_options(input):
 	# how many upgrades per person
 	var options = 3
 	var spawned_card
+	var card_object
 	modified_cards = card_pool.duplicate(true)
 	
 	for index in options:
 		# this will be used for weighting: 0-7 means a common spawns whilst 8-10 means rare
 		var rarity_rng = randi_range(0, 10)
-		if rarity_rng <= 8:
-			spawned_card = validate_index(1)["scene"].instantiate()
+		if rarity_rng == 8:
+			card_object = validate_index(1)
+			spawned_card = card_object["scene"].instantiate()
 		else:
-			spawned_card = validate_index(2)["scene"].instantiate()
+			card_object = validate_index(2)
+			spawned_card = card_object["scene"].instantiate()
 		#if rng <= 7:
 			#for card in card_pool:
 				#if card["rarity"] == 1: 
@@ -76,6 +78,15 @@ func _add_options(input):
 		spawned_card.position = Vector2(pos, 80)
 		UI.add_child(spawned_card)
 		print("card: " + str(spawned_card.position))
+		# at the specific card, if it is only intended to be taken once per run,
+		# remove it from future options.
+		if card_object["unique"] == true:
+			# card_object is technically a full array object, but we need just the index.
+			# then it will be removed only during runtime.
+			var unique_index = card_pool.find(card_object)
+			card_pool.remove_at(unique_index)
+			print("card_pool after removal: " + str(card_pool.map(func(c): return c.get("scene"))))
+			print("just murdered index: " + str(unique_index) + " and object was: " + str(card_object))
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 func validate_index(rarity):
@@ -98,4 +109,17 @@ func validate_index(rarity):
 			return card_pool[0]
 		print("FAILED")
 		return validate_index(rarity)
+		
+func unlock_shotgun():
+	card_pool.append({
+		"scene": preload("res://assets/models/upgradeCards/rare/shotgun_damage_card.tscn"),
+		"rarity": 2,
+		"unique": true
+	})
+	card_pool.append({
+		"scene": preload("res://assets/models/upgradeCards/rare/shotgun_cooldown_card.tscn"),
+		"rarity": 2,
+		"unique": true
+	})
+	
 	
