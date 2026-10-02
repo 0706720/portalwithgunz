@@ -18,6 +18,7 @@ func _on_button_pressed() -> void:
 	apply_effect(player)
 	
 func apply_effect(player) -> void:
+	var upgradeNode = get_tree().get_first_node_in_group("upgrade")
 	# declared here to avoid variable bloat in player
 	var pistol_base = 10
 	# EFFECT: +10% of pistol base damage added onto current damage.
@@ -27,4 +28,5 @@ func apply_effect(player) -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	# this should delete all instances of cards currently on screen, if that isn't happening
 	# then ensure all cards belong to group 'Card' in the inspector.
+	upgradeNode.clear_unique("jump_distance")
 	get_tree().call_group("Card", "queue_free")
