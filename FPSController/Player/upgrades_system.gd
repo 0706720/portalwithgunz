@@ -6,12 +6,12 @@ extends Node
 
 # rarity values are as follows: 1 for common, 2 for rare, 3 for legendary (if we do those).
 @export var card_pool: Array[Dictionary] = [
-	{ "scene": preload("res://assets/models/upgradeCards/commom/speed_up_card.tscn"), "rarity": 1, "unique": false },
-	{ "scene": preload("res://assets/models/upgradeCards/commom/health_up_card.tscn"), "rarity": 1, "unique": false },
-	{ "scene": preload("res://assets/models/upgradeCards/commom/damage_up_card.tscn"), "rarity": 1, "unique": false },
-	{ "scene": preload("res://assets/models/upgradeCards/rare/unlock_jump_card.tscn"), "rarity": 2, "unique": true },
-	{ "scene": preload("res://assets/models/upgradeCards/rare/unlock_grenade_launcher.tscn"), "rarity": 2, "unique": true },
-	{ "scene": preload("res://assets/models/upgradeCards/rare/unlock_shotgun.tscn"), "rarity": 2, "unique": true },
+	{ "name": "speed_up", "scene": preload("res://assets/models/upgradeCards/commom/speed_up_card.tscn"), "rarity": 1, "unique": false },
+	{ "name": "health_up", "scene": preload("res://assets/models/upgradeCards/commom/health_up_card.tscn"), "rarity": 1, "unique": false },
+	{ "name": "damage_up", "scene": preload("res://assets/models/upgradeCards/commom/damage_up_card.tscn"), "rarity": 1, "unique": false },
+	{ "name": "unlock_jump", "scene": preload("res://assets/models/upgradeCards/rare/unlock_jump_card.tscn"), "rarity": 2, "unique": true },
+	{ "name": "unlock_grenade_launcher", "scene": preload("res://assets/models/upgradeCards/rare/unlock_grenade_launcher.tscn"), "rarity": 2, "unique": true },
+	{ "name": "unlock_shotugn", "scene": preload("res://assets/models/upgradeCards/rare/unlock_shotgun.tscn"), "rarity": 2, "unique": true },
 ]
 
 var failsafe = 0
@@ -30,7 +30,6 @@ func _process(delta: float) -> void:
 	pass
 
 func _add_options(input):
-	var screen_center := UI.size / 2.0
 # intended logic: use the upgradesNode to 'paste' 3 random options out of the cards available onto 
 # each player's screens locally, every roll seperate.
 	print('found signal and func ran: ' + str(input))
@@ -49,19 +48,6 @@ func _add_options(input):
 		else:
 			card_object = validate_index(2)
 			spawned_card = card_object["scene"].instantiate()
-		#if rng <= 7:
-			#for card in card_pool:
-				#if card["rarity"] == 1: 
-					#spawned_card = card["scene"].instantiate()
-					#break
-		#else:
-			#for card in card_pool:
-				#if card["rarity"] == 2: 
-					#spawned_card = card["scene"].instantiate()
-					#break
-		
-		#var spawned_card = speedupcard.instantiate()
-		# Center the card in the viewport
 		
 		failsafe = 0
 		var pos
@@ -77,16 +63,15 @@ func _add_options(input):
 
 		spawned_card.position = Vector2(pos, 80)
 		UI.add_child(spawned_card)
-		print("card: " + str(spawned_card.position))
+		print("card: " + str(spawned_card))
 		# at the specific card, if it is only intended to be taken once per run,
 		# remove it from future options.
-		if card_object["unique"] == true:
+		#if card_object["unique"] == true:
 			# card_object is technically a full array object, but we need just the index.
 			# then it will be removed only during runtime.
-			var unique_index = card_pool.find(card_object)
-			card_pool.remove_at(unique_index)
-			print("card_pool after removal: " + str(card_pool.map(func(c): return c.get("scene"))))
-			print("just murdered index: " + str(unique_index) + " and object was: " + str(card_object))
+			#var unique_index = card_pool.find(card_object)
+			#card_pool.remove_at(unique_index)
+			#print("just murdered index: " + str(unique_index) + " and object was: " + str(card_object))
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 func validate_index(rarity):
@@ -112,14 +97,50 @@ func validate_index(rarity):
 		
 func unlock_shotgun():
 	card_pool.append({
+		"name": "shotgun_damage",
 		"scene": preload("res://assets/models/upgradeCards/rare/shotgun_damage_card.tscn"),
 		"rarity": 2,
 		"unique": true
 	})
 	card_pool.append({
+		"name": "shotgun_cooldown",
 		"scene": preload("res://assets/models/upgradeCards/rare/shotgun_cooldown_card.tscn"),
 		"rarity": 2,
 		"unique": true
 	})
+
+func unlock_grenade_launcher():
+	card_pool.append({
+		"name": "grenade_radius",
+		"scene": preload("res://assets/models/upgradeCards/rare/grenade_radius_card.tscn"),
+		"rarity": 2,
+		"unique": true
+	})
+	card_pool.append({
+		"name": "grenade_damage",
+		"scene": preload("res://assets/models/upgradeCards/rare/grenade_damage_card.tscn"),
+		"rarity": 2,
+		"unique": true
+	})
+	
+func unlock_jump():
+	card_pool.append({
+		"name": "jump_cooldown",
+		"scene": preload("res://assets/models/upgradeCards/rare/jump_cooldown_card.tscn"),
+		"rarity": 2,
+		"unique": true
+	})
+	card_pool.append({
+		"name": "jump_distance",
+		"scene": preload("res://assets/models/upgradeCards/rare/jump_distance_card.tscn"),
+		"rarity": 2,
+		"unique": true
+	})
+
+func clear_unique(cardname: String):
+	# fancy line which finds index where name = parameter
+	var index = card_pool.find_custom(func(card): return card["name"] == cardname)
+	card_pool.remove_at(index)
+	
 	
 	

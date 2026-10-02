@@ -29,4 +29,5 @@ func apply_effect(player) -> void:
 	# this should delete all instances of cards currently on screen, if that isn't happening
 	# then ensure all cards belong to group 'Card' in the inspector.
 	upgradeNode.unlock_shotgun()
+	upgradeNode.clear_unique("unlock_shotugn")
 	get_tree().call_group("Card", "queue_free")
