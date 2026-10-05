@@ -1,0 +1,133 @@
+[gd_scene format=3 uid="uid://7weax8q8ul5f"]
+
+[ext_resource type="Script" uid="uid://cxavet4uncyj2" path="res://assets/AssetCode/cards/large_speed_up_card.gd" id="1_d0ucm"]
+[ext_resource type="Texture2D" uid="uid://cmwausg74bpcb" path="res://assets/images/upgradesSystem/hermes.jpeg" id="1_k7y6v"]
+[ext_resource type="Texture2D" uid="uid://ctcrwyn562eq4" path="res://assets/images/upgradesSystem/cardoutline (1).png" id="2_d0ucm"]
+[ext_resource type="Texture2D" uid="uid://byw5l60pviokk" path="res://assets/images/upgradesSystem/jump-across.png" id="3_d0ucm"]
+[ext_resource type="FontFile" uid="uid://brl5hlu3dc40l" path="res://assets/images/upgradesSystem/Nunito/Nunito-Italic-VariableFont_wght.ttf" id="4_nmgap"]
+[ext_resource type="FontFile" uid="uid://b1eo5a8at87ej" path="res://assets/images/upgradesSystem/Nunito/Nunito-VariableFont_wght.ttf" id="5_sapus"]
+[ext_resource type="Texture2D" uid="uid://dtyn5dqvisj54" path="res://assets/images/upgradesSystem/plus.png" id="6_qymqb"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_d31ck"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nmgap"]
+bg_color = Color(0.16470589, 0.6745098, 0.8352941, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sapus"]
+bg_color = Color(0.23137255, 0.6784314, 0.78039217, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+
+[node name="LargeSpeedUpCard" type="Control" unique_id=1238490879 groups=["Card"]]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_d0ucm")
+
+[node name="cardAssets" type="Control" parent="." unique_id=1740872564]
+anchors_preset = 0
+
+[node name="Hermes" type="TextureRect" parent="cardAssets" unique_id=1570008080]
+layout_mode = 0
+offset_left = 363.0
+offset_top = 86.0
+offset_right = 723.0
+offset_bottom = 382.0
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_k7y6v")
+
+[node name="Cardoutline(1)" type="TextureRect" parent="cardAssets" unique_id=462394333]
+visible = false
+layout_mode = 0
+offset_left = 438.0
+offset_top = 255.0
+offset_right = 438.0
+offset_bottom = 255.0
+texture = ExtResource("2_d0ucm")
+
+[node name="HeartShield" type="TextureRect" parent="cardAssets" unique_id=903670426]
+layout_mode = 0
+offset_left = 306.00003
+offset_top = 420.99997
+offset_right = 818.0
+offset_bottom = 933.0
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("3_d0ucm")
+
+[node name="Label" type="RichTextLabel" parent="cardAssets" unique_id=1081330419]
+layout_mode = 0
+offset_left = 352.0
+offset_top = 256.0
+offset_right = 535.0
+offset_bottom = 294.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("4_nmgap")
+theme_override_fonts/bold_font = ExtResource("5_sapus")
+theme_override_font_sizes/normal_font_size = 24
+bbcode_enabled = true
+text = "[u]SPEED BONUS[u]"
+
+[node name="Label2" type="RichTextLabel" parent="cardAssets" unique_id=382509005]
+layout_mode = 0
+offset_left = 288.0
+offset_top = 288.0
+offset_right = 585.0
+offset_bottom = 402.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("4_nmgap")
+theme_override_font_sizes/normal_font_size = 20
+bbcode_enabled = true
+text = "Recieve a 20% bonus to walking 
+speed"
+horizontal_alignment = 1
+
+[node name="Polygon2D" type="Polygon2D" parent="cardAssets" unique_id=1245189889]
+z_index = -1
+polygon = PackedVector2Array(304, 31, 286, 43, 286, 463, 301, 480, 577, 480, 590, 466, 590, 46, 576, 31)
+
+[node name="Button" type="Button" parent="cardAssets" unique_id=1070235821]
+material = SubResource("CanvasItemMaterial_d31ck")
+layout_mode = 0
+offset_left = 376.0
+offset_top = 421.0
+offset_right = 447.0
+offset_bottom = 446.5
+scale = Vector2(2, 2)
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_nmgap")
+theme_override_styles/hover = SubResource("StyleBoxFlat_sapus")
+text = "SELECT"
+
+[node name="TextureRect" type="TextureRect" parent="cardAssets" unique_id=393565140]
+layout_mode = 0
+offset_left = 521.0
+offset_top = 62.0
+offset_right = 965.0
+offset_bottom = 512.0
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("6_qymqb")
+
+[node name="Line2D" type="Line2D" parent="cardAssets" unique_id=352403244]
+points = PackedVector2Array(304, 31, 286, 43, 286, 463, 301, 480, 577, 480, 590, 466, 590, 46, 576, 31)
+width = 5.0
+default_color = Color(0.25490198, 0.14117648, 0.6039216, 1)
+
+[node name="Line2D2" type="Line2D" parent="cardAssets" unique_id=2041678935]
+position = Vector2(1, 3)
+points = PackedVector2Array(576, 30, 302, 30)
+width = 5.0
+default_color = Color(0.25490198, 0.14117648, 0.6039216, 1)
+
+[connection signal="pressed" from="cardAssets/Button" to="." method="_on_button_pressed"]
