@@ -201,6 +201,9 @@ func die() -> void:
 	
 	# Tell all clients to clean up this enemy instance
 	rpc("rpc_client_die")
+	
+	# below line will run only on the local instance of player, signalling for them to gain xp for kill.
+	Global.experience_up.emit(10)
 	queue_free()
 
 @rpc("authority", "call_remote", "reliable")
