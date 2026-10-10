@@ -895,7 +895,7 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_b3r6a")
 show_percentage = false
 script = ExtResource("28_wd7pj")
 
-[node name="weaponsManager" type="Node" parent="." unique_id=828943716]
+[node name="weaponsManager" type="Node" parent="." unique_id=828943716 groups=["weaponsManager"]]
 script = ExtResource("17_hjbpo")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1497174945]

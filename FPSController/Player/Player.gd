@@ -67,7 +67,7 @@ var grapple_point: Vector3
 var mouse_sensitivity = 0.002
 @onready var bulletSpawn := $CameraHolder/Camera3D/bulletSpawn
 var ammo : int = 5
-var pistol_damage = 10
+var pistol_damage = 25
 var player_health = 100
 var canThrow = true
 @onready var my_label = $Label
@@ -268,7 +268,7 @@ func _unhandled_input(event):
 			if hit_player.is_in_group('target'):
 				# If the enemy has a receive_damage function, call it via RPC (passing damage amount, e.g., 25)
 				if hit_player.has_method("receive_damage"):
-					hit_player.receive_damage.rpc(25)
+					hit_player.receive_damage.rpc(pistol_damage)
 
 	if anim_playing == false and Input.is_action_just_pressed("superjump"):
 		anim_playing = true

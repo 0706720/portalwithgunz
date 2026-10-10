@@ -8,18 +8,26 @@ extends Node
 @onready var sniper_node    := $"../Camera3D/M91"
 @onready var shotgun_node   := $"../CameraHolder/Camera3D/Shotgun"
 
-var weapons = ["Pistol", "Grenade", "GrappleGun", "PortalGun", "Shotgun"]
+# AFTER DEVELOPMENT: change all entries to be 'unlocked': false for the purposes of gameplay
+@export var weapons: Array[Dictionary] = [
+	{ "name": "Pistol", "unlocked": true },
+	{ "name": "Grenade", "unlocked": true },
+	{ "name": "GrappleGun", "unlocked": true },
+	{ "name": "PortalGun", "unlocked": true },
+	{ "name": "Shotgun", "unlocked": true }
+]
 var weapon_nodes: Array = []
 
 func _ready() -> void:
 	# build the nodes array so indexing matches weapons[]
 	weapon_nodes = [pistol_node, grenade_node, grapple_node, portal_node, shotgun_node]
 	# optionally include sniper_node where appropriate
-	print("weapons:", weapons)
 
 # Call this locally when the local player changes weapon
 func request_weapon_change(weapon_index: int) -> void:
 	if not _valid_index(weapon_index):
+		return
+	if not _unlocked_weapon(weapon_index):
 		return
 	# change locally for instant feedback
 	_apply_weapon_local(weapon_index)
@@ -44,11 +52,23 @@ func _apply_weapon_local(weapon_index: int) -> void:
 	var n = weapon_nodes[weapon_index]
 	n.visible = true
 	n.position = Vector3(0.5, -0.25, -0.5)
-	Global.currentWeapon = weapons[weapon_index]
+	Global.currentWeapon = weapons[weapon_index]["name"]
 	print("Local weapon set to", Global.currentWeapon)
 
 func _valid_index(i: int) -> bool:
 	return i >= 0 and i < weapon_nodes.size()
+
+func _unlocked_weapon(i):
+	# this function will ensure the weapon is actually unlocked before swapping. This is 
+	# relevant to the upgrades system which will gradually offer these to the player.
+	if weapons[i]["unlocked"] == true:
+		#print("index is: " + str(weapons[i]))
+		return true
+
+func unlock_weapon(name: String):
+	for entry in weapons:
+		if entry['name'] == name:
+			entry['unlocked'] = true
 
 #extends Node
 #

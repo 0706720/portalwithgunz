@@ -1,5 +1,5 @@
 extends Control
-
+## COMPLETE
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
@@ -18,11 +18,10 @@ func _on_button_pressed() -> void:
 	apply_effect(player)
 	
 func apply_effect(player) -> void:
-	# declared here to avoid variable bloat in player
-	var pistol_base = 10
-	# EFFECT: +10% of pistol base damage added onto current damage.
-	player.pistol_damage = player.pistol_damage + (pistol_base / 10)
-	print("PISTOL: " + str(player.pistol_damage))
+	# EFFECT: +10% of base max hp added to max hp
+	var base_max_hp = 99
+	var amount = (base_max_hp / 10 * 2)
+	player.change_max_hp(amount)
 	# hide mouse for gameplay
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	# this should delete all instances of cards currently on screen, if that isn't happening
