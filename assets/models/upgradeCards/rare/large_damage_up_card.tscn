@@ -1,0 +1,133 @@
+[gd_scene format=3 uid="uid://cri7dbgvn5tcc"]
+
+[ext_resource type="Texture2D" uid="uid://b2co5h7q3cxjb" path="res://assets/images/upgradesSystem/undertaker.webp" id="1_6x5qm"]
+[ext_resource type="Script" uid="uid://ckd062njss3ao" path="res://assets/AssetCode/cards/large_damage_up_card.gd" id="1_itedg"]
+[ext_resource type="Texture2D" uid="uid://ctcrwyn562eq4" path="res://assets/images/upgradesSystem/cardoutline (1).png" id="2_itedg"]
+[ext_resource type="Texture2D" uid="uid://cg6wleqmqqa26" path="res://assets/images/upgradesSystem/revolver.png" id="3_8ke3i"]
+[ext_resource type="FontFile" uid="uid://brl5hlu3dc40l" path="res://assets/images/upgradesSystem/Nunito/Nunito-Italic-VariableFont_wght.ttf" id="4_4llnl"]
+[ext_resource type="FontFile" uid="uid://b1eo5a8at87ej" path="res://assets/images/upgradesSystem/Nunito/Nunito-VariableFont_wght.ttf" id="5_20bmw"]
+[ext_resource type="Texture2D" uid="uid://dtyn5dqvisj54" path="res://assets/images/upgradesSystem/plus.png" id="6_jtrso"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_bnvrn"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e72gu"]
+bg_color = Color(0.16470589, 0.6745098, 0.8352941, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t1iqu"]
+bg_color = Color(0.23137255, 0.6784314, 0.78039217, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+
+[node name="LargeDamageUpCard" type="Control" unique_id=1671860884 groups=["Card"]]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_itedg")
+
+[node name="cardAssets" type="Control" parent="." unique_id=427297936]
+anchors_preset = 0
+
+[node name="Hermes" type="TextureRect" parent="cardAssets" unique_id=690049400]
+layout_mode = 0
+offset_left = 335.99994
+offset_top = 121.00001
+offset_right = 1037.0
+offset_bottom = 487.0
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("1_6x5qm")
+
+[node name="Cardoutline(1)" type="TextureRect" parent="cardAssets" unique_id=2101547211]
+visible = false
+layout_mode = 0
+offset_left = 438.0
+offset_top = 255.0
+offset_right = 438.0
+offset_bottom = 255.0
+texture = ExtResource("2_itedg")
+
+[node name="HeartShield" type="TextureRect" parent="cardAssets" unique_id=1259111029]
+layout_mode = 0
+offset_left = 306.00003
+offset_top = 420.99997
+offset_right = 818.0
+offset_bottom = 933.0
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("3_8ke3i")
+
+[node name="Label" type="RichTextLabel" parent="cardAssets" unique_id=1294150446]
+layout_mode = 0
+offset_left = 340.0
+offset_top = 256.0
+offset_right = 546.0
+offset_bottom = 294.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("4_4llnl")
+theme_override_fonts/bold_font = ExtResource("5_20bmw")
+theme_override_font_sizes/normal_font_size = 24
+bbcode_enabled = true
+text = "[u]DAMAGE BONUS[u]"
+horizontal_alignment = 1
+
+[node name="Label2" type="RichTextLabel" parent="cardAssets" unique_id=2005508605]
+layout_mode = 0
+offset_left = 288.0
+offset_top = 288.0
+offset_right = 585.0
+offset_bottom = 402.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("4_4llnl")
+theme_override_font_sizes/normal_font_size = 20
+bbcode_enabled = true
+text = "Recieve a 20% bonus to pistol damage"
+horizontal_alignment = 1
+
+[node name="Polygon2D" type="Polygon2D" parent="cardAssets" unique_id=448533893]
+z_index = -1
+polygon = PackedVector2Array(304, 31, 286, 43, 286, 463, 301, 480, 577, 480, 590, 466, 590, 46, 576, 31)
+
+[node name="Button" type="Button" parent="cardAssets" unique_id=1307054356]
+material = SubResource("CanvasItemMaterial_bnvrn")
+layout_mode = 0
+offset_left = 376.0
+offset_top = 421.0
+offset_right = 447.0
+offset_bottom = 446.5
+scale = Vector2(2, 2)
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_e72gu")
+theme_override_styles/hover = SubResource("StyleBoxFlat_t1iqu")
+text = "SELECT"
+
+[node name="Line2D" type="Line2D" parent="cardAssets" unique_id=538013826]
+points = PackedVector2Array(304, 31, 286, 43, 286, 463, 301, 480, 577, 480, 590, 466, 590, 46, 576, 31)
+width = 5.0
+default_color = Color(0.25490198, 0.14117648, 0.6039216, 1)
+
+[node name="Line2D2" type="Line2D" parent="cardAssets" unique_id=1819402749]
+position = Vector2(1, 3)
+points = PackedVector2Array(576, 30, 302, 30)
+width = 5.0
+default_color = Color(0.25490198, 0.14117648, 0.6039216, 1)
+
+[node name="TextureRect" type="TextureRect" parent="cardAssets" unique_id=104383635]
+layout_mode = 0
+offset_left = 496.00003
+offset_top = 78.0
+offset_right = 940.0
+offset_bottom = 528.0
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("6_jtrso")
+
+[connection signal="pressed" from="cardAssets/Button" to="." method="_on_button_pressed"]

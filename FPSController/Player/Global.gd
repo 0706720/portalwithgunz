@@ -4,6 +4,13 @@ extends Node
 # given that enemy does not exist inside of Player's scene tree.
 signal experience_up(amount)
 
+## GROUP: Weapon Checks for Upgrade System
+var shotugn_unlocked = false
+var grenade_unlocked = false
+
+## DEV NOTE: apply this as a condition for jump when releasing public version
+var jump_unlocked = false
+
 var current_score = 0
 var health = 100
 

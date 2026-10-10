@@ -1,5 +1,5 @@
 extends Control
-
+## COMPLETE
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
@@ -17,8 +17,8 @@ func _on_button_pressed() -> void:
 	apply_effect(player)
 	
 func apply_effect(player) -> void:
+	# EFFECT: +10% of base max hp added to max hp
 	var base_max_hp = 99
-	# EFFECT: +10% of pistol base damage added onto current damage.
 	var amount = (base_max_hp / 10)
 	player.change_max_hp(amount)
 	# hide mouse for gameplay

@@ -1,5 +1,5 @@
 extends Control
-
+## COMPLETE
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
@@ -19,15 +19,15 @@ func _on_button_pressed() -> void:
 	
 func apply_effect(player) -> void:
 	var upgradeNode = get_tree().get_first_node_in_group("upgrade")
-	# declared here to avoid variable bloat in player
-	var pistol_base = 10
-	# EFFECT: +10% of pistol base damage added onto current damage.
-	player.pistol_damage = player.pistol_damage + (pistol_base / 10)
-	print("PISTOL: " + str(player.pistol_damage))
+	# This singleton variable will be used to track when jump key is pressed 
+	# if this card was previously used
+	Global.jump_unlocked = true
 	# hide mouse for gameplay
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	# unlock jump dependencies
+	upgradeNode.unlock_jump()
+	# make sure this redundant upgrade doesnt show again
+	upgradeNode.clear_unique("unlock_jump")
 	# this should delete all instances of cards currently on screen, if that isn't happening
 	# then ensure all cards belong to group 'Card' in the inspector.
-	upgradeNode.unlock_jump()
-	upgradeNode.clear_unique("unlock_jump")
 	get_tree().call_group("Card", "queue_free")
