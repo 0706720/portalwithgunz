@@ -11,11 +11,12 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if Input.is_action_just_pressed("shoot") and Global.currentWeapon == 'Grenade':
+	if Input.is_action_just_pressed("shoot") and Global.currentWeapon == 'Grenade' and Global.weapon_cooldown <= 0:
 		shoot_grenade()
 
 
 func shoot_grenade() -> void:
+	Global.weapon_cooldown = 2.5
 	var grenade = GrenadeScene.instantiate() as RigidBody3D
 	get_tree().current_scene.add_child(grenade)
 	grenade.global_transform = SpawnPoint.global_transform
