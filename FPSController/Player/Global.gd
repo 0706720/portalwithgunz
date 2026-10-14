@@ -12,7 +12,10 @@ var grenade_unlocked = false
 var weapon_cooldown: float = 0.0
 
 ## DEV NOTE: apply this as a condition for jump when releasing public version
-var jump_unlocked = false
+var jump_unlocked = true
+
+## Upgrade card misc
+var xp_threshold_card = false
 
 var current_score = 0
 var health = 100

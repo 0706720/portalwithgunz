@@ -24,11 +24,15 @@ func _process(delta: float) -> void:
 	
 func on_xp_gain(amount):
 	if is_multiplayer_authority():
+		if Global.xp_threshold_card == true:
+			var am = float(amount)
+			var extra_amount = am / 10
+			amount = am + extra_amount
+			print("extra exp is: "  + str(extra_amount) + " original exp: " + str(am) + " final xp: " + str(amount))
 		experience += amount
-		print("NEW XP: " + str(experience))
 		# logic for xp reaching requirement
 		if experience >= level_amount:
-			level_amount = (level_amount * level_up_multiplier)
+			create_new_level()
 			experience = 0
 			level_up.emit(1)
 		update_progress(experience, level_amount)
@@ -38,4 +42,6 @@ func update_progress(exp, max_xp):
 	progress_node.value = exp
 	progress_node.max_value = max_xp
 	
+func create_new_level():
+	level_amount = (level_amount * level_up_multiplier)
 	

@@ -270,7 +270,7 @@ func _unhandled_input(event):
 				if hit_player.has_method("receive_damage"):
 					hit_player.receive_damage.rpc(pistol_damage)
 
-	if anim_playing == false and Input.is_action_just_pressed("superjump"):
+	if anim_playing == false and Input.is_action_just_pressed("superjump") and Global.jump_unlocked:
 		anim_playing = true
 		var shoot_dir = cam.global_transform.basis.z.normalized()
 		velocity += shoot_dir * knockback_force
