@@ -19,7 +19,7 @@ func _ready() -> void:
 	pass
 
 func shoot_shotgun():
-	if Input.is_action_just_pressed("shoot") and Global.currentWeapon == 'shotgun':
+	if Input.is_action_just_pressed("shoot") and Global.currentWeapon == 'Shotgun':
 		#timer.start()
 		var random_x = randf_range(-spread_angle, spread_angle)
 		var random_y = randf_range(-spread_angle, spread_angle)
