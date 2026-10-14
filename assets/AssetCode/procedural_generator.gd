@@ -379,7 +379,7 @@ func instantiate_rooms_incrementally(layout_data: Dictionary) -> void:
 
 
 func setup_end_portal(room: Node3D) -> void:
-	var portal_area = room.get_node_or_null("MeshInstance3D2/PortalArea") as Area3D
+	var portal_area = room.get_node_or_null("Portal/PortalArea") as Area3D
 	
 	if portal_area and multiplayer.is_server():
 		print("[Portal Setup] Successfully found PortalArea in room: ", room.name)
