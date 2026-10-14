@@ -24,42 +24,42 @@ size = Vector3(20, 0.1, 20)
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_vpwjj"]
 data = PackedVector3Array(-10, 0.049999997, 10, 10, 0.049999997, 10, -10, -0.049999997, 10, 10, 0.049999997, 10, 10, -0.049999997, 10, -10, -0.049999997, 10, 10, 0.049999997, -10, -10, 0.049999997, -10, 10, -0.049999997, -10, -10, 0.049999997, -10, -10, -0.049999997, -10, 10, -0.049999997, -10, 10, 0.049999997, 10, 10, 0.049999997, -10, 10, -0.049999997, 10, 10, 0.049999997, -10, 10, -0.049999997, -10, 10, -0.049999997, 10, -10, 0.049999997, -10, -10, 0.049999997, 10, -10, -0.049999997, -10, -10, 0.049999997, 10, -10, -0.049999997, 10, -10, -0.049999997, -10, 10, 0.049999997, 10, -10, 0.049999997, 10, 10, 0.049999997, -10, -10, 0.049999997, 10, -10, 0.049999997, -10, 10, 0.049999997, -10, -10, -0.049999997, 10, 10, -0.049999997, 10, -10, -0.049999997, -10, 10, -0.049999997, 10, 10, -0.049999997, -10, -10, -0.049999997, -10)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ynhhp"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nbtxv"]
 albedo_texture = ExtResource("2_fb6wg")
 uv1_scale = Vector3(0.2, 0.2, 0.2)
 uv1_triplanar = true
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_yf5fn"]
 lightmap_size_hint = Vector2i(102, 102)
-material = SubResource("StandardMaterial3D_ynhhp")
+material = SubResource("StandardMaterial3D_nbtxv")
 add_uv2 = true
 size = Vector2(20, 20)
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_08rus"]
 data = PackedVector3Array(10, 0, 10, -10, 0, 10, 10, 0, -10, -10, 0, 10, -10, 0, -10, 10, 0, -10)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yypnt"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fntsp"]
 albedo_texture = ExtResource("3_vpwjj")
 uv1_scale = Vector3(0.1, 0.1, 0.1)
 uv1_triplanar = true
 
 [sub_resource type="BoxMesh" id="BoxMesh_1cpm3"]
 lightmap_size_hint = Vector2i(114, 206)
-material = SubResource("StandardMaterial3D_yypnt")
+material = SubResource("StandardMaterial3D_fntsp")
 add_uv2 = true
 size = Vector3(2, 10, 20)
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_yypnt"]
 data = PackedVector3Array(-1, 5, 10, 1, 5, 10, -1, -5, 10, 1, 5, 10, 1, -5, 10, -1, -5, 10, 1, 5, -10, -1, 5, -10, 1, -5, -10, -1, 5, -10, -1, -5, -10, 1, -5, -10, 1, 5, 10, 1, 5, -10, 1, -5, 10, 1, 5, -10, 1, -5, -10, 1, -5, 10, -1, 5, -10, -1, 5, 10, -1, -5, -10, -1, 5, 10, -1, -5, 10, -1, -5, -10, 1, 5, 10, -1, 5, 10, 1, 5, -10, -1, 5, 10, -1, 5, -10, 1, 5, -10, -1, -5, 10, 1, -5, 10, -1, -5, -10, 1, -5, 10, 1, -5, -10, -1, -5, -10)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_08rus"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e15ow"]
 albedo_texture = ExtResource("3_vpwjj")
 uv1_scale = Vector3(0.1, 0.1, 0.1)
 uv1_triplanar = true
 
 [sub_resource type="BoxMesh" id="BoxMesh_yypnt"]
 lightmap_size_hint = Vector2i(114, 206)
-material = SubResource("StandardMaterial3D_08rus")
+material = SubResource("StandardMaterial3D_e15ow")
 add_uv2 = true
 size = Vector3(2, 10, 20)
 
@@ -110,14 +110,14 @@ shape = SubResource("BoxShape3D_08rus")
 
 [node name="MeshContainer" type="Node3D" parent="." unique_id=539164012]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="MeshContainer" unique_id=404953161]
+[node name="Roof" type="MeshInstance3D" parent="MeshContainer" unique_id=404953161]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 10)
 mesh = SubResource("BoxMesh_g4v7s")
 skeleton = NodePath("../..")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="MeshContainer/MeshInstance3D" unique_id=290257711]
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshContainer/Roof" unique_id=290257711]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshContainer/MeshInstance3D/StaticBody3D" unique_id=124519765]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshContainer/Roof/StaticBody3D" unique_id=124519765]
 shape = SubResource("ConcavePolygonShape3D_vpwjj")
 
 [node name="Floor" type="MeshInstance3D" parent="MeshContainer" unique_id=636075812]
