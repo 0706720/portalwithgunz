@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://cnoujtbhb6erw"]
 
+[ext_resource type="Shader" uid="uid://n8l8xsgj3vl4" path="res://assets/Rooms/Special/end_room_prefab.gdshader" id="1_svdvv"]
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ivket"]
 albedo_color = Color(1, 1, 0, 1)
 
@@ -13,13 +15,20 @@ data = PackedVector3Array(10, 0, 10, -10, 0, 10, 10, 0, -10, -10, 0, 10, -10, 0,
 [sub_resource type="BoxShape3D" id="BoxShape3D_kl01i"]
 size = Vector3(8, 2, 8)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_svdvv"]
-albedo_color = Color(0, 0.46963003, 1, 1)
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_svdvv"]
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_g4v7s"]
-material = SubResource("StandardMaterial3D_svdvv")
-radius = 1.0
-height = 5.0
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8sv8v"]
+render_priority = 0
+shader = ExtResource("1_svdvv")
+shader_parameter/portal_texture = SubResource("NoiseTexture2D_svdvv")
+shader_parameter/portal_color = Color(0.3, 0.5, 1, 1)
+shader_parameter/swirl_strength = 2.000000569999999
+shader_parameter/rotation_speed = 3.0000006174999996
+shader_parameter/edge_softness = 0.10000000405148
+
+[sub_resource type="QuadMesh" id="QuadMesh_82fmt"]
+material = SubResource("ShaderMaterial_8sv8v")
+size = Vector2(2, 4)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_g4v7s"]
 radius = 1.0
@@ -53,8 +62,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("BoxShape3D_kl01i")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=2092189577]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 4)
-mesh = SubResource("CapsuleMesh_g4v7s")
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 2, 4)
+mesh = SubResource("QuadMesh_82fmt")
 
 [node name="PortalArea" type="Area3D" parent="MeshInstance3D2" unique_id=2092152315]
 collision_layer = 255
