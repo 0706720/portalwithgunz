@@ -8,6 +8,9 @@ signal experience_up(amount)
 var shotugn_unlocked = false
 var grenade_unlocked = false
 
+## Weapon Cooldown
+var weapon_cooldown: float = 0.0
+
 ## DEV NOTE: apply this as a condition for jump when releasing public version
 var jump_unlocked = false
 
@@ -35,7 +38,5 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
-
-
-	
+	if weapon_cooldown > 0:
+		weapon_cooldown -= delta

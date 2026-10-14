@@ -19,11 +19,13 @@ func _ready() -> void:
 	pass
 
 func shoot_shotgun():
-	if Input.is_action_just_pressed("shoot") and Global.currentWeapon == 'Shotgun':
+	if Input.is_action_just_pressed("shoot") and Global.currentWeapon == 'Shotgun' and Global.weapon_cooldown <= 0:
 		#timer.start()
 		var random_x = randf_range(-spread_angle, spread_angle)
 		var random_y = randf_range(-spread_angle, spread_angle)
 		var random_z = randf_range(-spread_angle, spread_angle)
+		Global.weapon_cooldown = 1.0
+		
 		var bullet1 = pellet.instantiate()
 		get_tree().root.add_child(bullet1)
 		bullet1.global_transform = spawnPoint1.global_transform
