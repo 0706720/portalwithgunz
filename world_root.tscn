@@ -6,9 +6,12 @@
 [ext_resource type="Script" uid="uid://dkwcsqg2yfq6v" path="res://assets/AssetCode/player_spawner.gd" id="4_mtm5c"]
 [ext_resource type="PackedScene" uid="uid://dyhdh556qmjip" path="res://loading_screen.tscn" id="5_bpw3s"]
 
+[sub_resource type="Sky" id="Sky_fb6wg"]
+
 [sub_resource type="Environment" id="Environment_cuis1"]
 background_mode = 2
 background_color = Color(0.03529412, 0, 0.06666667, 1)
+sky = SubResource("Sky_fb6wg")
 ambient_light_color = Color(0.14135897, 0.00027270883, 0.29568216, 1)
 ssao_enabled = true
 
