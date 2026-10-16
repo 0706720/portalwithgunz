@@ -11,6 +11,7 @@ extends RigidBody3D
 # Called when the node enters the scene tree for the fssirst time.
 func _ready() -> void:
 	$Timer.timeout.connect(_on_timer_timeout)
+	print("grenade _ready scale:", scale)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

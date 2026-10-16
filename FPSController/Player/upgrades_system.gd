@@ -114,7 +114,7 @@ func unlock_grenade_launcher():
 	})
 	card_pool.append({
 		"name": "grenade_damage",
-		"scene": preload("res://assets/models/upgradeCards/rare/grenade_damage_card.tscn"),
+		"scene": preload("res://assets/models/upgradeCards/rare/grenade_cooldown_card.tscn"),
 		"rarity": 2,
 		"unique": true
 	})
