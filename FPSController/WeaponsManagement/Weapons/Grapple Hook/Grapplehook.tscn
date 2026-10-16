@@ -1,6 +1,11 @@
 [gd_scene format=3 uid="uid://d4i7nb1k36bs3"]
 
+[ext_resource type="Script" uid="uid://bpw7un7mudhi2" path="res://FPSController/WeaponsManagement/Weapons/Grapple Hook/grapplehook.gd" id="1_d7toa"]
 [ext_resource type="PackedScene" uid="uid://bnwaxjn3kx02" path="res://FPSController/WeaponsManagement/Weapons/Grapple Hook/hook_textuer.fbx" id="1_i1x4r"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_d7toa"]
+top_radius = 0.1
+bottom_radius = 0.1
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1w4tv"]
 albedo_color = Color(1, 0, 0, 1)
@@ -9,13 +14,30 @@ albedo_color = Color(1, 0, 0, 1)
 material = SubResource("StandardMaterial3D_1w4tv")
 
 [node name="Grapple Hook" type="Node3D" unique_id=1356339492]
+script = ExtResource("1_d7toa")
 
-[node name="hook_textuer" parent="." unique_id=1145913485 instance=ExtResource("1_i1x4r")]
+[node name="Rope" type="MeshInstance3D" parent="." unique_id=432179982]
+visible = false
+mesh = SubResource("CylinderMesh_d7toa")
+skeleton = NodePath("../hook_texture")
+
+[node name="RayCast3D" type="RayCast3D" parent="." unique_id=514762055]
+transform = Transform3D(-4.371139e-08, 100, 0, -1, -4.371139e-06, 0, 0, 0, 1, -1.5, 0.48107195, 0)
+
+[node name="Timer" type="Timer" parent="." unique_id=577699163]
+wait_time = 5.0
+
+[node name="hook_texture" parent="." unique_id=1145913485 instance=ExtResource("1_i1x4r")]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
-
-[node name="RayCast3D" type="RayCast3D" parent="hook_textuer" unique_id=514762055]
-transform = Transform3D(-8.742278e-08, 200, 0, -2, -8.742278e-06, 0, 0, 0, 2, -3, 0.9621439, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=2075579343]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -101.25732, 0.5081954, 0)
 mesh = SubResource("SphereMesh_nvqsp")
+
+[node name="lookpoint" type="Node3D" parent="." unique_id=218196321]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -1.5590855, 0.46175548, 0)
+
+[node name="HookOrigin" type="Node3D" parent="." unique_id=1648018333]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.579661, 0.47015283, 0)
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
