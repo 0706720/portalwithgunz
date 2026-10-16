@@ -1,5 +1,5 @@
 extends Control
-
+## COMPLETE
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
@@ -28,5 +28,6 @@ func apply_effect(player) -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	# this should delete all instances of cards currently on screen, if that isn't happening
 	# then ensure all cards belong to group 'Card' in the inspector.
+	Global.grenade_size_bonus += 1
 	upgradeNode.clear_unique("grenade_radius")
 	get_tree().call_group("Card", "queue_free")

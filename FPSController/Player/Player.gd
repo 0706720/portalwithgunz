@@ -194,6 +194,7 @@ func _ready() -> void:
 
 	build_default_keybinding()
 	input_actions_check()
+	%Pistol.scale = Vector3.ONE * 3.0
 
 func capture_mouse() -> void:
 	if is_multiplayer_authority():
@@ -549,3 +550,7 @@ func clip_velocity(normal: Vector3, overbounce : float, delta : float) -> void:
 	var adjust := velocity.dot(normal)
 	if adjust < 0.0:
 		velocity -= normal * adjust
+
+func scale_grenade(scale_factor: int):
+	var grenade = get_node("res://grenade.tscn")
+	grenade.scale = Vector3.ONE * 5.0
