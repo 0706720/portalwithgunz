@@ -56,13 +56,13 @@ var spread = 10
 var knockback_force = -30
 @onready var anim_playing = false
 
-@export var grapple_speed: float = 25.0
-@export var grapple_pull_strength: float = 40.0
-@export var max_grapple_distance: float = 50.0
-@export var stop_distance: float = 2.0
-var is_grappling: bool = false
-var grapple_point: Vector3
-@export var rope_length = 0.0
+#@export var grapple_speed: float = 25.0
+#@export var grapple_pull_strength: float = 40.0
+#@export var max_grapple_distance: float = 50.0
+#@export var stop_distance: float = 2.0
+#var is_grappling: bool = false
+#var grapple_point: Vector3s
+#@export var rope_length = 0.0
 
 var mouse_sensitivity = 0.002
 @onready var bulletSpawn := $CameraHolder/Camera3D/bulletSpawn
@@ -329,8 +329,8 @@ func _physics_process(delta):
 	else:
 		anim_player.play("idle")
 
-	if Input.is_action_just_pressed("Grapple") and Global.currentWeapon == 'GrappleGun':
-		start_grapple()
+	#if Input.is_action_just_pressed("Grapple") and Global.currentWeapon == 'GrappleGun':
+		#start_grapple()
 
 	if Input.is_action_just_pressed("weapon1"):
 		weaponsManager.request_weapon_change(0)
@@ -343,11 +343,11 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("weapon5"):
 		weaponsManager.request_weapon_change(4)
 
-	if Input.is_action_just_released("Grapple"):
-		stop_grapple()
-
-	if is_grappling:
-		process_grapple(delta)
+	#if Input.is_action_just_released("Grapple"):
+		#stop_grapple()
+#
+	#if is_grappling:
+		#process_grapple(delta)
 
 	if Input.is_action_just_pressed(throw_action):
 		throw_weapon()
@@ -422,41 +422,42 @@ func show_emote_remote(emote):
 		$EmoteBar.texture = null
 	)
 
+
+
 func gravity_apply(delta):
 	velocity.y -= gravity * delta
 
-func start_grapple():
-	raycast.global_transform = cam.global_transform
-	raycast.target_position = Vector3(0, 0, -max_grapple_distance)
-	raycast.force_raycast_update()
-
-	if raycast.is_colliding():
-		grapple_point = raycast.get_collision_point()
-		rope_length = global_transform.origin.distance_to(grapple_point)
-		is_grappling = true
-
-func process_grapple(delta):
-	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
-	var cam_basis = cam.global_transform.basis
-	var move_dir = (cam_basis.x * input_dir.x + cam_basis.z * input_dir.y).normalized()
-	velocity += move_dir * 10.0 * delta
-	var to_grapple = grapple_point - global_transform.origin
-	var distance = to_grapple.length()
-	var direction = to_grapple.normalized()
-
-	if distance > rope_length:
-		var correction = direction * (distance - rope_length)
-		velocity += correction * 20.0 * delta
-
-	var velocity_away = velocity.dot(direction)
-	if velocity_away > 0:
-		velocity -= direction * velocity_away
-
-	velocity += direction * grapple_pull_strength * delta
-
-func stop_grapple():
-	is_grappling = false
-	velocity *= 1.2
+#func start_grapple():
+	#raycast.global_transform = cam.global_transform
+	#raycast.target_position = Vector3(0, 0, -max_grapple_distance)
+	#raycast.force_raycast_update()
+	#if raycast.is_colliding():
+		#grapple_point = raycast.get_collision_point()
+		#rope_length = global_transform.origin.distance_to(grapple_point)
+		#is_grappling = true
+#
+#func process_grapple(delta):
+	#var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
+	#var cam_basis = cam.global_transform.basis
+	#var move_dir = (cam_basis.x * input_dir.x + cam_basis.z * input_dir.y).normalized()
+	#velocity += move_dir * 10.0 * delta
+	#var to_grapple = grapple_point - global_transform.origin
+	#var distance = to_grapple.length()
+	#var direction = to_grapple.normalized()
+#
+	#if distance > rope_length:
+		#var correction = direction * (distance - rope_length)
+		#velocity += correction * 20.0 * delta
+#
+	#var velocity_away = velocity.dot(direction)
+	#if velocity_away > 0:
+		#velocity -= direction * velocity_away
+#
+	#velocity += direction * grapple_pull_strength * delta
+#
+#func stop_grapple():
+	#is_grappling = false
+	#velocity *= 1.2
 
 func throw_weapon():
 	print("func_weapon called")
