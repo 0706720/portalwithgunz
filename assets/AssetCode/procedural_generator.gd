@@ -10,13 +10,13 @@ signal world_ready
 @export_flags_3d_physics var room_bounds_layer := 2
 @export var max_attempts_per_room := 15
 @export var max_backtracks := 20
-@export var required_straights_after_turn := 0 # Forces linear paths after turns
+@export var required_straights_after_turn := 0
 
 @export_category("Difficulty & Scaling")
 var dungeon_loop := 1
-@export var difficulty_multiplier_per_loop := 1.25 # Increases enemy budget/stats by 25% each loop
-@export var extra_rooms_per_loop := 3 # Adds 3 more rooms per loop
-@export var extra_arenas_per_loop := 1 # Adds 1 extra arena per loop
+@export var difficulty_multiplier_per_loop := 1.25
+@export var extra_rooms_per_loop := 3
+@export var extra_arenas_per_loop := 1
 
 @export_category("Scene References")
 @export var end_room_scene: PackedScene = preload("res://assets/Rooms/Special/end_room_prefab.tscn")
@@ -26,13 +26,16 @@ var dungeon_loop := 1
 @onready var room_container: Node3D = $"../RoomContainer"
 
 @export_category("Arena Settings")
-@export var max_main_arenas := 2 # Hard cap on how many arena rooms can spawn
-@export var branch_arena_target := 2 # Exact number of arenas forced on the side branch
+@export var max_main_arenas := 2
+@export var branch_arena_target := 2
 
-# Runtime tracking variables
 var main_arena_count := 0
 var branch_arena_count := 0
 var splitter_has_spawned := false
+
+@export_category("Treasure Portal Settings")
+@export var treasure_portal_difficulty_multiplier := 2.0
+@export var treasure_reward_multiplier := 2.5
 
 @export_category("Enemy Point-Buy System")
 @export var enemy_spawn_chance := 0.7
@@ -47,38 +50,29 @@ var splitter_has_spawned := false
 	{"scene": preload("res://assets/Enemies/elite_knight.tscn"), "cost": 35},
 ]
 
-# Internal states
 var level_generated := false
 var rng := RandomNumberGenerator.new()
 var all_rooms: Array[PackedScene] = []
 var generated_rooms: Array[Node3D] = []
-var last_turn_direction := ""
 var all_branches: Array = []
-var enemy_spawn_tallies: Dictionary = {}
-var room_spawn_tallies: Dictionary = {}
 
 
 # ==============================================================================
-# 2. INITIALIZATION & SETUP (_ready)
+# 2. INITIALIZATION & SETUP
 # ==============================================================================
 func _ready() -> void:
-	enemy_spawn_tallies.clear()
-	room_spawn_tallies.clear()
 	main_arena_count = 0
 	splitter_has_spawned = false
-	
 	set_process_input(true)
 	
 	if multiplayer.is_server():
 		rng.randomize()
 		load_room_prefabs()
 		
-		if validate_generator_setup():
-			# 1. Generate layout with current loop scaling and build behind loading screen
+		if room_container != null and not all_rooms.is_empty():
 			await generate_spawn_room_first()
 			var layout_data = generate_level_aabb_layout()
 			instantiate_rooms_incrementally(layout_data)
-			
 			level_generated = true
 			emit_signal("world_ready")
 		else:
@@ -90,17 +84,10 @@ func _ready() -> void:
 func load_room_prefabs() -> void:
 	all_rooms.clear()
 	scan_folder_for_rooms("res://assets/Rooms/")
-	print("[Gen] Total valid rooms preloaded into memory: ", all_rooms.size())
-
-
-func validate_generator_setup() -> bool:
-	return room_container != null and not all_rooms.is_empty()
 
 
 func scan_folder_for_rooms(dir_path: String) -> void:
-	if "InDevelopment" in dir_path:
-		return
-		
+	if "InDevelopment" in dir_path: return
 	var dir := DirAccess.open(dir_path)
 	if dir == null: return
 	
@@ -114,21 +101,16 @@ func scan_folder_for_rooms(dir_path: String) -> void:
 		else:
 			if file_name.ends_with(".tscn"):
 				var full_path := dir_path + file_name
-				
 				var skip := false
-				if start_room_scene != null and full_path == start_room_scene.resource_path: skip = true
-				if end_room_scene != null and full_path == end_room_scene.resource_path: skip = true
-				if splitter_room_scene != null and full_path == splitter_room_scene.resource_path: skip = true
-				if treasure_room_scene != null and full_path == treasure_room_scene.resource_path: skip = true 
+				if start_room_scene and full_path == start_room_scene.resource_path: skip = true
+				if end_room_scene and full_path == end_room_scene.resource_path: skip = true
+				if splitter_room_scene and full_path == splitter_room_scene.resource_path: skip = true
+				if treasure_room_scene and full_path == treasure_room_scene.resource_path: skip = true 
 				
-				if skip:
-					file_name = dir.get_next()
-					continue
-				
-				var scene := load(full_path) as PackedScene
-				if scene and validate_prefab_structure(scene): 
-					all_rooms.append(scene)
-					
+				if not skip:
+					var scene := load(full_path) as PackedScene
+					if scene and validate_prefab_structure(scene):
+						all_rooms.append(scene)
 		file_name = dir.get_next()
 	dir.list_dir_end()
 
@@ -141,7 +123,7 @@ func validate_prefab_structure(scene: PackedScene) -> bool:
 
 
 # ==============================================================================
-# 3. CORE GENERATION & SCALING LAYOUT
+# 3. CORE LAYOUT GENERATION
 # ==============================================================================
 func generate_spawn_room_first() -> void:
 	var room := start_room_scene.instantiate() as Node3D
@@ -160,7 +142,6 @@ func build_room_sequence(start_tf: Transform3D, count: int, is_branch: bool, pla
 	var room_transforms: Array[Transform3D] = []
 	var room_scenes: Array[PackedScene] = []
 	
-	# Scale arena limits dynamically based on loop progression
 	var current_max_arenas = max_main_arenas + ((dungeon_loop - 1) * extra_arenas_per_loop)
 	
 	for i in range(1, count + 1):
@@ -170,7 +151,8 @@ func build_room_sequence(start_tf: Transform3D, count: int, is_branch: bool, pla
 		var next_tf = Transform3D.IDENTITY
 		var global_aabb = AABB()
 		
-		if not is_branch and not splitter_has_spawned and i == 4 and splitter_room_scene != null:
+		# Splitter Room restriction: Only spawns after room 5
+		if not is_branch and not splitter_has_spawned and i >= 6 and splitter_room_scene != null:
 			selected_scene = splitter_room_scene
 			splitter_has_spawned = true
 			var inst = selected_scene.instantiate() as Node3D
@@ -183,10 +165,7 @@ func build_room_sequence(start_tf: Transform3D, count: int, is_branch: bool, pla
 			candidate_tf = current_tf * entry.transform.inverse()
 			global_aabb = (candidate_tf * local_aabb).abs()
 			
-			var overlapping = false
-			for ex in placed_aabbs:
-				if ex.intersects(global_aabb): overlapping = true; break
-			
+			var overlapping = placed_aabbs.any(func(ex): return ex.intersects(global_aabb))
 			if not overlapping:
 				placed_aabbs.append(global_aabb)
 				room_transforms.append(candidate_tf)
@@ -195,17 +174,14 @@ func build_room_sequence(start_tf: Transform3D, count: int, is_branch: bool, pla
 				
 				var branch_data = build_room_sequence(candidate_tf * exit_b.transform, 5, true, placed_aabbs)
 				all_branches.append(branch_data)
-				
 				current_tf = candidate_tf * exit_a.transform
 				continue
 			else:
 				inst.queue_free()
 
 		var room_found = false
-		var must_be_straight = false
-		
 		for attempt in range(max_attempts_per_room):
-			must_be_straight = (forced_straight_count > 0)
+			var must_be_straight = (is_branch and i == 1) or (forced_straight_count > 0)
 			var scene = pick_room_for_director(i, must_be_straight, last_was_arena, is_branch, current_max_arenas)
 			if not scene: break
 			
@@ -224,27 +200,19 @@ func build_room_sequence(start_tf: Transform3D, count: int, is_branch: bool, pla
 			candidate_tf = current_tf * entry.transform.inverse()
 			global_aabb = (candidate_tf * local_aabb).abs()
 			
-			var overlapping = false
-			for ex in placed_aabbs:
-				if ex.intersects(global_aabb): overlapping = true; break
-			if overlapping: inst.queue_free(); continue
+			if placed_aabbs.any(func(ex): return ex.intersects(global_aabb)):
+				inst.queue_free(); continue
 			
 			var is_arena = is_room_arena(scene)
 			if is_branch:
 				var force_arena = (i == 2 or i == 4)
-				if force_arena and not is_arena: inst.queue_free(); continue
-				if not force_arena and is_arena: inst.queue_free(); continue 
+				if force_arena != is_arena: inst.queue_free(); continue
 			else:
 				if is_arena and (main_arena_count >= current_max_arenas or last_was_arena):
-					inst.queue_free()
-					continue
+					inst.queue_free(); continue
 			
 			next_tf = candidate_tf * exit.transform
-			
-			if required_straights_after_turn > 0:
-				forced_straight_count = required_straights_after_turn if not is_straight else max(0, forced_straight_count - 1)
-			else:
-				forced_straight_count = 0
+			forced_straight_count = required_straights_after_turn if not is_straight else max(0, forced_straight_count - 1)
 			
 			selected_scene = scene
 			selected_inst = inst
@@ -286,7 +254,6 @@ func generate_level_aabb_layout() -> Dictionary:
 		placed_aabbs.append((start_bounds.shape.get_debug_mesh().get_aabb()).abs())
 	temp_start.queue_free()
 
-	# Scale total room count higher with each loop tier!
 	var current_room_count = room_count + ((dungeon_loop - 1) * extra_rooms_per_loop)
 	var main_layout = build_room_sequence(initial_tf, current_room_count, false, placed_aabbs)
 	var room_scenes = main_layout["scenes"]
@@ -307,10 +274,11 @@ func pick_room_for_director(room_index: int, force_straight: bool, last_was_aren
 	
 	for scene in all_rooms:
 		var is_arena = is_room_arena(scene)
+		if not is_branch and is_arena and room_index < 5: continue
+		
 		if is_branch:
 			var force_arena = (room_index == 2 or room_index == 4)
-			if force_arena and not is_arena: continue
-			if not force_arena and is_arena: continue
+			if force_arena != is_arena: continue
 		else:
 			if is_arena and (main_arena_count >= max_arenas or last_was_arena): continue
 			
@@ -330,15 +298,13 @@ func is_room_arena(room_scene: PackedScene) -> bool:
 		var r_types = meta["room_type"]
 		if r_types is Array:
 			for t in r_types:
-				if "arena" in str(t).to_lower():
-					found = true
-					break
+				if "arena" in str(t).to_lower(): found = true; break
 	inst.queue_free()
 	return found
 
 
 # ==============================================================================
-# 5. INCREMENTAL INSTANTIATION & PORTAL WIRING
+# 5. INSTANTIATION & PORTALS
 # ==============================================================================
 func instantiate_rooms_incrementally(layout_data: Dictionary) -> void:
 	var scenes: Array = layout_data["scenes"]
@@ -354,13 +320,7 @@ func instantiate_rooms_incrementally(layout_data: Dictionary) -> void:
 		generated_rooms.append(room)
 		
 		spawn_enemies_in_room(room, i)
-		
-		# Auto-wire any room that happens to contain a PortalArea!
 		setup_end_portal(room)
-		
-		# Check if this is the final End Room and wire up its portal trigger
-		if i == scenes.size() - 1 and scene == end_room_scene:
-			setup_end_portal(room)
 
 	for b_idx in range(branches.size()):
 		var branch = branches[b_idx]
@@ -376,30 +336,28 @@ func instantiate_rooms_incrementally(layout_data: Dictionary) -> void:
 			generated_rooms.append(room)
 			
 			spawn_enemies_in_room(room, i + 1)
+			setup_end_portal(room)
 
 
 func setup_end_portal(room: Node3D) -> void:
+	if not multiplayer.is_server(): return
+
 	var portal_area = room.get_node_or_null("Portal/PortalArea") as Area3D
-	
-	if portal_area and multiplayer.is_server():
-		print("[Portal Setup] Successfully found PortalArea in room: ", room.name)
-		if not portal_area.body_entered.is_connected(_on_portal_body_entered):
-			portal_area.body_entered.connect(_on_portal_body_entered.bind(portal_area))
+	if portal_area and not portal_area.body_entered.is_connected(_on_portal_body_entered):
+		portal_area.body_entered.connect(_on_portal_body_entered.bind(portal_area, false))
+
+	var treasure_portal_area = room.get_node_or_null("TreasurePortal/Area3D") as Area3D
+	if treasure_portal_area and not treasure_portal_area.body_entered.is_connected(_on_portal_body_entered):
+		treasure_portal_area.body_entered.connect(_on_portal_body_entered.bind(treasure_portal_area, true))
 
 
-func _on_portal_body_entered(body: Node3D, portal_area: Area3D) -> void:
-	print("[Portal] Something entered the portal: ", body.name, " Groups: ", body.get_groups())
+func _on_portal_body_entered(body: Node3D, portal_area: Area3D, is_treasure: bool) -> void:
+	if not multiplayer.is_server(): return
 	
-	if not multiplayer.is_server():
-		return
-		
 	if body.is_in_group("player"):
-		print("[Portal] Player detected! Restarting and scaling dungeon...")
-		# Disable monitoring temporarily so it doesn't trigger multiple times
 		portal_area.set_deferred("monitoring", false)
-		restart_and_scale_dungeon()
-	else:
-		print("[Portal] Entered body was NOT in the 'player' group.")
+		if is_treasure: trigger_treasure_branch(body)
+		else: restart_and_scale_dungeon()
 
 
 func spawn_enemies_in_room(room: Node3D, room_index: int) -> void:
@@ -420,47 +378,56 @@ func spawn_enemies_in_room(room: Node3D, room_index: int) -> void:
 		var enemy_scene = chosen["scene"] as PackedScene
 		if enemy_scene:
 			scaled_budget -= chosen["cost"]
-			
 			var enemy = enemy_scene.instantiate() as Node3D
 			room.add_child(enemy)
 			enemy.global_transform = marker.global_transform
 			enemy.add_to_group("network_enemies")
-			
 			rpc("rpc_spawn_enemy_remote", room.name, enemy_scene.resource_path, marker.global_transform)
 
 
 func restart_and_scale_dungeon() -> void:
-	if not multiplayer.is_server():
-		return
-		
+	if not multiplayer.is_server(): return
 	dungeon_loop += 1
-	print("[Gen] Portal entered! Resetting dungeon for Loop tier: ", dungeon_loop)
-	
-	# 1. Tell all clients to wipe their old rooms
 	rpc("rpc_clear_client_dungeon")
 	await get_tree().process_frame 
 	
-	# 2. Generate start room & full layout on server
 	await generate_spawn_room_first()
 	await get_tree().physics_frame
 	
 	var layout_data = generate_level_aabb_layout()
 	instantiate_rooms_incrementally(layout_data)
 	
-	# 3. Teleport server host player immediately
 	var spawn_room = room_container.get_node_or_null("Room_0")
-	if spawn_room:
+	if spawn_room and Global.players.has(1):
 		var spawn_marker = spawn_room.get_node_or_null("SpawnPoints/PlayerSpawn")
 		var target_transform = spawn_marker.global_transform if spawn_marker else spawn_room.global_transform
 		target_transform.origin += Vector3(0, 1.0, 0)
-		
-		if Global.players.has(1):
-			var host_player = Global.players[1]
-			if is_instance_valid(host_player):
-				host_player.global_transform = target_transform
-				host_player.velocity = Vector3.ZERO
+		var host_player = Global.players[1]
+		if is_instance_valid(host_player):
+			host_player.global_transform = target_transform
+			host_player.velocity = Vector3.ZERO
 	
-	# 4. Broadcast layout state to clients (which triggers remote_world_ready and client auto-snap)
+	for peer in multiplayer.get_peers():
+		request_world_state(peer)
+
+
+func trigger_treasure_branch(player: Node3D) -> void:
+	if not multiplayer.is_server(): return
+	rpc("rpc_clear_client_dungeon")
+	await get_tree().process_frame
+	
+	var placed_aabbs: Array[AABB] = []
+	var temp_start := start_room_scene.instantiate() as Node3D
+	var start_exit := temp_start.get_node("Connectors/Exit") as Node3D
+	var initial_tf := temp_start.global_transform * start_exit.transform
+	temp_start.queue_free()
+	
+	var treasure_layout = build_room_sequence(initial_tf, 3, true, placed_aabbs)
+	if not treasure_layout["scenes"].is_empty():
+		treasure_layout["scenes"][treasure_layout["scenes"].size() - 1] = treasure_room_scene
+		
+	instantiate_rooms_incrementally(treasure_layout)
+	
 	for peer in multiplayer.get_peers():
 		request_world_state(peer)
 
@@ -468,12 +435,10 @@ func restart_and_scale_dungeon() -> void:
 @rpc("any_peer", "reliable")
 func request_world_state(peer_id: int) -> void:
 	if not multiplayer.is_server(): return
-	
-	for i in range(generated_rooms.size()):
-		var room = generated_rooms[i]
+	for room in generated_rooms:
 		rpc_id(peer_id, "rpc_spawn_room_remote", room.scene_file_path, room.global_transform, room.name)
 		
-	await data_sync_delay() # brief yield helper
+	await get_tree().create_timer(0.5).timeout
 	for room in generated_rooms:
 		for child in room.get_children():
 			if child.is_in_group("network_enemies"):
@@ -484,21 +449,12 @@ func request_world_state(peer_id: int) -> void:
 
 @rpc("authority", "call_local", "reliable")
 func rpc_clear_client_dungeon() -> void:
-	# Optional: Show your loading screen here if you have a loading screen controller reference
-	# e.g., LoadingScreen.show()
-	
 	for room in generated_rooms:
-		if is_instance_valid(room):
-			room.queue_free()
+		if is_instance_valid(room): room.queue_free()
 	generated_rooms.clear()
-	
 	main_arena_count = 0
 	branch_arena_count = 0
 	splitter_has_spawned = false
-
-
-func data_sync_delay() -> void:
-	await get_tree().create_timer(0.5).timeout
 
 
 @rpc("authority", "call_remote", "reliable")
@@ -516,7 +472,6 @@ func rpc_spawn_enemy_remote(r_name: String, e_path: String, tf: Transform3D) -> 
 	if not room:
 		await get_tree().process_frame
 		room = room_container.get_node_or_null(r_name)
-		
 	if room:
 		var enemy = load(e_path).instantiate() as Node3D
 		room.add_child(enemy)
@@ -527,7 +482,6 @@ func rpc_spawn_enemy_remote(r_name: String, e_path: String, tf: Transform3D) -> 
 @rpc("authority", "call_remote", "reliable")
 func remote_world_ready() -> void:
 	emit_signal("world_ready")
-	# Once the client's world is ready, find Room_0 locally and snap the local player to it
 	var spawn_room = room_container.get_node_or_null("Room_0")
 	if spawn_room and Global.player:
 		var spawn_marker = spawn_room.get_node_or_null("SpawnPoints/PlayerSpawn")

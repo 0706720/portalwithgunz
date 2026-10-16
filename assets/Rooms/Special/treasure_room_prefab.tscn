@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://dtrwsg8t583xb"]
 
+[ext_resource type="Script" uid="uid://bwi671jt5nokv" path="res://assets/Rooms/Special/treasure_room.gd" id="1_4whyp"]
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vliu7"]
 albedo_color = Color(1, 0.63584566, 0.7547807, 1)
 metallic = 1.0
@@ -15,6 +17,8 @@ data = PackedVector3Array(10, 0, 10, -10, 0, 10, 10, 0, -10, -10, 0, 10, -10, 0,
 size = Vector3(8, 2, 8)
 
 [node name="TreasureRoomPrefab" type="Node3D" unique_id=1067759415]
+script = ExtResource("1_4whyp")
+reward_pool = null
 
 [node name="Connectors" type="Node3D" parent="." unique_id=1707349763]
 
@@ -40,3 +44,14 @@ collision_mask = 3
 [node name="CollisionShape3D" type="CollisionShape3D" parent="BoundsArea" unique_id=1344650141]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("BoxShape3D_kl01i")
+
+[node name="RewardSpawns" type="Node3D" parent="." unique_id=813362542]
+
+[node name="Marker3D_1" type="Marker3D" parent="RewardSpawns" unique_id=1214977995]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 10)
+
+[node name="Marker3D_2" type="Marker3D" parent="RewardSpawns" unique_id=1195012470]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 5)
+
+[node name="Marker3D_3" type="Marker3D" parent="RewardSpawns" unique_id=1309056341]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 15)
