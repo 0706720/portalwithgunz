@@ -4,15 +4,28 @@
 [ext_resource type="Script" uid="uid://becawo6agqcir" path="res://assets/AssetCode/procedural_generator.gd" id="2_m82b1"]
 [ext_resource type="Script" uid="uid://bi0pamcrbsvyv" path="res://Network/ai_director.gd" id="3_d8pbq"]
 [ext_resource type="Script" uid="uid://dkwcsqg2yfq6v" path="res://assets/AssetCode/player_spawner.gd" id="4_mtm5c"]
+[ext_resource type="Texture2D" uid="uid://by2wglgj47twe" path="res://assets/images/qwantani_night_puresky_4k.exr" id="5_8dww3"]
 [ext_resource type="PackedScene" uid="uid://dyhdh556qmjip" path="res://loading_screen.tscn" id="5_bpw3s"]
 
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_8dww3"]
+sky_top_color = Color(0, 0, 0, 1)
+sky_horizon_color = Color(0.00021782173, 0.020611187, 0.20042259, 1)
+sky_energy_multiplier = 0.6
+sky_cover = ExtResource("5_8dww3")
+sky_cover_modulate = Color(0.000551434, 0.07104909, 0.37190443, 1)
+ground_bottom_color = Color(0, 0, 0, 1)
+ground_horizon_color = Color(1.2032688e-06, 0.26817164, 0.49977046, 1)
+ground_energy_multiplier = 0.6
+
 [sub_resource type="Sky" id="Sky_fb6wg"]
+sky_material = SubResource("ProceduralSkyMaterial_8dww3")
 
 [sub_resource type="Environment" id="Environment_cuis1"]
 background_mode = 2
 background_color = Color(0.03529412, 0, 0.06666667, 1)
 sky = SubResource("Sky_fb6wg")
 ambient_light_color = Color(0.14135897, 0.00027270883, 0.29568216, 1)
+tonemap_mode = 2
 ssao_enabled = true
 
 [node name="WorldRoot" type="Node" unique_id=178156929]
@@ -41,15 +54,9 @@ environment = SubResource("Environment_cuis1")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1305743073]
 transform = Transform3D(-0.70710665, 0.70710677, -6.181723e-08, 0.49999994, 0.49999994, 0.7071067, 0.5, 0.49999988, -0.7071067, 0, 0, 0)
-light_color = Color(0.44840753, 0.7695819, 1, 1)
 light_energy = 0.2
 shadow_enabled = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1269018179]
 
 [node name="LoadingScreen" parent="CanvasLayer" unique_id=626300901 instance=ExtResource("5_bpw3s")]
-
-[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="." unique_id=192350852]
-transform = Transform3D(-0.7660445, 0.3213938, -0.55667037, 0, 0.8660254, 0.5, 0.6427876, 0.38302225, -0.663414, 0, 0, 0)
-light_color = Color(0.2250965, 0.00058539025, 0.40424407, 1)
-light_energy = 0.1

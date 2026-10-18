@@ -206,7 +206,5 @@ LevelUp={
 
 [rendering]
 
-renderer/rendering_method="gl_compatibility"
-renderer/rendering_method.mobile="gl_compatibility"
 lights_and_shadows/tighter_shadow_caster_culling=false
 occlusion_culling/use_occlusion_culling=true
