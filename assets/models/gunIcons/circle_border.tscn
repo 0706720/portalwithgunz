@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://ostt735hy24a"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ij2t7"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0.5058824, 0.52156866, 0.5372549, 1)
+corner_radius_top_left = 500
+corner_radius_top_right = 500
+corner_radius_bottom_right = 500
+corner_radius_bottom_left = 500
+
+[node name="CircleBorder" type="Node2D" unique_id=322981801]
+
+[node name="Panel" type="Panel" parent="." unique_id=1074586976]
+custom_minimum_size = Vector2(150, 150)
+offset_left = 407.0
+offset_top = 174.0
+offset_right = 557.0
+offset_bottom = 324.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_ij2t7")

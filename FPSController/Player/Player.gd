@@ -194,7 +194,6 @@ func _ready() -> void:
 
 	build_default_keybinding()
 	input_actions_check()
-	%Pistol.scale = Vector3.ONE * 3.0
 
 func capture_mouse() -> void:
 	if is_multiplayer_authority():
