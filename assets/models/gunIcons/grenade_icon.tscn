@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://cxtnlpv0hosl8"]
+
+[ext_resource type="PackedScene" uid="uid://ostt735hy24a" path="res://assets/models/gunIcons/circle_border.tscn" id="1_hv7gj"]
+
+[node name="GrenadeIcon" type="Node2D" unique_id=96000430]
+
+[node name="CircleBorder" parent="." unique_id=322981801 instance=ExtResource("1_hv7gj")]
