@@ -53,18 +53,15 @@ func update_rope() -> void:
 	var end = grapple_point
 	var distance = start.distance_to(end)
 	
-	# 1. Place the base of the rope directly at the gun
-	rope.global_position = start
+	# 1. Place the rope at the exact midpoint between the gun and the wall
+	rope.global_position = (start + end) * 0.5
 	
-	# 2. Scale the full distance (divided by 2 because Godot's default CylinderMesh height is 2.0)
-	#rope.scale = Vector3(1.0, distance * 0.5, 1.0)
-	rope.scale = Vector3(1.0, 1.0 , distance * 0.5)
-	
-	# 3. Point the rope toward the grapple point
+	# 2. Point the rope toward the grapple point
 	rope.look_at(end, Vector3.UP)
-	
-	# 4. Correct the rotation if your cylinder's length runs along Z instead of Y
 	rope.rotate_object_local(Vector3.RIGHT, PI * 0.5)
+	
+	# 3. Scale by the FULL distance unit-for-unit (since it scales out from the center)
+	rope.scale = Vector3(1.0, distance * 2.0, 1.0)
 
 func _on_timer_timeout() -> void:
 	stop_grapple()
