@@ -15,6 +15,7 @@ render_priority = 0
 shader = ExtResource("1_svdvv")
 shader_parameter/portal_texture = SubResource("NoiseTexture2D_svdvv")
 shader_parameter/portal_color = Color(0.3, 0.5, 1, 1)
+shader_parameter/emission_intensity = 3.0
 shader_parameter/swirl_strength = 2.000000569999999
 shader_parameter/rotation_speed = 3.0000006174999996
 shader_parameter/edge_softness = 0.10000000405148

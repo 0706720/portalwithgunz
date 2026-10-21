@@ -43,11 +43,11 @@ var splitter_has_spawned := false
 	{"scene": preload("res://assets/Enemies/bat.tscn"), "cost": 4},
 	{"scene": preload("res://assets/Enemies/goblin.tscn"), "cost": 5},
 	{"scene": preload("res://assets/Enemies/skeleton_archer.tscn"), "cost": 10},
-	{"scene": preload("res://assets/Enemies/sorcerer.tscn"), "cost": 15},
-	{"scene": preload("res://assets/Enemies/warlock.tscn"), "cost": 15},
-	{"scene": preload("res://assets/Enemies/orc.tscn"), "cost": 20},
-	{"scene": preload("res://assets/Enemies/elite_crossbower.tscn"), "cost": 30},
-	{"scene": preload("res://assets/Enemies/elite_knight.tscn"), "cost": 35},
+	#{"scene": preload("res://assets/Enemies/sorcerer.tscn"), "cost": 15},
+	#{"scene": preload("res://assets/Enemies/warlock.tscn"), "cost": 15},
+	#{"scene": preload("res://assets/Enemies/orc.tscn"), "cost": 20},
+	#{"scene": preload("res://assets/Enemies/elite_crossbower.tscn"), "cost": 30},
+	#{"scene": preload("res://assets/Enemies/elite_knight.tscn"), "cost": 35},
 ]
 
 var level_generated := false
