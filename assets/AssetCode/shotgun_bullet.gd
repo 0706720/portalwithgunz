@@ -14,3 +14,8 @@ func _process(delta: float) -> void:
 func _on_body_entered(body: Node3D) -> void:
 	if body.is_in_group("Object"):
 		queue_free()
+	if body.is_in_group('target'):
+				# If the enemy has a receive_damage function, call it via RPC (passing damage amount, e.g., 25)
+		if body.has_method("receive_damage"):
+			body.receive_damage.rpc(10)
+			queue_free()

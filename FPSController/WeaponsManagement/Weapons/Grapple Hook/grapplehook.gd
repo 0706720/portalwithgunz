@@ -2,7 +2,7 @@ extends Node3D
 
 @export var pull_force: float = 50.0
 @export var rope_length_slack: float = 1.0
-@export var grapple_duration: float = 15.0
+@export var grapple_duration: float = 5.0
 
 var grapple_point: Vector3
 var last_shot_point: Vector3
@@ -61,7 +61,7 @@ func update_rope() -> void:
 	rope.rotate_object_local(Vector3.RIGHT, PI * 0.5)
 	
 	# 3. Scale by the FULL distance unit-for-unit (since it scales out from the center)
-	rope.scale = Vector3(1.0, distance * 2.0, 1.0)
+	rope.scale = Vector3(1.0, distance * 1.7, 1.0)
 
 func _on_timer_timeout() -> void:
 	stop_grapple()
