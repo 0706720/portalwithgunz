@@ -3,6 +3,7 @@ extends Node
 @onready var xpBar = %xpBar
 @onready var UI: Control = %HUD
 @onready var camera = %Camera3D
+@onready var message = get_node("res://assets/models/gunIcons/popup.tscn")
 
 # rarity values are as follows: 1 for common, 2 for rare, 3 for legendary (if we do those).
 @export var card_pool: Array[Dictionary] = [
@@ -34,8 +35,8 @@ func _process(delta: float) -> void:
 	pass
 
 func _add_options(input):
-# intended logic: use the upgradesNode to 'paste' 3 random options out of the cards available onto 
-# each player's screens locally, every roll seperate.
+	# intended logic: use the upgradesNode to 'paste' 3 random options out of the cards available onto 
+	# each player's screens locally, every roll seperate.
 	#print('found signal and func ran: ' + str(input))
 	# how many upgrades per person
 	var options = 3
@@ -67,6 +68,8 @@ func _add_options(input):
 
 		spawned_card.position = Vector2(pos, 80)
 		UI.add_child(spawned_card)
+		Global.signal_popup()
+		Global.upgrade_pending = false
 		#print("card: " + str(spawned_card))
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 

@@ -19,7 +19,7 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	# developer tool that will not remain permanently
-	if Input.is_action_just_pressed("LevelUp"):
+	if Input.is_action_just_pressed("LevelUp") and Global.upgrade_pending:
 		level_up.emit(1)
 	
 func on_xp_gain(amount):
@@ -34,7 +34,8 @@ func on_xp_gain(amount):
 		if experience >= level_amount:
 			create_new_level()
 			experience = 0
-			level_up.emit(1)
+			Global.upgrade_pending = true
+			Global.signal_popup()
 		update_progress(experience, level_amount)
 
 func update_progress(exp, max_xp):
