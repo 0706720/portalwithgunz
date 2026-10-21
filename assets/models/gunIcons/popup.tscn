@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://bprk3daoy6f18"]
+
+[node name="Popup" type="Node2D" unique_id=392233854]
+
+[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=1922022400]
+offset_right = 391.0
+offset_bottom = 26.0
+bbcode_enabled = true
+text = "[color=blue]You leveled up![/color] Click '-' to view available upgrades"
