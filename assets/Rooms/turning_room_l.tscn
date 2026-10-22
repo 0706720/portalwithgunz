@@ -61,6 +61,9 @@ data = PackedVector3Array(20, 0, 10, -20, 0, 10, 20, 0, -10, -20, 0, 10, -20, 0,
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_p2jly"]
 data = PackedVector3Array(-1, 5, 10, 1, 5, 10, -1, -5, 10, 1, 5, 10, 1, -5, 10, -1, -5, 10, 1, 5, -10, -1, 5, -10, 1, -5, -10, -1, 5, -10, -1, -5, -10, 1, -5, -10, 1, 5, 10, 1, 5, -10, 1, -5, 10, 1, 5, -10, 1, -5, -10, 1, -5, 10, -1, 5, -10, -1, 5, 10, -1, -5, -10, -1, 5, 10, -1, -5, 10, -1, -5, -10, 1, 5, 10, -1, 5, 10, 1, 5, -10, -1, 5, 10, -1, 5, -10, 1, 5, -10, -1, -5, 10, 1, -5, 10, -1, -5, -10, 1, -5, 10, 1, -5, -10, -1, -5, -10)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_o30tn"]
+size = Vector3(20, 10, 1)
+
 [node name="TurningRoomL" type="Node3D" unique_id=1160821041]
 
 [node name="Connectors" type="Node3D" parent="." unique_id=890660771]
@@ -169,3 +172,11 @@ transform = Transform3D(-0.8660254, 0.5, -8.742278e-08, 0.5, 0.8660254, 0, 7.571
 
 [node name="LightmapGI" type="LightmapGI" parent="." unique_id=1167044199]
 light_data = ExtResource("5_o30tn")
+
+[node name="ActivationArea" type="Area3D" parent="." unique_id=293920959]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+collision_layer = 255
+collision_mask = 255
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ActivationArea" unique_id=457540040]
+shape = SubResource("BoxShape3D_o30tn")

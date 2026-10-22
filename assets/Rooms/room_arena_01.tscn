@@ -71,6 +71,9 @@ data = PackedVector3Array(-21, 0.049999997, 20, 21, 0.049999997, 20, -21, -0.049
 [sub_resource type="BoxShape3D" id="BoxShape3D_inn36"]
 size = Vector3(8, 2, 8)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_g4v7s"]
+size = Vector3(20, 10, 1)
+
 [node name="ArenaPrefab01" type="Node3D" unique_id=1768685127]
 
 [node name="Metadata" type="Node" parent="." unique_id=939893820]
@@ -89,6 +92,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 40)
 [node name="SpawnPoints" type="Node3D" parent="." unique_id=268442773]
 
 [node name="enemy_spawns" type="Node3D" parent="SpawnPoints" unique_id=800816673]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 20)
 
 [node name="spawn1" type="Node3D" parent="SpawnPoints/enemy_spawns" unique_id=703455805]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 10)
@@ -293,3 +297,11 @@ shape = SubResource("BoxShape3D_inn36")
 
 [node name="LightmapGI" type="LightmapGI" parent="." unique_id=417620790]
 light_data = ExtResource("7_27py7")
+
+[node name="ActivationArea" type="Area3D" parent="." unique_id=172302515]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+collision_layer = 255
+collision_mask = 255
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ActivationArea" unique_id=315261343]
+shape = SubResource("BoxShape3D_g4v7s")

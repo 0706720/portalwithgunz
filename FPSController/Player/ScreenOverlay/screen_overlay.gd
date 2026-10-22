@@ -16,21 +16,43 @@ class_name HUD
 @onready var Portal_two_Label_text: Label = %PortalTwoLabelText
 @onready var Points_label_text: Label = %PointsLabelText
 
+# Level & Status label reference
+@onready var current_level_label_text: Label = %currentLevelLabelText
+
+func _ready() -> void:
+	# Give the engine a couple of frames to ensure all nodes and singletons are fully loaded
+	await get_tree().create_timer(0.1).timeout
+	
+	# Keep trying to find the generator until it's available
+	var procedural_gen = Global.get("current_generator")
+	
+	# Fallback to finding it via group if Global hasn't caught it yet
+	if not procedural_gen:
+		procedural_gen = get_tree().get_first_node_in_group("generator")
+	
+	if procedural_gen and is_instance_valid(procedural_gen):
+		var current_loop = procedural_gen.dungeon_loop
+		var is_treasure = procedural_gen.is_treasure_run
+		
+		if current_level_label_text:
+			var status_text = "Treasure Branch" if is_treasure else "Standard Dungeon"
+			current_level_label_text.text = "Loop: %d | Status: %s" % [current_loop, status_text]
+	else:
+		# Ultimate fallback so it never stays blank on level 1
+		if current_level_label_text:
+			current_level_label_text.text = "Loop: 1 | Status: Standard Dungeon"
+
 func _process(_delta : float) -> void:
 	display_current_FPS()
-	
 	display_properties()
 	
 func display_properties() -> void:
 	if is_multiplayer_authority():
 		current_state_label_text.set_text(str(play_char.state_machine.current_state.state_name))
-		#current_state_label_text.set_text(str(play_char.state_machine.curr_state_name))
 		desired_move_speed_label_text.set_text(str(round_to_3_decimals(play_char.desired_move_speed)))
 		is_on_floor_label_text.set_text(str(play_char.is_on_floor()))
 		velocity_label_text.set_text(str(round_to_3_decimals(play_char.velocity.length())))
 		Air_speed_label_text.set_text(str(round_to_3_decimals(play_char.move_speed)))
-		#Portal_two_Label_text.set_txt(str(round_to_3_decimals()))
-		#Portal_two_Label_text.set_txt(str(round_to_3_decimals()))
 		Points_label_text.set_text(str(Global.current_score))
 	else:
 		hide()

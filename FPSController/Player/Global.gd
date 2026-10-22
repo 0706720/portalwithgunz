@@ -1,5 +1,7 @@
 extends Node
  
+var current_generator: Node = null
+
 # middleman Global.gd acts as a way to connect data flow of enemy death needed for xp
 # given that enemy does not exist inside of Player's scene tree.
 signal experience_up(amount)
