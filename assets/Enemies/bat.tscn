@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://hmcquic7h8j"]
 
-[ext_resource type="Script" uid="uid://dc3u8ckutqrs2" path="res://assets/Enemies/flying_enemy.gd" id="1_pblot"]
+[ext_resource type="Script" uid="uid://d0i6e1a140beq" path="res://assets/Enemies/flying_enemy_ranged.gd" id="1_pblot"]
+[ext_resource type="PackedScene" uid="uid://df17s8ffphdeh" path="res://assets/Enemies/laser.tscn" id="2_sfnse"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_pblot"]
 radius = 1.0
@@ -29,8 +30,15 @@ radius = 1.0
 height = 2.0
 
 [node name="Bat" type="CharacterBody3D" unique_id=1845121343]
+motion_mode = 1
 script = ExtResource("1_pblot")
+max_flight_altitude = 18.0
+projectile_scene = ExtResource("2_sfnse")
 speed = 4.0
+aggro_range = 30.0
+min_preferred_distance = 8.0
+max_preferred_distance = 18.0
+attack_range = 15.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1487910360]
 shape = SubResource("SphereShape3D_pblot")
@@ -51,3 +59,6 @@ skeleton = NodePath("../..")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="MeshHolder" unique_id=661030915]
 mesh = SubResource("SphereMesh_45kln")
 skeleton = NodePath("../..")
+
+[node name="RayCast3D" type="RayCast3D" parent="." unique_id=1251922401]
+target_position = Vector3(0, 0, -15)

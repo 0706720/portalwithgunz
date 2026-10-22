@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bpo7c0shq8d0m"]
 
 [ext_resource type="Script" uid="uid://2rpo01itsjmb" path="res://assets/Enemies/ranged_enemy.gd" id="1_lrssj"]
-[ext_resource type="PackedScene" uid="uid://bo72as1hvuoe4" path="res://assets/Enemies/bullet.tscn" id="2_gul52"]
+[ext_resource type="PackedScene" uid="uid://bo72as1hvuoe4" path="res://assets/Enemies/arrow.tscn" id="2_gul52"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_yf5fn"]
 radius = 1.0

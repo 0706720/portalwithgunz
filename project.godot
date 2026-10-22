@@ -26,6 +26,12 @@ Global="*uid://c1xxttxh8shp6"
 Network="*uid://r8j6sp7df6v"
 AI_Director="*uid://bi0pamcrbsvyv"
 
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/size/mode=3
+
 [dotnet]
 
 project/assembly_name="MultiplayerFPSTemplate"
