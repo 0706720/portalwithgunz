@@ -67,6 +67,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, 20)
 [node name="SpawnPoints" type="Node3D" parent="." unique_id=409352592]
 
 [node name="enemy_spawns" type="Node3D" parent="SpawnPoints" unique_id=2141860867]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0)
 
 [node name="spawn1" type="Node3D" parent="SpawnPoints/enemy_spawns" unique_id=1402797742]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 4, 10)

@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://j3ueaiuk75p5"]
 
 [ext_resource type="Shader" uid="uid://n8l8xsgj3vl4" path="res://assets/Rooms/Special/end_room_prefab.gdshader" id="1_g1grd"]
+[ext_resource type="Script" uid="uid://bekw3a32md71i" path="res://assets/Interactables/Rewards/treasure_portal.gd" id="1_s8ikd"]
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_s8ikd"]
 
@@ -21,7 +22,8 @@ size = Vector2(2, 4)
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_fy33k"]
 data = PackedVector3Array(1, -2, 0, -1, -2, 0, 1, 2, 0, -1, -2, 0, -1, 2, 0, 1, 2, 0)
 
-[node name="TreasurePortal" type="Node3D" unique_id=1281683551]
+[node name="TreasurePortal" type="Node3D" unique_id=1281683551 groups=["network_interactables"]]
+script = ExtResource("1_s8ikd")
 
 [node name="Portal" type="MeshInstance3D" parent="." unique_id=1673849547]
 transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)

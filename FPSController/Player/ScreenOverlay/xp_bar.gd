@@ -30,7 +30,7 @@ func on_xp_gain(amount):
 	var procedural_gen = get_tree().get_first_node_in_group("generator")
 	if procedural_gen and "is_treasure_run" in procedural_gen and procedural_gen.is_treasure_run:
 		# Apply a multiplier for treasure branches (e.g., 2.0x XP)
-		amount *= 2.0 
+		amount *= 5.0 
 
 	if Global.xp_threshold_card == true:
 		var am = float(amount)

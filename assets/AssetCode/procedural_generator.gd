@@ -352,10 +352,12 @@ func spawn_enemies_in_room(room: Node3D, room_index: int) -> void:
 	var meta = room.get_node_or_null("Metadata")
 	var base_budget: int = meta.enemy_budget if meta and "enemy_budget" in meta else 40
 	
+	# Calculate total scaling multiplier based on loop and treasure state
 	var current_multiplier = difficulty_multiplier_per_loop
 	if is_treasure_run:
 		current_multiplier *= treasure_portal_difficulty_multiplier
 		
+	# Scale the budget exponentially per loop (e.g., Loop 2 gets significantly more points)
 	var scaled_budget = int(base_budget * pow(current_multiplier, dungeon_loop - 1))
 	var room_enemy_data: Array[Dictionary] = []
 	
@@ -370,7 +372,8 @@ func spawn_enemies_in_room(room: Node3D, room_index: int) -> void:
 			scaled_budget -= chosen["cost"]
 			room_enemy_data.append({
 				"path": enemy_scene.resource_path,
-				"transform": marker.global_transform
+				"transform": marker.global_transform,
+				"multiplier": current_multiplier
 			})
 	
 	var is_arena = "arena" in room.scene_file_path.to_lower()
@@ -379,26 +382,60 @@ func spawn_enemies_in_room(room: Node3D, room_index: int) -> void:
 			if "arena" in str(t).to_lower(): is_arena = true
 			
 	if is_arena:
-		_trickle_spawn_enemies(room, room_enemy_data)
+		setup_arena_trigger(room, room_enemy_data)
 	else:
 		for enemy_data in room_enemy_data:
 			var enemy = load(enemy_data["path"]).instantiate() as Node3D
+			if enemy.has_method("initialize_scaled_stats"):
+				enemy.initialize_scaled_stats(enemy_data["multiplier"])
 			room.add_child(enemy)
 			enemy.global_transform = enemy_data["transform"]
 			enemy.add_to_group("network_enemies")
-			rpc("rpc_spawn_enemy_remote", room.name, enemy_data["path"], enemy_data["transform"])
+			rpc("rpc_spawn_enemy_remote", room.name, enemy_data["path"], enemy_data["transform"], enemy_data["multiplier"])
+
+
+func setup_arena_trigger(room: Node3D, enemy_data_list: Array[Dictionary]) -> void:
+	if not multiplayer.is_server(): return
+	
+	# Look for the dedicated ActivationArea node you just placed in the prefab
+	var trigger_area := room.get_node_or_null("ActivationArea") as Area3D
+	if trigger_area:
+		if not trigger_area.body_entered.is_connected(_on_arena_entered):
+			trigger_area.body_entered.connect(_on_arena_entered.bind(trigger_area, room, enemy_data_list))
+	else:
+		# Fallback if an arena prefab doesn't have an ActivationArea yet
+		print("[Arena Warning] Room ", room.name, " is an arena but lacks an ActivationArea node!")
+
+
+func _on_arena_entered(body: Node3D, trigger_area: Area3D, room: Node3D, enemy_data_list: Array[Dictionary]) -> void:
+	if not multiplayer.is_server(): return
+	if not body.is_in_group("player"): return
+	if not is_instance_valid(trigger_area) or not trigger_area.monitoring: return
+	
+	# Disable trigger so it only fires once per arena
+	trigger_area.set_deferred("monitoring", false)
+	
+	print("[Arena] Player entered arena: ", room.name, ". Starting wave trickle...")
+	_trickle_spawn_enemies(room, enemy_data_list)
 
 
 func _trickle_spawn_enemies(room: Node3D, enemy_data_list: Array[Dictionary]) -> void:
 	if not multiplayer.is_server(): return
+		
 	for enemy_data in enemy_data_list:
 		if not is_instance_valid(room): break
-		var enemy = load(enemy_data["path"]).instantiate() as Node3D
-		room.add_child(enemy)
-		enemy.global_transform = enemy_data["transform"]
-		enemy.add_to_group("network_enemies")
-		rpc("rpc_spawn_enemy_remote", room.name, enemy_data["path"], enemy_data["transform"])
-		await get_tree().create_timer(0.8).timeout
+			
+		var scene = load(enemy_data["path"]) as PackedScene
+		if scene:
+			var enemy = scene.instantiate() as Node3D
+			if enemy.has_method("initialize_scaled_stats"):
+				enemy.initialize_scaled_stats(enemy_data["multiplier"])
+			room.add_child(enemy)
+			enemy.global_transform = enemy_data["transform"]
+			enemy.add_to_group("network_enemies")
+			
+			rpc("rpc_spawn_enemy_remote", room.name, enemy_data["path"], enemy_data["transform"], enemy_data["multiplier"])
+			await get_tree().create_timer(0.8).timeout
 
 
 func setup_end_portal(room: Node3D) -> void: 
@@ -523,12 +560,36 @@ func request_world_state(peer_id: int) -> void:
 	rpc_id(peer_id, "rpc_update_dungeon_hud", dungeon_loop, is_treasure_run)
 	
 	for room in generated_rooms:
+		# 1. Spawn the room base scene on the client
 		rpc_id(peer_id, "rpc_spawn_room_remote", room.scene_file_path, room.global_transform, room.name)
+		
+		# 2. Sync enemies inside the room
 		for child in room.get_children():
 			if child.is_in_group("network_enemies"):
 				rpc_id(peer_id, "rpc_spawn_enemy_remote", room.name, child.scene_file_path, child.global_transform)
+			
+			# 3. Sync interactables inside the room (Chests, Loot, etc.)
+			elif child.is_in_group("network_interactables"):
+				rpc_id(peer_id, "rpc_spawn_interactable_remote", room.name, child.scene_file_path, child.global_transform, child.name)
 		
 	rpc_id(peer_id, "remote_world_ready")
+
+
+@rpc("authority", "call_remote", "reliable")
+func rpc_spawn_interactable_remote(r_name: String, i_path: String, tf: Transform3D, i_name: String) -> void:
+	var room = room_container.get_node_or_null(r_name)
+	if not room:
+		await get_tree().process_frame
+		room = room_container.get_node_or_null(r_name)
+		
+	if room:
+		var scene = load(i_path) as PackedScene
+		if scene:
+			var interactable = scene.instantiate() as Node3D
+			interactable.name = i_name
+			room.add_child(interactable)
+			interactable.global_transform = tf
+			interactable.add_to_group("network_interactables")
 
 
 @rpc("authority", "call_local", "reliable")
@@ -551,7 +612,7 @@ func rpc_spawn_room_remote(path: String, tf: Transform3D, r_name: String) -> voi
 
 
 @rpc("authority", "call_remote", "reliable")
-func rpc_spawn_enemy_remote(r_name: String, e_path: String, tf: Transform3D) -> void:
+func rpc_spawn_enemy_remote(r_name: String, e_path: String, tf: Transform3D, multiplier: float = 1.0) -> void:
 	var room = room_container.get_node_or_null(r_name)
 	if not room:
 		await get_tree().process_frame
@@ -561,6 +622,8 @@ func rpc_spawn_enemy_remote(r_name: String, e_path: String, tf: Transform3D) -> 
 		var scene = load(e_path) as PackedScene
 		if scene:
 			var enemy = scene.instantiate() as Node3D
+			if enemy.has_method("initialize_scaled_stats"):
+				enemy.initialize_scaled_stats(multiplier)
 			room.add_child(enemy)
 			enemy.global_transform = tf
 			enemy.add_to_group("network_enemies")

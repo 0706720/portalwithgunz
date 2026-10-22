@@ -24,6 +24,7 @@ var attack_timer := 0.0
 
 var target_player: Node3D = null
 var is_aggroed := false
+var stat_multiplier := 1.0
 
 var movement_timer := 0.0
 var current_wander_dir := Vector3.ZERO
@@ -42,6 +43,12 @@ func _ready() -> void:
 		find_player()
 		movement_timer = randf_range(1.0, 3.0)
 		pick_new_wander_direction()
+
+func initialize_scaled_stats(multiplier: float) -> void:
+	stat_multiplier = multiplier
+	max_health = int(max_health * stat_multiplier)
+	current_health = max_health
+	attack_damage = int(attack_damage * stat_multiplier)
 
 func find_player() -> void:
 	var players = get_tree().get_nodes_in_group("player")
@@ -78,7 +85,7 @@ func _physics_process(delta: float) -> void:
 		return
 
 	# HARDWARE OPTIMIZATION (Distance Culling): Skip heavy AI logic if players are >25m away
-	if global_position.distance_to(target_player.global_position) > 25.0:
+	if global_position.distance_to(target_player.global_position) > 50.0:
 		return
 
 	if wall_hit_cooldown > 0.0:
@@ -177,7 +184,7 @@ func die() -> void:
 	if multiplayer.is_server():
 		for player in get_tree().get_nodes_in_group("player"):
 			if is_instance_valid(player):
-				player.rpc("add_experience", 10)
+				player.rpc("add_experience", 1)
 	queue_free()
 
 @rpc("authority", "call_remote", "reliable")
