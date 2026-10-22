@@ -30,14 +30,12 @@ var current_wander_dir := Vector3.ZERO
 var wall_hit_cooldown := 0.0 
 var target_refresh_timer := 0.0
 
-@onready var synchronizer: MultiplayerSynchronizer = $MultiplayerSynchronizer
+# Network sync throttling variables
+var sync_timer := 0.0
+const SYNC_INTERVAL := 0.05 # 20 updates per second for smooth client updates without packet flooding
 
 func _ready() -> void:
 	add_to_group("target")
-	
-	# CRITICAL: Force the MultiplayerSynchronizer authority to the server (ID 1) on all machines
-	if has_node("MultiplayerSynchronizer"):
-		$MultiplayerSynchronizer.set_multiplayer_authority(1)
 	
 	if multiplayer.is_server():
 		await get_tree().physics_frame
@@ -102,10 +100,12 @@ func _physics_process(delta: float) -> void:
 			velocity.x = move_toward(velocity.x, 0, speed * delta * 5.0)
 			velocity.z = move_toward(velocity.z, 0, speed * delta * 5.0)
 			move_and_slide()
+			_try_sync_transform(delta)
 			return
 	else:
 		if distance_to_player > aggro_range * 2.0:
 			is_aggroed = false
+			_try_sync_transform(delta)
 			return
 
 	if distance_to_player <= attack_range:
@@ -148,6 +148,14 @@ func _physics_process(delta: float) -> void:
 	velocity.z = move_toward(velocity.z, target_velocity.z, speed * delta * 6.0)
 
 	move_and_slide()
+	_try_sync_transform(delta)
+
+# THROTTLED NETWORK SYNC
+func _try_sync_transform(delta: float) -> void:
+	sync_timer += delta
+	if sync_timer >= SYNC_INTERVAL:
+		sync_timer = 0.0
+		rpc("sync_enemy_transform", global_transform)
 
 # VIRTUAL METHOD: Child scripts will override this!
 func perform_attack() -> void:
@@ -175,3 +183,7 @@ func die() -> void:
 @rpc("authority", "call_remote", "reliable")
 func rpc_client_die() -> void:
 	queue_free()
+
+@rpc("authority", "unreliable")
+func sync_enemy_transform(new_transform: Transform3D) -> void:
+	global_transform = new_transform

@@ -18,14 +18,6 @@ albedo_color = Color(1, 0, 1, 1)
 material = SubResource("StandardMaterial3D_yf5fn")
 size = Vector3(1, 0.2, 0.1)
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_lrssj"]
-properties/0/path = NodePath(".:rotation")
-properties/0/spawn = true
-properties/0/replication_mode = 1
-properties/1/path = NodePath(".:position")
-properties/1/spawn = true
-properties/1/replication_mode = 1
-
 [node name="SkeletonArcher" type="CharacterBody3D" unique_id=1686824275]
 script = ExtResource("1_lrssj")
 projectile_scene = ExtResource("2_gul52")
@@ -45,8 +37,3 @@ target_position = Vector3(0, 0, -15)
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=422860626]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -1)
 mesh = SubResource("BoxMesh_g4v7s")
-
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=1859756267]
-physics_interpolation_mode = 1
-root_path = NodePath("")
-replication_config = SubResource("SceneReplicationConfig_lrssj")
