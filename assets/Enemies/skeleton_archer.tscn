@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bpo7c0shq8d0m"]
 
-[ext_resource type="Script" uid="uid://f4pnbc3ykgbk" path="res://assets/Enemies/enemy.gd" id="1_5d0my"]
+[ext_resource type="Script" uid="uid://2rpo01itsjmb" path="res://assets/Enemies/ranged_enemy.gd" id="1_lrssj"]
+[ext_resource type="PackedScene" uid="uid://bo72as1hvuoe4" path="res://assets/Enemies/bullet.tscn" id="2_gul52"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_yf5fn"]
 radius = 1.0
@@ -10,17 +11,34 @@ height = 4.0
 radius = 1.0
 height = 4.0
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yf5fn"]
+albedo_color = Color(1, 0, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_g4v7s"]
+material = SubResource("StandardMaterial3D_yf5fn")
+size = Vector3(1, 0.2, 0.1)
+
 [node name="SkeletonArcher" type="CharacterBody3D" unique_id=1686824275]
-script = ExtResource("1_5d0my")
+script = ExtResource("1_lrssj")
+projectile_scene = ExtResource("2_gul52")
 speed = 6.5
 aggro_range = 120.0
 min_preferred_distance = 30.0
 max_preferred_distance = 55.0
 strafe_speed_multiplier = 1.4
 separation_weight = 1.5
+attack_range = 40.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=445519343]
 mesh = SubResource("CapsuleMesh_yf5fn")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=640262504]
 shape = SubResource("CapsuleShape3D_g4v7s")
+
+[node name="LineOfSight" type="RayCast3D" parent="." unique_id=19786117]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+target_position = Vector3(0, 0, -15)
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=422860626]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -1)
+mesh = SubResource("BoxMesh_g4v7s")
