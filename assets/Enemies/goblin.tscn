@@ -14,13 +14,18 @@ height = 4.0
 radius = 1.0
 height = 4.0
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_t2qjf"]
+properties/0/path = NodePath(".:rotation")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:position")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
 [node name="Goblin" type="CharacterBody3D" unique_id=525620555 groups=["Enemy", "enemy"]]
 script = ExtResource("1_t2qjf")
 speed = 7.0
 aggro_range = 100.0
-max_preferred_distance = 20.0
-strafe_speed_multiplier = 0.5
-separation_weight = 1.5
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1496695776]
 mesh = SubResource("CapsuleMesh_an04p")
@@ -31,3 +36,8 @@ autostart = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=899935191]
 shape = SubResource("CapsuleShape3D_yf5fn")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=1355572331]
+physics_interpolation_mode = 1
+root_path = NodePath("")
+replication_config = SubResource("SceneReplicationConfig_t2qjf")

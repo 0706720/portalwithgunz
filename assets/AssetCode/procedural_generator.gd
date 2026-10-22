@@ -324,7 +324,7 @@ func instantiate_rooms_incrementally(layout_data: Dictionary) -> void:
 		room.global_transform = transforms[i]
 		generated_rooms.append(room)
 		
-		queue_enemies_in_room(room, i)
+		spawn_enemies_in_room(room, i)
 		setup_end_portal(room)
 
 	for b_idx in range(branches.size()):
@@ -340,11 +340,11 @@ func instantiate_rooms_incrementally(layout_data: Dictionary) -> void:
 			room.global_transform = b_transforms[i]
 			generated_rooms.append(room)
 			
-			queue_enemies_in_room(room, i + 1)
+			spawn_enemies_in_room(room, i + 1)
 			setup_end_portal(room)
 
 
-func queue_enemies_in_room(room: Node3D, room_index: int) -> void:
+func spawn_enemies_in_room(room: Node3D, room_index: int) -> void:
 	if room_index == 0: return
 	var spawns_node = room.get_node_or_null("SpawnPoints/enemy_spawns")
 	if not spawns_node or enemy_pool.is_empty(): return
@@ -372,36 +372,33 @@ func queue_enemies_in_room(room: Node3D, room_index: int) -> void:
 				"path": enemy_scene.resource_path,
 				"transform": marker.global_transform
 			})
-			
-	room.set_meta("pending_enemies", room_enemy_data)
-	setup_room_activation_trigger(room)
-
-
-func setup_room_activation_trigger(room: Node3D) -> void:
-	if not multiplayer.is_server(): return
-	var trigger_area = room.get_node_or_null("ActivationArea") as Area3D # <-- Updated name here
-	if trigger_area:
-		if not trigger_area.body_entered.is_connected(_on_room_activation_entered):
-			trigger_area.body_entered.connect(_on_room_activation_entered.bind(room, trigger_area))
-
-
-func _on_room_activation_entered(body: Node3D, room: Node3D, trigger_area: Area3D) -> void:
-	if not multiplayer.is_server(): return
-	if not body.is_in_group("player"): return
-	if not room.has_meta("pending_enemies"): return
 	
-	if trigger_area and trigger_area.has_signal("body_entered"):
-		trigger_area.set_deferred("monitoring", false)
-		
-	var pending_enemies = room.get_meta("pending_enemies")
-	for enemy_data in pending_enemies:
+	var is_arena = "arena" in room.scene_file_path.to_lower()
+	if meta and "room_type" in meta:
+		for t in meta.room_type:
+			if "arena" in str(t).to_lower(): is_arena = true
+			
+	if is_arena:
+		_trickle_spawn_enemies(room, room_enemy_data)
+	else:
+		for enemy_data in room_enemy_data:
+			var enemy = load(enemy_data["path"]).instantiate() as Node3D
+			room.add_child(enemy)
+			enemy.global_transform = enemy_data["transform"]
+			enemy.add_to_group("network_enemies")
+			rpc("rpc_spawn_enemy_remote", room.name, enemy_data["path"], enemy_data["transform"])
+
+
+func _trickle_spawn_enemies(room: Node3D, enemy_data_list: Array[Dictionary]) -> void:
+	if not multiplayer.is_server(): return
+	for enemy_data in enemy_data_list:
+		if not is_instance_valid(room): break
 		var enemy = load(enemy_data["path"]).instantiate() as Node3D
 		room.add_child(enemy)
 		enemy.global_transform = enemy_data["transform"]
 		enemy.add_to_group("network_enemies")
 		rpc("rpc_spawn_enemy_remote", room.name, enemy_data["path"], enemy_data["transform"])
-		
-	room.remove_meta("pending_enemies")
+		await get_tree().create_timer(0.8).timeout
 
 
 func setup_end_portal(room: Node3D) -> void: 
@@ -527,9 +524,10 @@ func request_world_state(peer_id: int) -> void:
 	
 	for room in generated_rooms:
 		rpc_id(peer_id, "rpc_spawn_room_remote", room.scene_file_path, room.global_transform, room.name)
+		for child in room.get_children():
+			if child.is_in_group("network_enemies"):
+				rpc_id(peer_id, "rpc_spawn_enemy_remote", room.name, child.scene_file_path, child.global_transform)
 		
-	# Note: With room activation triggers, remote clients will also spawn enemies 
-	# dynamically via the rpc_spawn_enemy_remote calls when triggered by the server.
 	rpc_id(peer_id, "remote_world_ready")
 
 
@@ -558,11 +556,14 @@ func rpc_spawn_enemy_remote(r_name: String, e_path: String, tf: Transform3D) -> 
 	if not room:
 		await get_tree().process_frame
 		room = room_container.get_node_or_null(r_name)
+		
 	if room:
-		var enemy = load(e_path).instantiate() as Node3D
-		room.add_child(enemy)
-		enemy.global_transform = tf
-		enemy.add_to_group("network_enemies")
+		var scene = load(e_path) as PackedScene
+		if scene:
+			var enemy = scene.instantiate() as Node3D
+			room.add_child(enemy)
+			enemy.global_transform = tf
+			enemy.add_to_group("network_enemies")
 
 
 @rpc("authority", "call_remote", "reliable")
