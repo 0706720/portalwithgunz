@@ -164,7 +164,10 @@ func die() -> void:
 		return
 	is_dead = true
 	rpc("rpc_client_die")
-	Global.experience_up.emit(10)
+	if multiplayer.is_server():
+		for player in get_tree().get_nodes_in_group("player"):
+			if is_instance_valid(player):
+				player.rpc("add_experience", 10)
 	queue_free()
 
 @rpc("authority", "call_remote", "reliable")

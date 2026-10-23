@@ -554,3 +554,7 @@ func clip_velocity(normal: Vector3, overbounce : float, delta : float) -> void:
 func scale_grenade(scale_factor: int):
 	var grenade = get_node("res://grenade.tscn")
 	grenade.scale = Vector3.ONE * 5.0
+
+@rpc("authority", "call_local", "reliable")
+func add_experience(amount: int) -> void:
+	Global.experience_up.emit(amount)
