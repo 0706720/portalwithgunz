@@ -8,20 +8,39 @@ extends Node
 @onready var sniper_node    := $"../Camera3D/M91"
 @onready var shotgun_node   := $"../CameraHolder/Camera3D/Shotgun"
 
-# AFTER DEVELOPMENT: change all entries to be 'unlocked': false for the purposes of gameplay
+@onready var icon_node = $"../HUD/GrenadeIcon/pistol_test"
+
+# Every joining player starts with exactly one random weapon unlocked.
+# All other weapons stay locked.
 @export var weapons: Array[Dictionary] = [
-	{ "name": "Pistol", "unlocked": true },
-	{ "name": "Grenade", "unlocked": true },
-	{ "name": "GrappleGun", "unlocked": true },
-	{ "name": "PortalGun", "unlocked": true },
-	{ "name": "Shotgun", "unlocked": true }
+	{ "name": "Pistol", "unlocked": false, "icon_path": load("res://assets/images/upgradesSystem/undertaker.webp"), "scale": Vector2(0.17, 0.17)},
+	{ "name": "Grenade", "unlocked": false, "icon_path": load("res://assets/images/upgradesSystem/grenade_launcher-Photoroom.png"), "scale": Vector2(1.1, 1.1)},
+	{ "name": "GrappleGun", "unlocked": false },
+	{ "name": "PortalGun", "unlocked": false },
+	{ "name": "Shotgun", "unlocked": false, "icon_path": load("res://assets/images/upgradesSystem/boomstick.png"), "scale": Vector2(0.2, 0.2)}
 ]
+
 var weapon_nodes: Array = []
+var start_weapon_choices: Array = ["Pistol", "Grenade", "Shotgun"]
 
 func _ready() -> void:
 	# build the nodes array so indexing matches weapons[]
 	weapon_nodes = [pistol_node, grenade_node, grapple_node, portal_node, shotgun_node]
+	_assign_random_starting_weapon()
 	# optionally include sniper_node where appropriate
+
+func _assign_random_starting_weapon() -> void:
+	var chosen_name: String = start_weapon_choices[randi() % start_weapon_choices.size()]
+
+	# lock everything by default, then unlock only the random start weapon
+	for i in range(weapons.size()):
+		weapons[i]["unlocked"] = weapons[i]["name"] == chosen_name
+
+	# apply the chosen weapon immediately
+	for i in range(weapons.size()):
+		if weapons[i]["name"] == chosen_name:
+			_apply_weapon_local(i)
+			return
 
 # Call this locally when the local player changes weapon
 func request_weapon_change(weapon_index: int) -> void:
@@ -29,8 +48,10 @@ func request_weapon_change(weapon_index: int) -> void:
 		return
 	if not _unlocked_weapon(weapon_index):
 		return
+
 	# change locally for instant feedback
 	_apply_weapon_local(weapon_index)
+
 	# broadcast to other peers (exclude self)
 	rpc_id(0, "rpc_apply_weapon", weapon_index)
 
@@ -48,83 +69,27 @@ func _apply_weapon_local(weapon_index: int) -> void:
 		if node:
 			node.visible = false
 			node.position = Vector3(-0.5, -0.35, -0.7)
+
 	# show the selected one
 	var n = weapon_nodes[weapon_index]
 	n.visible = true
 	n.position = Vector3(0.5, -0.25, -0.5)
+
 	Global.currentWeapon = weapons[weapon_index]["name"]
+	# change UI weapon to the weapon asset defined in the weapons array, then scale appropriately
+	icon_node.texture = weapons[weapon_index]["icon_path"]
+	icon_node.scale = weapons[weapon_index]["scale"]
 	print("Local weapon set to", Global.currentWeapon)
 
 func _valid_index(i: int) -> bool:
 	return i >= 0 and i < weapon_nodes.size()
 
-func _unlocked_weapon(i):
-	# this function will ensure the weapon is actually unlocked before swapping. This is 
-	# relevant to the upgrades system which will gradually offer these to the player.
+func _unlocked_weapon(i) -> bool:
 	if weapons[i]["unlocked"] == true:
-		#print("index is: " + str(weapons[i]))
 		return true
+	return false
 
 func unlock_weapon(name: String):
 	for entry in weapons:
-		if entry['name'] == name:
-			entry['unlocked'] = true
-
-#extends Node
-#
-## .. is simply a reference to the parent node.
-#@onready var pistolNode = ^"../CameraHolder/Camera3D/Pistol"
-#@onready var shotgunNode = ^"../CameraHolder/Camera3D/Propulsion_shotgun"
-#@onready var grappleNode = ^"../CameraHolder/Camera3D/Grapple Hook"
-#@onready var portalNode = ^"../CameraHolder/Camera3D/PortalGun"
-## non-initial weapon (sniper instance)
-#@onready var sniperNode = ^"../Camera3D/M91"
-#
-#var weapons = ["Pistol", "Shotgun", "GrappleGun", "PortalGun"]
-#
-#var paths = [
-	#"res://scenes/models/Pistol.glb", 
-	#"res://assets/images/Weapons/Shotgunz/spas12.FBX",
-	#"res://assets/images/Weapons/Vacuum Cleanerz/vacuum3.fbx",
-	#"res://assets/images/Weapons/Sniperz/M91.fbx",
-	#"res://assets/images/Weapons/portalGunz/portalgun2.obj"
-	#]
-#
-#var nodepaths = ["%Pistol", "%Propulsion_shotgun", "%Grapple Hook", "%PortalGun"]
-#
-## Called when the node enters the scene tree for the first time.
-#func _ready() -> void:
-	#print(weapons[0])
-#
-## this should automate new weapons being added, using unique node name and name of weapon.
-#func import_weapon(weaponname: String, nodepath: String):
-	#weapons.append(weaponname)
-	#nodepaths.append(nodepath)
-	##var scene = load("")
-	#print('new weapons array: ' + str(weapons) + ' new nodepaths array: ' + str(nodepaths))
-	#
-#@rpc("authority", "call_local", "reliable")
-#func print(weapon_index):
-	## below line is needed due to the lack of a 'try'syntax in godot.
-	#if weapon_index >= 0 and weapon_index < nodepaths.size():
-		#var weaponInstance
-		## for all weapons, reset location to the left of the player and make invisible
-		#for i in nodepaths:
-			#weaponInstance = get_node(i)
-			#weaponInstance.visible = false
-			#weaponInstance.position = Vector3(-0.5, -0.35, -0.7)
-		#
-		#var nodeReference = nodepaths[weapon_index]
-		#weaponInstance = get_node(nodeReference)
-		## make desired weapon visible and move to right of camera
-		#weaponInstance.visible = true
-		#weaponInstance.position = Vector3(0.5, -0.25, -0.5)
-		## update global weapon name for player script firing checks (you shouldn't be able to fire a weapon you're not using)
-		#Global.currentWeapon = weapons[weapon_index]
-		#print(Global.currentWeapon)
-	#else:
-		## if weapon not in arrays is requested using number keys
-		#print('weapon index fetch unsuccessful')
-		#
-#func _process(delta: float) -> void:
-	#pass
+		if entry["name"] == name:
+			entry["unlocked"] = true

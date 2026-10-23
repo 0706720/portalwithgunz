@@ -5,7 +5,8 @@
 
 [node name="PistolIcon" type="Node2D" unique_id=1535771531]
 
-[node name="Undertaker" type="Sprite2D" parent="." unique_id=1318472555]
+[node name="pistol_test" type="Sprite2D" parent="." unique_id=1318472555]
+unique_name_in_owner = true
 position = Vector2(488.99997, 260.00003)
 rotation = -0.34906584
 scale = Vector2(0.17, 0.17)
