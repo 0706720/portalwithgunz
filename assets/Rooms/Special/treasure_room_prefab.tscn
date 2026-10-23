@@ -73,7 +73,6 @@ size = Vector3(2, 10, 20)
 
 [node name="TreasureRoomPrefab" type="Node3D" unique_id=1067759415]
 script = ExtResource("1_4whyp")
-reward_pool = null
 
 [node name="Connectors" type="Node3D" parent="." unique_id=1707349763]
 

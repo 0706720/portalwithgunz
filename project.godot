@@ -59,6 +59,7 @@ Bullet=""
 Enemy=""
 Object=""
 Card=""
+network_interactables=""
 
 [input]
 

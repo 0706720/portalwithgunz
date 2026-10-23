@@ -1,0 +1,69 @@
+[gd_scene format=3 uid="uid://hmcquic7h8j"]
+
+[ext_resource type="Script" uid="uid://d0i6e1a140beq" path="res://assets/Enemies/flying_enemy_ranged.gd" id="1_pblot"]
+[ext_resource type="PackedScene" uid="uid://df17s8ffphdeh" path="res://assets/Enemies/laser.tscn" id="2_sfnse"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_pblot"]
+radius = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_57qmd"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_g4v7s"]
+material = SubResource("StandardMaterial3D_57qmd")
+radius = 0.2
+height = 0.6
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yf5fn"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_g4v7s"]
+material = SubResource("StandardMaterial3D_yf5fn")
+radius = 0.6
+height = 1.2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pblot"]
+albedo_color = Color(0.53995657, 0.20760706, 2.8878452e-07, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_45kln"]
+material = SubResource("StandardMaterial3D_pblot")
+radius = 1.0
+height = 2.0
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_sfnse"]
+
+[node name="Bat" type="CharacterBody3D" unique_id=1845121343]
+motion_mode = 1
+script = ExtResource("1_pblot")
+max_flight_altitude = 18.0
+projectile_scene = ExtResource("2_sfnse")
+speed = 4.0
+aggro_range = 30.0
+min_preferred_distance = 8.0
+max_preferred_distance = 18.0
+attack_range = 15.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1487910360]
+shape = SubResource("SphereShape3D_pblot")
+
+[node name="MeshHolder" type="Node3D" parent="." unique_id=1017910723]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="MeshHolder" unique_id=1554759847]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.018)
+mesh = SubResource("CapsuleMesh_g4v7s")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="MeshHolder" unique_id=474977132]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.6)
+mesh = SubResource("SphereMesh_g4v7s")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MeshHolder" unique_id=661030915]
+mesh = SubResource("SphereMesh_45kln")
+skeleton = NodePath("../..")
+
+[node name="RayCast3D" type="RayCast3D" parent="." unique_id=1251922401]
+target_position = Vector3(0, 0, -15)
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=346308805]
+replication_config = SubResource("SceneReplicationConfig_sfnse")

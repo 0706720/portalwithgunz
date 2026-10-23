@@ -18,9 +18,6 @@ height = 4.0
 script = ExtResource("1_t2qjf")
 speed = 7.0
 aggro_range = 100.0
-max_preferred_distance = 20.0
-strafe_speed_multiplier = 0.5
-separation_weight = 1.5
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1496695776]
 mesh = SubResource("CapsuleMesh_an04p")

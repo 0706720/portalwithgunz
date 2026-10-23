@@ -6,7 +6,7 @@ extends CharacterBody3D
 @export var min_preferred_distance : float 
 @export var max_preferred_distance : float
 @export var strafe_speed_multiplier : float
-@export var separation_weight : float = 1.0        
+@export var separation_weight : float = 1.0         
 
 @export var max_spawn_distance := 45.0
 @export var despawn_distance := 60.0
@@ -17,25 +17,38 @@ extends CharacterBody3D
 var is_dead := false
 
 @export_category("Attack Configuration")
-@export var attack_range := 2.5            
+@export var attack_range := 2.5             
 @export var attack_damage := 10
 @export var attack_cooldown := 1.5         
 var attack_timer := 0.0
 
 var target_player: Node3D = null
 var is_aggroed := false
+var stat_multiplier := 1.0
 
 var movement_timer := 0.0
 var current_wander_dir := Vector3.ZERO
 var wall_hit_cooldown := 0.0 
 var target_refresh_timer := 0.0
 
+# Network sync throttling variables
+var sync_timer := 0.0
+const SYNC_INTERVAL := 0.05 # 20 updates per second for smooth client updates without packet flooding
+
 func _ready() -> void:
 	add_to_group("target")
-	await get_tree().physics_frame
-	find_player()
-	movement_timer = randf_range(1.0, 3.0)
-	pick_new_wander_direction()
+	
+	if multiplayer.is_server():
+		await get_tree().physics_frame
+		find_player()
+		movement_timer = randf_range(1.0, 3.0)
+		pick_new_wander_direction()
+
+func initialize_scaled_stats(multiplier: float) -> void:
+	stat_multiplier = multiplier
+	max_health = int(max_health * stat_multiplier)
+	current_health = max_health
+	attack_damage = int(attack_damage * stat_multiplier)
 
 func find_player() -> void:
 	var players = get_tree().get_nodes_in_group("player")
@@ -60,10 +73,8 @@ func pick_new_wander_direction() -> void:
 	current_wander_dir = Vector3(randf_range(-1.0, 1.0), 0, randf_range(-1.0, 1.0)).normalized()
 
 func _physics_process(delta: float) -> void:
-	if not multiplayer.is_server() and multiplayer.has_multiplayer_peer():
+	if not multiplayer.is_server():
 		return
-
-	# Spawner distance logic (omitted brevity, keep your spawner loop here)
 
 	target_refresh_timer -= delta
 	if target_refresh_timer <= 0.0 or not target_player or not is_instance_valid(target_player):
@@ -71,6 +82,10 @@ func _physics_process(delta: float) -> void:
 		find_player()
 
 	if not target_player:
+		return
+
+	# HARDWARE OPTIMIZATION (Distance Culling): Skip heavy AI logic if players are >25m away
+	if global_position.distance_to(target_player.global_position) > 50.0:
 		return
 
 	if wall_hit_cooldown > 0.0:
@@ -92,25 +107,24 @@ func _physics_process(delta: float) -> void:
 			velocity.x = move_toward(velocity.x, 0, speed * delta * 5.0)
 			velocity.z = move_toward(velocity.z, 0, speed * delta * 5.0)
 			move_and_slide()
+			_try_sync_transform(delta)
 			return
 	else:
 		if distance_to_player > aggro_range * 2.0:
 			is_aggroed = false
+			_try_sync_transform(delta)
 			return
 
-	# Attack trigger check (does NOT stop movement anymore)
 	if distance_to_player <= attack_range:
 		if attack_timer <= 0.0:
-			perform_attack() # Calls child attack logic (melee or ranged)
+			perform_attack()
 			attack_timer = attack_cooldown
 
-	# 1. Always look at the player smoothly while aggroed
 	if distance_to_player > 0.5:
 		var look_target = Vector3(target_player.global_position.x, global_position.y, target_player.global_position.z)
 		var target_transform = global_transform.looking_at(look_target, Vector3.UP)
 		global_transform = global_transform.interpolate_with(target_transform, delta * 12.0)
 
-	# 2. Movement logic (Wandering, strafing, and separation force)
 	movement_timer -= delta
 	if movement_timer <= 0.0:
 		movement_timer = randf_range(1.5, 4.0)
@@ -129,22 +143,25 @@ func _physics_process(delta: float) -> void:
 				push_dir.y = 0
 				separation_force += push_dir.normalized() / dist
 
-	# 3. Dynamic Range Band & Movement Calculation
-	var target_velocity := Vector3.ZERO
+	var target_velocity: Vector3 = Vector3.ZERO
 	if distance_to_player > max_preferred_distance:
 		target_velocity = (forward_backward_vector + (current_wander_dir * 0.4) + (separation_force * separation_weight)).normalized() * speed
 	elif distance_to_player < min_preferred_distance:
 		target_velocity = (-forward_backward_vector + (current_wander_dir * 0.4) + (separation_force * separation_weight)).normalized() * speed
 	else:
-		# Strafe around the player when inside preferred distance / attack range
 		target_velocity = (current_wander_dir + (separation_force * separation_weight)).normalized() * (speed * strafe_speed_multiplier)
 
 	velocity.x = move_toward(velocity.x, target_velocity.x, speed * delta * 6.0)
 	velocity.z = move_toward(velocity.z, target_velocity.z, speed * delta * 6.0)
 
 	move_and_slide()
+	_try_sync_transform(delta)
 
-	if multiplayer.is_server():
+# THROTTLED NETWORK SYNC
+func _try_sync_transform(delta: float) -> void:
+	sync_timer += delta
+	if sync_timer >= SYNC_INTERVAL:
+		sync_timer = 0.0
 		rpc("sync_enemy_transform", global_transform)
 
 # VIRTUAL METHOD: Child scripts will override this!
@@ -167,7 +184,7 @@ func die() -> void:
 	if multiplayer.is_server():
 		for player in get_tree().get_nodes_in_group("player"):
 			if is_instance_valid(player):
-				player.rpc("add_experience", 10)
+				player.rpc("add_experience", 1)
 	queue_free()
 
 @rpc("authority", "call_remote", "reliable")

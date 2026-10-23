@@ -180,3 +180,19 @@ collision_mask = 255
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ActivationArea" unique_id=457540040]
 shape = SubResource("BoxShape3D_o30tn")
+
+[node name="SpawnPoints" type="Node3D" parent="." unique_id=2059564442]
+
+[node name="enemy_spawns" type="Node3D" parent="SpawnPoints" unique_id=1794702111]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0)
+
+[node name="spawn1" type="Node3D" parent="SpawnPoints/enemy_spawns" unique_id=1995379549]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 4, 10)
+
+[node name="resource_spawns" type="Node3D" parent="SpawnPoints" unique_id=1185316633]
+
+[node name="spawn1" type="Node3D" parent="SpawnPoints/resource_spawns" unique_id=830736920]
+
+[node name="puzzle_spawns" type="Node3D" parent="SpawnPoints" unique_id=1605775851]
+
+[node name="spawn1" type="Node3D" parent="SpawnPoints/puzzle_spawns" unique_id=194223664]
