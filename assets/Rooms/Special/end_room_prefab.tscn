@@ -10,7 +10,7 @@ size = Vector3(8, 2, 8)
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_svdvv"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_8sv8v"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1jjxi"]
 render_priority = 0
 shader = ExtResource("1_svdvv")
 shader_parameter/portal_texture = SubResource("NoiseTexture2D_svdvv")
@@ -21,55 +21,55 @@ shader_parameter/rotation_speed = 3.0000006174999996
 shader_parameter/edge_softness = 0.10000000405148
 
 [sub_resource type="QuadMesh" id="QuadMesh_82fmt"]
-material = SubResource("ShaderMaterial_8sv8v")
+material = SubResource("ShaderMaterial_1jjxi")
 size = Vector2(2, 4)
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_cwsjm"]
 data = PackedVector3Array(1, -2, 0, -1, -2, 0, 1, 2, 0, -1, -2, 0, -1, 2, 0, 1, 2, 0)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_08rus"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hyw8k"]
 albedo_texture = ExtResource("2_1jjxi")
 uv1_scale = Vector3(0.1, 0.1, 0.1)
 uv1_triplanar = true
 
 [sub_resource type="BoxMesh" id="BoxMesh_lh5hy"]
 lightmap_size_hint = Vector2i(114, 206)
-material = SubResource("StandardMaterial3D_08rus")
+material = SubResource("StandardMaterial3D_hyw8k")
 add_uv2 = true
 size = Vector3(2, 10, 20)
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_drqnt"]
 data = PackedVector3Array(-1, 5, 10, 1, 5, 10, -1, -5, 10, 1, 5, 10, 1, -5, 10, -1, -5, 10, 1, 5, -10, -1, 5, -10, 1, -5, -10, -1, 5, -10, -1, -5, -10, 1, -5, -10, 1, 5, 10, 1, 5, -10, 1, -5, 10, 1, 5, -10, 1, -5, -10, 1, -5, 10, -1, 5, -10, -1, 5, 10, -1, -5, -10, -1, 5, 10, -1, -5, 10, -1, -5, -10, 1, 5, 10, -1, 5, 10, 1, 5, -10, -1, 5, 10, -1, 5, -10, 1, 5, -10, -1, -5, 10, 1, -5, 10, -1, -5, -10, 1, -5, 10, 1, -5, -10, -1, -5, -10)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yypnt"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hgiqh"]
 albedo_texture = ExtResource("2_1jjxi")
 uv1_scale = Vector3(0.1, 0.1, 0.1)
 uv1_triplanar = true
 
 [sub_resource type="BoxMesh" id="BoxMesh_5r5mf"]
 lightmap_size_hint = Vector2i(114, 206)
-material = SubResource("StandardMaterial3D_yypnt")
+material = SubResource("StandardMaterial3D_hgiqh")
 add_uv2 = true
 size = Vector3(2, 10, 20)
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_56mg0"]
 data = PackedVector3Array(-1, 5, 10, 1, 5, 10, -1, -5, 10, 1, 5, 10, 1, -5, 10, -1, -5, 10, 1, 5, -10, -1, 5, -10, 1, -5, -10, -1, 5, -10, -1, -5, -10, 1, -5, -10, 1, 5, 10, 1, 5, -10, 1, -5, 10, 1, 5, -10, 1, -5, -10, 1, -5, 10, -1, 5, -10, -1, 5, 10, -1, -5, -10, -1, 5, 10, -1, -5, 10, -1, -5, -10, 1, 5, 10, -1, 5, 10, 1, 5, -10, -1, 5, 10, -1, 5, -10, 1, 5, -10, -1, -5, 10, 1, -5, 10, -1, -5, -10, 1, -5, 10, 1, -5, -10, -1, -5, -10)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ynhhp"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cwsjm"]
 albedo_texture = ExtResource("4_hgiqh")
 uv1_scale = Vector3(0.2, 0.2, 0.2)
 uv1_triplanar = true
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_b32ih"]
 lightmap_size_hint = Vector2i(102, 102)
-material = SubResource("StandardMaterial3D_ynhhp")
+material = SubResource("StandardMaterial3D_cwsjm")
 add_uv2 = true
 size = Vector2(20, 20)
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_4y48s"]
 data = PackedVector3Array(10, 0, 10, -10, 0, 10, 10, 0, -10, -10, 0, 10, -10, 0, -10, 10, 0, -10)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vpwjj"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lh5hy"]
 albedo_texture = ExtResource("4_hgiqh")
 metallic = 1.0
 uv1_scale = Vector3(0.1, 0.1, 0.1)
@@ -77,7 +77,7 @@ uv1_triplanar = true
 
 [sub_resource type="BoxMesh" id="BoxMesh_dyx68"]
 lightmap_size_hint = Vector2i(204, 107)
-material = SubResource("StandardMaterial3D_vpwjj")
+material = SubResource("StandardMaterial3D_lh5hy")
 add_uv2 = true
 size = Vector3(20, 0.1, 20)
 
@@ -86,7 +86,7 @@ data = PackedVector3Array(-10, 0.049999997, 10, 10, 0.049999997, 10, -10, -0.049
 
 [sub_resource type="BoxMesh" id="BoxMesh_eoa7q"]
 lightmap_size_hint = Vector2i(114, 206)
-material = SubResource("StandardMaterial3D_08rus")
+material = SubResource("StandardMaterial3D_hyw8k")
 add_uv2 = true
 size = Vector3(2, 10, 20)
 

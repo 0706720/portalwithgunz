@@ -1,0 +1,204 @@
+[gd_scene format=3 uid="uid://cnso0scfax2fc"]
+
+[ext_resource type="Texture2D" uid="uid://vw4d70xv6yno" path="res://assets/images/wall_dungeon.jpeg" id="1_ythsk"]
+[ext_resource type="PackedScene" uid="uid://dlx6jlni62p4y" path="res://assets/models/torch.tscn" id="2_10ktw"]
+[ext_resource type="Texture2D" uid="uid://cs1ibjwvbhsss" path="res://assets/images/dungeo_floor.jpg" id="3_33234"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nvo4k"]
+albedo_texture = ExtResource("1_ythsk")
+uv1_scale = Vector3(0.1, 0.1, 0.1)
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_khtf8"]
+lightmap_size_hint = Vector2i(114, 206)
+material = SubResource("StandardMaterial3D_nvo4k")
+add_uv2 = true
+size = Vector3(2, 10, 20)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_wp0cj"]
+data = PackedVector3Array(-1, 5, 10, 1, 5, 10, -1, -5, 10, 1, 5, 10, 1, -5, 10, -1, -5, 10, 1, 5, -10, -1, 5, -10, 1, -5, -10, -1, 5, -10, -1, -5, -10, 1, -5, -10, 1, 5, 10, 1, 5, -10, 1, -5, 10, 1, 5, -10, 1, -5, -10, 1, -5, 10, -1, 5, -10, -1, 5, 10, -1, -5, -10, -1, 5, 10, -1, -5, 10, -1, -5, -10, 1, 5, 10, -1, 5, 10, 1, 5, -10, -1, 5, 10, -1, 5, -10, 1, 5, -10, -1, -5, 10, 1, -5, 10, -1, -5, -10, 1, -5, 10, 1, -5, -10, -1, -5, -10)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wvpy3"]
+albedo_texture = ExtResource("1_ythsk")
+uv1_scale = Vector3(0.1, 0.1, 0.1)
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_r3ka6"]
+lightmap_size_hint = Vector2i(114, 206)
+material = SubResource("StandardMaterial3D_wvpy3")
+add_uv2 = true
+size = Vector3(2, 10, 20)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_m4wgp"]
+data = PackedVector3Array(-1, 5, 10, 1, 5, 10, -1, -5, 10, 1, 5, 10, 1, -5, 10, -1, -5, 10, 1, 5, -10, -1, 5, -10, 1, -5, -10, -1, 5, -10, -1, -5, -10, 1, -5, -10, 1, 5, 10, 1, 5, -10, 1, -5, 10, 1, 5, -10, 1, -5, -10, 1, -5, 10, -1, 5, -10, -1, 5, 10, -1, -5, -10, -1, 5, 10, -1, -5, 10, -1, -5, -10, 1, 5, 10, -1, 5, 10, 1, 5, -10, -1, 5, 10, -1, 5, -10, 1, 5, -10, -1, -5, 10, 1, -5, 10, -1, -5, -10, 1, -5, 10, 1, -5, -10, -1, -5, -10)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xnso3"]
+albedo_texture = ExtResource("3_33234")
+uv1_scale = Vector3(0.2, 0.2, 0.2)
+uv1_triplanar = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_1ci6v"]
+lightmap_size_hint = Vector2i(102, 102)
+material = SubResource("StandardMaterial3D_xnso3")
+add_uv2 = true
+size = Vector2(20, 20)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_ylwl4"]
+data = PackedVector3Array(10, 0, 10, -10, 0, 10, 10, 0, -10, -10, 0, 10, -10, 0, -10, 10, 0, -10)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8fbgw"]
+albedo_texture = ExtResource("3_33234")
+metallic = 1.0
+uv1_scale = Vector3(0.1, 0.1, 0.1)
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_i5dou"]
+lightmap_size_hint = Vector2i(204, 107)
+material = SubResource("StandardMaterial3D_8fbgw")
+add_uv2 = true
+size = Vector3(20, 0.1, 20)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_u0jmy"]
+data = PackedVector3Array(-10, 0.049999997, 10, 10, 0.049999997, 10, -10, -0.049999997, 10, 10, 0.049999997, 10, 10, -0.049999997, 10, -10, -0.049999997, 10, 10, 0.049999997, -10, -10, 0.049999997, -10, 10, -0.049999997, -10, -10, 0.049999997, -10, -10, -0.049999997, -10, 10, -0.049999997, -10, 10, 0.049999997, 10, 10, 0.049999997, -10, 10, -0.049999997, 10, 10, 0.049999997, -10, 10, -0.049999997, -10, 10, -0.049999997, 10, -10, 0.049999997, -10, -10, 0.049999997, 10, -10, -0.049999997, -10, -10, 0.049999997, 10, -10, -0.049999997, 10, -10, -0.049999997, -10, 10, 0.049999997, 10, -10, 0.049999997, 10, 10, 0.049999997, -10, -10, 0.049999997, 10, -10, 0.049999997, -10, 10, 0.049999997, -10, -10, -0.049999997, 10, 10, -0.049999997, 10, -10, -0.049999997, -10, 10, -0.049999997, 10, 10, -0.049999997, -10, -10, -0.049999997, -10)
+
+[sub_resource type="BoxMesh" id="BoxMesh_q38ah"]
+lightmap_size_hint = Vector2i(114, 206)
+material = SubResource("StandardMaterial3D_nvo4k")
+add_uv2 = true
+size = Vector3(2, 10, 20)
+
+[sub_resource type="Shader" id="Shader_wi4g8"]
+code = "shader_type spatial;
+render_mode blend_mix, depth_draw_opaque, cull_disabled, unshaded; // Changed cull_back to cull_disabled
+
+uniform sampler2D portal_texture : source_color, filter_linear_mipmap;
+uniform vec4 portal_color : source_color = vec4(1.0, 0.9, 0.0, 1.0); 
+// Boosts the color past 1.0 to trigger Godot's WorldEnvironment glow/bloom
+uniform float emission_intensity : hint_range(1.0, 20.0) = 3.0; 
+uniform float swirl_strength : hint_range(-10.0, 10.0) = 5.0;
+uniform float rotation_speed : hint_range(-10.0, 10.0) = 2.0;
+uniform float edge_softness : hint_range(0.01, 1.0) = 0.4; 
+
+void fragment() {
+    // Center the UV coordinates to [-0.5, 0.5]
+    vec2 uv = UV - vec2(0.5);
+    
+    // Calculate distance from the center
+    float dist = length(uv);
+    
+    // Create an angle that changes over time and intensifies closer to the center
+    float angle = (TIME * rotation_speed) + (1.0 / (dist + 0.1) * swirl_strength);
+    
+    // Rotate the UV coordinates
+    vec2 rotated_uv;
+    rotated_uv.x = uv.x * cos(angle) - uv.y * sin(angle);
+    rotated_uv.y = uv.x * sin(angle) + uv.y * cos(angle);
+    
+    // Restore UV coordinates back to space
+    rotated_uv += vec2(0.5);
+    
+    // Sample the texture
+    vec4 tex_color = texture(portal_texture, rotated_uv);
+    
+    // Convert texture to grayscale (luminance) so its native color doesn't clash
+    float brightness = dot(tex_color.rgb, vec3(0.299, 0.587, 0.114));
+    
+    // Calculate a circular mask
+    float circle_mask = smoothstep(0.5, 0.5 - edge_softness, dist);
+    
+    // Mix the base brightness with the color, then multiply by intensity for vibrancy
+    ALBEDO = vec3(brightness) * portal_color.rgb * emission_intensity;
+    ALPHA = tex_color.a * portal_color.a * circle_mask;
+}
+"
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_8vv1x"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_56785"]
+render_priority = 0
+shader = SubResource("Shader_wi4g8")
+shader_parameter/portal_texture = SubResource("NoiseTexture2D_8vv1x")
+shader_parameter/portal_color = Color(0.91401964, 0.00012109697, 0.7451069, 1)
+shader_parameter/emission_intensity = 3.0
+shader_parameter/swirl_strength = 2.000000569999999
+shader_parameter/rotation_speed = 3.0000006174999996
+shader_parameter/edge_softness = 0.10000000405148
+
+[sub_resource type="QuadMesh" id="QuadMesh_8phq2"]
+material = SubResource("ShaderMaterial_56785")
+size = Vector2(2, 4)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_pb37x"]
+data = PackedVector3Array(1, -2, 0, -1, -2, 0, 1, 2, 0, -1, -2, 0, -1, 2, 0, 1, 2, 0)
+
+[node name="TreasureEndRoomPrefab" type="Node3D" unique_id=1909172185]
+
+[node name="MeshContainer" type="Node3D" parent="." unique_id=1124817185]
+
+[node name="LeftSideWall" type="MeshInstance3D" parent="MeshContainer" unique_id=882027620]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 5, 10)
+mesh = SubResource("BoxMesh_khtf8")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshContainer/LeftSideWall" unique_id=2119728700]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshContainer/LeftSideWall/StaticBody3D" unique_id=2011499648]
+shape = SubResource("ConcavePolygonShape3D_wp0cj")
+
+[node name="Torch" parent="MeshContainer/LeftSideWall" unique_id=744360467 instance=ExtResource("2_10ktw")]
+transform = Transform3D(0.8660254, 0.5, 0, -0.5, 0.8660254, 0, 0, 0, 1, 1, 0, 0)
+
+[node name="RightSideWall" type="MeshInstance3D" parent="MeshContainer" unique_id=44331351]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 5, 10)
+mesh = SubResource("BoxMesh_r3ka6")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshContainer/RightSideWall" unique_id=715656379]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshContainer/RightSideWall/StaticBody3D" unique_id=57358594]
+shape = SubResource("ConcavePolygonShape3D_m4wgp")
+
+[node name="Torch" parent="MeshContainer/RightSideWall" unique_id=240566154 instance=ExtResource("2_10ktw")]
+transform = Transform3D(0.8660254, -0.5, 0, 0.5, 0.8660254, 0, 0, 0, 1, -1, 0, 0)
+
+[node name="Floor" type="MeshInstance3D" parent="MeshContainer" unique_id=691162225]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
+mesh = SubResource("PlaneMesh_1ci6v")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshContainer/Floor" unique_id=1505670253]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshContainer/Floor/StaticBody3D" unique_id=268397041]
+shape = SubResource("ConcavePolygonShape3D_ylwl4")
+
+[node name="Roof" type="MeshInstance3D" parent="MeshContainer" unique_id=277626732]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 10)
+mesh = SubResource("BoxMesh_i5dou")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshContainer/Roof" unique_id=1778690917]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshContainer/Roof/StaticBody3D" unique_id=331880294]
+shape = SubResource("ConcavePolygonShape3D_u0jmy")
+
+[node name="BackWall" type="MeshInstance3D" parent="MeshContainer" unique_id=2061225051]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 5, 19)
+mesh = SubResource("BoxMesh_q38ah")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshContainer/BackWall" unique_id=55866984]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshContainer/BackWall/StaticBody3D" unique_id=1698238531]
+shape = SubResource("ConcavePolygonShape3D_wp0cj")
+
+[node name="TreasureEndPortal" type="MeshInstance3D" parent="." unique_id=510765235]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 2, 17.8)
+mesh = SubResource("QuadMesh_8phq2")
+
+[node name="PortalArea" type="Area3D" parent="TreasureEndPortal" unique_id=931562412]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
+collision_layer = 255
+collision_mask = 255
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TreasureEndPortal/PortalArea" unique_id=911724932]
+shape = SubResource("ConcavePolygonShape3D_pb37x")
