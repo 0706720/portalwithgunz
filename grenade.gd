@@ -6,7 +6,9 @@ extends RigidBody3D
 @onready var debris: GPUParticles3D = $Grenade_explosion/Debris2
 @onready var smoke: GPUParticles3D = $Grenade_explosion/Smoke2
 @onready var fire: GPUParticles3D = $Grenade_explosion/Fire2
-@onready var mesh_instance = $MeshInstance3D 
+@onready var grenade_body = $MeshInstance3D 
+@onready var grenade_top = %MeshInstance3D2
+@onready var grenade_tab = %MeshInstance3D3
 
 # Called when the node enters the scene tree for the fssirst time.
 func _ready() -> void:
@@ -24,9 +26,15 @@ func _on_timer_timeout() -> void:
 
 func explode() -> void:
 	freeze = true
-	if mesh_instance:
-		mesh_instance.visible = false
+	if grenade_body:
+		grenade_body.visible = false
+	if grenade_tab:
+		grenade_tab.visible = false
+	if grenade_top:
+		grenade_top.visible = false
 	$CollisionShape3D.disabled = true
+	$CollisionShape3D2.disabled = true
+	$CollisionShape3D3.disabled = true
 	var overlapping_bodies = explosion_area.get_overlapping_bodies()
 	for body in overlapping_bodies:
 		if body.is_in_group('target'):

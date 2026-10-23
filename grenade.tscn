@@ -3,9 +3,29 @@
 [ext_resource type="Script" uid="uid://bytkgbuqweo4u" path="res://grenade.gd" id="1_gju2f"]
 [ext_resource type="PackedScene" uid="uid://dekpafv2h5dv4" path="res://grenade_explosion.tscn" id="2_24g56"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_1uvau"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_24g56"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_blnac"]
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_24g56"]
+height = 0.216
+radius = 0.058
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ga5sg"]
+size = Vector3(0.04, 0.1, 0.05)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_24g56"]
+albedo_color = Color(0, 0.25882354, 0, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_dqhpj"]
+material = SubResource("StandardMaterial3D_24g56")
+height = 1.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_xhsnc"]
+top_radius = 0.057617188
+bottom_radius = 0.057617188
+height = 0.21560669
+
+[sub_resource type="BoxMesh" id="BoxMesh_xhsnc"]
+size = Vector3(0.04, 0.1, 0.05)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ht8yr"]
 radius = 5.7902894
@@ -116,12 +136,30 @@ script = ExtResource("1_gju2f")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1076212715]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
-shape = SubResource("BoxShape3D_1uvau")
+shape = SubResource("SphereShape3D_24g56")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="." unique_id=1999662048]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25611877, 0)
+shape = SubResource("CylinderShape3D_24g56")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="." unique_id=420642501]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.06330331, 0.31318456, -0.0012342185)
+shape = SubResource("BoxShape3D_ga5sg")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=306428133]
 unique_name_in_owner = true
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
-mesh = SubResource("BoxMesh_blnac")
+mesh = SubResource("CapsuleMesh_dqhpj")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=135735046]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25611877, 0)
+mesh = SubResource("CylinderMesh_xhsnc")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="." unique_id=1781352001]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.06330331, 0.31318456, -0.0012342185)
+mesh = SubResource("BoxMesh_xhsnc")
 
 [node name="Area3D" type="Area3D" parent="." unique_id=1678279794]
 
