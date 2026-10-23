@@ -60,13 +60,13 @@ func _add_options(input):
 		# the value of index, and adjust x position accordingly
 		match index:
 			0:
-				pos = -220
+				pos = 0
 			1:
-				pos = 130
+				pos = 500
 			2:
-				pos = 480
+				pos = 1000
 
-		spawned_card.position = Vector2(pos, 80)
+		spawned_card.position = Vector2(pos, 300)
 		UI.add_child(spawned_card)
 		Global.signal_popup()
 		Global.upgrade_pending = false

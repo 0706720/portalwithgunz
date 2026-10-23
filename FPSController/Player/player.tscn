@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://xcjrjq5cbn7y"]
 
 [ext_resource type="Script" uid="uid://byvoccpe1ihl7" path="res://FPSController/Player/Player.gd" id="1_do0ft"]
-[ext_resource type="PackedScene" uid="uid://bg1xha1x7mh6l" path="res://FPSController/WeaponsManagement/Weapons/Shotgunz/propulsion_shotgun.tscn" id="2_cw433"]
 [ext_resource type="PackedScene" uid="uid://dbl02j5ji12bo" path="res://assets/models/ShotgunBullet.tscn" id="2_g48ct"]
 [ext_resource type="PackedScene" uid="uid://cf1dcxwv6bvl3" path="res://assets/models/Pistol.glb" id="3_5jtsq"]
 [ext_resource type="Texture2D" uid="uid://vwob30tkwej4" path="res://addons/kenney_particle_pack/star_06.png" id="4_wpatb"]
@@ -31,8 +30,8 @@
 [ext_resource type="Texture2D" uid="uid://65i6bhs5c4l7" path="res://assets/images/chicken-rice-and-yoghurt-v0-7ria5b8ongi41.webp" id="24_cahw7"]
 [ext_resource type="Script" uid="uid://bjplljit7b0op" path="res://FPSController/Player/upgrades_system.gd" id="27_g48ct"]
 [ext_resource type="Script" uid="uid://s6mq1s78yokb" path="res://FPSController/Player/ScreenOverlay/xp_bar.gd" id="28_wd7pj"]
-[ext_resource type="PackedScene" uid="uid://ostt735hy24a" path="res://assets/models/gunIcons/circle_border.tscn" id="29_00aet"]
 [ext_resource type="PackedScene" uid="uid://bprk3daoy6f18" path="res://assets/models/gunIcons/popup.tscn" id="30_e1mg5"]
+[ext_resource type="PackedScene" uid="uid://cxtnlpv0hosl8" path="res://assets/models/gunIcons/grenade_icon.tscn" id="31_0v3k2"]
 [ext_resource type="Script" uid="uid://c5unn33of3e33" path="res://assets/AssetCode/cards/popup.gd" id="31_hjbpo"]
 
 [sub_resource type="Curve" id="Curve_qfm1y"]
@@ -718,10 +717,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4739923, 0)
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.51306, 0)
 
-[node name="Propulsion_shotgun" parent="CameraHolder/Camera3D" unique_id=1602549375 instance=ExtResource("2_cw433")]
-unique_name_in_owner = true
-transform = Transform3D(-1.5, 0, -1.3113416e-07, 0, 1.5, 0, 1.3113416e-07, 0, -1.5, -0.5, -0.35, -0.7)
-
 [node name="Pistol" parent="CameraHolder/Camera3D" unique_id=945160158 instance=ExtResource("3_5jtsq")]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, -0.25, -0.5)
@@ -843,9 +838,9 @@ options = Array[ExtResource("18_wpatb")]([SubResource("AtlasTexture_v5lg8"), Sub
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 0
 offset_left = 26.0
-offset_top = 545.0
+offset_top = 1024.0
 offset_right = 126.0
-offset_bottom = 560.0
+offset_bottom = 1039.0
 scale = Vector2(2, 2)
 theme_override_styles/background = SubResource("StyleBoxFlat_3v2ag")
 theme_override_styles/fill = SubResource("StyleBoxFlat_d2wvv")
@@ -861,25 +856,25 @@ libraries/ = SubResource("AnimationLibrary_jej6c")
 [node name="healthPlaceholder" type="Label" parent="HUD" unique_id=1231744766]
 layout_mode = 0
 offset_left = 116.0
-offset_top = 512.0
+offset_top = 984.0
 offset_right = 132.0
-offset_bottom = 535.0
+offset_bottom = 1007.0
 text = "/"
 
 [node name="healthVar" type="Label" parent="HUD" unique_id=1547088208]
 layout_mode = 0
 offset_left = 83.0
-offset_top = 512.0
+offset_top = 984.0
 offset_right = 112.0
-offset_bottom = 535.0
+offset_bottom = 1007.0
 text = "00"
 
 [node name="healthMax" type="Label" parent="HUD" unique_id=1475800816]
 layout_mode = 0
 offset_left = 137.0
-offset_top = 512.0
+offset_top = 984.0
 offset_right = 177.0
-offset_bottom = 535.0
+offset_bottom = 1007.0
 text = "00"
 
 [node name="cardHolder" type="Control" parent="HUD" unique_id=1310383515]
@@ -892,23 +887,23 @@ offset_bottom = 40.0
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 25.0
-offset_top = 575.0
+offset_top = 1007.0
 offset_right = 227.0
-offset_bottom = 593.0
+offset_bottom = 1025.0
 theme_override_colors/font_color = Color(0.09019608, 0.9490196, 0.9490196, 1)
 theme_override_styles/background = SubResource("StyleBoxFlat_gq8m4")
 theme_override_styles/fill = SubResource("StyleBoxFlat_b3r6a")
 show_percentage = false
 script = ExtResource("28_wd7pj")
 
-[node name="CircleBorder" parent="HUD" unique_id=322981801 instance=ExtResource("29_00aet")]
-position = Vector2(578, 305)
-
 [node name="Popup" parent="HUD" unique_id=392233854 instance=ExtResource("30_e1mg5")]
 unique_name_in_owner = true
 visible = false
 position = Vector2(384, 0)
 script = ExtResource("31_hjbpo")
+
+[node name="GrenadeIcon" parent="HUD" unique_id=96000430 instance=ExtResource("31_0v3k2")]
+position = Vector2(1329, 733)
 
 [node name="weaponsManager" type="Node" parent="." unique_id=828943716 groups=["weaponsManager"]]
 script = ExtResource("17_hjbpo")

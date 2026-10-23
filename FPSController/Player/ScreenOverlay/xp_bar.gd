@@ -4,7 +4,7 @@ var experience = 0
 # how much harder it is to level up after each level completion
 var level_up_multiplier = 1.5
 # initial xp requirement
-var level_amount = 50
+var level_amount = 5
 @onready var progress_node = %xpBar
 
 # main recipient of this signal is the upgrades_system.gd to display cards
