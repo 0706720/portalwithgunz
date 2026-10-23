@@ -197,10 +197,20 @@ func receive_damage(amount: int) -> void:
 		if current_health <= 0:
 			die()
 
+var arena_manager: Node3D = null
+
+func set_arena_manager(manager: Node3D) -> void:
+	arena_manager = manager
+
 func die() -> void:
 	if is_dead:
 		return
 	is_dead = true
+	
+	# Notify the arena room that this enemy has fallen
+	if multiplayer.is_server() and is_instance_valid(arena_manager):
+		arena_manager.unregister_enemy()
+		
 	rpc("rpc_client_die")
 	if multiplayer.is_server():
 		for player in get_tree().get_nodes_in_group("player"):

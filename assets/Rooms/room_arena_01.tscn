@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bprr7kn8s2bom"]
 
 [ext_resource type="Script" uid="uid://b6n6uoylj1gpp" path="res://Network/metadata.gd" id="1_27py7"]
+[ext_resource type="Script" uid="uid://cf20ovhat7pvt" path="res://assets/Rooms/arena_room.gd" id="1_q7d6m"]
 [ext_resource type="Texture2D" uid="uid://cs1ibjwvbhsss" path="res://assets/images/dungeo_floor.jpg" id="2_q7d6m"]
 [ext_resource type="Texture2D" uid="uid://vw4d70xv6yno" path="res://assets/images/wall_dungeon.jpeg" id="3_v7hwv"]
 [ext_resource type="PackedScene" uid="uid://dlx6jlni62p4y" path="res://assets/models/torch.tscn" id="4_mpfe2"]
@@ -74,13 +75,31 @@ size = Vector3(8, 2, 8)
 [sub_resource type="BoxShape3D" id="BoxShape3D_g4v7s"]
 size = Vector3(20, 10, 1)
 
-[node name="ArenaPrefab01" type="Node3D" unique_id=1768685127]
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_jf5nk"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_q7d6m"]
+data = PackedVector3Array(-10, 5, 1, 10, 5, 1, -10, -5, 1, 10, 5, 1, 10, -5, 1, -10, -5, 1, 10, 5, -1, -10, 5, -1, 10, -5, -1, -10, 5, -1, -10, -5, -1, 10, -5, -1, 10, 5, 1, 10, 5, -1, 10, -5, 1, 10, 5, -1, 10, -5, -1, 10, -5, 1, -10, 5, -1, -10, 5, 1, -10, -5, -1, -10, 5, 1, -10, -5, 1, -10, -5, -1, 10, 5, 1, -10, 5, 1, 10, 5, -1, -10, 5, 1, -10, 5, -1, 10, 5, -1, -10, -5, 1, 10, -5, 1, -10, -5, -1, 10, -5, 1, 10, -5, -1, -10, -5, -1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_82yh8"]
+albedo_texture = ExtResource("3_v7hwv")
+uv1_scale = Vector3(0.1, 0.1, 0.1)
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_q7d6m"]
+lightmap_size_hint = Vector2i(114, 206)
+material = SubResource("StandardMaterial3D_82yh8")
+add_uv2 = true
+size = Vector3(20, 10, 2)
+
+[node name="ArenaPrefab01" type="Node3D" unique_id=1768685127 node_paths=PackedStringArray("door_collisions")]
+script = ExtResource("1_q7d6m")
+door_collisions = [NodePath("DoorCollison")]
 
 [node name="Metadata" type="Node" parent="." unique_id=939893820]
 script = ExtResource("1_27py7")
 difficulty_weight = 0.8
 room_type = Array[String](["\"arena\""])
-enemy_budget = 40.0
+enemy_budget = 400.0
 
 [node name="Connectors" type="Node3D" parent="." unique_id=1497390118]
 
@@ -94,23 +113,68 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 40)
 [node name="enemy_spawns" type="Node3D" parent="SpawnPoints" unique_id=800816673]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 20)
 
-[node name="spawn1" type="Node3D" parent="SpawnPoints/enemy_spawns" unique_id=703455805]
+[node name="spawn1" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=2133128070]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 10)
 
-[node name="spawn2" type="Node3D" parent="SpawnPoints/enemy_spawns" unique_id=224745444]
+[node name="spawn2" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=1522079443]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 5)
 
-[node name="spawn3" type="Node3D" parent="SpawnPoints/enemy_spawns" unique_id=1938333865]
+[node name="spawn3" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=297479273]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 5, 5)
 
-[node name="spawn4" type="Node3D" parent="SpawnPoints/enemy_spawns" unique_id=2007624928]
+[node name="spawn4" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=1304727813]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 5, 5)
 
-[node name="spawn5" type="Node3D" parent="SpawnPoints/enemy_spawns" unique_id=1915651495]
+[node name="spawn5" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=1411848637]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 5, 10)
 
-[node name="spawn6" type="Node3D" parent="SpawnPoints/enemy_spawns" unique_id=98460993]
+[node name="spawn6" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=1676742989]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 5, 10)
+
+[node name="spawn7" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=1983926971]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 5, 10)
+
+[node name="spawn8" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=1698763826]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 5, 5)
+
+[node name="spawn9" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=816579884]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 5, 5)
+
+[node name="spawn10" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=2095686118]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 5, 0)
+
+[node name="spawn11" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=1481940379]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 5, 0)
+
+[node name="spawn12" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=2100265652]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+
+[node name="spawn13" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=1174862719]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 5, 0)
+
+[node name="spawn14" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=1013426649]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 5, 0)
+
+[node name="spawn15" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=1130065086]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 5, 0)
+
+[node name="spawn16" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=2140193535]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 5, 5)
+
+[node name="spawn17" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=311886925]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 5, 10)
+
+[node name="spawn18" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=1612472161]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 5, 0)
+
+[node name="spawn19" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=2071106171]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 5, 5)
+
+[node name="spawn20" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=316893376]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 5, 10)
+
+[node name="spawn21" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=302232127]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 5, 10)
 
 [node name="resource_spawns" type="Node3D" parent="SpawnPoints" unique_id=609920733]
 
@@ -305,3 +369,16 @@ collision_mask = 255
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ActivationArea" unique_id=315261343]
 shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="DoorCollison" type="StaticBody3D" parent="." unique_id=283382710]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 39)
+collision_layer = 255
+collision_mask = 255
+physics_material_override = SubResource("PhysicsMaterial_jf5nk")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DoorCollison" unique_id=1609049188]
+shape = SubResource("ConcavePolygonShape3D_q7d6m")
+debug_color = Color(0.9621149, 0, 0.5092375, 0.41960785)
+
+[node name="DoorCollisionMesh" type="MeshInstance3D" parent="DoorCollison" unique_id=1573216169]
+mesh = SubResource("BoxMesh_q7d6m")
