@@ -9,8 +9,8 @@
 albedo_texture = ExtResource("2_jpsil")
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_xhsnc"]
-top_radius = 0.05
-bottom_radius = 0.05
+top_radius = 0.04
+bottom_radius = 0.04
 height = 1.5
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ex0tx"]

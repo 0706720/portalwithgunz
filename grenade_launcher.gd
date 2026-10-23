@@ -1,7 +1,7 @@
 extends Node3D
 
 const GrenadeScene = preload("res://grenade.tscn")
-@export var launch_speed: float = 20.0
+@export var launch_speed: float = 50.0
 @onready var SpawnPoint = $SpawnPoint
 
 # Called when the node enters the scene tree for the first time.
