@@ -8,8 +8,8 @@
 script = ExtResource("1_jwbto")
 
 [node name="MainMenu" type="PanelContainer" parent="CanvasLayer" unique_id=1180220277]
-offset_right = 1154.0
-offset_bottom = 648.0
+offset_right = 1920.0
+offset_bottom = 1080.0
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/MainMenu" unique_id=29485240]
 layout_mode = 2
