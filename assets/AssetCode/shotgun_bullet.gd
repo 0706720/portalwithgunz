@@ -1,21 +1,31 @@
 extends Area3D
 
-@export var Bullet_Speed = 120
-@export var max_bullets: int = 7
-# Called when the node enters the scene tree for the first time.
+@export var Bullet_Speed: float = 120.0
+@export var damage: int = 15
+
+var shooter: Node3D = null # Assigned by the shotgun when spawned
+
 func _ready() -> void:
-	pass # Replace with function body.
+	await get_tree().create_timer(3.0).timeout
+	queue_free()
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	global_translate(-global_transform.basis.z * Bullet_Speed * delta)
+	global_translate(global_transform.basis.z * Bullet_Speed * delta)
 
 func _on_body_entered(body: Node3D) -> void:
-	if body.is_in_group("Object"):
+	# Ignore the specific player who fired this bullet
+	if body == shooter or (body is CharacterBody3D and body.is_in_group("player")):
+		return
+
+	# Check if body or parent has receive_damage
+	var target = body
+	if not target.has_method("receive_damage") and target.get_parent() and target.get_parent().has_method("receive_damage"):
+		target = target.get_parent()
+
+	if target.has_method("receive_damage"):
+		print("[Bullet] Dealing ", damage, " damage to: ", target.name)
+		target.receive_damage.rpc(damage)
 		queue_free()
-	if body.is_in_group('target'):
-				# If the enemy has a receive_damage function, call it via RPC (passing damage amount, e.g., 25)
-		if body.has_method("receive_damage"):
-			body.receive_damage.rpc(15)
-			queue_free()
+	else:
+		# Hit a wall, floor, or non-damageable object
+		queue_free()

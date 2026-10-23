@@ -624,8 +624,18 @@ func rpc_spawn_enemy_remote(r_name: String, e_path: String, tf: Transform3D, mul
 			var enemy = scene.instantiate() as Node3D
 			if enemy.has_method("initialize_scaled_stats"):
 				enemy.initialize_scaled_stats(multiplier)
+			
 			room.add_child(enemy)
-			enemy.global_transform = tf
+			
+			# Lift the enemy slightly off the floor so they don't clip underground
+			var safe_tf = tf
+			safe_tf.origin.y += 0.3
+			enemy.global_transform = safe_tf
+			
+			# Instantly snap client position on spawn to prevent glide/teleport blur
+			if enemy.has_method("set_initial_network_transform"):
+				enemy.set_initial_network_transform(safe_tf)
+				
 			enemy.add_to_group("network_enemies")
 
 

@@ -254,21 +254,17 @@ func _unhandled_input(event):
 		cam.rotate_x(-event.relative.y * .005)
 		cam.rotation.x = clamp(cam.rotation.x, -PI/2, PI/2)
 
-	if Input.is_action_just_pressed("shoot") \
-	and Global.currentWeapon == 'Pistol' \
-	and anim_player.current_animation != "shoot":
-		play_shoot_effects.rpc()
-		if raycast.is_colliding():
-			var hit_player = raycast.get_collider()
-			#if hit_player.is_in_group('Player'):
-				#hit_player.receive_damage.rpc_id(hit_player.get_multiplayer_authority())
-			#if hit_player.is_in_group('target'):
-				#hit_player.delete_target()
-			# Check if we hit an enemy/target
-			if hit_player.is_in_group('target'):
-				# If the enemy has a receive_damage function, call it via RPC (passing damage amount, e.g., 25)
-				if hit_player.has_method("receive_damage"):
-					hit_player.receive_damage.rpc(pistol_damage)
+	if is_multiplayer_authority() and weaponsManager:
+			var active_weapon = weaponsManager.get("current_weapon_name")
+			if Input.is_action_just_pressed("shoot") \
+			and active_weapon == 'Pistol' \
+			and anim_player.current_animation != "shoot":
+				play_shoot_effects.rpc()
+				if raycast.is_colliding():
+					var hit_player = raycast.get_collider()
+					if hit_player and hit_player.is_in_group('target'):
+						if hit_player.has_method("receive_damage"):
+							hit_player.receive_damage.rpc(pistol_damage)
 
 	if anim_playing == false and Input.is_action_just_pressed("superjump") and Global.jump_unlocked:
 		anim_playing = true

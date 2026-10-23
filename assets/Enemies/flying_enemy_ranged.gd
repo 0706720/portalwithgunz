@@ -4,8 +4,8 @@ extends Enemy
 @export_category("Flight Configuration")
 @export var min_flight_altitude := 1.5    
 @export var max_flight_altitude := 7.0    
-@export var float_bob_speed := 3.0        
-@export var float_bob_intensity := 0.4    
+@export var float_bob_speed := 3.0         
+@export var float_bob_intensity := 0.4     
 
 @export_category("Ranged Attack Configuration")
 @export var projectile_scene: PackedScene
@@ -14,9 +14,16 @@ extends Enemy
 var time_passed := 0.0
 
 func _physics_process(delta: float) -> void:
-	if not multiplayer.is_server() and multiplayer.has_multiplayer_peer():
+	# ==========================================
+	# CLIENT SIDE: Smoothly interpolate transforms received from server
+	# ==========================================
+	if not multiplayer.is_server():
+		global_transform = global_transform.interpolate_with(targeted_client_transform, delta * 15.0)
 		return
 
+	# ==========================================
+	# SERVER SIDE: Flight AI & Movement Logic
+	# ==========================================
 	target_refresh_timer -= delta
 	if target_refresh_timer <= 0.0 or not target_player or not is_instance_valid(target_player):
 		target_refresh_timer = 1.0
@@ -40,10 +47,12 @@ func _physics_process(delta: float) -> void:
 		else:
 			velocity = velocity.move_toward(Vector3.ZERO, speed * delta * 3.0)
 			move_and_slide()
+			_try_sync_transform(delta)
 			return
 	else:
 		if distance_to_player > aggro_range * 2.0:
 			is_aggroed = false
+			_try_sync_transform(delta)
 			return
 
 	# 2. Attack Trigger Check
@@ -104,9 +113,9 @@ func _physics_process(delta: float) -> void:
 	velocity.z = move_toward(velocity.z, target_velocity.z, speed * delta * 5.0)
 
 	move_and_slide()
-
-	if multiplayer.is_server():
-		rpc("sync_enemy_transform", global_transform)
+	
+	# Use the base class throttled sync helper so it doesn't flood the network
+	_try_sync_transform(delta)
 
 func perform_attack() -> void:
 	if not multiplayer.is_server():
