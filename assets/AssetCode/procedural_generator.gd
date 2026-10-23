@@ -339,25 +339,79 @@ func instantiate_rooms_incrementally(layout_data: Dictionary) -> void:
 			setup_end_portal(room)
 
 
-func setup_end_portal(room: Node3D) -> void:
+func setup_end_portal(room: Node3D) -> void: 
 	if not multiplayer.is_server(): return
 
-	var portal_area = room.get_node_or_null("Portal/PortalArea") as Area3D
-	if portal_area and not portal_area.body_entered.is_connected(_on_portal_body_entered):
-		portal_area.body_entered.connect(_on_portal_body_entered.bind(portal_area, false))
+	# 1. Regular dungeon end portal.
+	var end_area := room.get_node_or_null(
+		"Portal/PortalArea"
+	) as Area3D
 
-	var treasure_portal_area = room.get_node_or_null("TreasurePortal/Area3D") as Area3D
-	if treasure_portal_area and not treasure_portal_area.body_entered.is_connected(_on_portal_body_entered):
-		treasure_portal_area.body_entered.connect(_on_portal_body_entered.bind(treasure_portal_area, true))
+	if end_area:
+		if not end_area.body_entered.is_connected(_on_portal_body_entered):
+			end_area.body_entered.connect(
+				_on_portal_body_entered.bind(end_area, false, false)
+			)
+	else:
+		print("[Portal] No regular end portal in: ", room.name)
+
+	# 2. Treasure branch entrance portal.
+	# Supports either of your treasure entrance hierarchies.
+	var treasure_area := room.get_node_or_null(
+		"TreasurePortal/Portal/PortalArea"
+	) as Area3D
+
+	if treasure_area == null:
+		treasure_area = room.get_node_or_null(
+			"TreasurePortal/Area3D"
+		) as Area3D
+
+	if treasure_area:
+		if not treasure_area.body_entered.is_connected(_on_portal_body_entered):
+			treasure_area.body_entered.connect(
+				_on_portal_body_entered.bind(treasure_area, true, false)
+			)
+	else:
+		print("[Portal] No treasure entrance portal in: ", room.name)
+
+	# 3. Treasure dungeon end portal.
+	var treasure_end_area := room.get_node_or_null(
+		"TreasureEndPortal/PortalArea"
+	) as Area3D
+
+	if treasure_end_area:
+		if not treasure_end_area.body_entered.is_connected(_on_portal_body_entered):
+			treasure_end_area.body_entered.connect(
+				_on_portal_body_entered.bind(treasure_end_area, false, true)
+			)
+	else:
+		print("[Portal] No treasure end portal in: ", room.name)
 
 
-func _on_portal_body_entered(body: Node3D, portal_area: Area3D, is_treasure: bool) -> void:
+func _on_portal_body_entered( body: Node3D, portal_area: Area3D, is_treasure: bool, is_treasure_end: bool ) -> void: 
 	if not multiplayer.is_server(): return
-	
-	if body.is_in_group("player"):
-		portal_area.set_deferred("monitoring", false)
-		if is_treasure: trigger_treasure_branch(body)
-		else: restart_and_scale_dungeon()
+
+	if not body.is_in_group("player"):
+		return
+
+	# Prevent the same portal from triggering repeatedly.
+	if not is_instance_valid(portal_area):
+		return
+
+	if not portal_area.monitoring:
+		return
+
+	portal_area.set_deferred("monitoring", false)
+
+	if is_treasure_end:
+		print("[Portal] Treasure dungeon completed!")
+		restart_and_scale_dungeon()
+	elif is_treasure:
+		print("[Portal] Entering treasure dungeon!")
+		trigger_treasure_branch(body)
+	else:
+		print("[Portal] Regular dungeon completed!")
+		restart_and_scale_dungeon()
 
 
 func spawn_enemies_in_room(room: Node3D, room_index: int) -> void:
@@ -411,25 +465,79 @@ func restart_and_scale_dungeon() -> void:
 		request_world_state(peer)
 
 
-func trigger_treasure_branch(player: Node3D) -> void:
+func trigger_treasure_branch(player: Node3D) -> void: 
 	if not multiplayer.is_server(): return
+
+	if not is_instance_valid(player):
+		return
+
+	print("[Treasure] Generating treasure branch...")
+
+	# Remove the existing dungeon on the server and clients.
 	rpc("rpc_clear_client_dungeon")
 	await get_tree().process_frame
-	
-	var placed_aabbs: Array[AABB] = []
+
+	# Calculate the branch starting position.
 	var temp_start := start_room_scene.instantiate() as Node3D
-	var start_exit := temp_start.get_node("Connectors/Exit") as Node3D
-	var initial_tf := temp_start.global_transform * start_exit.transform
-	temp_start.queue_free()
-	
-	var treasure_layout = build_room_sequence(initial_tf, 3, true, placed_aabbs)
-	if not treasure_layout["scenes"].is_empty():
-		treasure_layout["scenes"][treasure_layout["scenes"].size() - 1] = treasure_room_scene
-		
+
+	if temp_start == null:
+		push_error("[Treasure] Failed to instantiate spawn room.")
+		return
+
+	var start_exit := temp_start.get_node_or_null(
+		"Connectors/Exit"
+	) as Node3D
+
+	if start_exit == null:
+		temp_start.free()
+		push_error("[Treasure] Spawn room is missing Connectors/Exit.")
+		return
+
+	var initial_tf: Transform3D = (
+		temp_start.global_transform * start_exit.transform
+	)
+
+	temp_start.free()
+
+	# Generate the branch layout.
+	var placed_aabbs: Array[AABB] = []
+
+	var treasure_layout := build_room_sequence(
+		initial_tf,
+		3,
+		true,
+		placed_aabbs
+	)
+
+	var scenes: Array = treasure_layout["scenes"]
+
+	if scenes.is_empty():
+		push_error("[Treasure] No rooms could be generated.")
+		return
+
+	if treasure_room_scene == null:
+		push_error("[Treasure] Treasure room scene is not assigned.")
+		return
+
+	# Replace the final branch room with the treasure room.
+	scenes[scenes.size() - 1] = treasure_room_scene
+
+	# Instantiate the rooms and configure their portals.
 	instantiate_rooms_incrementally(treasure_layout)
-	
+
+	# Position the player at the start of the new branch.
+	if is_instance_valid(player):
+		player.global_transform = initial_tf
+		player.global_position += Vector3.UP
+
+		if player is CharacterBody3D:
+			player.velocity = Vector3.ZERO
+
+	# Synchronize the generated rooms with connected clients.
 	for peer in multiplayer.get_peers():
 		request_world_state(peer)
+
+	print("[Treasure] Treasure branch generated.")
 
 
 @rpc("any_peer", "reliable")
