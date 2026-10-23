@@ -23,6 +23,7 @@ var dungeon_loop := 1
 @export var splitter_room_scene: PackedScene = preload("res://assets/Rooms/Special/splitter_room_prefab.tscn")
 @export var start_room_scene: PackedScene = preload("res://assets/Rooms/Special/spawn_room_prefab.tscn")
 @export var treasure_room_scene: PackedScene = preload("res://assets/Rooms/Special/treasure_room_prefab.tscn") 
+@export var treasure_end_room_scene: PackedScene = preload("res://assets/Rooms/Special/treasure_end_room_prefab.tscn")
 @onready var room_container: Node3D = $"../RoomContainer"
 
 @export_category("Arena Settings")
@@ -36,6 +37,7 @@ var splitter_has_spawned := false
 @export_category("Treasure Portal Settings")
 @export var treasure_portal_difficulty_multiplier := 2.0
 @export var treasure_reward_multiplier := 2.5
+var is_treasure_run := false
 
 @export_category("Enemy Point-Buy System")
 @export var enemy_spawn_chance := 0.7
@@ -43,11 +45,6 @@ var splitter_has_spawned := false
 	{"scene": preload("res://assets/Enemies/bat.tscn"), "cost": 4},
 	{"scene": preload("res://assets/Enemies/goblin.tscn"), "cost": 5},
 	{"scene": preload("res://assets/Enemies/skeleton_archer.tscn"), "cost": 10},
-	#{"scene": preload("res://assets/Enemies/sorcerer.tscn"), "cost": 15},
-	#{"scene": preload("res://assets/Enemies/warlock.tscn"), "cost": 15},
-	#{"scene": preload("res://assets/Enemies/orc.tscn"), "cost": 20},
-	#{"scene": preload("res://assets/Enemies/elite_crossbower.tscn"), "cost": 30},
-	#{"scene": preload("res://assets/Enemies/elite_knight.tscn"), "cost": 35},
 ]
 
 var level_generated := false
@@ -61,6 +58,10 @@ var all_branches: Array = []
 # 2. INITIALIZATION & SETUP
 # ==============================================================================
 func _ready() -> void:
+	add_to_group("generator")
+	if Global.has_method("set") or "current_generator" in Global:
+		Global.current_generator = self
+		
 	main_arena_count = 0
 	splitter_has_spawned = false
 	set_process_input(true)
@@ -74,6 +75,7 @@ func _ready() -> void:
 			var layout_data = generate_level_aabb_layout()
 			instantiate_rooms_incrementally(layout_data)
 			level_generated = true
+			rpc_update_dungeon_hud(dungeon_loop, is_treasure_run)
 			emit_signal("world_ready")
 		else:
 			push_error("[ProceduralGen] Generator setup validation failed.")
@@ -106,6 +108,7 @@ func scan_folder_for_rooms(dir_path: String) -> void:
 				if end_room_scene and full_path == end_room_scene.resource_path: skip = true
 				if splitter_room_scene and full_path == splitter_room_scene.resource_path: skip = true
 				if treasure_room_scene and full_path == treasure_room_scene.resource_path: skip = true 
+				if treasure_end_room_scene and full_path == treasure_end_room_scene.resource_path: skip = true
 				
 				if not skip:
 					var scene := load(full_path) as PackedScene
@@ -151,8 +154,7 @@ func build_room_sequence(start_tf: Transform3D, count: int, is_branch: bool, pla
 		var next_tf = Transform3D.IDENTITY
 		var global_aabb = AABB()
 		
-		# Splitter Room restriction: Only spawns after room 5
-		if not is_branch and not splitter_has_spawned and i >= 6 and splitter_room_scene != null:
+		if not is_branch and not is_treasure_run and not splitter_has_spawned and i >= 6 and splitter_room_scene != null:
 			selected_scene = splitter_room_scene
 			splitter_has_spawned = true
 			var inst = selected_scene.instantiate() as Node3D
@@ -259,8 +261,11 @@ func generate_level_aabb_layout() -> Dictionary:
 	var room_scenes = main_layout["scenes"]
 	var room_transforms = main_layout["transforms"]
 
-	if end_room_scene != null and not room_scenes.is_empty():
-		room_scenes[room_scenes.size() - 1] = end_room_scene
+	if not room_scenes.is_empty():
+		if is_treasure_run and treasure_end_room_scene != null:
+			room_scenes[room_scenes.size() - 1] = treasure_end_room_scene
+		elif not is_treasure_run and end_room_scene != null:
+			room_scenes[room_scenes.size() - 1] = end_room_scene
 
 	return { "scenes": room_scenes, "transforms": room_transforms, "branches": all_branches }
 
@@ -319,7 +324,7 @@ func instantiate_rooms_incrementally(layout_data: Dictionary) -> void:
 		room.global_transform = transforms[i]
 		generated_rooms.append(room)
 		
-		spawn_enemies_in_room(room, i)
+		queue_enemies_in_room(room, i)
 		setup_end_portal(room)
 
 	for b_idx in range(branches.size()):
@@ -335,103 +340,24 @@ func instantiate_rooms_incrementally(layout_data: Dictionary) -> void:
 			room.global_transform = b_transforms[i]
 			generated_rooms.append(room)
 			
-			spawn_enemies_in_room(room, i + 1)
+			queue_enemies_in_room(room, i + 1)
 			setup_end_portal(room)
 
 
-func setup_end_portal(room: Node3D) -> void: 
-	if not multiplayer.is_server(): return
-
-	# 1. Regular dungeon end portal.
-	var end_area := room.get_node_or_null(
-		"Portal/PortalArea"
-	) as Area3D
-
-	if end_area:
-		if not end_area.body_entered.is_connected(_on_portal_body_entered):
-			end_area.body_entered.connect(
-				_on_portal_body_entered.bind(end_area, false, false)
-			)
-	else:
-		print("[Portal] No regular end portal in: ", room.name)
-
-	# 2. Treasure branch entrance portal.
-	# Supports either of your treasure entrance hierarchies.
-	var treasure_area := room.get_node_or_null(
-		"TreasurePortal/Portal/PortalArea"
-	) as Area3D
-
-	if treasure_area == null:
-		treasure_area = room.get_node_or_null(
-			"TreasurePortal/Area3D"
-		) as Area3D
-
-	if treasure_area:
-		if not treasure_area.body_entered.is_connected(_on_portal_body_entered):
-			treasure_area.body_entered.connect(
-				_on_portal_body_entered.bind(treasure_area, true, false)
-			)
-	else:
-		print("[Portal] No treasure entrance portal in: ", room.name)
-
-	# 3. Treasure dungeon end portal.
-	var treasure_end_area := room.get_node_or_null(
-		"TreasureEndPortal/PortalArea"
-	) as Area3D
-
-	if treasure_end_area:
-		if not treasure_end_area.body_entered.is_connected(_on_portal_body_entered):
-			treasure_end_area.body_entered.connect(
-				_on_portal_body_entered.bind(treasure_end_area, false, true)
-			)
-	else:
-		print("[Portal] No treasure end portal in: ", room.name)
-
-
-func _on_portal_body_entered(
-	body: Node3D,
-	portal_area: Area3D,
-	is_treasure: bool,
-	is_treasure_end: bool
-) -> void:
-	if not multiplayer.is_server():
-		return
-
-	print("[Portal] Body entered: ", body.name)
-
-	if not body.is_in_group("player"):
-		print("[Portal] Body is not in the player group.")
-		return
-
-	if not is_instance_valid(portal_area):
-		print("[Portal] Portal area is invalid.")
-		return
-
-	if not portal_area.monitoring:
-		return
-
-	portal_area.set_deferred("monitoring", false)
-
-	if is_treasure_end:
-		print("[Portal] Treasure end portal activated!")
-		restart_and_scale_dungeon()
-	elif is_treasure:
-		print("[Portal] Treasure entrance activated!")
-		trigger_treasure_branch(body)
-	else:
-		print("[Portal] Regular end portal activated!")
-		restart_and_scale_dungeon()
-
-
-
-func spawn_enemies_in_room(room: Node3D, room_index: int) -> void:
+func queue_enemies_in_room(room: Node3D, room_index: int) -> void:
 	if room_index == 0: return
 	var spawns_node = room.get_node_or_null("SpawnPoints/enemy_spawns")
 	if not spawns_node or enemy_pool.is_empty(): return
 	
 	var meta = room.get_node_or_null("Metadata")
 	var base_budget: int = meta.enemy_budget if meta and "enemy_budget" in meta else 40
-	var scaled_budget = int(base_budget * pow(difficulty_multiplier_per_loop, dungeon_loop - 1))
+	
+	var current_multiplier = difficulty_multiplier_per_loop
+	if is_treasure_run:
+		current_multiplier *= treasure_portal_difficulty_multiplier
+		
+	var scaled_budget = int(base_budget * pow(current_multiplier, dungeon_loop - 1))
+	var room_enemy_data: Array[Dictionary] = []
 	
 	for marker in spawns_node.get_children():
 		if scaled_budget <= 0: break
@@ -442,16 +368,90 @@ func spawn_enemies_in_room(room: Node3D, room_index: int) -> void:
 		var enemy_scene = chosen["scene"] as PackedScene
 		if enemy_scene:
 			scaled_budget -= chosen["cost"]
-			var enemy = enemy_scene.instantiate() as Node3D
-			room.add_child(enemy)
-			enemy.global_transform = marker.global_transform
-			enemy.add_to_group("network_enemies")
-			rpc("rpc_spawn_enemy_remote", room.name, enemy_scene.resource_path, marker.global_transform)
+			room_enemy_data.append({
+				"path": enemy_scene.resource_path,
+				"transform": marker.global_transform
+			})
+			
+	room.set_meta("pending_enemies", room_enemy_data)
+	setup_room_activation_trigger(room)
+
+
+func setup_room_activation_trigger(room: Node3D) -> void:
+	if not multiplayer.is_server(): return
+	var trigger_area = room.get_node_or_null("ActivationArea") as Area3D # <-- Updated name here
+	if trigger_area:
+		if not trigger_area.body_entered.is_connected(_on_room_activation_entered):
+			trigger_area.body_entered.connect(_on_room_activation_entered.bind(room, trigger_area))
+
+
+func _on_room_activation_entered(body: Node3D, room: Node3D, trigger_area: Area3D) -> void:
+	if not multiplayer.is_server(): return
+	if not body.is_in_group("player"): return
+	if not room.has_meta("pending_enemies"): return
+	
+	if trigger_area and trigger_area.has_signal("body_entered"):
+		trigger_area.set_deferred("monitoring", false)
+		
+	var pending_enemies = room.get_meta("pending_enemies")
+	for enemy_data in pending_enemies:
+		var enemy = load(enemy_data["path"]).instantiate() as Node3D
+		room.add_child(enemy)
+		enemy.global_transform = enemy_data["transform"]
+		enemy.add_to_group("network_enemies")
+		rpc("rpc_spawn_enemy_remote", room.name, enemy_data["path"], enemy_data["transform"])
+		
+	room.remove_meta("pending_enemies")
+
+
+func setup_end_portal(room: Node3D) -> void: 
+	if not multiplayer.is_server(): return
+
+	var end_area := room.get_node_or_null("Portal/PortalArea") as Area3D
+	if end_area:
+		if not end_area.body_entered.is_connected(_on_portal_body_entered):
+			end_area.body_entered.connect(_on_portal_body_entered.bind(end_area, false, false))
+
+	var treasure_area := room.get_node_or_null("TreasurePortal/Portal/PortalArea") as Area3D
+	if treasure_area == null:
+		treasure_area = room.get_node_or_null("TreasurePortal/Area3D") as Area3D
+
+	if treasure_area:
+		if not treasure_area.body_entered.is_connected(_on_portal_body_entered):
+			treasure_area.body_entered.connect(_on_portal_body_entered.bind(treasure_area, true, false))
+
+	var treasure_end_area := room.get_node_or_null("TreasureEndPortal/PortalArea") as Area3D
+	if treasure_end_area:
+		if not treasure_end_area.body_entered.is_connected(_on_portal_body_entered):
+			treasure_end_area.body_entered.connect(_on_portal_body_entered.bind(treasure_end_area, false, true))
+
+
+func _on_portal_body_entered(body: Node3D, portal_area: Area3D, is_treasure: bool, is_treasure_end: bool) -> void:
+	if not multiplayer.is_server(): return
+	if not body.is_in_group("player"): return
+	if not is_instance_valid(portal_area) or not portal_area.monitoring: return
+
+	portal_area.set_deferred("monitoring", false)
+
+	if is_treasure_end:
+		print("[Portal] Treasure end portal activated! Looping back to base dungeon and resetting scale.")
+		is_treasure_run = false
+		restart_and_scale_dungeon()
+	elif is_treasure:
+		print("[Portal] Treasure entrance activated! Triggering scaled treasure dungeon.")
+		trigger_treasure_branch(body)
+	else:
+		print("[Portal] Regular end portal activated!")
+		is_treasure_run = false
+		restart_and_scale_dungeon()
 
 
 func restart_and_scale_dungeon() -> void:
 	if not multiplayer.is_server(): return
 	dungeon_loop += 1
+	is_treasure_run = false
+	rpc_update_dungeon_hud(dungeon_loop, is_treasure_run)
+	
 	rpc("rpc_clear_client_dungeon")
 	await get_tree().process_frame 
 	
@@ -475,93 +475,61 @@ func restart_and_scale_dungeon() -> void:
 		request_world_state(peer)
 
 
-func trigger_treasure_branch(player: Node3D) -> void: 
+func trigger_treasure_branch(player: Node3D) -> void:  
 	if not multiplayer.is_server(): return
+	if not is_instance_valid(player): return
 
-	if not is_instance_valid(player):
-		return
+	print("[Treasure] Generating full scaled treasure dungeon...")
+	is_treasure_run = true
+	dungeon_loop += 1 
+	rpc_update_dungeon_hud(dungeon_loop, is_treasure_run)
 
-	print("[Treasure] Generating treasure branch...")
-
-	# Remove the existing dungeon on the server and clients.
 	rpc("rpc_clear_client_dungeon")
 	await get_tree().process_frame
 
-	# Calculate the branch starting position.
-	var temp_start := start_room_scene.instantiate() as Node3D
+	await generate_spawn_room_first()
+	await get_tree().physics_frame
 
-	if temp_start == null:
-		push_error("[Treasure] Failed to instantiate spawn room.")
-		return
+	var layout_data = generate_level_aabb_layout()
+	instantiate_rooms_incrementally(layout_data)
 
-	var start_exit := temp_start.get_node_or_null(
-		"Connectors/Exit"
-	) as Node3D
-
-	if start_exit == null:
-		temp_start.free()
-		push_error("[Treasure] Spawn room is missing Connectors/Exit.")
-		return
-
-	var initial_tf: Transform3D = (
-		temp_start.global_transform * start_exit.transform
-	)
-
-	temp_start.free()
-
-	# Generate the branch layout.
-	var placed_aabbs: Array[AABB] = []
-
-	var treasure_layout := build_room_sequence(
-		initial_tf,
-		3,
-		true,
-		placed_aabbs
-	)
-
-	var scenes: Array = treasure_layout["scenes"]
-
-	if scenes.is_empty():
-		push_error("[Treasure] No rooms could be generated.")
-		return
-
-	if treasure_room_scene == null:
-		push_error("[Treasure] Treasure room scene is not assigned.")
-		return
-
-	# Replace the final branch room with the treasure room.
-	scenes[scenes.size() - 1] = treasure_room_scene
-
-	# Instantiate the rooms and configure their portals.
-	instantiate_rooms_incrementally(treasure_layout)
-
-	# Position the player at the start of the new branch.
-	if is_instance_valid(player):
-		player.global_transform = initial_tf
-		player.global_position += Vector3.UP
-
+	var spawn_room = room_container.get_node_or_null("Room_0")
+	if spawn_room:
+		var spawn_marker = spawn_room.get_node_or_null("SpawnPoints/PlayerSpawn")
+		var target_transform = spawn_marker.global_transform if spawn_marker else spawn_room.global_transform
+		target_transform.origin += Vector3(0, 1.0, 0)
+		player.global_transform = target_transform
 		if player is CharacterBody3D:
 			player.velocity = Vector3.ZERO
 
-	# Synchronize the generated rooms with connected clients.
 	for peer in multiplayer.get_peers():
 		request_world_state(peer)
 
-	print("[Treasure] Treasure branch generated.")
+	print("[Treasure] Scaled treasure dungeon generated successfully.")
+
+
+@rpc("authority", "call_local", "reliable")
+func rpc_update_dungeon_hud(current_loop: int, treasure_active: bool) -> void:
+	for peer_id in Global.players:
+		var player = Global.players[peer_id]
+		if is_instance_valid(player):
+			var level_text_label = player.get_node_or_null("Screen overlay/MarginContainer3/PanelContainer/HBoxContainer/VBoxContainer/currentLevelLabelText")
+			if level_text_label:
+				var status_text = "Treasure Branch" if treasure_active else "Standard Dungeon"
+				level_text_label.text = "Loop: %d | Status: %s" % [current_loop, status_text]
 
 
 @rpc("any_peer", "reliable")
 func request_world_state(peer_id: int) -> void:
 	if not multiplayer.is_server(): return
+	
+	rpc_id(peer_id, "rpc_update_dungeon_hud", dungeon_loop, is_treasure_run)
+	
 	for room in generated_rooms:
 		rpc_id(peer_id, "rpc_spawn_room_remote", room.scene_file_path, room.global_transform, room.name)
 		
-	await get_tree().create_timer(0.5).timeout
-	for room in generated_rooms:
-		for child in room.get_children():
-			if child.is_in_group("network_enemies"):
-				rpc_id(peer_id, "rpc_spawn_enemy_remote", room.name, child.scene_file_path, child.global_transform)
-				
+	# Note: With room activation triggers, remote clients will also spawn enemies 
+	# dynamically via the rpc_spawn_enemy_remote calls when triggered by the server.
 	rpc_id(peer_id, "remote_world_ready")
 
 

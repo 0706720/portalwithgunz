@@ -1002,9 +1002,10 @@ layout_mode = 2
 text = "..................."
 
 [node name="MarginContainer2" type="MarginContainer" parent="Screen overlay" unique_id=1493372493]
-offset_left = 900.0
-offset_right = 1151.0
-offset_bottom = 35.0
+offset_left = 1670.0
+offset_top = 5.0
+offset_right = 1921.0
+offset_bottom = 55.0
 
 [node name="PanelContainer" type="PanelContainer" parent="Screen overlay/MarginContainer2" unique_id=1803128789]
 layout_mode = 2
@@ -1059,6 +1060,33 @@ grow_vertical = 2
 text = "( )"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="MarginContainer3" type="MarginContainer" parent="Screen overlay" unique_id=472594358]
+offset_left = 1000.0
+offset_right = 1098.0
+offset_bottom = 40.0
+
+[node name="PanelContainer" type="PanelContainer" parent="Screen overlay/MarginContainer3" unique_id=29568536]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Screen overlay/MarginContainer3/PanelContainer" unique_id=1714249013]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Screen overlay/MarginContainer3/PanelContainer/HBoxContainer" unique_id=789546433]
+layout_mode = 2
+
+[node name="CurrentLevelLabel" type="Label" parent="Screen overlay/MarginContainer3/PanelContainer/HBoxContainer/VBoxContainer" unique_id=1541120354]
+layout_mode = 2
+text = "current level"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VSeparator" type="VSeparator" parent="Screen overlay/MarginContainer3/PanelContainer/HBoxContainer/VBoxContainer" unique_id=114568082]
+layout_mode = 2
+
+[node name="currentLevelLabelText" type="Label" parent="Screen overlay/MarginContainer3/PanelContainer/HBoxContainer/VBoxContainer" unique_id=919500136]
+unique_name_in_owner = true
+layout_mode = 2
 
 [node name="EmoteBar" type="Sprite3D" parent="." unique_id=1177638455]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, -14.5134945)
