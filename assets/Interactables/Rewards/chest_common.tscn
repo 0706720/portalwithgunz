@@ -1,12 +1,29 @@
 [gd_scene format=3 uid="uid://bliyb5p1ui3om"]
 
+[ext_resource type="Texture2D" uid="uid://deky0tl44tiju" path="res://assets/images/Darkwood.png" id="1_e37xn"]
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d0u6y"]
-albedo_color = Color(1, 0, 0, 1)
+albedo_texture = ExtResource("1_e37xn")
 
 [sub_resource type="BoxMesh" id="BoxMesh_g4v7s"]
 material = SubResource("StandardMaterial3D_d0u6y")
+
+[sub_resource type="BoxMesh" id="BoxMesh_ipctq"]
+material = SubResource("StandardMaterial3D_d0u6y")
+size = Vector3(1, 0.2, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ij2t7"]
+size = Vector3(0.2, 0.4, 0.1)
 
 [node name="ChestCommon" type="Node3D" unique_id=1810660396]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1588585800]
 mesh = SubResource("BoxMesh_g4v7s")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=1349290706]
+transform = Transform3D(1, 0, 0, 0, 0.9778917, 0.20911276, 0, -0.20911276, 0.9778917, 0, 0.6131091, 0)
+mesh = SubResource("BoxMesh_ipctq")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="." unique_id=17277736]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.49695653, 0.48714215)
+mesh = SubResource("BoxMesh_ij2t7")
