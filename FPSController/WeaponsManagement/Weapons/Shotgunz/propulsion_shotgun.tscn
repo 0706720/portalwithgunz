@@ -98,6 +98,7 @@ orientation = 2
 [node name="Propulsion_shotgun" type="Node3D" unique_id=1602549375 groups=["player"]]
 transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
 script = ExtResource("1_imbo3")
+anim_playing = true
 ShotgunBullet = ExtResource("2_n1ujq")
 
 [node name="Shotgun_model" parent="." unique_id=546938671 instance=ExtResource("1_j20jc")]

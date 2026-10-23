@@ -7,6 +7,7 @@ extends CharacterBody3D
 @export var max_preferred_distance : float
 @export var strafe_speed_multiplier : float
 @export var separation_weight : float = 1.0         
+@export var is_flying : bool = false # Check this true for bats in their inspector!
 
 @export var max_spawn_distance := 45.0
 @export var despawn_distance := 60.0
@@ -33,10 +34,14 @@ var target_refresh_timer := 0.0
 
 # Network sync throttling variables
 var sync_timer := 0.0
-const SYNC_INTERVAL := 0.05 # 20 updates per second for smooth client updates without packet flooding
+const SYNC_INTERVAL := 0.05 
+
+# Client-side smoothing variables
+var targeted_client_transform: Transform3D
 
 func _ready() -> void:
 	add_to_group("target")
+	targeted_client_transform = global_transform
 	
 	if multiplayer.is_server():
 		await get_tree().physics_frame
@@ -49,6 +54,11 @@ func initialize_scaled_stats(multiplier: float) -> void:
 	max_health = int(max_health * stat_multiplier)
 	current_health = max_health
 	attack_damage = int(attack_damage * stat_multiplier)
+
+# Prevents clients from lerping from (0,0,0) when spawned
+func set_initial_network_transform(tf: Transform3D) -> void:
+	global_transform = tf
+	targeted_client_transform = tf
 
 func find_player() -> void:
 	var players = get_tree().get_nodes_in_group("player")
@@ -74,6 +84,8 @@ func pick_new_wander_direction() -> void:
 
 func _physics_process(delta: float) -> void:
 	if not multiplayer.is_server():
+		# Smooth interpolation for clients
+		global_transform = global_transform.interpolate_with(targeted_client_transform, delta * 15.0)
 		return
 
 	target_refresh_timer -= delta
@@ -84,7 +96,6 @@ func _physics_process(delta: float) -> void:
 	if not target_player:
 		return
 
-	# HARDWARE OPTIMIZATION (Distance Culling): Skip heavy AI logic if players are >25m away
 	if global_position.distance_to(target_player.global_position) > 50.0:
 		return
 
@@ -93,10 +104,16 @@ func _physics_process(delta: float) -> void:
 	if attack_timer > 0.0:
 		attack_timer -= delta
 
-	if not is_on_floor():
-		velocity += get_gravity() * delta
+	# Handle gravity vs flying altitude control
+	if not is_flying:
+		if not is_on_floor():
+			velocity += get_gravity() * delta
+		else:
+			velocity.y = 0
 	else:
-		velocity.y = 0
+		# Give flying enemies smooth height adjustment toward the target player's height (plus an offset, e.g., 1.5 meters up)
+		var target_height = target_player.global_position.y + 1.5
+		velocity.y = move_toward(velocity.y, (target_height - global_position.y) * 3.0, speed * delta * 4.0)
 
 	var distance_to_player = global_position.distance_to(target_player.global_position)
 
@@ -154,27 +171,31 @@ func _physics_process(delta: float) -> void:
 	velocity.x = move_toward(velocity.x, target_velocity.x, speed * delta * 6.0)
 	velocity.z = move_toward(velocity.z, target_velocity.z, speed * delta * 6.0)
 
+	# Crucial: Ensure move_and_slide runs for flying units too so their transforms update and sync!
 	move_and_slide()
 	_try_sync_transform(delta)
 
-# THROTTLED NETWORK SYNC
 func _try_sync_transform(delta: float) -> void:
 	sync_timer += delta
 	if sync_timer >= SYNC_INTERVAL:
 		sync_timer = 0.0
 		rpc("sync_enemy_transform", global_transform)
 
-# VIRTUAL METHOD: Child scripts will override this!
 func perform_attack() -> void:
 	pass
 
 @rpc("any_peer", "call_local", "reliable")
 func receive_damage(amount: int) -> void:
-	if not multiplayer.is_server() or is_dead:
+	if is_dead:
 		return
-	current_health -= amount
-	if current_health <= 0:
-		die()
+	
+	# Only the server modifies health and triggers death logic
+	if multiplayer.is_server():
+		current_health -= amount
+		print("[Server] Enemy took ", amount, " damage. Health left: ", current_health)
+		
+		if current_health <= 0:
+			die()
 
 func die() -> void:
 	if is_dead:
@@ -193,4 +214,4 @@ func rpc_client_die() -> void:
 
 @rpc("authority", "unreliable")
 func sync_enemy_transform(new_transform: Transform3D) -> void:
-	global_transform = new_transform
+	targeted_client_transform = new_transform
