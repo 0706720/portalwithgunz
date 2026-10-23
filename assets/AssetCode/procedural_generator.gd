@@ -388,14 +388,23 @@ func setup_end_portal(room: Node3D) -> void:
 		print("[Portal] No treasure end portal in: ", room.name)
 
 
-func _on_portal_body_entered( body: Node3D, portal_area: Area3D, is_treasure: bool, is_treasure_end: bool ) -> void: 
-	if not multiplayer.is_server(): return
-
-	if not body.is_in_group("player"):
+func _on_portal_body_entered(
+	body: Node3D,
+	portal_area: Area3D,
+	is_treasure: bool,
+	is_treasure_end: bool
+) -> void:
+	if not multiplayer.is_server():
 		return
 
-	# Prevent the same portal from triggering repeatedly.
+	print("[Portal] Body entered: ", body.name)
+
+	if not body.is_in_group("player"):
+		print("[Portal] Body is not in the player group.")
+		return
+
 	if not is_instance_valid(portal_area):
+		print("[Portal] Portal area is invalid.")
 		return
 
 	if not portal_area.monitoring:
@@ -404,14 +413,15 @@ func _on_portal_body_entered( body: Node3D, portal_area: Area3D, is_treasure: bo
 	portal_area.set_deferred("monitoring", false)
 
 	if is_treasure_end:
-		print("[Portal] Treasure dungeon completed!")
+		print("[Portal] Treasure end portal activated!")
 		restart_and_scale_dungeon()
 	elif is_treasure:
-		print("[Portal] Entering treasure dungeon!")
+		print("[Portal] Treasure entrance activated!")
 		trigger_treasure_branch(body)
 	else:
-		print("[Portal] Regular dungeon completed!")
+		print("[Portal] Regular end portal activated!")
 		restart_and_scale_dungeon()
+
 
 
 func spawn_enemies_in_room(room: Node3D, room_index: int) -> void:
