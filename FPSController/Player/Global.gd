@@ -21,7 +21,7 @@ var jump_unlocked = true
 
 ## Upgrade card misc
 var xp_threshold_card = false
-var upgrade_pending = false
+var upgrade_pending = 0
 
 var current_score = 0
 var health = 100
@@ -31,8 +31,8 @@ var players := {}
 var player
 var currentWeapon = 'Pistol'
 
-func signal_popup():
-	signal_message.emit()
+func signal_popup(bool):
+	signal_message.emit(bool)
 # if status is true, increases the size of the window and scales on-screen elements to window size
 # allows for better viewing on retina (or similar resolution) displays
 func high_resolution_display_mode(status):

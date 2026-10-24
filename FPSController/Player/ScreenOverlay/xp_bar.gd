@@ -2,7 +2,7 @@ extends ProgressBar
 
 var experience = 0
 var level_amount = 5
-var level_up_multiplier = 1.5
+var level_up_multiplier = 1.25
 
 @onready var progress_node = %xpBar
 
@@ -16,8 +16,7 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	# Developer shortcut (Server-side check)
-	if multiplayer.is_server() and Input.is_action_just_pressed("LevelUp") and Global.upgrade_pending:
+	if Input.is_action_just_pressed("LevelUp") and Global.upgrade_pending >= 1:
 		level_up.emit(1)
 	
 func on_xp_gain(amount):
@@ -41,16 +40,18 @@ func on_xp_gain(amount):
 	experience += amount
 
 	# Logic for xp reaching requirement
-	if experience >= level_amount:
-		create_new_level()
-		experience = 0
-		Global.upgrade_pending = true
-		Global.signal_popup()
+	while experience > 0:
+		if experience >= level_amount:
+			experience -= level_amount
+			create_new_level()
+			rpc("apply_upgrade_all_clients")
+		else:
+			break
 		
 	# Synchronize progress across all clients
 	rpc("rpc_sync_xp_progress", experience, level_amount)
 
-@rpc("authority", "call_local", "reliable")
+@rpc("any_peer", "call_local", "reliable")
 func rpc_sync_xp_progress(exp: float, max_xp: float) -> void:
 	update_progress(exp, max_xp)
 
@@ -60,3 +61,8 @@ func update_progress(exp, max_xp):
 	
 func create_new_level():
 	level_amount = (level_amount * level_up_multiplier)
+
+@rpc("any_peer", "call_local", "reliable")
+func apply_upgrade_all_clients():
+	Global.upgrade_pending += 1
+	Global.signal_popup(true)

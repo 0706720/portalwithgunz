@@ -1,16 +1,14 @@
 extends Node2D
-var status = false
 
-# Called when the node enters the scene tree for the first time.
+@onready var node = %Popup
+
 func _ready() -> void:
 	Global.signal_message.connect(alert_toggle)
 
+func apply_all_clients(status: bool) -> void:
+	if multiplayer.is_server():
+		rpc("alert_toggle", status)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-	
-func alert_toggle():
-	status = !status
-	var node = %Popup
+@rpc("any_peer", "call_local", "reliable")
+func alert_toggle(status: bool) -> void:
 	node.visible = status

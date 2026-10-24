@@ -68,10 +68,9 @@ func _add_options(input):
 
 		spawned_card.position = Vector2(pos, 300)
 		UI.add_child(spawned_card)
-		Global.signal_popup()
-		Global.upgrade_pending = false
 		#print("card: " + str(spawned_card))
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	update_ui()
 
 func validate_index(rarity):
 	failsafe += 1
@@ -140,6 +139,11 @@ func clear_unique(cardname: String):
 	# fancy line which finds index where name = parameter
 	var index = card_pool.find_custom(func(card): return card["name"] == cardname)
 	card_pool.remove_at(index)
+	
+func update_ui():
+	Global.upgrade_pending -= 1
+	if Global.upgrade_pending <= 0:
+			Global.signal_popup(false)
 	
 	
 	
