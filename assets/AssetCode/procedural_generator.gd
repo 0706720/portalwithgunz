@@ -251,7 +251,7 @@ func generate_level_aabb_layout() -> Dictionary:
 	all_branches.clear()
 	
 	# ROLL ONCE PER RUN: 30% chance for a treasure branch to exist in this dungeon
-	allow_treasure_branch = (rng.randf() <= 1)
+	allow_treasure_branch = (rng.randf() <= 0.3)
 	
 	var temp_start := start_room_scene.instantiate() as Node3D
 	var start_exit := temp_start.get_node("Connectors/Exit") as Node3D

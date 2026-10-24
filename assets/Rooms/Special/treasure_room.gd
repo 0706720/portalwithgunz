@@ -1,8 +1,8 @@
 extends Node3D
 
 @export var reward_pool: Array[Dictionary] = [
-	{"scene": preload("res://assets/Interactables/Rewards/chest_common.tscn"), "weight": 1},
-	{"scene": preload("res://assets/Interactables/Rewards/treasure_portal.tscn"), "weight": 100}
+	{"scene": preload("res://assets/Interactables/Rewards/chest_common.tscn"), "weight": 80},
+	{"scene": preload("res://assets/Interactables/Rewards/treasure_portal.tscn"), "weight": 20}
 ]
 
 # Toggle this ON in the Inspector for your Treasure End Room scene!
