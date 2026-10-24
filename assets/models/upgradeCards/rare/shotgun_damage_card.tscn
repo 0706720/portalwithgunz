@@ -89,7 +89,7 @@ theme_override_colors/default_color = Color(0, 0, 0, 1)
 theme_override_fonts/normal_font = ExtResource("4_g7u5s")
 theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
-text = "Shotgun damage recieves a 10% boost [color=blue](Unique)[/color]"
+text = "Shotgun receives an additional pellet [color=blue](Unique)[/color]"
 horizontal_alignment = 1
 
 [node name="Polygon2D" type="Polygon2D" parent="cardAssets" unique_id=1633409725]
