@@ -251,7 +251,7 @@ func generate_level_aabb_layout() -> Dictionary:
 	all_branches.clear()
 	
 	# ROLL ONCE PER RUN: 30% chance for a treasure branch to exist in this dungeon
-	allow_treasure_branch = (rng.randf() <= 0.3)
+	allow_treasure_branch = (rng.randf() <= 1)
 	
 	var temp_start := start_room_scene.instantiate() as Node3D
 	var start_exit := temp_start.get_node("Connectors/Exit") as Node3D
@@ -675,10 +675,18 @@ func rpc_spawn_enemy_remote(r_name: String, e_path: String, tf: Transform3D, mul
 @rpc("authority", "call_remote", "reliable")
 func remote_world_ready() -> void:
 	emit_signal("world_ready")
+	
+	# 1. Wait until Room_0 is guaranteed to exist in the client's scene tree
 	var spawn_room = room_container.get_node_or_null("Room_0")
-	if spawn_room and Global.player:
-		var spawn_marker = spawn_room.get_node_or_null("SpawnPoints/PlayerSpawn")
-		var target_transform = spawn_marker.global_transform if spawn_marker else spawn_room.global_transform
-		target_transform.origin += Vector3(0, 1.0, 0)
-		Global.player.global_transform = target_transform
-		Global.player.velocity = Vector3.ZERO
+	while spawn_room == null and is_inside_tree():
+		await get_tree().process_frame
+		spawn_room = room_container.get_node_or_null("Room_0")
+		
+	print("[Client] Dungeon world is fully loaded. Requesting player spawn...")
+	
+	# 2. Target your actual "PlayerSpawner" node in WorldRoot
+	var player_spawner = get_node_or_null("../PlayerSpawner") 
+	if player_spawner:
+		player_spawner.rpc_id(1, "request_spawn", multiplayer.get_unique_id())
+	else:
+		push_error("[Client] Could not find PlayerSpawner node!")

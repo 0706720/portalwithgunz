@@ -54,6 +54,7 @@ data = PackedVector3Array(-10, 0.049999997, 10, 10, 0.049999997, 10, -10, -0.049
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
 
 [node name="PlayerSpawn" type="Node3D" parent="SpawnPoints" unique_id=2134919627]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 
 [node name="Connectors" type="Node3D" parent="." unique_id=1707349763]
 

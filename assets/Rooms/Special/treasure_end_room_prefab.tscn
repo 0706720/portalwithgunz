@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://cnso0scfax2fc"]
 
+[ext_resource type="Script" uid="uid://bwi671jt5nokv" path="res://assets/Rooms/Special/treasure_room.gd" id="1_10ktw"]
 [ext_resource type="Texture2D" uid="uid://vw4d70xv6yno" path="res://assets/images/wall_dungeon.jpeg" id="1_ythsk"]
 [ext_resource type="PackedScene" uid="uid://dlx6jlni62p4y" path="res://assets/models/torch.tscn" id="2_10ktw"]
 [ext_resource type="Texture2D" uid="uid://cs1ibjwvbhsss" path="res://assets/images/dungeo_floor.jpg" id="3_33234"]
@@ -132,6 +133,8 @@ size = Vector2(2, 4)
 data = PackedVector3Array(1, -2, 0, -1, -2, 0, 1, 2, 0, -1, -2, 0, -1, 2, 0, 1, 2, 0)
 
 [node name="TreasureEndRoomPrefab" type="Node3D" unique_id=1909172185]
+script = ExtResource("1_10ktw")
+disable_portal = true
 
 [node name="MeshContainer" type="Node3D" parent="." unique_id=1124817185]
 
@@ -202,3 +205,17 @@ collision_mask = 255
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="TreasureEndPortal/PortalArea" unique_id=911724932]
 shape = SubResource("ConcavePolygonShape3D_pb37x")
+
+[node name="RewardSpawns" type="Node3D" parent="." unique_id=1093696626]
+
+[node name="Marker3D_1" type="Marker3D" parent="RewardSpawns" unique_id=2005302868]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 7.5, 2, 16)
+
+[node name="Marker3D_2" type="Marker3D" parent="RewardSpawns" unique_id=2062021855]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 2.5, 2, 16)
+
+[node name="Marker3D_3" type="Marker3D" parent="RewardSpawns" unique_id=1891178183]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -2.5, 2, 16)
+
+[node name="Marker3D_4" type="Marker3D" parent="RewardSpawns" unique_id=2019260722]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -7.5, 2, 16)

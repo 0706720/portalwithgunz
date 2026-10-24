@@ -5,6 +5,9 @@ extends Node3D
 	{"scene": preload("res://assets/Interactables/Rewards/treasure_portal.tscn"), "weight": 100}
 ]
 
+# Toggle this ON in the Inspector for your Treasure End Room scene!
+@export var disable_portal: bool = false
+
 var rng := RandomNumberGenerator.new()
 var rewards_spawned := false
 
@@ -33,8 +36,12 @@ func spawn_weighted_rewards() -> void:
 		if marker:
 			var chosen_scene = get_weighted_random_reward()
 			
-			# Ensure only one rare portal spawns per treasure room
-			if chosen_scene and chosen_scene.resource_path == portal_scene_path:
+			# Ensure portals cannot spawn if disabled for this room type
+			if disable_portal and chosen_scene and chosen_scene.resource_path == portal_scene_path:
+				chosen_scene = reward_pool[0]["scene"] # Fallback to chest
+			
+			# Otherwise, ensure only one rare portal spawns per regular room
+			elif not disable_portal and chosen_scene and chosen_scene.resource_path == portal_scene_path:
 				if portal_spawned:
 					chosen_scene = reward_pool[0]["scene"]
 				else:
@@ -63,12 +70,20 @@ func rpc_spawn_reward_remote(scene_path: String, tf: Transform3D, index: int) ->
 func get_weighted_random_reward() -> PackedScene:
 	var total_weight := 0
 	for item in reward_pool:
+		# Skip portal from weight calculations if disabled
+		if disable_portal and item["scene"].resource_path == "res://assets/Interactables/Rewards/treasure_portal.tscn":
+			continue
 		total_weight += item["weight"]
+		
+	if total_weight <= 0:
+		return reward_pool[0]["scene"]
 		
 	var roll := rng.randi_range(0, total_weight - 1)
 	var cumulative_weight := 0
 	
 	for item in reward_pool:
+		if disable_portal and item["scene"].resource_path == "res://assets/Interactables/Rewards/treasure_portal.tscn":
+			continue
 		cumulative_weight += item["weight"]
 		if roll < cumulative_weight:
 			return item["scene"]

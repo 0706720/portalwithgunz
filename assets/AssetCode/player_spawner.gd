@@ -1,4 +1,4 @@
-extends Node
+extends MultiplayerSpawner
 
 @export var player_scene: PackedScene = preload("res://FPSController/Player/player.tscn")
 
@@ -14,15 +14,15 @@ func spawn_player(peer_id: int) -> void:
 	player.name = str(peer_id)
 	player.set_multiplayer_authority(peer_id)
 
-	# Look for a spawn point inside the start room, or fall back to a root-level one
-	var spawn_point = scene_root.get_node_or_null("Room_0/SpawnPoint") as Node3D
-	if not spawn_point:
-		spawn_point = scene_root.get_node_or_null("SpawnPoint") as Node3D
-
+	# Try finding the spawn point; if it fails, fallback safely
+	var spawn_path = "RoomContainer/Room_0/SpawnPoints/PlayerSpawn"
+	var spawn_point = scene_root.get_node_or_null(spawn_path) as Node3D
+	
 	if spawn_point:
-		# Copy full transform so position AND rotation (facing direction) match perfectly
 		player.global_transform = spawn_point.global_transform
+		print("[PlayerSpawner] SUCCESS: Spawned player at Room_0 marker for peer: ", peer_id)
 	else:
+		print("[PlayerSpawner] WARNING: Spawn point not found yet, using default position.")
 		player.global_transform = Transform3D(Basis(), Vector3(0, 2.0, 0))
 
 	scene_root.add_child(player, true)
@@ -38,9 +38,8 @@ func request_spawn(peer_id: int) -> void:
 	# 2. Tell the newly joined client to spawn all players that ALREADY exist on the server
 	var scene_root = get_tree().current_scene
 	for child in scene_root.get_children():
-		if child is PlayerCharacter and child.name != str(peer_id):
+		if child is CharacterBody3D and child.name != str(peer_id): # Adjust 'CharacterBody3D' to match your player base class if needed
 			var existing_peer_id := child.name.to_int()
-			# Force the new client to spawn the existing player locally
 			rpc_id(peer_id, "rpc_force_spawn_existing", existing_peer_id, child.global_transform)
 
 @rpc("authority", "reliable")

@@ -1,12 +1,10 @@
 extends Node
 
-# Inside your WorldRoot / Main script (_ready function):
 func _ready() -> void:
 	print("WorldRoot _ready on peer:", multiplayer.get_unique_id(), "is_server:", multiplayer.is_server())
 	
-	# Connect the generator signal to your loading screen so it deletes itself when ready
 	var generator = $ProceduralGenerator
-	var loading_screen = $CanvasLayer/LoadingScreen # Adjust path if named differently
+	var loading_screen = $CanvasLayer/LoadingScreen
 	
 	if generator and loading_screen:
 		generator.world_ready.connect(loading_screen._on_world_ready)
