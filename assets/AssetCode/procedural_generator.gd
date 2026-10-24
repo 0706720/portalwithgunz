@@ -11,6 +11,7 @@ signal world_ready
 @export var max_attempts_per_room := 15
 @export var max_backtracks := 20
 @export var required_straights_after_turn := 0
+var allow_treasure_branch := false
 
 @export_category("Difficulty & Scaling")
 var dungeon_loop := 1
@@ -154,7 +155,8 @@ func build_room_sequence(start_tf: Transform3D, count: int, is_branch: bool, pla
 		var next_tf = Transform3D.IDENTITY
 		var global_aabb = AABB()
 		
-		if not is_branch and not is_treasure_run and not splitter_has_spawned and i >= 6 and splitter_room_scene != null:
+		# Check if allowed by our single 30% run roll, and hasn't spawned yet, and we're past room 6
+		if not is_branch and not is_treasure_run and allow_treasure_branch and not splitter_has_spawned and i >= 6 and splitter_room_scene != null:
 			selected_scene = splitter_room_scene
 			splitter_has_spawned = true
 			var inst = selected_scene.instantiate() as Node3D
@@ -172,9 +174,6 @@ func build_room_sequence(start_tf: Transform3D, count: int, is_branch: bool, pla
 				placed_aabbs.append(global_aabb)
 				room_transforms.append(candidate_tf)
 				room_scenes.append(selected_scene)
-				
-				# FIX: Generate enemy data for the splitter room so it triggers waves properly!
-				# (You can extract your enemy budget logic here or call a helper function)
 				
 				inst.queue_free()
 				
@@ -250,6 +249,9 @@ func build_room_sequence(start_tf: Transform3D, count: int, is_branch: bool, pla
 func generate_level_aabb_layout() -> Dictionary:
 	var placed_aabbs: Array[AABB] = []
 	all_branches.clear()
+	
+	# ROLL ONCE PER RUN: 30% chance for a treasure branch to exist in this dungeon
+	allow_treasure_branch = (rng.randf() <= 0.3)
 	
 	var temp_start := start_room_scene.instantiate() as Node3D
 	var start_exit := temp_start.get_node("Connectors/Exit") as Node3D
