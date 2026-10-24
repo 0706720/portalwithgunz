@@ -110,72 +110,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 40)
 
 [node name="SpawnPoints" type="Node3D" parent="." unique_id=268442773]
 
-[node name="enemy_spawns" type="Node3D" parent="SpawnPoints" unique_id=800816673]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 20)
-
-[node name="spawn1" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=2133128070]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 10)
-
-[node name="spawn2" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=1522079443]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 5)
-
-[node name="spawn3" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=297479273]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 5, 5)
-
-[node name="spawn4" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=1304727813]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 5, 5)
-
-[node name="spawn5" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=1411848637]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 5, 10)
-
-[node name="spawn6" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=1676742989]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 5, 10)
-
-[node name="spawn7" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=1983926971]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 5, 10)
-
-[node name="spawn8" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=1698763826]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 5, 5)
-
-[node name="spawn9" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=816579884]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 5, 5)
-
-[node name="spawn10" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=2095686118]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 5, 0)
-
-[node name="spawn11" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=1481940379]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 5, 0)
-
-[node name="spawn12" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=2100265652]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
-
-[node name="spawn13" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=1174862719]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 5, 0)
-
-[node name="spawn14" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=1013426649]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 5, 0)
-
-[node name="spawn15" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=1130065086]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 5, 0)
-
-[node name="spawn16" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=2140193535]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 5, 5)
-
-[node name="spawn17" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=311886925]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 5, 10)
-
-[node name="spawn18" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=1612472161]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 5, 0)
-
-[node name="spawn19" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=2071106171]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 5, 5)
-
-[node name="spawn20" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=316893376]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 5, 10)
-
-[node name="spawn21" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=302232127]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 5, 10)
-
 [node name="resource_spawns" type="Node3D" parent="SpawnPoints" unique_id=609920733]
 
 [node name="spawn1" type="Node3D" parent="SpawnPoints/resource_spawns" unique_id=438799057]
@@ -183,6 +117,126 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 5, 10)
 [node name="puzzle_spawns" type="Node3D" parent="SpawnPoints" unique_id=1170800451]
 
 [node name="spawn1" type="Node3D" parent="SpawnPoints/puzzle_spawns" unique_id=593188252]
+
+[node name="enemy_spawns" type="Node3D" parent="SpawnPoints" unique_id=954173168]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 20)
+
+[node name="FrontRow" type="Node3D" parent="SpawnPoints/enemy_spawns" unique_id=874231918]
+
+[node name="spawn8" type="Marker3D" parent="SpawnPoints/enemy_spawns/FrontRow" unique_id=913228434]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 5, 0)
+
+[node name="spawn6" type="Marker3D" parent="SpawnPoints/enemy_spawns/FrontRow" unique_id=330615380]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 5, 0)
+
+[node name="spawn5" type="Marker3D" parent="SpawnPoints/enemy_spawns/FrontRow" unique_id=1148919238]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 5, 0)
+
+[node name="spawn4" type="Marker3D" parent="SpawnPoints/enemy_spawns/FrontRow" unique_id=2023222064]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+
+[node name="spawn3" type="Marker3D" parent="SpawnPoints/enemy_spawns/FrontRow" unique_id=1859330295]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 5, 0)
+
+[node name="spawn2" type="Marker3D" parent="SpawnPoints/enemy_spawns/FrontRow" unique_id=223172879]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 5, 0)
+
+[node name="spawn1" type="Marker3D" parent="SpawnPoints/enemy_spawns/FrontRow" unique_id=1690819549]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 5, 0)
+
+[node name="MiddleRow" type="Node3D" parent="SpawnPoints/enemy_spawns" unique_id=571061915]
+
+[node name="spawn14" type="Marker3D" parent="SpawnPoints/enemy_spawns/MiddleRow" unique_id=1969721405]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 5, 5)
+
+[node name="spawn13" type="Marker3D" parent="SpawnPoints/enemy_spawns/MiddleRow" unique_id=1808475374]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 5, 5)
+
+[node name="spawn12" type="Marker3D" parent="SpawnPoints/enemy_spawns/MiddleRow" unique_id=1883120797]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 5, 5)
+
+[node name="spawn11" type="Marker3D" parent="SpawnPoints/enemy_spawns/MiddleRow" unique_id=480924828]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 5)
+
+[node name="spawn10" type="Marker3D" parent="SpawnPoints/enemy_spawns/MiddleRow" unique_id=1943926288]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 5, 5)
+
+[node name="spawn9" type="Marker3D" parent="SpawnPoints/enemy_spawns/MiddleRow" unique_id=920744902]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 5, 5)
+
+[node name="spawn8" type="Marker3D" parent="SpawnPoints/enemy_spawns/MiddleRow" unique_id=140108473]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 5, 5)
+
+[node name="BackRow" type="Node3D" parent="SpawnPoints/enemy_spawns" unique_id=1688916616]
+
+[node name="spawn21" type="Marker3D" parent="SpawnPoints/enemy_spawns/BackRow" unique_id=1452539432]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 5, 10)
+
+[node name="spawn20" type="Marker3D" parent="SpawnPoints/enemy_spawns/BackRow" unique_id=1784297352]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 5, 10)
+
+[node name="spawn19" type="Marker3D" parent="SpawnPoints/enemy_spawns/BackRow" unique_id=1016048892]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 5, 10)
+
+[node name="spawn18" type="Marker3D" parent="SpawnPoints/enemy_spawns/BackRow" unique_id=964581590]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 10)
+
+[node name="spawn17" type="Marker3D" parent="SpawnPoints/enemy_spawns/BackRow" unique_id=859635318]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 5, 10)
+
+[node name="spawn16" type="Marker3D" parent="SpawnPoints/enemy_spawns/BackRow" unique_id=930555187]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 5, 10)
+
+[node name="spawn15" type="Marker3D" parent="SpawnPoints/enemy_spawns/BackRow" unique_id=1989960075]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 5, 10)
+
+[node name="HigherRowLeft" type="Node3D" parent="SpawnPoints/enemy_spawns" unique_id=1999782122]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+
+[node name="spawn28" type="Marker3D" parent="SpawnPoints/enemy_spawns/HigherRowLeft" unique_id=1372975034]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 15, 15)
+
+[node name="spawn27" type="Marker3D" parent="SpawnPoints/enemy_spawns/HigherRowLeft" unique_id=668422841]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 15, 10)
+
+[node name="spawn26" type="Marker3D" parent="SpawnPoints/enemy_spawns/HigherRowLeft" unique_id=1699845801]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 15, 5)
+
+[node name="spawn25" type="Marker3D" parent="SpawnPoints/enemy_spawns/HigherRowLeft" unique_id=1979513316]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 15, 0)
+
+[node name="spawn24" type="Marker3D" parent="SpawnPoints/enemy_spawns/HigherRowLeft" unique_id=1608551553]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 15, -5)
+
+[node name="spawn23" type="Marker3D" parent="SpawnPoints/enemy_spawns/HigherRowLeft" unique_id=1386956763]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 15, -10)
+
+[node name="spawn22" type="Marker3D" parent="SpawnPoints/enemy_spawns/HigherRowLeft" unique_id=988201762]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 15, -15)
+
+[node name="HigherRowRight" type="Node3D" parent="SpawnPoints/enemy_spawns" unique_id=660749655]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+
+[node name="spawn35" type="Marker3D" parent="SpawnPoints/enemy_spawns/HigherRowRight" unique_id=2018882514]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 15, 15)
+
+[node name="spawn34" type="Marker3D" parent="SpawnPoints/enemy_spawns/HigherRowRight" unique_id=821313221]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 15, 10)
+
+[node name="spawn33" type="Marker3D" parent="SpawnPoints/enemy_spawns/HigherRowRight" unique_id=1242679007]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 15, 5)
+
+[node name="spawn32" type="Marker3D" parent="SpawnPoints/enemy_spawns/HigherRowRight" unique_id=848384669]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 15, 0)
+
+[node name="spawn31" type="Marker3D" parent="SpawnPoints/enemy_spawns/HigherRowRight" unique_id=270636405]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 15, -5)
+
+[node name="spawn30" type="Marker3D" parent="SpawnPoints/enemy_spawns/HigherRowRight" unique_id=464185215]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 15, -10)
+
+[node name="spawn29" type="Marker3D" parent="SpawnPoints/enemy_spawns/HigherRowRight" unique_id=1593433206]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 15, -15)
 
 [node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=439716147]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 20)
@@ -333,7 +387,7 @@ skeleton = NodePath("../..")
 shape = SubResource("ConcavePolygonShape3D_6b58k")
 
 [node name="WoodBeam" parent="MeshContainer" unique_id=1370154369 instance=ExtResource("6_4qqh0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 11, 20)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.826275, 11, 20)
 
 [node name="WoodBeam2" parent="MeshContainer" unique_id=1728088204 instance=ExtResource("6_4qqh0")]
 transform = Transform3D(-0.9848077, 0, 0.1736483, 0, 1, 0, -0.1736483, 0, -0.9848077, -5.5, 11, 20)
@@ -348,7 +402,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 11, 20)
 transform = Transform3D(0.76604444, 0, 0.6427876, 0, 1, 0, -0.6427876, 0, 0.76604444, -3.7, 12, 12.5)
 
 [node name="WoodenRamp2" parent="MeshContainer" unique_id=280952127 instance=ExtResource("7_65jox")]
-transform = Transform3D(-0.7660444, 0, -0.6427876, 0, 1, 0, 0.6427876, 0, -0.7660444, 9.2, 12, 20)
+transform = Transform3D(-0.7660444, 0, -0.6427876, 0, 1, 0, 0.6427876, 0, -0.7660444, 13.991287, 12, 25.803726)
 
 [node name="BoundsArea" type="Area3D" parent="." unique_id=1071726804]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)

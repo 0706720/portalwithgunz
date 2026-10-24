@@ -518,7 +518,7 @@ func server_handle_player_death() -> void:
 		return
 		
 	health = max_health
-	global_transform.origin = Vector3(0, 1, 0)
+	global_transform.origin = Vector3(0, 1, 5)
 	
 	rpc("client_update_health", health, max_health)
 	rpc("client_reset_position", global_transform)
