@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bq2603ymv6d11"]
 
 [ext_resource type="Script" uid="uid://b6n6uoylj1gpp" path="res://Network/metadata.gd" id="1_ciwy5"]
+[ext_resource type="Script" uid="uid://cf20ovhat7pvt" path="res://assets/Rooms/arena_room.gd" id="1_jf5nk"]
 [ext_resource type="Texture2D" uid="uid://cs1ibjwvbhsss" path="res://assets/images/dungeo_floor.jpg" id="2_xqbu7"]
 [ext_resource type="Texture2D" uid="uid://vw4d70xv6yno" path="res://assets/images/wall_dungeon.jpeg" id="3_jf5nk"]
 [ext_resource type="PackedScene" uid="uid://dlx6jlni62p4y" path="res://assets/models/torch.tscn" id="4_n3ri0"]
@@ -118,13 +119,31 @@ size = Vector3(8, 2, 8)
 [sub_resource type="BoxShape3D" id="BoxShape3D_xqbu7"]
 size = Vector3(20, 10, 1)
 
-[node name="ArenaPrefab01" type="Node3D" unique_id=1768685127]
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_n3ri0"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_jf5nk"]
+data = PackedVector3Array(-10, 5, 1, 10, 5, 1, -10, -5, 1, 10, 5, 1, 10, -5, 1, -10, -5, 1, 10, 5, -1, -10, 5, -1, 10, -5, -1, -10, 5, -1, -10, -5, -1, 10, -5, -1, 10, 5, 1, 10, 5, -1, 10, -5, 1, 10, 5, -1, 10, -5, -1, 10, -5, 1, -10, 5, -1, -10, 5, 1, -10, -5, -1, -10, 5, 1, -10, -5, 1, -10, -5, -1, 10, 5, 1, -10, 5, 1, 10, 5, -1, -10, 5, 1, -10, 5, -1, 10, 5, -1, -10, -5, 1, 10, -5, 1, -10, -5, -1, 10, -5, 1, 10, -5, -1, -10, -5, -1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jf5nk"]
+albedo_texture = ExtResource("3_jf5nk")
+uv1_scale = Vector3(0.1, 0.1, 0.1)
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_n3ri0"]
+lightmap_size_hint = Vector2i(114, 206)
+material = SubResource("StandardMaterial3D_jf5nk")
+add_uv2 = true
+size = Vector3(20, 10, 2)
+
+[node name="ArenaPrefab01" type="Node3D" unique_id=1768685127 node_paths=PackedStringArray("door_collisions")]
+script = ExtResource("1_jf5nk")
+door_collisions = [NodePath("DoorCollison")]
 
 [node name="Metadata" type="Node" parent="." unique_id=939893820]
 script = ExtResource("1_ciwy5")
 difficulty_weight = 0.8
 room_type = Array[String](["\"arena\""])
-enemy_budget = 40.0
+enemy_budget = 400.0
 
 [node name="Connectors" type="Node3D" parent="." unique_id=1497390118]
 
@@ -135,27 +154,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 40)
 
 [node name="SpawnPoints" type="Node3D" parent="." unique_id=268442773]
 
-[node name="enemy_spawns" type="Node3D" parent="SpawnPoints" unique_id=800816673]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 20)
-
-[node name="spawn1" type="Node3D" parent="SpawnPoints/enemy_spawns" unique_id=703455805]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 10)
-
-[node name="spawn2" type="Node3D" parent="SpawnPoints/enemy_spawns" unique_id=224745444]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 5)
-
-[node name="spawn3" type="Node3D" parent="SpawnPoints/enemy_spawns" unique_id=1938333865]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 5, 5)
-
-[node name="spawn4" type="Node3D" parent="SpawnPoints/enemy_spawns" unique_id=2007624928]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 5, 5)
-
-[node name="spawn5" type="Node3D" parent="SpawnPoints/enemy_spawns" unique_id=1915651495]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 5, 10)
-
-[node name="spawn6" type="Node3D" parent="SpawnPoints/enemy_spawns" unique_id=98460993]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 5, 10)
-
 [node name="resource_spawns" type="Node3D" parent="SpawnPoints" unique_id=609920733]
 
 [node name="spawn1" type="Node3D" parent="SpawnPoints/resource_spawns" unique_id=438799057]
@@ -163,6 +161,72 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 5, 10)
 [node name="puzzle_spawns" type="Node3D" parent="SpawnPoints" unique_id=1170800451]
 
 [node name="spawn1" type="Node3D" parent="SpawnPoints/puzzle_spawns" unique_id=593188252]
+
+[node name="enemy_spawns" type="Node3D" parent="SpawnPoints" unique_id=63067365]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 20)
+
+[node name="spawn1" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=1036594197]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 10)
+
+[node name="spawn2" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=320339660]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 5)
+
+[node name="spawn3" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=1810903687]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 5, 5)
+
+[node name="spawn4" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=346671648]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 5, 5)
+
+[node name="spawn5" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=1811816182]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 5, 10)
+
+[node name="spawn6" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=1661648372]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 5, 10)
+
+[node name="spawn7" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=978386479]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 5, 10)
+
+[node name="spawn8" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=1753245957]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 5, 5)
+
+[node name="spawn9" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=506484007]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 5, 5)
+
+[node name="spawn10" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=1701090495]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 5, 0)
+
+[node name="spawn11" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=1296377763]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 5, 0)
+
+[node name="spawn12" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=1538400500]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+
+[node name="spawn13" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=1049572808]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 5, 0)
+
+[node name="spawn14" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=1568623528]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 5, 0)
+
+[node name="spawn15" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=258076851]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 5, 0)
+
+[node name="spawn16" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=831339352]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 5, 5)
+
+[node name="spawn17" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=872125776]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 5, 10)
+
+[node name="spawn18" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=1766613958]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 5, 0)
+
+[node name="spawn19" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=244009503]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 5, 5)
+
+[node name="spawn20" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=28672552]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 5, 10)
+
+[node name="spawn21" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=1580784481]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 5, 10)
 
 [node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=292360135]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 20)
@@ -381,3 +445,16 @@ collision_mask = 255
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ActivationArea" unique_id=75117456]
 shape = SubResource("BoxShape3D_xqbu7")
+
+[node name="DoorCollison" type="StaticBody3D" parent="." unique_id=629613870]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 39)
+collision_layer = 255
+collision_mask = 255
+physics_material_override = SubResource("PhysicsMaterial_n3ri0")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DoorCollison" unique_id=787468071]
+shape = SubResource("ConcavePolygonShape3D_jf5nk")
+debug_color = Color(0.9731359, 0, 0.4394883, 0.41960785)
+
+[node name="DoorCollisionMesh" type="MeshInstance3D" parent="DoorCollison" unique_id=1095603752]
+mesh = SubResource("BoxMesh_n3ri0")

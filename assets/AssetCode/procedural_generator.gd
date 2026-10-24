@@ -172,6 +172,10 @@ func build_room_sequence(start_tf: Transform3D, count: int, is_branch: bool, pla
 				placed_aabbs.append(global_aabb)
 				room_transforms.append(candidate_tf)
 				room_scenes.append(selected_scene)
+				
+				# FIX: Generate enemy data for the splitter room so it triggers waves properly!
+				# (You can extract your enemy budget logic here or call a helper function)
+				
 				inst.queue_free()
 				
 				var branch_data = build_room_sequence(candidate_tf * exit_b.transform, 5, true, placed_aabbs)
@@ -352,12 +356,10 @@ func spawn_enemies_in_room(room: Node3D, room_index: int) -> void:
 	var meta = room.get_node_or_null("Metadata")
 	var base_budget: int = meta.enemy_budget if meta and "enemy_budget" in meta else 40
 	
-	# Calculate total scaling multiplier based on loop and treasure state
 	var current_multiplier = difficulty_multiplier_per_loop
 	if is_treasure_run:
 		current_multiplier *= treasure_portal_difficulty_multiplier
 		
-	# Scale the budget exponentially per loop (e.g., Loop 2 gets significantly more points)
 	var scaled_budget = int(base_budget * pow(current_multiplier, dungeon_loop - 1))
 	var room_enemy_data: Array[Dictionary] = []
 	
@@ -376,14 +378,17 @@ func spawn_enemies_in_room(room: Node3D, room_index: int) -> void:
 				"multiplier": current_multiplier
 			})
 	
-	var is_arena = "arena" in room.scene_file_path.to_lower()
+	var is_arena = "arena" in room.scene_file_path.to_lower() or "splitter" in room.scene_file_path.to_lower()
 	if meta and "room_type" in meta:
 		for t in meta.room_type:
-			if "arena" in str(t).to_lower(): is_arena = true
-			
-	if is_arena:
-		setup_arena_trigger(room, room_enemy_data)
+			if "arena" in str(t).to_lower():
+				is_arena = true
+	
+	if is_arena and room.has_method("initialize_arena"):
+		# Delegate entirely to the arena room script!
+		room.initialize_arena(room_enemy_data)
 	else:
+		# Standard room instant-spawn logic
 		for enemy_data in room_enemy_data:
 			var enemy = load(enemy_data["path"]).instantiate() as Node3D
 			if enemy.has_method("initialize_scaled_stats"):
