@@ -356,11 +356,16 @@ func spawn_enemies_in_room(room: Node3D, room_index: int) -> void:
 	var meta = room.get_node_or_null("Metadata")
 	var base_budget: int = meta.enemy_budget if meta and "enemy_budget" in meta else 40
 	
-	var current_multiplier = difficulty_multiplier_per_loop
+	# FIX: Calculate the actual enemy stat multiplier based on the loop
+	# On Loop 1: (dungeon_loop - 1) = 0 -> pow(..., 0) = 1.0 (No scaling)
+	# On Loop 2+: Scales up by difficulty_multiplier_per_loop
+	var loop_factor = max(0, dungeon_loop - 1)
+	var enemy_stat_multiplier = pow(difficulty_multiplier_per_loop, loop_factor)
+	
 	if is_treasure_run:
-		current_multiplier *= treasure_portal_difficulty_multiplier
+		enemy_stat_multiplier *= treasure_portal_difficulty_multiplier
 		
-	var scaled_budget = int(base_budget * pow(current_multiplier, dungeon_loop - 1))
+	var scaled_budget = int(base_budget * enemy_stat_multiplier)
 	var room_enemy_data: Array[Dictionary] = []
 	
 	for marker in spawns_node.get_children():
@@ -375,7 +380,7 @@ func spawn_enemies_in_room(room: Node3D, room_index: int) -> void:
 			room_enemy_data.append({
 				"path": enemy_scene.resource_path,
 				"transform": marker.global_transform,
-				"multiplier": current_multiplier
+				"multiplier": enemy_stat_multiplier # Passes the correct loop-scaled multiplier
 			})
 	
 	var is_arena = "arena" in room.scene_file_path.to_lower() or "splitter" in room.scene_file_path.to_lower()
@@ -385,10 +390,8 @@ func spawn_enemies_in_room(room: Node3D, room_index: int) -> void:
 				is_arena = true
 	
 	if is_arena and room.has_method("initialize_arena"):
-		# Delegate entirely to the arena room script!
 		room.initialize_arena(room_enemy_data)
 	else:
-		# Standard room instant-spawn logic
 		for enemy_data in room_enemy_data:
 			var enemy = load(enemy_data["path"]).instantiate() as Node3D
 			if enemy.has_method("initialize_scaled_stats"):
@@ -396,6 +399,7 @@ func spawn_enemies_in_room(room: Node3D, room_index: int) -> void:
 			room.add_child(enemy)
 			enemy.global_transform = enemy_data["transform"]
 			enemy.add_to_group("network_enemies")
+			
 			rpc("rpc_spawn_enemy_remote", room.name, enemy_data["path"], enemy_data["transform"], enemy_data["multiplier"])
 
 
@@ -568,12 +572,11 @@ func request_world_state(peer_id: int) -> void:
 		# 1. Spawn the room base scene on the client
 		rpc_id(peer_id, "rpc_spawn_room_remote", room.scene_file_path, room.global_transform, room.name)
 		
-		# 2. Sync enemies inside the room
+		# 2. Sync enemies inside the room for late joiners
 		for child in room.get_children():
 			if child.is_in_group("network_enemies"):
-				rpc_id(peer_id, "rpc_spawn_enemy_remote", room.name, child.scene_file_path, child.global_transform)
+				rpc_id(peer_id, "rpc_spawn_enemy_remote", room.name, child.scene_file_path, child.global_transform, child.get("stat_multiplier") if "stat_multiplier" in child else 1.0)
 			
-			# 3. Sync interactables inside the room (Chests, Loot, etc.)
 			elif child.is_in_group("network_interactables"):
 				rpc_id(peer_id, "rpc_spawn_interactable_remote", room.name, child.scene_file_path, child.global_transform, child.name)
 		
@@ -632,7 +635,7 @@ func rpc_spawn_enemy_remote(r_name: String, e_path: String, tf: Transform3D, mul
 			
 			room.add_child(enemy)
 			
-			# Lift the enemy slightly off the floor so they don't clip underground
+			# Safe transform adjustment
 			var safe_tf = tf
 			safe_tf.origin.y += 0.3
 			enemy.global_transform = safe_tf

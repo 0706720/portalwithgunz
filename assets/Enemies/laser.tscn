@@ -16,8 +16,9 @@ radius = 0.1
 radius = 0.1015625
 
 [node name="Laser" type="Area3D" unique_id=908026902]
+collision_layer = 2
+collision_mask = 2
 script = ExtResource("1_dqhpj")
-speed = 30.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1137117128]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
@@ -26,3 +27,5 @@ mesh = SubResource("CapsuleMesh_g4v7s")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1208097187]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
 shape = SubResource("CapsuleShape3D_ug8wo")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
