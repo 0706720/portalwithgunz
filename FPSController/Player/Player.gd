@@ -54,6 +54,7 @@ var health = 99
 var max_health = 99
 var spread = 10
 var knockback_force = -30
+var jump_cooldown = 1.0
 @onready var anim_playing = false
 
 #@export var grapple_speed: float = 25.0
@@ -270,7 +271,7 @@ func _unhandled_input(event):
 		anim_playing = true
 		var shoot_dir = cam.global_transform.basis.z.normalized()
 		velocity += shoot_dir * knockback_force
-		await get_tree().create_timer(1.0).timeout
+		await get_tree().create_timer(jump_cooldown).timeout
 		anim_playing = false
 
 func simulate_movement(delta):
