@@ -24,7 +24,7 @@ func _on_body_entered(body: Node3D) -> void:
 
 	if target.has_method("receive_damage"):
 		print("[Bullet] Dealing ", damage, " damage to: ", target.name)
-		target.receive_damage.rpc(damage)
+		target.receive_damage.rpc(damage, shooter)
 		queue_free()
 	else:
 		# Hit a wall, floor, or non-damageable object

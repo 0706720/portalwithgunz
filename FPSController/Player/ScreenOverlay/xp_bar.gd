@@ -1,7 +1,7 @@
 extends ProgressBar
 
 var experience = 0
-var level_amount = 5
+var level_amount = 50
 var level_up_multiplier = 1.25
 
 @onready var progress_node = %xpBar
@@ -31,9 +31,9 @@ func on_xp_gain(amount):
 		# Apply a multiplier for treasure branches (e.g., 2.0x XP)
 		amount *= 5.0 
 
-	if Global.xp_threshold_card == true:
+	if Global.xp_threshold_card >= 1.0:
 		var am = float(amount)
-		var extra_amount = am / 10
+		var extra_amount = am / 10 * Global.xp_threshold_card
 		amount = am + extra_amount
 		print("extra exp is: " + str(extra_amount) + " original exp: " + str(am) + " final xp: " + str(amount))
 		

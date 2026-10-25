@@ -29,6 +29,14 @@ func _process(delta: float) -> void:
 		
 	shoot_shotgun()
 
+func _find_player_root() -> Node:
+	var node: Node = self
+	while node:
+		if node.is_in_group("player"):
+			return node
+		node = node.get_parent()
+	return null
+
 func shoot_shotgun() -> void:
 	var active_weapon = weapon_manager.get("current_weapon_name") if weapon_manager else ""
 	
@@ -43,13 +51,15 @@ func shoot_shotgun() -> void:
 		var origin_tf = spawn_point.global_transform if spawn_point else global_transform
 		
 		# Sync pellet instantiation across all network peers
-		rpc("server_spawn_pellets", origin_tf)
+		var shooter = _find_player_root()
+		var shooter_path = shooter.get_path() if shooter else NodePath()
+		rpc("server_spawn_pellets", origin_tf, shooter_path)
 		
 		await get_tree().create_timer(fire_cooldown).timeout
 		is_cooling_down = false
 
 @rpc("any_peer", "call_local", "reliable")
-func server_spawn_pellets(origin_transform: Transform3D) -> void:
+func server_spawn_pellets(origin_transform: Transform3D, shooter_path: NodePath = NodePath()) -> void:
 	for i in range(pellet_count):
 		var bullet = pellet_scene.instantiate() as Area3D
 		if not bullet:
@@ -59,8 +69,9 @@ func server_spawn_pellets(origin_transform: Transform3D) -> void:
 		bullet.global_transform = origin_transform
 		
 		# Pass the player who fired this bullet so the bullet knows who to ignore!
-		if "shooter" in bullet:
-			bullet.shooter = self.owner # Or your player root node
+		var shooter = get_node_or_null(shooter_path) if shooter_path != NodePath() else null
+		if shooter and "shooter" in bullet:
+			bullet.shooter = shooter
 		
 		var rand_x = randf_range(-spread_angle, spread_angle)
 		var rand_y = randf_range(-spread_angle, spread_angle)

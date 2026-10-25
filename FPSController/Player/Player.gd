@@ -265,7 +265,7 @@ func _unhandled_input(event):
 					var hit_player = raycast.get_collider()
 					if hit_player and hit_player.is_in_group('target'):
 						if hit_player.has_method("receive_damage"):
-							hit_player.receive_damage.rpc(pistol_damage)
+							hit_player.receive_damage.rpc(pistol_damage, self)
 
 	if anim_playing == false and Input.is_action_just_pressed("superjump") and Global.jump_unlocked:
 		anim_playing = true
@@ -554,4 +554,6 @@ func scale_grenade(scale_factor: int):
 
 @rpc("authority", "call_local", "reliable")
 func add_experience(amount: int) -> void:
+	if not multiplayer.is_server():
+		return
 	Global.experience_up.emit(amount)

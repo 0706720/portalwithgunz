@@ -20,14 +20,29 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("shoot") and active_weapon == 'Grenade' and Global.weapon_cooldown <= 0:
 		shoot_grenade()
 
+func _find_player_root() -> Node:
+	var node: Node = self
+	while node:
+		if node.is_in_group("player"):
+			return node
+		node = node.get_parent()
+	return null
+
 func shoot_grenade() -> void:
 	adjust_cooldown()
-	rpc("server_spawn_grenade", SpawnPoint.global_transform, launch_speed)
+	var shooter = _find_player_root()
+	var shooter_path = shooter.get_path() if shooter else NodePath()
+	rpc("server_spawn_grenade", SpawnPoint.global_transform, launch_speed, shooter_path)
 
 @rpc("any_peer", "call_local", "reliable")
-func server_spawn_grenade(spawn_tf: Transform3D, speed: float) -> void:
+func server_spawn_grenade(spawn_tf: Transform3D, speed: float, shooter_path: NodePath = NodePath()) -> void:
 	var grenade = GrenadeScene.instantiate() as RigidBody3D
 	adjust_size(grenade)
+
+	var shooter = get_node_or_null(shooter_path) if shooter_path != NodePath() else null
+	if grenade.has_method("set_shooter"):
+		grenade.set_shooter(shooter)
+
 	get_tree().current_scene.add_child(grenade)
 	grenade.global_transform = spawn_tf
 	var forward_dir = -spawn_tf.basis.z
