@@ -144,24 +144,44 @@ func _enter_tree():
 @onready var my_collision_shape: CollisionShape3D = $CollisionShape3D # Adjust if your path is different
 
 func _ready() -> void:
+	# Check if this player instance belongs to the local machine
+	if is_multiplayer_authority():
+		# Locate the procedural spawn marker in the scene tree
+		var scene_root = get_tree().current_scene
+		var spawn_point = scene_root.get_node_or_null("RoomContainer/Room_0/SpawnPoints/PlayerSpawn") as Node3D
+		
+		if spawn_point:
+			# Override local transform with the exact position AND facing angle of the marker
+			global_transform = spawn_point.global_transform
+			
+			# Reset velocity to prevent immediate sliding or physics drops
+			if "velocity" in self:
+				velocity = Vector3.ZERO
+				
+			print("[Player] Client successfully snapped to Room_0 spawn marker.")
+		else:
+			push_warning("[Player] Could not locate Room_0 PlayerSpawn marker locally!")
+
 	if my_collision_shape:
 		print("[Player Debug] Collision shape node found! Shape asset: ", my_collision_shape.shape)
 	else:
 		print("[Player Debug] ERROR: Could not find CollisionShape3D node!")
+		
 	# Make sure both host and client players join the group
 	add_to_group("player")
+	
 	# Convert node name (e.g. "655412542") into integer peer ID authority
 	if name.is_valid_int():
 		set_multiplayer_authority(name.to_int())
-
-	# Wait two frames for MultiplayerSpawner replication & authority sync
-	await get_tree().process_frame
-	await get_tree().process_frame
 
 	var local_id := multiplayer.get_unique_id()
 	var auth_id := get_multiplayer_authority()
 
 	print("PLAYER READY:", name, " | Local Peer ID:", local_id, " | Node Authority:", auth_id)
+
+	# Safely clear any initial physics velocity to prevent mid-air spawning bugs
+	if "velocity" in self:
+		velocity = Vector3.ZERO
 
 	if is_multiplayer_authority():
 		cam.make_current()
@@ -196,7 +216,6 @@ func _ready() -> void:
 		crouch_shapecast.add_exception(self)
 	if healthBar and is_multiplayer_authority():
 		healthBar.max_value = health
-	#receive_damage(0)
 
 	build_default_keybinding()
 	input_actions_check()

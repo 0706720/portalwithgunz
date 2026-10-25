@@ -37,18 +37,8 @@ script = ExtResource("1_k4cn1")
 [node name="AI_Director" type="Node" parent="." unique_id=150566484]
 script = ExtResource("3_d8pbq")
 
-[node name="PlayerSpawner" type="Node3D" parent="." unique_id=1793986205]
-script = ExtResource("4_mtm5c")
-
-[node name="SpawnPoint" type="Node3D" parent="." unique_id=2094156297]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 4, 0)
-
 [node name="ProceduralGenerator" type="Node" parent="." unique_id=1172167322]
 script = ExtResource("2_m82b1")
-
-[node name="PlayerSpawnerSignal" type="MultiplayerSpawner" parent="." unique_id=1404446632]
-_spawnable_scenes = PackedStringArray("uid://xcjrjq5cbn7y")
-spawn_path = NodePath("..")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=852767747]
 environment = SubResource("Environment_cuis1")
@@ -61,3 +51,8 @@ shadow_enabled = true
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1269018179]
 
 [node name="LoadingScreen" parent="CanvasLayer" unique_id=626300901 instance=ExtResource("5_bpw3s")]
+
+[node name="PlayerSpawner" type="MultiplayerSpawner" parent="." unique_id=44418571]
+_spawnable_scenes = PackedStringArray("uid://xcjrjq5cbn7y")
+spawn_path = NodePath("..")
+script = ExtResource("4_mtm5c")

@@ -11,6 +11,7 @@ signal world_ready
 @export var max_attempts_per_room := 15
 @export var max_backtracks := 20
 @export var required_straights_after_turn := 0
+var allow_treasure_branch := false
 
 @export_category("Difficulty & Scaling")
 var dungeon_loop := 1
@@ -154,7 +155,8 @@ func build_room_sequence(start_tf: Transform3D, count: int, is_branch: bool, pla
 		var next_tf = Transform3D.IDENTITY
 		var global_aabb = AABB()
 		
-		if not is_branch and not is_treasure_run and not splitter_has_spawned and i >= 6 and splitter_room_scene != null:
+		# Check if allowed by our single 30% run roll, and hasn't spawned yet, and we're past room 6
+		if not is_branch and not is_treasure_run and allow_treasure_branch and not splitter_has_spawned and i >= 6 and splitter_room_scene != null:
 			selected_scene = splitter_room_scene
 			splitter_has_spawned = true
 			var inst = selected_scene.instantiate() as Node3D
@@ -172,9 +174,6 @@ func build_room_sequence(start_tf: Transform3D, count: int, is_branch: bool, pla
 				placed_aabbs.append(global_aabb)
 				room_transforms.append(candidate_tf)
 				room_scenes.append(selected_scene)
-				
-				# FIX: Generate enemy data for the splitter room so it triggers waves properly!
-				# (You can extract your enemy budget logic here or call a helper function)
 				
 				inst.queue_free()
 				
@@ -250,6 +249,9 @@ func build_room_sequence(start_tf: Transform3D, count: int, is_branch: bool, pla
 func generate_level_aabb_layout() -> Dictionary:
 	var placed_aabbs: Array[AABB] = []
 	all_branches.clear()
+	
+	# ROLL ONCE PER RUN: 30% chance for a treasure branch to exist in this dungeon
+	allow_treasure_branch = (rng.randf() <= 0.3)
 	
 	var temp_start := start_room_scene.instantiate() as Node3D
 	var start_exit := temp_start.get_node("Connectors/Exit") as Node3D
@@ -673,10 +675,18 @@ func rpc_spawn_enemy_remote(r_name: String, e_path: String, tf: Transform3D, mul
 @rpc("authority", "call_remote", "reliable")
 func remote_world_ready() -> void:
 	emit_signal("world_ready")
+	
+	# 1. Wait until Room_0 is guaranteed to exist in the client's scene tree
 	var spawn_room = room_container.get_node_or_null("Room_0")
-	if spawn_room and Global.player:
-		var spawn_marker = spawn_room.get_node_or_null("SpawnPoints/PlayerSpawn")
-		var target_transform = spawn_marker.global_transform if spawn_marker else spawn_room.global_transform
-		target_transform.origin += Vector3(0, 1.0, 0)
-		Global.player.global_transform = target_transform
-		Global.player.velocity = Vector3.ZERO
+	while spawn_room == null and is_inside_tree():
+		await get_tree().process_frame
+		spawn_room = room_container.get_node_or_null("Room_0")
+		
+	print("[Client] Dungeon world is fully loaded. Requesting player spawn...")
+	
+	# 2. Target your actual "PlayerSpawner" node in WorldRoot
+	var player_spawner = get_node_or_null("../PlayerSpawner") 
+	if player_spawner:
+		player_spawner.rpc_id(1, "request_spawn", multiplayer.get_unique_id())
+	else:
+		push_error("[Client] Could not find PlayerSpawner node!")
