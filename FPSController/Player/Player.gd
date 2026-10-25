@@ -191,7 +191,7 @@ func _ready() -> void:
 		crouch_shapecast.add_exception(self)
 	if healthBar and is_multiplayer_authority():
 		healthBar.max_value = health
-	receive_damage(0)
+	#receive_damage(0)
 
 	build_default_keybinding()
 	input_actions_check()
@@ -490,22 +490,51 @@ func _client_sync_state(server_transform: Transform3D, server_velocity: Vector3)
 		global_transform = current
 		velocity = velocity.lerp(server_velocity, VEL_SMOOTH)
 
-@rpc("any_peer")
-func receive_damage(amount):
-	health -= amount
-	if health <= 0:
-		health = 99
-		position = Vector3.ZERO
-	health_changed.emit(health, max_health)
+# ==============================================================================
+# SECURE HEALTH & DAMAGE SYSTEM
+# ==============================================================================
 
-@rpc("any_peer")
-func change_max_hp(amount):
-	# round up to avoid decimals
-	amount = ceil(amount)
-	max_health += amount
-	# give player health according to max boost and signal HUD to reflect it
-	# negative amount is for positive gain
-	receive_damage(-amount)
+func take_damage(amount: int) -> void:
+	if not multiplayer.is_server():
+		return # Only the server calculates damage to prevent cheating
+		
+	health = clamp(health - amount, 0, max_health)
+	
+	# Push the updated health from the server to all clients
+	rpc("client_update_health", health, max_health)
+	
+	if health <= 0:
+		server_handle_player_death()
+
+@rpc("any_peer", "call_local", "reliable")
+func client_update_health(new_health: int, new_max_health: int) -> void:
+	health = new_health
+	max_health = new_max_health
+	health_changed.emit(health, max_health)
+	print("[Player Health] Updated: ", health, "/", max_health)
+
+func server_handle_player_death() -> void:
+	if not multiplayer.is_server():
+		return
+		
+	health = max_health
+	global_transform.origin = Vector3(0, 1, 5)
+	
+	rpc("client_update_health", health, max_health)
+	rpc("client_reset_position", global_transform)
+
+@rpc("any_peer", "call_local", "reliable")
+func client_reset_position(new_transform: Transform3D) -> void:
+	global_transform = new_transform
+	velocity = Vector3.ZERO
+
+@rpc("any_peer", "call_local", "reliable")
+func change_max_hp(amount: int) -> void:
+	if not multiplayer.is_server():
+		return
+	max_health += int(amount)
+	health = clamp(health + amount, 0, max_health)
+	rpc("client_update_health", health, max_health)
 
 
 @rpc("authority", "call_local", "reliable")
@@ -516,7 +545,6 @@ func rpc_teleport_player(target_transform: Transform3D) -> void:
 	if has_node("StateMachine"):
 		# Optional: Force state machine to neutral or ground state if needed
 		pass
-
 
 func _on_animation_player_animation_finished(anim_name):
 	if anim_name == "shoot" and crouch_anim_player:

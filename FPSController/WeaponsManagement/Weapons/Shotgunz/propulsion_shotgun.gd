@@ -1,6 +1,6 @@
 extends Node3D
 
-var damage = 15
+var damage = 7
 var spread = 15
 @export var anim_playing = false
 

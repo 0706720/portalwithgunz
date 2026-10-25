@@ -91,6 +91,9 @@ func start_next_wave() -> void:
 				enemy.set_arena_manager(self)
 				
 			rpc("rpc_spawn_arena_enemy_remote", enemy_data["path"], safe_tf, enemy_data["multiplier"])
+			
+			# Stagger spawn delay to distribute CPU overhead and prevent frame stutter
+			await get_tree().create_timer(0.05).timeout
 
 @rpc("authority", "call_remote", "reliable")
 func rpc_spawn_arena_enemy_remote(e_path: String, tf: Transform3D, multiplier: float) -> void:
@@ -124,9 +127,8 @@ func complete_arena() -> void:
 func client_unlock_room() -> void:
 	for door in door_collisions:
 		if is_instance_valid(door):
-			door.queue_free() # Deletes the blocking door objects entirely when cleared
+			door.queue_free()
 
-# Helper function using set_deferred to safely toggle collision shapes without physics race conditions
 func _set_door_collision_state(parent_node: Node, disabled_state: bool) -> void:
 	for child in parent_node.get_children():
 		if child is CollisionShape3D:

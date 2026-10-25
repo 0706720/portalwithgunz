@@ -136,7 +136,7 @@ shape = SubResource("ConcavePolygonShape3D_gfcr4")
 
 [node name="enemy_spawns" type="Node3D" parent="MeshContainer/SpawnPoints" unique_id=2141860867]
 
-[node name="spawn1" type="Node3D" parent="MeshContainer/SpawnPoints/enemy_spawns" unique_id=1402797742]
+[node name="spawn1" type="Marker3D" parent="MeshContainer/SpawnPoints/enemy_spawns" unique_id=1598198694]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 4, 10)
 
 [node name="resource_spawns" type="Node3D" parent="MeshContainer/SpawnPoints" unique_id=95093346]

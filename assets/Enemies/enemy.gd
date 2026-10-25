@@ -18,7 +18,7 @@ extends CharacterBody3D
 var is_dead := false
 
 @export_category("Attack Configuration")
-@export var attack_range := 2.5             
+@export var attack_range := 2.5                 
 @export var attack_damage := 10
 @export var attack_cooldown := 1.5         
 var attack_timer := 0.0
@@ -38,10 +38,12 @@ const SYNC_INTERVAL := 0.05
 
 # Client-side smoothing variables
 var targeted_client_transform: Transform3D
+var is_charging_remote: bool = false
 
 var killer_player: Node = null
 
 func _ready() -> void:
+	print(max_health)
 	add_to_group("target")
 	targeted_client_transform = global_transform
 	
@@ -57,7 +59,6 @@ func initialize_scaled_stats(multiplier: float) -> void:
 	current_health = max_health
 	attack_damage = int(attack_damage * stat_multiplier)
 
-# Prevents clients from lerping from (0,0,0) when spawned
 func set_initial_network_transform(tf: Transform3D) -> void:
 	global_transform = tf
 	targeted_client_transform = tf
@@ -68,26 +69,38 @@ func find_player() -> void:
 		target_player = null
 		return
 		
-	var closest_player = players[0]
-	var min_distance = global_position.distance_to(closest_player.global_position)
+	var closest_candidate: Node3D = null
+	var min_distance := INF
 	
-	for i in range(1, players.size()):
-		var p = players[i]
-		if is_instance_valid(p):
-			var dist = global_position.distance_to(p.global_position)
+	for candidate in players:
+		if is_instance_valid(candidate) and candidate is Node3D:
+			if candidate.get("is_dead") == true:
+				continue
+				
+			var dist = global_position.distance_to(candidate.global_position)
 			if dist < min_distance:
 				min_distance = dist
-				closest_player = p
+				closest_candidate = candidate
 				
-	target_player = closest_player
+	if closest_candidate:
+		if not closest_candidate.has_method("take_damage"):
+			if closest_candidate.owner and closest_candidate.owner.has_method("take_damage"):
+				target_player = closest_candidate.owner
+			elif closest_candidate.get_parent() and closest_candidate.get_parent().has_method("take_damage"):
+				target_player = closest_candidate.get_parent()
+			else:
+				target_player = closest_candidate
+		else:
+			target_player = closest_candidate
 
 func pick_new_wander_direction() -> void:
 	current_wander_dir = Vector3(randf_range(-1.0, 1.0), 0, randf_range(-1.0, 1.0)).normalized()
 
 func _physics_process(delta: float) -> void:
 	if not multiplayer.is_server():
-		# Smooth interpolation for clients
-		global_transform = global_transform.interpolate_with(targeted_client_transform, delta * 15.0)
+		# If the enemy is charging on the server, interpolate much faster (or snap) on the client
+		var lerp_speed = 35.0 if is_charging_remote else 15.0
+		global_transform = global_transform.interpolate_with(targeted_client_transform, delta * lerp_speed)
 		return
 
 	target_refresh_timer -= delta
@@ -106,14 +119,12 @@ func _physics_process(delta: float) -> void:
 	if attack_timer > 0.0:
 		attack_timer -= delta
 
-	# Handle gravity vs flying altitude control
 	if not is_flying:
 		if not is_on_floor():
 			velocity += get_gravity() * delta
 		else:
 			velocity.y = 0
 	else:
-		# Give flying enemies smooth height adjustment toward the target player's height (plus an offset, e.g., 1.5 meters up)
 		var target_height = target_player.global_position.y + 1.5
 		velocity.y = move_toward(velocity.y, (target_height - global_position.y) * 3.0, speed * delta * 4.0)
 
@@ -173,7 +184,6 @@ func _physics_process(delta: float) -> void:
 	velocity.x = move_toward(velocity.x, target_velocity.x, speed * delta * 6.0)
 	velocity.z = move_toward(velocity.z, target_velocity.z, speed * delta * 6.0)
 
-	# Crucial: Ensure move_and_slide runs for flying units too so their transforms update and sync!
 	move_and_slide()
 	_try_sync_transform(delta)
 
@@ -181,7 +191,9 @@ func _try_sync_transform(delta: float) -> void:
 	sync_timer += delta
 	if sync_timer >= SYNC_INTERVAL:
 		sync_timer = 0.0
-		rpc("sync_enemy_transform", global_transform)
+		# Safely check if the enemy has a charging state (works for MeleeEnemy, ignores normal enemies)
+		var charging_status = get("is_charging") if get("is_charging") != null else false
+		rpc("sync_enemy_transform", global_transform, charging_status)
 
 func perform_attack() -> void:
 	pass
@@ -191,7 +203,6 @@ func receive_damage(amount: int, attacker: Node = null) -> void:
 	if is_dead:
 		return
 	
-	# Only the server modifies health and triggers death logic
 	if multiplayer.is_server():
 		current_health -= amount
 		print("[Server] Enemy took ", amount, " damage. Health left: ", current_health)
@@ -211,7 +222,6 @@ func die() -> void:
 		return
 	is_dead = true
 	
-	# Notify the arena room that this enemy has fallen
 	if multiplayer.is_server() and is_instance_valid(arena_manager):
 		arena_manager.unregister_enemy()
 		
@@ -227,5 +237,6 @@ func rpc_client_die() -> void:
 	queue_free()
 
 @rpc("authority", "unreliable")
-func sync_enemy_transform(new_transform: Transform3D) -> void:
+func sync_enemy_transform(new_transform: Transform3D, charging_status: bool = false) -> void:
 	targeted_client_transform = new_transform
+	is_charging_remote = charging_status

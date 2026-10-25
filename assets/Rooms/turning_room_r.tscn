@@ -69,12 +69,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, 20)
 [node name="enemy_spawns" type="Node3D" parent="SpawnPoints" unique_id=2141860867]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0)
 
-[node name="spawn1" type="Node3D" parent="SpawnPoints/enemy_spawns" unique_id=1402797742]
+[node name="spawn1" type="Marker3D" parent="SpawnPoints/enemy_spawns" unique_id=609631876]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 4, 10)
 
 [node name="resource_spawns" type="Node3D" parent="SpawnPoints" unique_id=95093346]
 
-[node name="spawn1" type="Node3D" parent="SpawnPoints/resource_spawns" unique_id=1243542531]
+[node name="spawn1" type="Node3D" parent="SpawnPoints/resource_spawns" unique_id=1274931545]
 
 [node name="puzzle_spawns" type="Node3D" parent="SpawnPoints" unique_id=2065966333]
 
