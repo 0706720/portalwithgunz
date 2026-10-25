@@ -65,5 +65,9 @@ func adjust_size(grenade_scene):
 			area.scale = Vector3.ONE * ((sf / 10) + 1.0)
 		var explosion = grenade_scene.get_node("Grenade_explosion") as Node3D
 		if explosion:
-			explosion.scale = Vector3.ONE * ((sf / 10) + 1.0)
+			# if you have the unique for 2x explosion size chance, then roll for 10%:
+			if Global.doubled_explosion_chance == true and randi_range(1, 10) == 1:
+				explosion.scale = Vector3.ONE * ((sf / 10) + 1.0) * 2.0
+			else:
+				explosion.scale = Vector3.ONE * ((sf / 10) + 1.0)
 	return grenade_scene

@@ -109,9 +109,9 @@ func unlock_shotgun():
 func unlock_grenade_launcher():
 	card_pool.append({
 		"name": "grenade_radius",
-		"scene": preload("res://assets/models/upgradeCards/rare/grenade_radius_card.tscn"),
-		"rarity": 2,
-		"unique": true
+		"scene": preload("res://assets/models/upgradeCards/commom/grenade_radius_card.tscn"),
+		"rarity": 1,
+		"unique": false
 	})
 	card_pool.append({
 		"name": "grenade_damage",
@@ -119,6 +119,13 @@ func unlock_grenade_launcher():
 		"rarity": 2,
 		"unique": true
 	})
+	card_pool.append({
+		"name": "grenade_explosion_chance",
+		"scene": preload("res://assets/models/upgradeCards/rare/grenade_explosion_chance.tscn"),
+		"rarity": 2,
+		"unique": true
+	})
+	
 	
 func unlock_jump():
 	card_pool.append({
