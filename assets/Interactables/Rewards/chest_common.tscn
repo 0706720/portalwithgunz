@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bliyb5p1ui3om"]
 
 [ext_resource type="Texture2D" uid="uid://deky0tl44tiju" path="res://assets/images/Darkwood.png" id="1_e37xn"]
+[ext_resource type="Script" uid="uid://nfsjr6aru0uu" path="res://assets/AssetCode/chest_common.gd" id="1_ipctq"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d0u6y"]
 albedo_texture = ExtResource("1_e37xn")
@@ -15,7 +16,14 @@ size = Vector3(1, 0.2, 1)
 [sub_resource type="BoxMesh" id="BoxMesh_ij2t7"]
 size = Vector3(0.2, 0.4, 0.1)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_rqf0u"]
+size = Vector3(1, 1.2999268, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_gq8m4"]
+size = Vector3(1.0946655, 1.3026123, 1.0511017)
+
 [node name="ChestCommon" type="Node3D" unique_id=1810660396]
+script = ExtResource("1_ipctq")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1588585800]
 mesh = SubResource("BoxMesh_g4v7s")
@@ -27,3 +35,19 @@ mesh = SubResource("BoxMesh_ipctq")
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="." unique_id=17277736]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.49695653, 0.48714215)
 mesh = SubResource("BoxMesh_ij2t7")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=1959683390]
+collision_layer = 255
+collision_mask = 255
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Area3D" unique_id=1679238263]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D/StaticBody3D" unique_id=1740092113]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.14996338, 0)
+shape = SubResource("BoxShape3D_rqf0u")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1368688483]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000579834, 0.15130615, 0.0063095093)
+shape = SubResource("BoxShape3D_gq8m4")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

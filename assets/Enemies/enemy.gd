@@ -39,6 +39,8 @@ const SYNC_INTERVAL := 0.05
 # Client-side smoothing variables
 var targeted_client_transform: Transform3D
 
+var killer_player: Node = null
+
 func _ready() -> void:
 	add_to_group("target")
 	targeted_client_transform = global_transform

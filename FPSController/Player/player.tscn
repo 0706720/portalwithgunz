@@ -781,7 +781,7 @@ visible = false
 unique_name_in_owner = true
 visible = false
 
-[node name="Shotgun" parent="CameraHolder/Camera3D" unique_id=1407172450 instance=ExtResource("9_evljc")]
+[node name="Shotgun" parent="CameraHolder/Camera3D" unique_id=1407172450 groups=["shotgun"] instance=ExtResource("9_evljc")]
 unique_name_in_owner = true
 visible = false
 

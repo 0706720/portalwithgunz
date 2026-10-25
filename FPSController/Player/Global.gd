@@ -20,7 +20,7 @@ var grenade_size_bonus: float = 0
 var jump_unlocked = true
 
 ## Upgrade card misc
-var xp_threshold_card = false
+var xp_threshold_card = 0
 var upgrade_pending = 0
 
 var current_score = 0

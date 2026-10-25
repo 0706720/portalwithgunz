@@ -29,5 +29,5 @@ func apply_effect(player) -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	# this should delete all instances of cards currently on screen, if that isn't happening
 	# then ensure all cards belong to group 'Card' in the inspector.
-	upgradeNode.clear_unique("jump_cooldown")
+	#upgradeNode.clear_unique("jump_cooldown")
 	get_tree().call_group("Card", "queue_free")
