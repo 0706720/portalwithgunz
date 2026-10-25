@@ -20,10 +20,10 @@ func _on_button_pressed() -> void:
 func apply_effect(player) -> void:
 	var upgradeNode = get_tree().get_first_node_in_group("upgrade")
 	# This line will apply relevant logic to xp_bar.gd to make all xp sources give 10% more.
-	Global.xp_threshold_card = true
+	Global.xp_threshold_card += 1
 	# hide mouse for gameplay
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	# this should delete all instances of cards currently on screen, if that isn't happening
 	# then ensure all cards belong to group 'Card' in the inspector.
-	upgradeNode.clear_unique("xp_threshold")
+	#upgradeNode.clear_unique("xp_threshold")
 	get_tree().call_group("Card", "queue_free")

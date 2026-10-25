@@ -1,5 +1,4 @@
 extends Control
-@onready var shotgun = %Shotgun
 ## COMPLETE
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -20,6 +19,7 @@ func _on_button_pressed() -> void:
 	
 func apply_effect(player) -> void:
 	var upgradeNode = get_tree().get_first_node_in_group("upgrade")
+	var shotgun = get_tree().get_first_node_in_group("shotgun")
 	# declared here to avoid variable bloat in player
 	var base_shotgun_cooldown = 1.0
 	var bonus = base_shotgun_cooldown / 10
@@ -29,5 +29,5 @@ func apply_effect(player) -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	# this should delete all instances of cards currently on screen, if that isn't happening
 	# then ensure all cards belong to group 'Card' in the inspector.
-	upgradeNode.clear_unique("shotgun_cooldown")
+	#upgradeNode.clear_unique("shotgun_cooldown")
 	get_tree().call_group("Card", "queue_free")

@@ -29,5 +29,5 @@ func apply_effect(player) -> void:
 	# this should delete all instances of cards currently on screen, if that isn't happening
 	# then ensure all cards belong to group 'Card' in the inspector.
 	Global.grenade_size_bonus += 1
-	upgradeNode.clear_unique("grenade_radius")
+	#upgradeNode.clear_unique("grenade_radius")
 	get_tree().call_group("Card", "queue_free")
