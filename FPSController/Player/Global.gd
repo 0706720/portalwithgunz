@@ -13,8 +13,8 @@ var grenade_unlocked = false
 
 ## Weapon Cooldown (Grenade)
 var weapon_cooldown: float = 0.0
-var grenade_cooldown_bonus: float = 10
-var grenade_size_bonus: float = 10
+var grenade_cooldown_bonus: float = 0
+var grenade_size_bonus: float = 0
 
 ## DEV NOTE: apply this as a condition for jump when releasing public version
 var jump_unlocked = true

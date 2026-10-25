@@ -69,6 +69,11 @@ var mouse_sensitivity = 0.002
 @onready var bulletSpawn := $CameraHolder/Camera3D/bulletSpawn
 var ammo : int = 5
 var pistol_damage = 25
+# each stack adds another roll for a 1% chance to deal 4X damage.
+var pistol_damage_stacks = 0
+var pistol_damage_new = 25
+# 5% chance for 5% of players max hp healed if pistol hits a target enemy
+var lifesteal = false
 var player_health = 100
 var canThrow = true
 @onready var my_label = $Label
@@ -265,7 +270,9 @@ func _unhandled_input(event):
 					var hit_player = raycast.get_collider()
 					if hit_player and hit_player.is_in_group('target'):
 						if hit_player.has_method("receive_damage"):
-							hit_player.receive_damage.rpc(pistol_damage, self)
+							check_extra_damage()
+							check_lifesteal()
+							hit_player.receive_damage.rpc(pistol_damage_new, self)
 
 	if anim_playing == false and Input.is_action_just_pressed("superjump") and Global.jump_unlocked:
 		anim_playing = true
@@ -585,3 +592,26 @@ func add_experience(amount: int) -> void:
 	if not multiplayer.is_server():
 		return
 	Global.experience_up.emit(amount)
+	
+func check_extra_damage():
+	# reset dmg to base
+	pistol_damage_new = pistol_damage
+	if pistol_damage_stacks == 0:
+		return
+	# loop for while loop happens exactly how many cards you have
+	var loops = pistol_damage_stacks
+	while loops > 0:
+		# 1 in 100
+		var num = randi_range(1, 100)
+		if num == 1:
+			pistol_damage_new = pistol_damage * 4
+			print("this has hit")
+			break
+		loops -= 1
+
+func check_lifesteal():
+	if lifesteal == false:
+		return
+	var num = randi_range(1, 20)
+	if num == 1:
+		take_damage(-5)

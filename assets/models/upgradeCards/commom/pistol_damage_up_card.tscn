@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://ci7yciu5a2nqo"]
 
-[ext_resource type="Texture2D" uid="uid://b2co5h7q3cxjb" path="res://assets/images/upgradesSystem/undertaker.webp" id="1_0v7ip"]
-[ext_resource type="Script" uid="uid://ddv2kn6tliwtw" path="res://assets/AssetCode/cards/damage_up_card.gd" id="1_rbceu"]
-[ext_resource type="Texture2D" uid="uid://ctcrwyn562eq4" path="res://assets/images/upgradesSystem/cardoutline (1).png" id="2_rbceu"]
-[ext_resource type="Texture2D" uid="uid://cg6wleqmqqa26" path="res://assets/images/upgradesSystem/revolver.png" id="3_40pxh"]
-[ext_resource type="FontFile" uid="uid://brl5hlu3dc40l" path="res://assets/images/upgradesSystem/Nunito/Nunito-Italic-VariableFont_wght.ttf" id="4_vd51b"]
-[ext_resource type="FontFile" uid="uid://b1eo5a8at87ej" path="res://assets/images/upgradesSystem/Nunito/Nunito-VariableFont_wght.ttf" id="5_4r32b"]
+[ext_resource type="Script" uid="uid://ddv2kn6tliwtw" path="res://assets/AssetCode/cards/damage_up_card.gd" id="1_aya60"]
+[ext_resource type="Texture2D" uid="uid://b2co5h7q3cxjb" path="res://assets/images/upgradesSystem/undertaker.webp" id="2_eulcy"]
+[ext_resource type="Texture2D" uid="uid://ctcrwyn562eq4" path="res://assets/images/upgradesSystem/cardoutline (1).png" id="3_nkiu6"]
+[ext_resource type="Texture2D" uid="uid://cg6wleqmqqa26" path="res://assets/images/upgradesSystem/revolver.png" id="4_m3b17"]
+[ext_resource type="FontFile" uid="uid://brl5hlu3dc40l" path="res://assets/images/upgradesSystem/Nunito/Nunito-Italic-VariableFont_wght.ttf" id="5_4ajpi"]
+[ext_resource type="FontFile" uid="uid://b1eo5a8at87ej" path="res://assets/images/upgradesSystem/Nunito/Nunito-VariableFont_wght.ttf" id="6_speka"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_gq8m4"]
 
@@ -28,7 +28,7 @@ border_color = Color(0, 0, 0, 1)
 [node name="DamageUpCard" type="Control" unique_id=189113893 groups=["Card"]]
 layout_mode = 3
 anchors_preset = 0
-script = ExtResource("1_rbceu")
+script = ExtResource("1_aya60")
 
 [node name="cardAssets" type="Control" parent="." unique_id=865342378]
 anchors_preset = 0
@@ -40,7 +40,7 @@ offset_top = 113.0
 offset_right = 1045.0
 offset_bottom = 479.0
 scale = Vector2(0.3, 0.3)
-texture = ExtResource("1_0v7ip")
+texture = ExtResource("2_eulcy")
 
 [node name="Cardoutline(1)" type="TextureRect" parent="cardAssets" unique_id=965248472]
 visible = false
@@ -49,7 +49,7 @@ offset_left = 438.0
 offset_top = 255.0
 offset_right = 438.0
 offset_bottom = 255.0
-texture = ExtResource("2_rbceu")
+texture = ExtResource("3_nkiu6")
 
 [node name="HeartShield" type="TextureRect" parent="cardAssets" unique_id=730218328]
 layout_mode = 0
@@ -58,7 +58,7 @@ offset_top = 420.99997
 offset_right = 818.0
 offset_bottom = 933.0
 scale = Vector2(0.1, 0.1)
-texture = ExtResource("3_40pxh")
+texture = ExtResource("4_m3b17")
 
 [node name="Label" type="RichTextLabel" parent="cardAssets" unique_id=801611469]
 layout_mode = 0
@@ -67,8 +67,8 @@ offset_top = 256.0
 offset_right = 549.0
 offset_bottom = 294.0
 theme_override_colors/default_color = Color(0, 0, 0, 1)
-theme_override_fonts/normal_font = ExtResource("4_vd51b")
-theme_override_fonts/bold_font = ExtResource("5_4r32b")
+theme_override_fonts/normal_font = ExtResource("5_4ajpi")
+theme_override_fonts/bold_font = ExtResource("6_speka")
 theme_override_font_sizes/normal_font_size = 24
 bbcode_enabled = true
 text = "[u]DAMAGE BONUS[u]"
@@ -81,7 +81,7 @@ offset_top = 288.0
 offset_right = 585.0
 offset_bottom = 402.0
 theme_override_colors/default_color = Color(0, 0, 0, 1)
-theme_override_fonts/normal_font = ExtResource("4_vd51b")
+theme_override_fonts/normal_font = ExtResource("5_4ajpi")
 theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
 text = "Recieve a 10% bonus to pistol damage"

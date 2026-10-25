@@ -912,6 +912,7 @@ script = ExtResource("31_hjbpo")
 position = Vector2(1329, 733)
 
 [node name="weaponsManager" type="Node" parent="." unique_id=828943716 groups=["weaponsManager"]]
+unique_name_in_owner = true
 script = ExtResource("17_hjbpo")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1497174945 groups=["player"]]
