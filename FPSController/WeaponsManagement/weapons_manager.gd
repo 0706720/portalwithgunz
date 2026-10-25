@@ -1,16 +1,20 @@
 class_name WeaponsManager
 extends Node
+# variable sent to upgrades system to allocate correct cards array.
+signal weapon_name(weaponname)
 
 @onready var pistol_node     := $"../CameraHolder/Camera3D/Pistol"
 @onready var grenade_node    := $"../CameraHolder/Camera3D/GrenadeLauncher"
 @onready var shotgun_node    := $"../CameraHolder/Camera3D/Shotgun"
+@onready var grapple_node    := $"../CameraHolder/Camera3D/Grapple Hook"
 
 @onready var icon_node = $"../HUD/GrenadeIcon/pistol_test"
 
 @export var weapons: Array[Dictionary] = [
 	{ "name": "Pistol", "unlocked": false, "icon_path": load("res://assets/images/upgradesSystem/undertaker.webp"), "scale": Vector2(0.17, 0.17)},
 	{ "name": "Grenade", "unlocked": false, "icon_path": load("res://assets/images/upgradesSystem/grenade_launcher-Photoroom.png"), "scale": Vector2(1.1, 1.1)},
-	{ "name": "Shotgun", "unlocked": false, "icon_path": load("res://assets/images/upgradesSystem/boomstick.png"), "scale": Vector2(0.2, 0.2)}
+	{ "name": "Shotgun", "unlocked": false, "icon_path": load("res://assets/images/upgradesSystem/boomstick.png"), "scale": Vector2(0.2, 0.2)},
+	{ "name": "GrappleGun", "unlocked": false, "icon_path": load("res://assets/images/upgradesSystem/grapple_icon.webp"), "scale": Vector2(0.8, 0.8)}
 ]
 
 var weapon_nodes: Array = []
@@ -19,7 +23,7 @@ var current_weapon_name: String = ""
 var assigned_index: int = -1
 
 func _ready() -> void:
-	weapon_nodes = [pistol_node, grenade_node, shotgun_node]
+	weapon_nodes = [pistol_node, grenade_node, shotgun_node, grapple_node]
 	
 	# Hide all weapon meshes initially
 	for node in weapon_nodes:
@@ -47,13 +51,27 @@ func request_weapon_sync(node_name: String) -> void:
 @rpc("any_peer", "reliable", "call_local")
 func sync_assigned_weapon(weapon_index: int) -> void:
 	assigned_index = weapon_index
+
+	# IMPORTANT: do not wipe all other unlock states.
+	# Only ensure the selected weapon is unlocked.
+	# Other weapons keep their current lock/unlock state.
 	for i in range(weapons.size()):
-		weapons[i]["unlocked"] = (i == weapon_index)
+		if i == weapon_index:
+			weapons[i]["unlocked"] = true
+		# leave all other weapons alone
+	
+	# this will be sent to upgrades system, as a string of the weapon
+	weapon_name.emit(start_weapon_choices[assigned_index])
 	_apply_weapon_local(weapon_index)
 
 func request_weapon_change(weapon_index: int) -> void:
-	if not _valid_index(weapon_index) or not weapons[weapon_index]["unlocked"]:
+	if not _valid_index(weapon_index):
 		return
+
+	# Standard gate: only allow switch if the weapon is unlocked
+	if not weapons[weapon_index].get("unlocked", false):
+		return
+
 	rpc("sync_assigned_weapon", weapon_index)
 
 func _apply_weapon_local(weapon_index: int) -> void:
@@ -68,14 +86,15 @@ func _apply_weapon_local(weapon_index: int) -> void:
 		n.position = Vector3(0.5, -0.25, -0.5)
 
 	current_weapon_name = weapons[weapon_index]["name"]
-	
+	Global.currentWeapon = current_weapon_name
+
 	# Only update HUD for the local player's own screen
 	if get_parent().is_multiplayer_authority() and weapons[weapon_index]["icon_path"] and icon_node:
 		icon_node.texture = weapons[weapon_index]["icon_path"]
 		icon_node.scale = weapons[weapon_index]["scale"]
 		
 	print("Weapon active for node ", get_parent().name, " : ", current_weapon_name)
-
+	
 func _get_index_by_name(w_name: String) -> int:
 	for i in range(weapons.size()):
 		if weapons[i]["name"] == w_name:
