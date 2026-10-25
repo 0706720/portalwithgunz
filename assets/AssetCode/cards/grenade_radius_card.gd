@@ -30,4 +30,7 @@ func apply_effect(player) -> void:
 	# then ensure all cards belong to group 'Card' in the inspector.
 	Global.grenade_size_bonus += 1
 	#upgradeNode.clear_unique("grenade_radius")
+	Global.upgrade_pending -= 1
+	if Global.upgrade_pending <= 0:
+		Global.signal_popup(false)
 	get_tree().call_group("Card", "queue_free")

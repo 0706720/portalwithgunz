@@ -10,10 +10,8 @@ extends Node
 	{ "name": "speed_up", "scene": preload("res://assets/models/upgradeCards/commom/speed_up_card.tscn"), "rarity": 1, "unique": false },
 	{ "name": "health_up", "scene": preload("res://assets/models/upgradeCards/commom/health_up_card.tscn"), "rarity": 1, "unique": false },
 	{ "name": "damage_up", "scene": preload("res://assets/models/upgradeCards/commom/damage_up_card.tscn"), "rarity": 1, "unique": false },
-	{ "name": "unlock_jump", "scene": preload("res://assets/models/upgradeCards/rare/unlock_jump_card.tscn"), "rarity": 2, "unique": true },
-	{ "name": "unlock_grenade_launcher", "scene": preload("res://assets/models/upgradeCards/rare/unlock_grenade_launcher.tscn"), "rarity": 2, "unique": true },
-	{ "name": "unlock_shotugn", "scene": preload("res://assets/models/upgradeCards/rare/unlock_shotgun.tscn"), "rarity": 2, "unique": true },
-	{ "name": "xp_threshold", "scene": preload("res://assets/models/upgradeCards/rare/xp_threshold_card.tscn"), "rarity": 2, "unique": true },
+	{ "name": "unlock_jump", "scene": preload("res://assets/models/upgradeCards/rare/unlock_jump_card.tscn"), "rarity": 2, "unique": false },
+	{ "name": "xp_threshold", "scene": preload("res://assets/models/upgradeCards/rare/xp_threshold_card.tscn"), "rarity": 2, "unique": false },
 	{ "name": "large_health_up", "scene": preload("res://assets/models/upgradeCards/rare/large_health_up_card.tscn"), "rarity": 2, "unique": false },
 	{ "name": "large_speed_up", "scene": preload("res://assets/models/upgradeCards/rare/large_speed_up_card.tscn"), "rarity": 2, "unique": false },
 	{ "name": "large_damage_up", "scene": preload("res://assets/models/upgradeCards/rare/large_damage_up_card.tscn"), "rarity": 2, "unique": false}
@@ -141,7 +139,6 @@ func clear_unique(cardname: String):
 	card_pool.remove_at(index)
 	
 func update_ui():
-	Global.upgrade_pending -= 1
 	if Global.upgrade_pending <= 0:
 			Global.signal_popup(false)
 	

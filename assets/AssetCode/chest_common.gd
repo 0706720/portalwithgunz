@@ -13,13 +13,14 @@ func _process(delta: float) -> void:
 
 func _on_area_3d_body_entered(body: Node3D) -> void:
 	if multiplayer.is_server() and body.is_in_group("player"):
-		Global.upgrade_pending += 3
-		rpc("apply_upgrade_all_clients", Global.upgrade_pending)
+		rpc("apply_upgrade_all_clients", 3)
+
+@rpc("authority", "call_local", "reliable")
+func apply_upgrade_all_clients(value: int):
+	Global.upgrade_pending = max(0, Global.upgrade_pending + value)
+	Global.signal_popup(true)
+	
+	if is_inside_tree():
 		node.queue_free()
 		
-
-@rpc("authority", "reliable")
-func apply_upgrade_all_clients(value: int):
-	Global.upgrade_pending += value
-	Global.signal_popup(true)
 	

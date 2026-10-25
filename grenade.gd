@@ -10,6 +10,7 @@ extends RigidBody3D
 @onready var grenade_top = %MeshInstance3D2
 @onready var grenade_tab = %MeshInstance3D3
 
+var shooter: Node = null
 var has_exploded := false
 var spawn_timer := 0.15 # Brief buffer so it clears the player's hand/spawn point safely
 
@@ -40,6 +41,9 @@ func _on_timer_timeout() -> void:
 	# Backup safety timer in case it doesn't hit anything
 	explode()
 
+func set_shooter(player: Node) -> void:
+	shooter = player
+
 func explode() -> void:
 	if has_exploded:
 		return
@@ -63,7 +67,7 @@ func explode() -> void:
 		for body in overlapping_bodies:
 			if body.is_in_group('Enemy') or body.is_in_group('target'):
 				if body.has_method("receive_damage"):
-					body.receive_damage.rpc(explosion_damage)
+					body.receive_damage.rpc(explosion_damage, shooter)
 			if body is RigidBody3D and body != self:
 				var force_dir = (body.global_position - global_position).normalized()
 				body.apply_central_impulse(force_dir * explosion_power)

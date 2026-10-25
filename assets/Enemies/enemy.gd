@@ -187,7 +187,7 @@ func perform_attack() -> void:
 	pass
 
 @rpc("any_peer", "call_local", "reliable")
-func receive_damage(amount: int) -> void:
+func receive_damage(amount: int, attacker: Node = null) -> void:
 	if is_dead:
 		return
 	
@@ -196,6 +196,8 @@ func receive_damage(amount: int) -> void:
 		current_health -= amount
 		print("[Server] Enemy took ", amount, " damage. Health left: ", current_health)
 		
+		if attacker and attacker.is_in_group("player"):
+			killer_player = attacker
 		if current_health <= 0:
 			die()
 
@@ -214,10 +216,10 @@ func die() -> void:
 		arena_manager.unregister_enemy()
 		
 	rpc("rpc_client_die")
+	
 	if multiplayer.is_server():
-		for player in get_tree().get_nodes_in_group("player"):
-			if is_instance_valid(player):
-				player.rpc("add_experience", 10)
+		if is_instance_valid(killer_player):
+			killer_player.rpc("add_experience", 10)
 	queue_free()
 
 @rpc("authority", "call_remote", "reliable")
