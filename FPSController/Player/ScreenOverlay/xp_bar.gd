@@ -16,7 +16,7 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	if Input.is_action_just_pressed("LevelUp") and Global.upgrade_pending >= 1:
+	if Input.is_action_just_pressed("LevelUp") and Global.upgrade_pending >= 1 and !selecting():
 		level_up.emit(1)
 	
 func on_xp_gain(amount):
@@ -66,3 +66,9 @@ func create_new_level():
 func apply_upgrade_all_clients():
 	Global.upgrade_pending += 1
 	Global.signal_popup(true)
+	
+func selecting():
+	if get_tree().get_nodes_in_group("Card").size() >= 1:
+		return true
+	else:
+		return false

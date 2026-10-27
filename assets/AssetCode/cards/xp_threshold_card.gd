@@ -26,6 +26,7 @@ func apply_effect(player) -> void:
 	# this should delete all instances of cards currently on screen, if that isn't happening
 	# then ensure all cards belong to group 'Card' in the inspector.
 	#upgradeNode.clear_unique("xp_threshold")
+	player.can_look = true
 	Global.upgrade_pending -= 1
 	if Global.upgrade_pending <= 0:
 		Global.signal_popup(false)

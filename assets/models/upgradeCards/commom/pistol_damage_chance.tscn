@@ -26,7 +26,7 @@ border_width_right = 1
 border_width_bottom = 1
 border_color = Color(0, 0, 0, 1)
 
-[node name="PistolDamageChance" type="Control" unique_id=1643539836]
+[node name="PistolDamageChance" type="Control" unique_id=1643539836 groups=["Card"]]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

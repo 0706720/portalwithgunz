@@ -20,11 +20,12 @@ var grenade_size_bonus: float = 0
 var doubled_explosion_chance = false
 
 ## DEV NOTE: apply this as a condition for jump when releasing public version
-var jump_unlocked = true
+var jump_unlocked = false
 
 ## Upgrade card misc
 var xp_threshold_card = 0
 var upgrade_pending = 0.0
+var selecting = false
 
 var current_score = 0
 var health = 100
