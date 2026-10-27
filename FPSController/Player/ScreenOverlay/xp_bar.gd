@@ -1,8 +1,8 @@
 extends ProgressBar
 
 var experience = 0
-var level_amount = 1
-var level_up_multiplier = 1.25
+var level_amount = 50
+var level_up_multiplier = 1.2
 
 @onready var progress_node = %xpBar
 
