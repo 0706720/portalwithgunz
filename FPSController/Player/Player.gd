@@ -2,6 +2,10 @@ extends CharacterBody3D
 class_name PlayerCharacter
 
 signal health_changed(health_value, max_health_value)
+static var living_players_count: int = 0
+const DEATH_SCREEN_SCENE = preload("res://death_screen.tscn")
+var active_death_screen: Node = null
+var is_dead: bool = false
 
 var current_speed: float
 
@@ -144,6 +148,21 @@ func _enter_tree():
 @onready var my_collision_shape: CollisionShape3D = $CollisionShape3D # Adjust if your path is different
 
 func _ready() -> void:
+	# Get the correct peer ID for this player node
+	var peer_id = name.to_int() if name.is_valid_int() else multiplayer.get_unique_id()
+	
+	# Register/Update this active player instance in Global
+	Global.players[peer_id] = self
+	
+	# Get this player's actual network owner ID safely
+	var owner_id = name.to_int() if name.is_valid_int() else multiplayer.get_unique_id()
+
+	# Tell the server to register this specific peer ID
+	if multiplayer.is_server():
+		GameManager.register_player(owner_id, self)
+	else:
+		rpc_id(1, "server_request_register", owner_id)
+
 	# Check if this player instance belongs to the local machine
 	if is_multiplayer_authority():
 		# Locate the procedural spawn marker in the scene tree
@@ -265,10 +284,6 @@ func input_actions_check() -> void:
 					var input_event_key = InputEventKey.new()
 					input_event_key.physical_keycode = keycode
 					InputMap.action_add_event(input_action, input_event_key)
-
-func _exit_tree() -> void:
-	if is_multiplayer_authority():
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 func _unhandled_input(event):
 	if not is_multiplayer_authority():
@@ -521,12 +536,12 @@ func _client_sync_state(server_transform: Transform3D, server_velocity: Vector3)
 # ==============================================================================
 
 func take_damage(amount: int) -> void:
-	if not multiplayer.is_server():
-		return # Only the server calculates damage to prevent cheating
+	if not multiplayer.is_server() or is_dead:
+		return
+		
+	print("[Damage] Health is: ", health, " | is_dead: ", is_dead)
 		
 	health = clamp(health - amount, 0, max_health)
-	
-	# Push the updated health from the server to all clients
 	rpc("client_update_health", health, max_health)
 	
 	if health <= 0:
@@ -537,22 +552,15 @@ func client_update_health(new_health: int, new_max_health: int) -> void:
 	health = new_health
 	max_health = new_max_health
 	health_changed.emit(health, max_health)
-	print("[Player Health] Updated: ", health, "/", max_health)
 
 func server_handle_player_death() -> void:
-	if not multiplayer.is_server():
-		return
+	if not multiplayer.is_server(): return
+	if is_dead: return
 		
-	health = max_health
-	global_transform.origin = Vector3(0, 1, 5)
-	
-	rpc("client_update_health", health, max_health)
-	rpc("client_reset_position", global_transform)
-
-@rpc("any_peer", "call_local", "reliable")
-func client_reset_position(new_transform: Transform3D) -> void:
-	global_transform = new_transform
-	velocity = Vector3.ZERO
+	# Notify GameManager of death
+	var peer_id: int = name.to_int() if name.is_valid_int() else multiplayer.get_unique_id()
+	GameManager.on_player_death(peer_id)
+	rpc("handle_local_death")
 
 @rpc("any_peer", "call_local", "reliable")
 func change_max_hp(amount: int) -> void:
@@ -562,15 +570,75 @@ func change_max_hp(amount: int) -> void:
 	health = clamp(health + amount, 0, max_health)
 	rpc("client_update_health", health, max_health)
 
+@rpc("any_peer", "reliable")
+func server_request_register(peer_id: int) -> void:
+	if multiplayer.is_server():
+		GameManager.register_player(peer_id, self)
 
-@rpc("authority", "call_local", "reliable")
-func rpc_teleport_player(target_transform: Transform3D) -> void:
-	global_transform = target_transform
+@rpc("any_peer", "call_local", "reliable")
+func handle_local_death() -> void:
+	print("[Player] Handling death for peer: ", name)
+	
+	is_dead = true
+	
+	global_transform.origin = Vector3(0, -999, 0)
 	velocity = Vector3.ZERO
-	# Reset interpolation/smoothing variables if applicable
-	if has_node("StateMachine"):
-		# Optional: Force state machine to neutral or ground state if needed
-		pass
+	
+	if has_node("CollisionShape3D"):
+		$CollisionShape3D.disabled = true
+	set_process(false)
+	set_physics_process(false)
+	
+	if name.to_int() == multiplayer.get_unique_id():
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		
+		# Only instantiate if one isn't already active
+		if not active_death_screen:
+			active_death_screen = DEATH_SCREEN_SCENE.instantiate()
+			if get_tree().current_scene:
+				get_tree().current_scene.add_child(active_death_screen)
+
+# 1. Allows the server to tell this specific client to clear their death screen
+@rpc("authority", "call_local", "reliable")
+func rpc_clear_death_screen() -> void:
+	print("[Player] Clearing death screen locally for peer: ", name)
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED # Change this to your game's normal active mouse mode (e.g., MOUSE_MODE_VISIBLE if you use a cursor)
+	
+	if active_death_screen and is_instance_valid(active_death_screen):
+		active_death_screen.queue_free()
+		active_death_screen = null
+
+@rpc("any_peer", "call_local", "reliable")
+func client_revive_player(target_tf: Transform3D) -> void:
+	print("[Player] Locally reviving, repositioning, and restoring controls for: ", name)
+	is_dead = false
+	
+	# 1. Re-enable collisions & processing
+	if has_node("CollisionShape3D"):
+		$CollisionShape3D.disabled = false
+		
+	set_process(true)
+	set_physics_process(true)
+	
+	# 2. Force local teleport and kill momentum so they don't slide/fall out of bounds
+	global_transform = target_tf
+	if self is CharacterBody3D:
+		velocity = Vector3.ZERO
+		
+	# 3. Only lock mouse and clear UI for the LOCAL player
+	if name.to_int() == multiplayer.get_unique_id():
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED # Change to your normal gameplay cursor mode if different
+		
+		if active_death_screen and is_instance_valid(active_death_screen):
+			active_death_screen.queue_free()
+			active_death_screen = null
+
+func _exit_tree() -> void:
+	if is_multiplayer_authority():
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		# Clean up count if a player abruptly disconnects mid-game
+	if multiplayer.is_server() and health > 0:
+		living_players_count = max(0, living_players_count - 1)
 
 func _on_animation_player_animation_finished(anim_name):
 	if anim_name == "shoot" and crouch_anim_player:

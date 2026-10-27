@@ -155,7 +155,6 @@ func build_room_sequence(start_tf: Transform3D, count: int, is_branch: bool, pla
 		var next_tf = Transform3D.IDENTITY
 		var global_aabb = AABB()
 		
-		# Check if allowed by our single 30% run roll, and hasn't spawned yet, and we're past room 6
 		if not is_branch and not is_treasure_run and allow_treasure_branch and not splitter_has_spawned and i >= 6 and splitter_room_scene != null:
 			selected_scene = splitter_room_scene
 			splitter_has_spawned = true
@@ -250,7 +249,6 @@ func generate_level_aabb_layout() -> Dictionary:
 	var placed_aabbs: Array[AABB] = []
 	all_branches.clear()
 	
-	# ROLL ONCE PER RUN: 30% chance for a treasure branch to exist in this dungeon
 	allow_treasure_branch = (rng.randf() <= 0.3)
 	
 	var temp_start := start_room_scene.instantiate() as Node3D
@@ -359,7 +357,6 @@ func spawn_enemies_in_room(room: Node3D, room_index: int) -> void:
 	var meta = room.get_node_or_null("Metadata")
 	var base_budget: int = meta.enemy_budget if meta and "enemy_budget" in meta else 40
 	
-	# Loop-based scaling multiplier
 	var loop_factor = max(0, dungeon_loop - 1)
 	var enemy_stat_multiplier = pow(difficulty_multiplier_per_loop, loop_factor)
 	
@@ -369,7 +366,6 @@ func spawn_enemies_in_room(room: Node3D, room_index: int) -> void:
 	var scaled_budget = int(base_budget * enemy_stat_multiplier)
 	var room_enemy_data: Array[Dictionary] = []
 	
-	# Collect markers from flat structure OR nested containers
 	var all_markers: Array[Node3D] = []
 	for child in spawns_node.get_children():
 		if child is Marker3D:
@@ -382,7 +378,6 @@ func spawn_enemies_in_room(room: Node3D, room_index: int) -> void:
 	if all_markers.is_empty():
 		return
 	
-	# Point-buy budget loop
 	for marker in all_markers:
 		if scaled_budget <= 0: break
 		var affordable = enemy_pool.filter(func(e): return e["cost"] <= scaled_budget)
@@ -394,11 +389,10 @@ func spawn_enemies_in_room(room: Node3D, room_index: int) -> void:
 			scaled_budget -= chosen["cost"]
 			room_enemy_data.append({
 				"path": enemy_scene.resource_path,
-				"transform": marker.global_transform, # Store absolute world transform directly!
+				"transform": marker.global_transform,
 				"multiplier": enemy_stat_multiplier
 			})
 	
-	# Check if room is an arena
 	var is_arena = "arena" in room.scene_file_path.to_lower() or "splitter" in room.scene_file_path.to_lower()
 	if meta and "room_type" in meta:
 		for t in meta.room_type:
@@ -406,10 +400,8 @@ func spawn_enemies_in_room(room: Node3D, room_index: int) -> void:
 				is_arena = true
 	
 	if is_arena and room.has_method("initialize_arena"):
-		# Delegate to arena script
 		room.initialize_arena(room_enemy_data)
 	else:
-		# Standard room instant-spawn logic
 		for enemy_data in room_enemy_data:
 			var enemy = load(enemy_data["path"]).instantiate() as Node3D
 			if enemy.has_method("initialize_scaled_stats"):
@@ -426,50 +418,6 @@ func spawn_enemies_in_room(room: Node3D, room_index: int) -> void:
 			enemy.add_to_group("network_enemies")
 			
 			rpc("rpc_spawn_enemy_remote", room.name, enemy_data["path"], world_tf, enemy_data["multiplier"])
-
-
-func setup_arena_trigger(room: Node3D, enemy_data_list: Array[Dictionary]) -> void:
-	if not multiplayer.is_server(): return
-	
-	# Look for the dedicated ActivationArea node you just placed in the prefab
-	var trigger_area := room.get_node_or_null("ActivationArea") as Area3D
-	if trigger_area:
-		if not trigger_area.body_entered.is_connected(_on_arena_entered):
-			trigger_area.body_entered.connect(_on_arena_entered.bind(trigger_area, room, enemy_data_list))
-	else:
-		# Fallback if an arena prefab doesn't have an ActivationArea yet
-		print("[Arena Warning] Room ", room.name, " is an arena but lacks an ActivationArea node!")
-
-
-func _on_arena_entered(body: Node3D, trigger_area: Area3D, room: Node3D, enemy_data_list: Array[Dictionary]) -> void:
-	if not multiplayer.is_server(): return
-	if not body.is_in_group("player"): return
-	if not is_instance_valid(trigger_area) or not trigger_area.monitoring: return
-	
-	# Disable trigger so it only fires once per arena
-	trigger_area.set_deferred("monitoring", false)
-	
-	print("[Arena] Player entered arena: ", room.name, ". Starting wave trickle...")
-	_trickle_spawn_enemies(room, enemy_data_list)
-
-
-func _trickle_spawn_enemies(room: Node3D, enemy_data_list: Array[Dictionary]) -> void:
-	if not multiplayer.is_server(): return
-		
-	for enemy_data in enemy_data_list:
-		if not is_instance_valid(room): break
-			
-		var scene = load(enemy_data["path"]) as PackedScene
-		if scene:
-			var enemy = scene.instantiate() as Node3D
-			if enemy.has_method("initialize_scaled_stats"):
-				enemy.initialize_scaled_stats(enemy_data["multiplier"])
-			room.add_child(enemy)
-			enemy.global_transform = enemy_data["transform"]
-			enemy.add_to_group("network_enemies")
-			
-			rpc("rpc_spawn_enemy_remote", room.name, enemy_data["path"], enemy_data["transform"], enemy_data["multiplier"])
-			await get_tree().create_timer(0.8).timeout
 
 
 func setup_end_portal(room: Node3D) -> void: 
@@ -501,6 +449,9 @@ func _on_portal_body_entered(body: Node3D, portal_area: Area3D, is_treasure: boo
 
 	portal_area.set_deferred("monitoring", false)
 
+	# --- REVIVE, TELEPORT, & HEAL ALL PLAYERS ON ANY PORTAL ACTIVATION ---
+	revive_and_heal_all_players()
+
 	if is_treasure_end:
 		print("[Portal] Treasure end portal activated! Looping back to base dungeon and resetting scale.")
 		is_treasure_run = false
@@ -512,6 +463,41 @@ func _on_portal_body_entered(body: Node3D, portal_area: Area3D, is_treasure: boo
 		print("[Portal] Regular end portal activated!")
 		is_treasure_run = false
 		restart_and_scale_dungeon()
+
+
+func revive_and_heal_all_players() -> void:
+	if not multiplayer.is_server(): return
+	
+	print("[Dungeon] Portal reached! Reviving dead players, repositioning, and healing...")
+	
+	# 1. TELL GAMEMANAGER TO RESET DEATH TRACKERS
+	if GameManager.has_method("reset_deaths"):
+		GameManager.reset_deaths()
+	# Or if you use a variable/array in GameManager:
+	# GameManager.dead_player_count = 0
+	# GameManager.dead_players.clear()
+	
+	var spawn_room = room_container.get_node_or_null("Room_0")
+	var target_transform = Transform3D.IDENTITY
+	if spawn_room:
+		var spawn_marker = spawn_room.get_node_or_null("SpawnPoints/PlayerSpawn")
+		target_transform = spawn_marker.global_transform if spawn_marker else spawn_room.global_transform
+		target_transform.origin += Vector3(0, 1.0, 0)
+	
+	for peer_id in Global.players:
+		var player = Global.players[peer_id]
+		if is_instance_valid(player):
+			# 2. Tell the client to revive, teleport, and clear death screen locally
+			if player.has_method("client_revive_player"):
+				player.rpc("client_revive_player", target_transform)
+			
+			# 3. Heal for 20% of max health and sync health update
+			if "health" in player and "max_health" in player:
+				var heal_amount = int(player.max_health * 0.20)
+				player.health = min(player.health + heal_amount, player.max_health)
+				
+				if player.has_method("client_update_health"):
+					player.rpc("client_update_health", player.health, player.max_health)
 
 
 func restart_and_scale_dungeon() -> void:
@@ -530,14 +516,17 @@ func restart_and_scale_dungeon() -> void:
 	instantiate_rooms_incrementally(layout_data)
 	
 	var spawn_room = room_container.get_node_or_null("Room_0")
-	if spawn_room and Global.players.has(1):
+	if spawn_room:
 		var spawn_marker = spawn_room.get_node_or_null("SpawnPoints/PlayerSpawn")
 		var target_transform = spawn_marker.global_transform if spawn_marker else spawn_room.global_transform
 		target_transform.origin += Vector3(0, 1.0, 0)
-		var host_player = Global.players[1]
-		if is_instance_valid(host_player):
-			host_player.global_transform = target_transform
-			host_player.velocity = Vector3.ZERO
+		
+		for peer_id in Global.players:
+			var player = Global.players[peer_id]
+			if is_instance_valid(player):
+				player.global_transform = target_transform
+				if player is CharacterBody3D:
+					player.velocity = Vector3.ZERO
 	
 	for peer in multiplayer.get_peers():
 		request_world_state(peer)
@@ -566,9 +555,13 @@ func trigger_treasure_branch(player: Node3D) -> void:
 		var spawn_marker = spawn_room.get_node_or_null("SpawnPoints/PlayerSpawn")
 		var target_transform = spawn_marker.global_transform if spawn_marker else spawn_room.global_transform
 		target_transform.origin += Vector3(0, 1.0, 0)
-		player.global_transform = target_transform
-		if player is CharacterBody3D:
-			player.velocity = Vector3.ZERO
+		
+		for peer_id in Global.players:
+			var p = Global.players[peer_id]
+			if is_instance_valid(p):
+				p.global_transform = target_transform
+				if p is CharacterBody3D:
+					p.velocity = Vector3.ZERO
 
 	for peer in multiplayer.get_peers():
 		request_world_state(peer)
@@ -594,10 +587,8 @@ func request_world_state(peer_id: int) -> void:
 	rpc_id(peer_id, "rpc_update_dungeon_hud", dungeon_loop, is_treasure_run)
 	
 	for room in generated_rooms:
-		# 1. Spawn the room base scene on the client
 		rpc_id(peer_id, "rpc_spawn_room_remote", room.scene_file_path, room.global_transform, room.name)
 		
-		# 2. Sync enemies inside the room for late joiners
 		for child in room.get_children():
 			if child.is_in_group("network_enemies"):
 				rpc_id(peer_id, "rpc_spawn_enemy_remote", room.name, child.scene_file_path, child.global_transform, child.get("stat_multiplier") if "stat_multiplier" in child else 1.0)
@@ -660,12 +651,10 @@ func rpc_spawn_enemy_remote(r_name: String, e_path: String, tf: Transform3D, mul
 			
 			room.add_child(enemy)
 			
-			# Safe transform adjustment
 			var safe_tf = tf
 			safe_tf.origin.y += 0.3
 			enemy.global_transform = safe_tf
 			
-			# Instantly snap client position on spawn to prevent glide/teleport blur
 			if enemy.has_method("set_initial_network_transform"):
 				enemy.set_initial_network_transform(safe_tf)
 				
@@ -676,7 +665,6 @@ func rpc_spawn_enemy_remote(r_name: String, e_path: String, tf: Transform3D, mul
 func remote_world_ready() -> void:
 	emit_signal("world_ready")
 	
-	# 1. Wait until Room_0 is guaranteed to exist in the client's scene tree
 	var spawn_room = room_container.get_node_or_null("Room_0")
 	while spawn_room == null and is_inside_tree():
 		await get_tree().process_frame
@@ -684,7 +672,6 @@ func remote_world_ready() -> void:
 		
 	print("[Client] Dungeon world is fully loaded. Requesting player spawn...")
 	
-	# 2. Target your actual "PlayerSpawner" node in WorldRoot
 	var player_spawner = get_node_or_null("../PlayerSpawner") 
 	if player_spawner:
 		player_spawner.rpc_id(1, "request_spawn", multiplayer.get_unique_id())

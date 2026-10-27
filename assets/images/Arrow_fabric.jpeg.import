@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://dfyx6vonjfmfp"
 path.s3tc="res://.godot/imported/Arrow_fabric.jpeg-398590059d72ecfd3827465c6a782058.s3tc.ctex"
+path.etc2="res://.godot/imported/Arrow_fabric.jpeg-398590059d72ecfd3827465c6a782058.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/images/Arrow_fabric.jpeg"
-dest_files=["res://.godot/imported/Arrow_fabric.jpeg-398590059d72ecfd3827465c6a782058.s3tc.ctex"]
+dest_files=["res://.godot/imported/Arrow_fabric.jpeg-398590059d72ecfd3827465c6a782058.s3tc.ctex", "res://.godot/imported/Arrow_fabric.jpeg-398590059d72ecfd3827465c6a782058.etc2.ctex"]
 
 [params]
 

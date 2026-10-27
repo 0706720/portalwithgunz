@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://g3l2dund4q6f"
 path.s3tc="res://.godot/imported/metalSpikeTexture.jpg-42f2b463cc7d877724967b1120d32539.s3tc.ctex"
+path.etc2="res://.godot/imported/metalSpikeTexture.jpg-42f2b463cc7d877724967b1120d32539.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/images/metalSpikeTexture.jpg"
-dest_files=["res://.godot/imported/metalSpikeTexture.jpg-42f2b463cc7d877724967b1120d32539.s3tc.ctex"]
+dest_files=["res://.godot/imported/metalSpikeTexture.jpg-42f2b463cc7d877724967b1120d32539.s3tc.ctex", "res://.godot/imported/metalSpikeTexture.jpg-42f2b463cc7d877724967b1120d32539.etc2.ctex"]
 
 [params]
 

@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://fbfa8rvkegos"
 path.s3tc="res://.godot/imported/M91_Scope_Metallic.png-23843f22365c579154ca1584475d55ab.s3tc.ctex"
+path.etc2="res://.godot/imported/M91_Scope_Metallic.png-23843f22365c579154ca1584475d55ab.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://FPSController/WeaponsManagement/Weapons/Sniperz/textures/M91_Scope_Metallic.png"
-dest_files=["res://.godot/imported/M91_Scope_Metallic.png-23843f22365c579154ca1584475d55ab.s3tc.ctex"]
+dest_files=["res://.godot/imported/M91_Scope_Metallic.png-23843f22365c579154ca1584475d55ab.s3tc.ctex", "res://.godot/imported/M91_Scope_Metallic.png-23843f22365c579154ca1584475d55ab.etc2.ctex"]
 
 [params]
 

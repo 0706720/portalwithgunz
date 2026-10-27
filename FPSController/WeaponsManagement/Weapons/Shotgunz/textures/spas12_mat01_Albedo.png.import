@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://bwkj6i63i27r2"
 path.s3tc="res://.godot/imported/spas12_mat01_Albedo.png-95772770ccce8e72a891c828e4fd45f8.s3tc.ctex"
+path.etc2="res://.godot/imported/spas12_mat01_Albedo.png-95772770ccce8e72a891c828e4fd45f8.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://FPSController/WeaponsManagement/Weapons/Shotgunz/textures/spas12_mat01_Albedo.png"
-dest_files=["res://.godot/imported/spas12_mat01_Albedo.png-95772770ccce8e72a891c828e4fd45f8.s3tc.ctex"]
+dest_files=["res://.godot/imported/spas12_mat01_Albedo.png-95772770ccce8e72a891c828e4fd45f8.s3tc.ctex", "res://.godot/imported/spas12_mat01_Albedo.png-95772770ccce8e72a891c828e4fd45f8.etc2.ctex"]
 
 [params]
 
