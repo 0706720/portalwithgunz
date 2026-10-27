@@ -295,18 +295,29 @@ func _unhandled_input(event):
 		cam.rotation.x = clamp(cam.rotation.x, -PI/2, PI/2)
 
 	if is_multiplayer_authority() and weaponsManager:
-			var active_weapon = weaponsManager.get("current_weapon_name")
-			if Input.is_action_just_pressed("shoot") \
-			and active_weapon == 'Pistol' \
-			and anim_player.current_animation != "shoot":
-				play_shoot_effects.rpc()
-				if raycast.is_colliding():
-					var hit_player = raycast.get_collider()
-					if hit_player and hit_player.is_in_group('target'):
-						if hit_player.has_method("receive_damage"):
-							check_extra_damage()
-							check_lifesteal()
-							hit_player.receive_damage.rpc(pistol_damage_new, self)
+		var active_weapon = weaponsManager.get("current_weapon_name")
+		if Input.is_action_just_pressed("shoot") \
+		and active_weapon == 'Pistol' \
+		and anim_player.current_animation != "shoot":
+			play_shoot_effects.rpc()
+			
+			if raycast.is_colliding():
+				var collider = raycast.get_collider()
+				var enemy_target = null
+				
+				if collider:
+					if collider.has_method("receive_damage"):
+						enemy_target = collider
+					elif collider.owner and collider.owner.has_method("receive_damage"):
+						enemy_target = collider.owner
+					elif collider.get_parent() and collider.get_parent().has_method("receive_damage"):
+						enemy_target = collider.get_parent()
+				
+				if enemy_target and enemy_target.is_in_group('target'):
+					check_extra_damage()
+					check_lifesteal()
+					# Send integer peer_id instead of Node instance 'self'
+					enemy_target.rpc_id(1, "receive_damage", pistol_damage_new, multiplayer.get_unique_id())
 
 	if anim_playing == false and Input.is_action_just_pressed("superjump") and Global.jump_unlocked:
 		anim_playing = true
@@ -613,21 +624,22 @@ func client_revive_player(target_tf: Transform3D) -> void:
 	print("[Player] Locally reviving, repositioning, and restoring controls for: ", name)
 	is_dead = false
 	
-	# 1. Re-enable collisions & processing
-	if has_node("CollisionShape3D"):
-		$CollisionShape3D.disabled = false
-		
-	set_process(true)
-	set_physics_process(true)
-	
-	# 2. Force local teleport and kill momentum so they don't slide/fall out of bounds
+	# 1. Force position and zero momentum FIRST before turning physics back on
 	global_transform = target_tf
 	if self is CharacterBody3D:
 		velocity = Vector3.ZERO
 		
+	# 2. Re-enable collisions & processing AFTER position is set
+	var col_shape = get_node_or_null("CollisionShape3D")
+	if col_shape:
+		col_shape.disabled = false
+		
+	set_process(true)
+	set_physics_process(true)
+	
 	# 3. Only lock mouse and clear UI for the LOCAL player
 	if name.to_int() == multiplayer.get_unique_id():
-		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED # Change to your normal gameplay cursor mode if different
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		
 		if active_death_screen and is_instance_valid(active_death_screen):
 			active_death_screen.queue_free()

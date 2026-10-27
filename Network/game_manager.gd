@@ -77,3 +77,19 @@ func _on_peer_disconnected(peer_id: int) -> void:
 		
 		if registered_players.size() <= 0:
 			rpc("client_return_to_main_menu")
+
+func reset_deaths() -> void:
+	if not multiplayer.is_server():
+		return
+		
+	print("[GameManager] Resetting death trackers. Re-populating active players...")
+	registered_players.clear()
+	
+	# Re-add all living/active players from Global.players so GameManager knows they are back
+	for peer_id in Global.players:
+		var player = Global.players[peer_id]
+		if is_instance_valid(player):
+			registered_players[peer_id] = player
+			print("[GameManager] Successfully re-registered player ID: ", peer_id)
+			
+	print("[GameManager] Total tracked players after portal reset: ", registered_players.size())

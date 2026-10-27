@@ -470,12 +470,9 @@ func revive_and_heal_all_players() -> void:
 	
 	print("[Dungeon] Portal reached! Reviving dead players, repositioning, and healing...")
 	
-	# 1. TELL GAMEMANAGER TO RESET DEATH TRACKERS
+	# 1. Reset death trackers and re-register players in GameManager
 	if GameManager.has_method("reset_deaths"):
 		GameManager.reset_deaths()
-	# Or if you use a variable/array in GameManager:
-	# GameManager.dead_player_count = 0
-	# GameManager.dead_players.clear()
 	
 	var spawn_room = room_container.get_node_or_null("Room_0")
 	var target_transform = Transform3D.IDENTITY

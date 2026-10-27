@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://cjddue730snm" path="res://assets/images/WoodenTexture.jpg" id="6_1g3fk"]
 [ext_resource type="Texture2D" uid="uid://b8cq3fy0t3int" path="res://assets/images/Light_wood.png" id="7_jobe0"]
 [ext_resource type="LightmapGIData" uid="uid://0gg4ubnytjbf" path="res://assets/Rooms/room_arena_04.lmbake" id="8_xqbu7"]
+[ext_resource type="PackedScene" uid="uid://um6llo13flnf" path="res://assets/models/sign.tscn" id="9_n3ri0"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vwdrm"]
 albedo_texture = ExtResource("2_xqbu7")
@@ -124,14 +125,14 @@ size = Vector3(20, 10, 1)
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_jf5nk"]
 data = PackedVector3Array(-10, 5, 1, 10, 5, 1, -10, -5, 1, 10, 5, 1, 10, -5, 1, -10, -5, 1, 10, 5, -1, -10, 5, -1, 10, -5, -1, -10, 5, -1, -10, -5, -1, 10, -5, -1, 10, 5, 1, 10, 5, -1, 10, -5, 1, 10, 5, -1, 10, -5, -1, 10, -5, 1, -10, 5, -1, -10, 5, 1, -10, -5, -1, -10, 5, 1, -10, -5, 1, -10, -5, -1, 10, 5, 1, -10, 5, 1, 10, 5, -1, -10, 5, 1, -10, 5, -1, 10, 5, -1, -10, -5, 1, 10, -5, 1, -10, -5, -1, 10, -5, 1, 10, -5, -1, -10, -5, -1)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jf5nk"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_snbpy"]
 albedo_texture = ExtResource("3_jf5nk")
 uv1_scale = Vector3(0.1, 0.1, 0.1)
 uv1_triplanar = true
 
 [sub_resource type="BoxMesh" id="BoxMesh_n3ri0"]
 lightmap_size_hint = Vector2i(114, 206)
-material = SubResource("StandardMaterial3D_jf5nk")
+material = SubResource("StandardMaterial3D_snbpy")
 add_uv2 = true
 size = Vector3(20, 10, 2)
 
@@ -477,6 +478,9 @@ skeleton = NodePath("../..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshContainer/Ramp2/StaticBody3D" unique_id=1381571936]
 shape = SubResource("ConcavePolygonShape3D_k2agg")
+
+[node name="Sign" parent="MeshContainer" unique_id=2129562351 instance=ExtResource("9_n3ri0")]
+transform = Transform3D(0.8660254, 0, 0.5, 0, 1, 0, -0.5, 0, 0.8660254, -10, 1, 37)
 
 [node name="BoundsArea" type="Area3D" parent="." unique_id=1071726804]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
