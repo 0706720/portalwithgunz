@@ -157,6 +157,7 @@ door_collisions = [NodePath("DoorCollison"), NodePath("DoorCollison2")]
 script = ExtResource("1_spoyu")
 difficulty_weight = 0.8
 room_type = Array[String](["\"arena\""])
+enemy_budget = 40.0
 
 [node name="Connectors" type="Node3D" parent="." unique_id=1497390118]
 
