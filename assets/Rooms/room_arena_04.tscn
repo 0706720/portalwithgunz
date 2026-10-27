@@ -143,6 +143,7 @@ door_collisions = [NodePath("DoorCollison")]
 script = ExtResource("1_ciwy5")
 difficulty_weight = 0.8
 room_type = Array[String](["\"arena\""])
+enemy_budget = 40.0
 
 [node name="Connectors" type="Node3D" parent="." unique_id=1497390118]
 
