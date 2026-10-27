@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://cr4l73caw0msd"
 path.s3tc="res://.godot/imported/torch_stick_3.png-7a55da7a0414086f80067ba23cd5b2a3.s3tc.ctex"
+path.etc2="res://.godot/imported/torch_stick_3.png-7a55da7a0414086f80067ba23cd5b2a3.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://FPSController/WeaponsManagement/Weapons/torch asset/torch_stick_3.png"
-dest_files=["res://.godot/imported/torch_stick_3.png-7a55da7a0414086f80067ba23cd5b2a3.s3tc.ctex"]
+dest_files=["res://.godot/imported/torch_stick_3.png-7a55da7a0414086f80067ba23cd5b2a3.s3tc.ctex", "res://.godot/imported/torch_stick_3.png-7a55da7a0414086f80067ba23cd5b2a3.etc2.ctex"]
 
 [params]
 

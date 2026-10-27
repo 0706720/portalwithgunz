@@ -4,15 +4,16 @@ importer="2d_array_texture"
 type="CompressedTexture2DArray"
 uid="uid://ch387gt7of1ii"
 path.bptc="res://.godot/imported/splitter_room_prefab.exr-afeeb577d3c329df17b77dae3c290a7d.bptc.ctexarray"
+path.astc="res://.godot/imported/splitter_room_prefab.exr-afeeb577d3c329df17b77dae3c290a7d.astc.ctexarray"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/Rooms/Special/splitter_room_prefab.exr"
-dest_files=["res://.godot/imported/splitter_room_prefab.exr-afeeb577d3c329df17b77dae3c290a7d.bptc.ctexarray"]
+dest_files=["res://.godot/imported/splitter_room_prefab.exr-afeeb577d3c329df17b77dae3c290a7d.bptc.ctexarray", "res://.godot/imported/splitter_room_prefab.exr-afeeb577d3c329df17b77dae3c290a7d.astc.ctexarray"]
 
 [params]
 

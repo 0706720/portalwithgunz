@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://c4nppl6ty4q2v"
 path.s3tc="res://.godot/imported/M91_bcolor.png-dc6edfdc182d7dd2a37b617118cc6c87.s3tc.ctex"
+path.etc2="res://.godot/imported/M91_bcolor.png-dc6edfdc182d7dd2a37b617118cc6c87.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://FPSController/WeaponsManagement/Weapons/Sniperz/textures/M91_bcolor.png"
-dest_files=["res://.godot/imported/M91_bcolor.png-dc6edfdc182d7dd2a37b617118cc6c87.s3tc.ctex"]
+dest_files=["res://.godot/imported/M91_bcolor.png-dc6edfdc182d7dd2a37b617118cc6c87.s3tc.ctex", "res://.godot/imported/M91_bcolor.png-dc6edfdc182d7dd2a37b617118cc6c87.etc2.ctex"]
 
 [params]
 

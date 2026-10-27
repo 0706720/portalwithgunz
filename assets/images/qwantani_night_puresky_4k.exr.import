@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://by2wglgj47twe"
 path.bptc="res://.godot/imported/qwantani_night_puresky_4k.exr-fe17e4601fc146a817ba2fd3638c1a09.bptc.ctex"
+path.astc="res://.godot/imported/qwantani_night_puresky_4k.exr-fe17e4601fc146a817ba2fd3638c1a09.astc.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/images/qwantani_night_puresky_4k.exr"
-dest_files=["res://.godot/imported/qwantani_night_puresky_4k.exr-fe17e4601fc146a817ba2fd3638c1a09.bptc.ctex"]
+dest_files=["res://.godot/imported/qwantani_night_puresky_4k.exr-fe17e4601fc146a817ba2fd3638c1a09.bptc.ctex", "res://.godot/imported/qwantani_night_puresky_4k.exr-fe17e4601fc146a817ba2fd3638c1a09.astc.ctex"]
 
 [params]
 

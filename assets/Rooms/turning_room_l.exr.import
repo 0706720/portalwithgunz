@@ -4,15 +4,16 @@ importer="2d_array_texture"
 type="CompressedTexture2DArray"
 uid="uid://bb55d2d5sr3w0"
 path.bptc="res://.godot/imported/turning_room_l.exr-a124933892c8d49448360427a2766fd3.bptc.ctexarray"
+path.astc="res://.godot/imported/turning_room_l.exr-a124933892c8d49448360427a2766fd3.astc.ctexarray"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/Rooms/turning_room_l.exr"
-dest_files=["res://.godot/imported/turning_room_l.exr-a124933892c8d49448360427a2766fd3.bptc.ctexarray"]
+dest_files=["res://.godot/imported/turning_room_l.exr-a124933892c8d49448360427a2766fd3.bptc.ctexarray", "res://.godot/imported/turning_room_l.exr-a124933892c8d49448360427a2766fd3.astc.ctexarray"]
 
 [params]
 

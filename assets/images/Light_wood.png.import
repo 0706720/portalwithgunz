@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://b8cq3fy0t3int"
 path.s3tc="res://.godot/imported/Light_wood.png-07acfe320d5a3991e924fad695c6fd24.s3tc.ctex"
+path.etc2="res://.godot/imported/Light_wood.png-07acfe320d5a3991e924fad695c6fd24.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/images/Light_wood.png"
-dest_files=["res://.godot/imported/Light_wood.png-07acfe320d5a3991e924fad695c6fd24.s3tc.ctex"]
+dest_files=["res://.godot/imported/Light_wood.png-07acfe320d5a3991e924fad695c6fd24.s3tc.ctex", "res://.godot/imported/Light_wood.png-07acfe320d5a3991e924fad695c6fd24.etc2.ctex"]
 
 [params]
 

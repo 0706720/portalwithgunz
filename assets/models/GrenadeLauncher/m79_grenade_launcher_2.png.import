@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://k36wc4poamia"
 path.s3tc="res://.godot/imported/m79_grenade_launcher_2.png-c61d6ac67d42f7b61872d20f536d6eb9.s3tc.ctex"
+path.etc2="res://.godot/imported/m79_grenade_launcher_2.png-c61d6ac67d42f7b61872d20f536d6eb9.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/models/GrenadeLauncher/m79_grenade_launcher_2.png"
-dest_files=["res://.godot/imported/m79_grenade_launcher_2.png-c61d6ac67d42f7b61872d20f536d6eb9.s3tc.ctex"]
+dest_files=["res://.godot/imported/m79_grenade_launcher_2.png-c61d6ac67d42f7b61872d20f536d6eb9.s3tc.ctex", "res://.godot/imported/m79_grenade_launcher_2.png-c61d6ac67d42f7b61872d20f536d6eb9.etc2.ctex"]
 
 [params]
 

@@ -66,9 +66,6 @@ size = Vector3(2, 10, 20)
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_ptlgb"]
 data = PackedVector3Array(-1, 5, 10, 1, 5, 10, -1, -5, 10, 1, 5, 10, 1, -5, 10, -1, -5, 10, 1, 5, -10, -1, 5, -10, 1, -5, -10, -1, 5, -10, -1, -5, -10, 1, -5, -10, 1, 5, 10, 1, 5, -10, 1, -5, 10, 1, 5, -10, 1, -5, -10, 1, -5, 10, -1, 5, -10, -1, 5, 10, -1, -5, -10, -1, 5, 10, -1, -5, 10, -1, -5, -10, 1, 5, 10, -1, 5, 10, 1, 5, -10, -1, 5, 10, -1, 5, -10, 1, 5, -10, -1, -5, 10, 1, -5, 10, -1, -5, -10, 1, -5, 10, 1, -5, -10, -1, -5, -10)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_vpwjj"]
-size = Vector3(20, 10, 1)
-
 [node name="StraightPrefab1" type="Node3D" unique_id=1768685127]
 
 [node name="Metadata" type="Node" parent="." unique_id=939893820]
@@ -162,11 +159,3 @@ transform = Transform3D(0.8660254, 0.5, 0, -0.5, 0.8660254, 0, 0, 0, 1, 1, 0, 0)
 
 [node name="LightmapGI" type="LightmapGI" parent="." unique_id=27347667]
 light_data = ExtResource("5_vpwjj")
-
-[node name="ActivationArea" type="Area3D" parent="." unique_id=697934879]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
-collision_layer = 255
-collision_mask = 255
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="ActivationArea" unique_id=706064079]
-shape = SubResource("BoxShape3D_vpwjj")

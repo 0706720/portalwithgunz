@@ -4,15 +4,16 @@ importer="2d_array_texture"
 type="CompressedTexture2DArray"
 uid="uid://dr2kjcsfidl82"
 path.bptc="res://.godot/imported/room_arena_01.exr-af9209bc316b933905675a171df37739.bptc.ctexarray"
+path.astc="res://.godot/imported/room_arena_01.exr-af9209bc316b933905675a171df37739.astc.ctexarray"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/Rooms/room_arena_01.exr"
-dest_files=["res://.godot/imported/room_arena_01.exr-af9209bc316b933905675a171df37739.bptc.ctexarray"]
+dest_files=["res://.godot/imported/room_arena_01.exr-af9209bc316b933905675a171df37739.bptc.ctexarray", "res://.godot/imported/room_arena_01.exr-af9209bc316b933905675a171df37739.astc.ctexarray"]
 
 [params]
 

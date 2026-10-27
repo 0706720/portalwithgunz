@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://cs1ibjwvbhsss"
 path.s3tc="res://.godot/imported/dungeo_floor.jpg-ec2291aade159a79a8cc4683fdd715e2.s3tc.ctex"
+path.etc2="res://.godot/imported/dungeo_floor.jpg-ec2291aade159a79a8cc4683fdd715e2.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/images/dungeo_floor.jpg"
-dest_files=["res://.godot/imported/dungeo_floor.jpg-ec2291aade159a79a8cc4683fdd715e2.s3tc.ctex"]
+dest_files=["res://.godot/imported/dungeo_floor.jpg-ec2291aade159a79a8cc4683fdd715e2.s3tc.ctex", "res://.godot/imported/dungeo_floor.jpg-ec2291aade159a79a8cc4683fdd715e2.etc2.ctex"]
 
 [params]
 

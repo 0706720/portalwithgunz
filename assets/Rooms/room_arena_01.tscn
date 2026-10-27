@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://cpvj6f2k4t4va" path="res://assets/models/wood_beam.tscn" id="6_4qqh0"]
 [ext_resource type="LightmapGIData" uid="uid://dpgwrgf837iwf" path="res://assets/Rooms/room_arena_01.lmbake" id="7_27py7"]
 [ext_resource type="PackedScene" uid="uid://bkn4mfuxefhuq" path="res://assets/models/wooden_ramp.tscn" id="7_65jox"]
+[ext_resource type="PackedScene" uid="uid://um6llo13flnf" path="res://assets/models/sign.tscn" id="8_v7hwv"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vwdrm"]
 albedo_texture = ExtResource("2_q7d6m")
@@ -403,6 +404,9 @@ transform = Transform3D(0.76604444, 0, 0.6427876, 0, 1, 0, -0.6427876, 0, 0.7660
 
 [node name="WoodenRamp2" parent="MeshContainer" unique_id=280952127 instance=ExtResource("7_65jox")]
 transform = Transform3D(-0.7660444, 0, -0.6427876, 0, 1, 0, 0.6427876, 0, -0.7660444, 13.991287, 12, 25.803726)
+
+[node name="Sign" parent="MeshContainer" unique_id=2129562351 instance=ExtResource("8_v7hwv")]
+transform = Transform3D(0.8660254, 0, 0.5, 0, 1, 0, -0.5, 0, 0.8660254, -10, 1, 37)
 
 [node name="BoundsArea" type="Area3D" parent="." unique_id=1071726804]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)

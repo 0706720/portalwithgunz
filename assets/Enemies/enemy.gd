@@ -199,16 +199,24 @@ func perform_attack() -> void:
 	pass
 
 @rpc("any_peer", "call_local", "reliable")
-func receive_damage(amount: int, attacker: Node = null) -> void:
+func receive_damage(amount: int, attacker: Variant = null) -> void:
 	if is_dead:
 		return
 	
 	if multiplayer.is_server():
 		current_health -= amount
-		print("[Server] Enemy took ", amount, " damage. Health left: ", current_health)
+		print("[Server] Enemy took ", amount, " damage | Health left: ", current_health)
 		
-		if attacker and attacker.is_in_group("player"):
-			killer_player = attacker
+		# 1. Sync updated health to all clients
+		rpc("sync_enemy_health", current_health)
+		
+		# 2. Safely resolve who the attacker was, whether passed as a Node or an Int (peer_id)
+		if attacker != null:
+			if attacker is Node and attacker.is_in_group("player"):
+				killer_player = attacker
+			elif attacker is int and Global.players.has(attacker):
+				killer_player = Global.players[attacker]
+				
 		if current_health <= 0:
 			die()
 
