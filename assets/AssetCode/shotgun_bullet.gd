@@ -13,6 +13,9 @@ func _process(delta: float) -> void:
 	global_translate(global_transform.basis.z * Bullet_Speed * delta)
 
 func _on_body_entered(body: Node3D) -> void:
+	# connect to up-to-date damage according to singleton reference
+	damage = Global.shotgun_damage
+	print('global dmg shotty: ' + str(damage))
 	# Ignore the specific player who fired this bullet
 	if body == shooter or (body is CharacterBody3D and body.is_in_group("player")):
 		return

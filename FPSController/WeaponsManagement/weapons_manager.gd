@@ -21,6 +21,7 @@ var weapon_nodes: Array = []
 var start_weapon_choices: Array = ["Pistol", "Grenade", "Shotgun"]
 var current_weapon_name: String = ""
 var assigned_index: int = -1
+var intialised = false
 
 func _ready() -> void:
 	weapon_nodes = [pistol_node, grenade_node, shotgun_node, grapple_node]
@@ -60,8 +61,10 @@ func sync_assigned_weapon(weapon_index: int) -> void:
 			weapons[i]["unlocked"] = true
 		# leave all other weapons alone
 	
-	# this will be sent to upgrades system, as a string of the weapon
-	weapon_name.emit(start_weapon_choices[assigned_index])
+	# this will be sent to upgrades system, as a string of the weapon. Only upon join.
+	if !intialised:
+		weapon_name.emit(start_weapon_choices[assigned_index])
+	intialised = true
 	_apply_weapon_local(weapon_index)
 
 func request_weapon_change(weapon_index: int) -> void:

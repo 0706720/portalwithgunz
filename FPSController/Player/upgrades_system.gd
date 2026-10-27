@@ -14,7 +14,8 @@ extends Node
 	{ "name": "xp_threshold", "scene": preload("res://assets/models/upgradeCards/rare/xp_threshold_card.tscn"), "rarity": 2, "unique": false },
 	{ "name": "large_health_up", "scene": preload("res://assets/models/upgradeCards/rare/large_health_up_card.tscn"), "rarity": 2, "unique": false },
 	{ "name": "large_speed_up", "scene": preload("res://assets/models/upgradeCards/rare/large_speed_up_card.tscn"), "rarity": 2, "unique": false },
-	{ "name": "unlock_grapple", "scene": preload("res://assets/models/upgradeCards/rare/unlock_grapple.tscn"), "rarity": 2, "unique": true}
+	{ "name": "unlock_grapple", "scene": preload("res://assets/models/upgradeCards/rare/unlock_grapple.tscn"), "rarity": 2, "unique": true},
+	{ "name": "global_damage", "scene": preload("res://assets/models/upgradeCards/commom/global_damage.tscn"), "rarity": 1, "unique": false}
 ]
 
 var failsafe = 0
@@ -46,7 +47,7 @@ func _add_options(input):
 	for index in options:
 		# this will be used for weighting: 0-7 means a common spawns whilst 8-10 means rare
 		var rarity_rng = randi_range(0, 10)
-		if rarity_rng == 0:
+		if rarity_rng >= 0:
 			card_object = validate_index(1)
 			spawned_card = card_object["scene"].instantiate()
 		else:

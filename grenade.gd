@@ -31,6 +31,9 @@ func _physics_process(delta: float) -> void:
 
 # Triggered immediately when the grenade collides with anything in the world
 func _on_body_entered(body: Node3D) -> void:
+	# connect to up-to-date damage according to singleton reference
+	explosion_damage = Global.grenade_damage
+	print('global dmg grenade: ' + str(explosion_damage))
 	if has_exploded or spawn_timer > 0:
 		return
 		

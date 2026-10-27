@@ -89,7 +89,7 @@ theme_override_colors/default_color = Color(0, 0, 0, 1)
 theme_override_fonts/normal_font = ExtResource("5_qoguc")
 theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
-text = "Grenade launcher cooldown recieves a 10% reduction [color=blue](Unique)[/color]"
+text = "Grenade launcher cooldown recieves a 10% reduction [color=blue](Stackable)[/color]"
 horizontal_alignment = 1
 
 [node name="Polygon2D" type="Polygon2D" parent="cardAssets" unique_id=341834954]
