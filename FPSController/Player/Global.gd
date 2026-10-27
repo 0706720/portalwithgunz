@@ -10,6 +10,8 @@ signal signal_message()
 ## GROUP: Weapon Checks for Upgrade System
 var shotugn_unlocked = false
 var grenade_unlocked = false
+var shotgun_damage = 15
+var grenade_damage = 50
 
 ## Weapon Cooldown (Grenade)
 var weapon_cooldown: float = 0.0

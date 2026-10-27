@@ -129,3 +129,5 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_styles/normal = SubResource("StyleBoxFlat_mwqpq")
 theme_override_styles/hover = SubResource("StyleBoxFlat_8mtnj")
 text = "SELECT"
+
+[connection signal="pressed" from="cardAssets/Button" to="." method="_on_button_pressed"]

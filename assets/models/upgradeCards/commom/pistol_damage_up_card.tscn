@@ -84,7 +84,8 @@ theme_override_colors/default_color = Color(0, 0, 0, 1)
 theme_override_fonts/normal_font = ExtResource("5_4ajpi")
 theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
-text = "Recieve a 10% bonus to pistol damage"
+text = "Recieve a 15% bonus to pistol damage [color=red]
+(Additive)[/color]"
 horizontal_alignment = 1
 
 [node name="Polygon2D" type="Polygon2D" parent="cardAssets" unique_id=1773938724]

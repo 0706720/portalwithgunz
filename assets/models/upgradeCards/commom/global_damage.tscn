@@ -1,0 +1,125 @@
+[gd_scene format=3 uid="uid://be0fhufaqgwvc"]
+
+[ext_resource type="Script" uid="uid://ysuprk1bjpia" path="res://assets/AssetCode/cards/global_damage.gd" id="1_cmuqr"]
+[ext_resource type="Texture2D" uid="uid://ctcrwyn562eq4" path="res://assets/images/upgradesSystem/cardoutline (1).png" id="3_n1s3t"]
+[ext_resource type="Texture2D" uid="uid://cg6wleqmqqa26" path="res://assets/images/upgradesSystem/revolver.png" id="4_aamh7"]
+[ext_resource type="FontFile" uid="uid://brl5hlu3dc40l" path="res://assets/images/upgradesSystem/Nunito/Nunito-Italic-VariableFont_wght.ttf" id="5_0kcbg"]
+[ext_resource type="Texture2D" uid="uid://ccluvo4tlcqby" path="res://assets/images/upgradesSystem/crosshair-108.svg" id="6_cmuqr"]
+[ext_resource type="FontFile" uid="uid://b1eo5a8at87ej" path="res://assets/images/upgradesSystem/Nunito/Nunito-VariableFont_wght.ttf" id="6_ws8ry"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_7ctai"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wr7n8"]
+bg_color = Color(0.16470589, 0.6745098, 0.8352941, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1uelp"]
+bg_color = Color(0.23137255, 0.6784314, 0.78039217, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+
+[node name="GlobalDamage" type="Control" unique_id=1344316632 groups=["Card"]]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_cmuqr")
+
+[node name="cardAssets" type="Control" parent="." unique_id=1384911710]
+anchors_preset = 0
+
+[node name="Cardoutline(1)" type="TextureRect" parent="cardAssets" unique_id=712843566]
+visible = false
+layout_mode = 0
+offset_left = 438.0
+offset_top = 255.0
+offset_right = 438.0
+offset_bottom = 255.0
+texture = ExtResource("3_n1s3t")
+
+[node name="HeartShield" type="TextureRect" parent="cardAssets" unique_id=1224821462]
+layout_mode = 0
+offset_left = 306.00003
+offset_top = 420.99997
+offset_right = 818.0
+offset_bottom = 933.0
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("4_aamh7")
+
+[node name="Label" type="RichTextLabel" parent="cardAssets" unique_id=290312815]
+layout_mode = 0
+offset_left = 333.0
+offset_top = 256.0
+offset_right = 549.0
+offset_bottom = 294.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("5_0kcbg")
+theme_override_fonts/bold_font = ExtResource("6_ws8ry")
+theme_override_font_sizes/normal_font_size = 24
+bbcode_enabled = true
+text = "[u]GLOBAL: DAMAGE[u]"
+horizontal_alignment = 1
+
+[node name="Label2" type="RichTextLabel" parent="cardAssets" unique_id=40177850]
+layout_mode = 0
+offset_left = 288.0
+offset_top = 288.0
+offset_right = 585.0
+offset_bottom = 402.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("5_0kcbg")
+theme_override_font_sizes/normal_font_size = 20
+bbcode_enabled = true
+text = "Recieve a 10% bonus to all damage [color=red]
+(Additive) [/color][color=blue]
+(Stackable)[/color]"
+horizontal_alignment = 1
+
+[node name="Polygon2D" type="Polygon2D" parent="cardAssets" unique_id=172910255]
+z_index = -1
+polygon = PackedVector2Array(304, 31, 286, 43, 286, 463, 301, 480, 577, 480, 590, 466, 590, 46, 576, 31)
+
+[node name="Line2D" type="Line2D" parent="cardAssets" unique_id=1174382010]
+points = PackedVector2Array(304, 31, 286, 43, 286, 463, 301, 480, 577, 480, 590, 466, 590, 46, 576, 31)
+width = 5.0
+default_color = Color(0, 0, 0, 1)
+
+[node name="Line2D2" type="Line2D" parent="cardAssets" unique_id=1166344483]
+position = Vector2(1, 3)
+points = PackedVector2Array(576, 30, 302, 30)
+width = 5.0
+default_color = Color(0, 0, 0, 1)
+
+[node name="Button" type="Button" parent="cardAssets" unique_id=2098837867]
+material = SubResource("CanvasItemMaterial_7ctai")
+layout_mode = 0
+offset_left = 376.0
+offset_top = 421.0
+offset_right = 447.0
+offset_bottom = 446.5
+scale = Vector2(2, 2)
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_wr7n8")
+theme_override_styles/hover = SubResource("StyleBoxFlat_1uelp")
+text = "SELECT"
+
+[node name="TextureRect" type="TextureRect" parent="cardAssets" unique_id=2034732829]
+layout_mode = 0
+offset_left = 380.0
+offset_top = 113.0
+offset_right = 444.0
+offset_bottom = 177.0
+scale = Vector2(2, 2)
+texture = ExtResource("6_cmuqr")
+
+[connection signal="pressed" from="cardAssets/Button" to="." method="_on_button_pressed"]
