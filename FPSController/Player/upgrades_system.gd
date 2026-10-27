@@ -5,6 +5,7 @@ extends Node
 @onready var camera = %Camera3D
 @onready var message = get_node("res://assets/models/gunIcons/popup.tscn")
 @onready var weaponsManager = %weaponsManager
+@onready var player = $"../.."
 
 # rarity values are as follows: 1 for common, 2 for rare, 3 for legendary (if we do those).
 @export var card_pool: Array[Dictionary] = [
@@ -35,6 +36,8 @@ func _process(delta: float) -> void:
 	pass
 
 func _add_options(input):
+	# lock movement while upgrades are being chosen
+	player.can_look = false
 	# intended logic: use the upgradesNode to 'paste' 3 random options out of the cards available onto 
 	# each player's screens locally, every roll seperate.
 	#print('found signal and func ran: ' + str(input))
@@ -45,9 +48,9 @@ func _add_options(input):
 	modified_cards = card_pool.duplicate(true)
 	
 	for index in options:
-		# this will be used for weighting: 0-7 means a common spawns whilst 8-10 means rare
+		# this will be used for weighting: 0-6 means a common spawns whilst 7-10 means rare
 		var rarity_rng = randi_range(0, 10)
-		if rarity_rng >= 0:
+		if rarity_rng <= 4:
 			card_object = validate_index(1)
 			spawned_card = card_object["scene"].instantiate()
 		else:

@@ -134,6 +134,9 @@ var texture = TextureRect
 const PortalThrow: PackedScene = preload("res://FPSController/WeaponsManagement/Weapons/portalGunz/throw_portal_gun.tscn")
 
 @onready var cam := $CameraHolder/Camera3D
+# this will be modifed by the upgrades system to ensure that camera is static whilst
+# you pick upgrades.
+var can_look = true
 
 func _enter_tree():
 	print(name)
@@ -274,7 +277,7 @@ func _unhandled_input(event):
 	if not is_multiplayer_authority():
 		return
 
-	if event is InputEventMouseMotion:
+	if event is InputEventMouseMotion and can_look:
 		rotate_y(-event.relative.x * .005)
 		cam.rotate_x(-event.relative.y * .005)
 		cam.rotation.x = clamp(cam.rotation.x, -PI/2, PI/2)
@@ -336,7 +339,7 @@ func _physics_process(delta):
 
 	# 2) Local camera keyboard rotation
 	var look_dir = Input.get_vector("look_left", "look_right", "look_up", "look_down")
-	if look_dir != Vector2.ZERO:
+	if look_dir != Vector2.ZERO and can_look:
 		rotate_y(-look_dir.x * LOOK_SPEED * delta)
 		cam.rotate_x(-look_dir.y * LOOK_SPEED * delta)
 		cam.rotation.x = clamp(cam.rotation.x, -PI/2, PI/2)
