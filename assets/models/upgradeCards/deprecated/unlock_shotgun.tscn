@@ -1,11 +1,13 @@
-[gd_scene format=3 uid="uid://d4ed0yqhfqpsv"]
+[gd_scene format=3 uid="uid://dxhlofbrderx5"]
 
 [ext_resource type="Script" uid="uid://kswxhxei1fnb" path="res://assets/AssetCode/cards/unlock_shotgun.gd" id="1_0vf03"]
-[ext_resource type="Texture2D" uid="uid://bnv62h322w048" path="res://assets/images/upgradesSystem/boomstick.png" id="1_l071t"]
 [ext_resource type="Texture2D" uid="uid://ctcrwyn562eq4" path="res://assets/images/upgradesSystem/cardoutline (1).png" id="2_0vf03"]
 [ext_resource type="Texture2D" uid="uid://cg6wleqmqqa26" path="res://assets/images/upgradesSystem/revolver.png" id="3_e5ao1"]
 [ext_resource type="FontFile" uid="uid://brl5hlu3dc40l" path="res://assets/images/upgradesSystem/Nunito/Nunito-Italic-VariableFont_wght.ttf" id="4_855g6"]
 [ext_resource type="FontFile" uid="uid://b1eo5a8at87ej" path="res://assets/images/upgradesSystem/Nunito/Nunito-VariableFont_wght.ttf" id="5_jp4mp"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_vwqs2"]
+load_path = "res://.godot/imported/boomstick.png-0f4589d30dd8d85e72f9d5dd44f3702a.ctex"
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_e5ao1"]
 
@@ -44,7 +46,7 @@ offset_top = 153.0
 offset_right = 3871.9998
 offset_bottom = 1337.0
 scale = Vector2(0.05, 0.05)
-texture = ExtResource("1_l071t")
+texture = SubResource("CompressedTexture2D_vwqs2")
 
 [node name="Cardoutline(1)" type="TextureRect" parent="cardAssets" unique_id=1691173444]
 visible = false

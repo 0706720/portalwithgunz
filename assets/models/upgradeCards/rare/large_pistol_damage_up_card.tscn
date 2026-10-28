@@ -1,12 +1,12 @@
 [gd_scene format=3 uid="uid://cri7dbgvn5tcc"]
 
-[ext_resource type="Texture2D" uid="uid://b2co5h7q3cxjb" path="res://assets/images/upgradesSystem/undertaker.webp" id="1_6x5qm"]
 [ext_resource type="Script" uid="uid://ckd062njss3ao" path="res://assets/AssetCode/cards/large_damage_up_card.gd" id="1_itedg"]
 [ext_resource type="Texture2D" uid="uid://ctcrwyn562eq4" path="res://assets/images/upgradesSystem/cardoutline (1).png" id="2_itedg"]
 [ext_resource type="Texture2D" uid="uid://cg6wleqmqqa26" path="res://assets/images/upgradesSystem/revolver.png" id="3_8ke3i"]
 [ext_resource type="FontFile" uid="uid://brl5hlu3dc40l" path="res://assets/images/upgradesSystem/Nunito/Nunito-Italic-VariableFont_wght.ttf" id="4_4llnl"]
 [ext_resource type="FontFile" uid="uid://b1eo5a8at87ej" path="res://assets/images/upgradesSystem/Nunito/Nunito-VariableFont_wght.ttf" id="5_20bmw"]
-[ext_resource type="Texture2D" uid="uid://dtyn5dqvisj54" path="res://assets/images/upgradesSystem/plus.png" id="6_jtrso"]
+[ext_resource type="Texture2D" uid="uid://c2lrci6jpyrce" path="res://assets/images/upgradesSystem/cross.svg" id="7_htu87"]
+[ext_resource type="Texture2D" uid="uid://cugp3dx8m5fax" path="res://assets/images/upgradesSystem/pistol_2d.png" id="7_sbous"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_bnvrn"]
 
@@ -37,15 +37,6 @@ script = ExtResource("1_itedg")
 
 [node name="cardAssets" type="Control" parent="." unique_id=427297936]
 anchors_preset = 0
-
-[node name="Hermes" type="TextureRect" parent="cardAssets" unique_id=690049400]
-layout_mode = 0
-offset_left = 335.99994
-offset_top = 121.00001
-offset_right = 1037.0
-offset_bottom = 487.0
-scale = Vector2(0.3, 0.3)
-texture = ExtResource("1_6x5qm")
 
 [node name="Cardoutline(1)" type="TextureRect" parent="cardAssets" unique_id=2101547211]
 visible = false
@@ -89,7 +80,9 @@ theme_override_colors/default_color = Color(0, 0, 0, 1)
 theme_override_fonts/normal_font = ExtResource("4_4llnl")
 theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
-text = "Recieve a 20% bonus to pistol damage"
+text = "Recieve a 20% bonus to pistol damage
+[color=red](Additive) [/color][color=blue]
+(Stackable)[/color]"
 horizontal_alignment = 1
 
 [node name="Polygon2D" type="Polygon2D" parent="cardAssets" unique_id=448533893]
@@ -121,13 +114,22 @@ points = PackedVector2Array(576, 30, 302, 30)
 width = 5.0
 default_color = Color(0.25490198, 0.14117648, 0.6039216, 1)
 
-[node name="TextureRect" type="TextureRect" parent="cardAssets" unique_id=104383635]
+[node name="TextureRect" type="TextureRect" parent="cardAssets" unique_id=473794405]
 layout_mode = 0
-offset_left = 496.00003
-offset_top = 78.0
-offset_right = 940.0
-offset_bottom = 528.0
-scale = Vector2(0.1, 0.1)
-texture = ExtResource("6_jtrso")
+offset_left = 524.0
+offset_top = 44.0
+offset_right = 652.0
+offset_bottom = 172.0
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("7_htu87")
+
+[node name="TextureRect3" type="TextureRect" parent="cardAssets" unique_id=1654627505]
+layout_mode = 0
+offset_left = 369.00003
+offset_top = 92.0
+offset_right = 881.0
+offset_bottom = 604.0
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("7_sbous")
 
 [connection signal="pressed" from="cardAssets/Button" to="." method="_on_button_pressed"]

@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://dqk2q36mrmcw"]
+
+[ext_resource type="PackedScene" uid="uid://ostt735hy24a" path="res://assets/models/gunIcons/circle_border.tscn" id="2_spuji"]
+[ext_resource type="Texture2D" uid="uid://cx5hsy20p1ufi" path="res://assets/images/upgradesSystem/shotgun_2d.png" id="3_spuji"]
+
+[node name="GrenadeIcon" type="Node2D" unique_id=529928692]
+rotation = -0.34906584
+
+[node name="CircleBorder" parent="." unique_id=322981801 instance=ExtResource("2_spuji")]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=245101071]
+position = Vector2(484.00003, 254.00002)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("3_spuji")

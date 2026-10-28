@@ -11,10 +11,10 @@ signal weapon_name(weaponname)
 @onready var icon_node = $"../HUD/GrenadeIcon/pistol_test"
 
 @export var weapons: Array[Dictionary] = [
-	{ "name": "Pistol", "unlocked": false, "icon_path": load("res://assets/images/upgradesSystem/undertaker.webp"), "scale": Vector2(0.17, 0.17)},
-	{ "name": "Grenade", "unlocked": false, "icon_path": load("res://assets/images/upgradesSystem/grenade_launcher-Photoroom.png"), "scale": Vector2(1.1, 1.1)},
-	{ "name": "Shotgun", "unlocked": false, "icon_path": load("res://assets/images/upgradesSystem/boomstick.png"), "scale": Vector2(0.2, 0.2)},
-	{ "name": "GrappleGun", "unlocked": false, "icon_path": load("res://assets/images/upgradesSystem/grapple_icon.webp"), "scale": Vector2(0.8, 0.8)}
+	{ "name": "Pistol", "unlocked": false, "icon_path": load("res://assets/images/upgradesSystem/pistol_2d.png"), "scale": Vector2(0.23, 0.23), "pos": Vector2(478, 234)},
+	{ "name": "Grenade", "unlocked": false, "icon_path": load("res://assets/images/upgradesSystem/grenade_2d.png"), "scale": Vector2(0.27, 0.27), "pos": Vector2(485, 254)},
+	{ "name": "Shotgun", "unlocked": false, "icon_path": load("res://assets/images/upgradesSystem/shotgun_2d.png"), "scale": Vector2(0.25, 0.25), "pos": Vector2(485, 254)},
+	{ "name": "GrappleGun", "unlocked": false, "icon_path": load("res://assets/images/upgradesSystem/grapple_2d.png"), "scale": Vector2(0.27, 0.27), "pos": Vector2(478, 231)}
 ]
 
 var weapon_nodes: Array = []
@@ -95,6 +95,7 @@ func _apply_weapon_local(weapon_index: int) -> void:
 	if get_parent().is_multiplayer_authority() and weapons[weapon_index]["icon_path"] and icon_node:
 		icon_node.texture = weapons[weapon_index]["icon_path"]
 		icon_node.scale = weapons[weapon_index]["scale"]
+		icon_node.position = weapons[weapon_index]["pos"]
 		
 	print("Weapon active for node ", get_parent().name, " : ", current_weapon_name)
 	

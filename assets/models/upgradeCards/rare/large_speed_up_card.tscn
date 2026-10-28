@@ -1,12 +1,12 @@
 [gd_scene format=3 uid="uid://7weax8q8ul5f"]
 
 [ext_resource type="Script" uid="uid://cxavet4uncyj2" path="res://assets/AssetCode/cards/large_speed_up_card.gd" id="1_d0ucm"]
-[ext_resource type="Texture2D" uid="uid://cmwausg74bpcb" path="res://assets/images/upgradesSystem/hermes.jpeg" id="1_k7y6v"]
 [ext_resource type="Texture2D" uid="uid://ctcrwyn562eq4" path="res://assets/images/upgradesSystem/cardoutline (1).png" id="2_d0ucm"]
 [ext_resource type="Texture2D" uid="uid://byw5l60pviokk" path="res://assets/images/upgradesSystem/jump-across.png" id="3_d0ucm"]
 [ext_resource type="FontFile" uid="uid://brl5hlu3dc40l" path="res://assets/images/upgradesSystem/Nunito/Nunito-Italic-VariableFont_wght.ttf" id="4_nmgap"]
 [ext_resource type="FontFile" uid="uid://b1eo5a8at87ej" path="res://assets/images/upgradesSystem/Nunito/Nunito-VariableFont_wght.ttf" id="5_sapus"]
-[ext_resource type="Texture2D" uid="uid://dtyn5dqvisj54" path="res://assets/images/upgradesSystem/plus.png" id="6_qymqb"]
+[ext_resource type="Texture2D" uid="uid://d4luwgelao1jt" path="res://assets/images/upgradesSystem/edit-1793166884536.svg" id="7_d0ucm"]
+[ext_resource type="Texture2D" uid="uid://c2lrci6jpyrce" path="res://assets/images/upgradesSystem/cross.svg" id="7_d31ck"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_d31ck"]
 
@@ -37,15 +37,6 @@ script = ExtResource("1_d0ucm")
 
 [node name="cardAssets" type="Control" parent="." unique_id=1740872564]
 anchors_preset = 0
-
-[node name="Hermes" type="TextureRect" parent="cardAssets" unique_id=1570008080]
-layout_mode = 0
-offset_left = 363.0
-offset_top = 86.0
-offset_right = 723.0
-offset_bottom = 382.0
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("1_k7y6v")
 
 [node name="Cardoutline(1)" type="TextureRect" parent="cardAssets" unique_id=462394333]
 visible = false
@@ -89,7 +80,9 @@ theme_override_fonts/normal_font = ExtResource("4_nmgap")
 theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
 text = "Recieve a 20% bonus to walking 
-speed"
+speed
+[color=red](Additive) [/color][color=blue]
+(Stackable)[/color]"
 horizontal_alignment = 1
 
 [node name="Polygon2D" type="Polygon2D" parent="cardAssets" unique_id=1245189889]
@@ -110,15 +103,6 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_nmgap")
 theme_override_styles/hover = SubResource("StyleBoxFlat_sapus")
 text = "SELECT"
 
-[node name="TextureRect" type="TextureRect" parent="cardAssets" unique_id=393565140]
-layout_mode = 0
-offset_left = 521.0
-offset_top = 62.0
-offset_right = 965.0
-offset_bottom = 512.0
-scale = Vector2(0.1, 0.1)
-texture = ExtResource("6_qymqb")
-
 [node name="Line2D" type="Line2D" parent="cardAssets" unique_id=352403244]
 points = PackedVector2Array(304, 31, 286, 43, 286, 463, 301, 480, 577, 480, 590, 466, 590, 46, 576, 31)
 width = 5.0
@@ -129,5 +113,22 @@ position = Vector2(1, 3)
 points = PackedVector2Array(576, 30, 302, 30)
 width = 5.0
 default_color = Color(0.25490198, 0.14117648, 0.6039216, 1)
+
+[node name="TextureRect2" type="TextureRect" parent="cardAssets" unique_id=731575113]
+layout_mode = 0
+offset_left = 374.0
+offset_top = 116.0
+offset_right = 502.0
+offset_bottom = 244.0
+texture = ExtResource("7_d0ucm")
+
+[node name="TextureRect" type="TextureRect" parent="cardAssets" unique_id=554603312]
+layout_mode = 0
+offset_left = 524.0
+offset_top = 44.0
+offset_right = 652.0
+offset_bottom = 172.0
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("7_d31ck")
 
 [connection signal="pressed" from="cardAssets/Button" to="." method="_on_button_pressed"]

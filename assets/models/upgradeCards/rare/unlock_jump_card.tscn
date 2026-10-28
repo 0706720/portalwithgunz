@@ -1,11 +1,12 @@
 [gd_scene format=3 uid="uid://o5m6v4dfw6y7"]
 
 [ext_resource type="Script" uid="uid://b5sfahx2s3hix" path="res://assets/AssetCode/cards/unlock_jump_card.gd" id="1_t1831"]
-[ext_resource type="Texture2D" uid="uid://bqlwrhoyfbapn" path="res://assets/images/upgradesSystem/32e82c300b6786a.webp" id="1_xml3r"]
 [ext_resource type="Texture2D" uid="uid://ctcrwyn562eq4" path="res://assets/images/upgradesSystem/cardoutline (1).png" id="2_c1pic"]
+[ext_resource type="Texture2D" uid="uid://dphgmpcbs4jj0" path="res://assets/images/upgradesSystem/edit-1793166068301.svg" id="2_t1831"]
 [ext_resource type="Texture2D" uid="uid://byw5l60pviokk" path="res://assets/images/upgradesSystem/jump-across.png" id="3_r2ie1"]
 [ext_resource type="FontFile" uid="uid://brl5hlu3dc40l" path="res://assets/images/upgradesSystem/Nunito/Nunito-Italic-VariableFont_wght.ttf" id="4_0db3u"]
 [ext_resource type="FontFile" uid="uid://b1eo5a8at87ej" path="res://assets/images/upgradesSystem/Nunito/Nunito-VariableFont_wght.ttf" id="5_sa0i3"]
+[ext_resource type="Texture2D" uid="uid://c2lrci6jpyrce" path="res://assets/images/upgradesSystem/cross.svg" id="7_nth4y"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_5jahm"]
 
@@ -35,12 +36,12 @@ anchors_preset = 0
 
 [node name="Hermes" type="TextureRect" parent="cardAssets" unique_id=1016976736]
 layout_mode = 0
-offset_left = 344.0
+offset_left = 352.0
 offset_top = 89.0
-offset_right = 1528.0
+offset_right = 1536.0
 offset_bottom = 1273.0
 scale = Vector2(0.15, 0.15)
-texture = ExtResource("1_xml3r")
+texture = ExtResource("2_t1831")
 
 [node name="Cardoutline(1)" type="TextureRect" parent="cardAssets" unique_id=237860041]
 visible = false
@@ -84,7 +85,8 @@ theme_override_colors/default_color = Color(0, 0, 0, 1)
 theme_override_fonts/normal_font = ExtResource("4_0db3u")
 theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
-text = "Unlock the ability to rapidly ascend upward (~)[color=blue](Unique)[/color]"
+text = "Unlock the ability to rapidly ascend upward (~)
+[color=blue](Unique)[/color]"
 horizontal_alignment = 1
 
 [node name="Polygon2D" type="Polygon2D" parent="cardAssets" unique_id=1235605486]
@@ -115,5 +117,14 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_styles/normal = SubResource("StyleBoxFlat_t1831")
 theme_override_styles/hover = SubResource("StyleBoxFlat_nth4y")
 text = "SELECT"
+
+[node name="TextureRect" type="TextureRect" parent="cardAssets" unique_id=1747954304]
+layout_mode = 0
+offset_left = 524.0
+offset_top = 44.0
+offset_right = 652.0
+offset_bottom = 172.0
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("7_nth4y")
 
 [connection signal="pressed" from="cardAssets/Button" to="." method="_on_button_pressed"]

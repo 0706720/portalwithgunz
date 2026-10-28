@@ -5,7 +5,8 @@
 [ext_resource type="Texture2D" uid="uid://dti8aciu1mus" path="res://assets/images/upgradesSystem/crystal-shine.png" id="2_moh51"]
 [ext_resource type="FontFile" uid="uid://brl5hlu3dc40l" path="res://assets/images/upgradesSystem/Nunito/Nunito-Italic-VariableFont_wght.ttf" id="3_xyigq"]
 [ext_resource type="FontFile" uid="uid://b1eo5a8at87ej" path="res://assets/images/upgradesSystem/Nunito/Nunito-VariableFont_wght.ttf" id="4_780qt"]
-[ext_resource type="Texture2D" uid="uid://cg86367vmbc7e" path="res://assets/images/upgradesSystem/greencross.webp" id="5_lvb8r"]
+[ext_resource type="Texture2D" uid="uid://bnbu24b33i6ve" path="res://assets/images/upgradesSystem/edit-1793166365729.svg" id="6_moh51"]
+[ext_resource type="Texture2D" uid="uid://c2lrci6jpyrce" path="res://assets/images/upgradesSystem/cross.svg" id="7_xyigq"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_jlmih"]
 
@@ -29,15 +30,6 @@ border_color = Color(0, 0, 0, 1)
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_moh51")
-
-[node name="Greencross" type="TextureRect" parent="." unique_id=2068209459]
-layout_mode = 0
-offset_left = 414.0
-offset_top = 87.0
-offset_right = 914.0
-offset_bottom = 587.0
-scale = Vector2(0.1, 0.1)
-texture = ExtResource("5_lvb8r")
 
 [node name="cardAssets" type="Control" parent="." unique_id=122792120]
 anchors_preset = 0
@@ -84,7 +76,9 @@ theme_override_colors/default_color = Color(0, 0, 0, 1)
 theme_override_fonts/normal_font = ExtResource("3_xyigq")
 theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
-text = "XP from all sources is increased by 10% [color=blue](Unique)[/color]"
+text = "XP from all sources is increased by 10% [color=red]
+(Additive) [/color][color=blue]
+(Stackable)[/color]"
 horizontal_alignment = 1
 
 [node name="Polygon2D" type="Polygon2D" parent="cardAssets" unique_id=638346989]
@@ -116,22 +110,21 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_1c22b")
 theme_override_styles/hover = SubResource("StyleBoxFlat_gxhvj")
 text = "SELECT"
 
-[node name="Greencross3" type="TextureRect" parent="cardAssets" unique_id=584876327]
+[node name="TextureRect" type="TextureRect" parent="cardAssets" unique_id=1982741107]
 layout_mode = 0
-offset_left = 454.0
-offset_top = 150.0
-offset_right = 954.0
-offset_bottom = 650.0
-scale = Vector2(0.1, 0.1)
-texture = ExtResource("5_lvb8r")
+offset_left = 373.0
+offset_top = 109.0
+offset_right = 501.0
+offset_bottom = 237.0
+texture = ExtResource("6_moh51")
 
-[node name="Greencross2" type="TextureRect" parent="cardAssets" unique_id=1402395694]
+[node name="TextureRect2" type="TextureRect" parent="cardAssets" unique_id=218318825]
 layout_mode = 0
-offset_left = 387.0
-offset_top = 184.0
-offset_right = 887.0
-offset_bottom = 684.0
-scale = Vector2(0.1, 0.1)
-texture = ExtResource("5_lvb8r")
+offset_left = 524.0
+offset_top = 44.0
+offset_right = 652.0
+offset_bottom = 172.0
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("7_xyigq")
 
 [connection signal="pressed" from="cardAssets/Button" to="." method="_on_button_pressed"]

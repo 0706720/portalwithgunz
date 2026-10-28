@@ -1,12 +1,11 @@
 [gd_scene format=3 uid="uid://cly8hbyffdfg"]
 
-[ext_resource type="Texture2D" uid="uid://b2co5h7q3cxjb" path="res://assets/images/upgradesSystem/undertaker.webp" id="1_ajxvo"]
 [ext_resource type="Script" uid="uid://bdjc3j0ke6ylr" path="res://assets/AssetCode/cards/pistol_damage_chance.gd" id="1_qp0pt"]
 [ext_resource type="Texture2D" uid="uid://ctcrwyn562eq4" path="res://assets/images/upgradesSystem/cardoutline (1).png" id="2_qp0pt"]
 [ext_resource type="Texture2D" uid="uid://cg6wleqmqqa26" path="res://assets/images/upgradesSystem/revolver.png" id="3_mj8mo"]
 [ext_resource type="FontFile" uid="uid://brl5hlu3dc40l" path="res://assets/images/upgradesSystem/Nunito/Nunito-Italic-VariableFont_wght.ttf" id="4_5en3o"]
 [ext_resource type="FontFile" uid="uid://b1eo5a8at87ej" path="res://assets/images/upgradesSystem/Nunito/Nunito-VariableFont_wght.ttf" id="5_j7y0y"]
-[ext_resource type="Texture2D" uid="uid://dtyn5dqvisj54" path="res://assets/images/upgradesSystem/plus.png" id="6_uiypw"]
+[ext_resource type="Texture2D" uid="uid://cugp3dx8m5fax" path="res://assets/images/upgradesSystem/pistol_2d.png" id="6_ajxvo"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_kiw3e"]
 
@@ -37,15 +36,6 @@ script = ExtResource("1_qp0pt")
 
 [node name="cardAssets" type="Control" parent="." unique_id=533616304]
 anchors_preset = 0
-
-[node name="Hermes" type="TextureRect" parent="cardAssets" unique_id=132160517]
-layout_mode = 0
-offset_left = 344.0
-offset_top = 113.0
-offset_right = 1045.0
-offset_bottom = 479.0
-scale = Vector2(0.3, 0.3)
-texture = ExtResource("1_ajxvo")
 
 [node name="Cardoutline(1)" type="TextureRect" parent="cardAssets" unique_id=598871488]
 visible = false
@@ -89,7 +79,9 @@ theme_override_colors/default_color = Color(0, 0, 0, 1)
 theme_override_fonts/normal_font = ExtResource("4_5en3o")
 theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
-text = "Recieve a 1% for the pistol to deal 4X damage [color=blue](Stackable)[/color]"
+text = "Recieve a 1% for the pistol to deal 4X damage 
+[color=red](Additive) [/color][color=blue]
+(Stackable)[/color]"
 horizontal_alignment = 1
 
 [node name="Polygon2D" type="Polygon2D" parent="cardAssets" unique_id=483733370]
@@ -121,13 +113,13 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_pnrgs")
 theme_override_styles/hover = SubResource("StyleBoxFlat_8lumx")
 text = "SELECT"
 
-[node name="TextureRect" type="TextureRect" parent="cardAssets" unique_id=559118179]
+[node name="TextureRect3" type="TextureRect" parent="cardAssets" unique_id=2083047517]
 layout_mode = 0
-offset_left = 496.99997
-offset_top = 68.000015
-offset_right = 941.0
-offset_bottom = 518.0
-scale = Vector2(0.1, 0.1)
-texture = ExtResource("6_uiypw")
+offset_left = 369.00003
+offset_top = 92.0
+offset_right = 881.0
+offset_bottom = 604.0
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("6_ajxvo")
 
 [connection signal="pressed" from="cardAssets/Button" to="." method="_on_button_pressed"]
