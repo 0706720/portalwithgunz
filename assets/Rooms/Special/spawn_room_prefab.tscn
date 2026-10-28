@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://cs1ibjwvbhsss" path="res://assets/images/dungeo_floor.jpg" id="1_08g3p"]
 [ext_resource type="Script" uid="uid://vtmrrbpj6gjq" path="res://assets/Rooms/Special/spawn_room_prefab.gd" id="1_q7kyv"]
+[ext_resource type="PackedScene" uid="uid://um6llo13flnf" path="res://assets/models/sign.tscn" id="2_2oqt0"]
 [ext_resource type="Texture2D" uid="uid://vw4d70xv6yno" path="res://assets/images/wall_dungeon.jpeg" id="2_q7kyv"]
 [ext_resource type="PackedScene" uid="uid://dlx6jlni62p4y" path="res://assets/models/torch.tscn" id="3_2oqt0"]
 
@@ -95,6 +96,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("BoxShape3D_kl01i")
 
 [node name="MeshContainer" type="Node3D" parent="." unique_id=893647859]
+
+[node name="Sign" parent="MeshContainer" unique_id=2129562351 instance=ExtResource("2_2oqt0")]
+transform = Transform3D(0.8660254, 0, 0.5, 0, 1, 0, -0.5, 0, 0.8660254, -8, 1, 16)
 
 [node name="Floor" type="MeshInstance3D" parent="MeshContainer" unique_id=651987031]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8)
