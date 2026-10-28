@@ -1,12 +1,12 @@
 [gd_scene format=3 uid="uid://264od1srwoy3"]
 
-[ext_resource type="Texture2D" uid="uid://bnv62h322w048" path="res://assets/images/upgradesSystem/boomstick.png" id="1_8g074"]
 [ext_resource type="Script" uid="uid://cnpcapsmly1t7" path="res://assets/AssetCode/cards/shotgun_cooldown_card.gd" id="1_hm3qa"]
 [ext_resource type="Texture2D" uid="uid://ctcrwyn562eq4" path="res://assets/images/upgradesSystem/cardoutline (1).png" id="2_hm3qa"]
 [ext_resource type="Texture2D" uid="uid://cg6wleqmqqa26" path="res://assets/images/upgradesSystem/revolver.png" id="3_gnvft"]
 [ext_resource type="FontFile" uid="uid://brl5hlu3dc40l" path="res://assets/images/upgradesSystem/Nunito/Nunito-Italic-VariableFont_wght.ttf" id="4_3wt5d"]
 [ext_resource type="FontFile" uid="uid://b1eo5a8at87ej" path="res://assets/images/upgradesSystem/Nunito/Nunito-VariableFont_wght.ttf" id="5_eddi3"]
-[ext_resource type="Texture2D" uid="uid://dtyn5dqvisj54" path="res://assets/images/upgradesSystem/plus.png" id="6_254nv"]
+[ext_resource type="Texture2D" uid="uid://cx5hsy20p1ufi" path="res://assets/images/upgradesSystem/shotgun_2d.png" id="7_gnvft"]
+[ext_resource type="Texture2D" uid="uid://c2lrci6jpyrce" path="res://assets/images/upgradesSystem/cross.svg" id="7_hm3qa"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_gnvft"]
 
@@ -37,15 +37,6 @@ script = ExtResource("1_hm3qa")
 
 [node name="cardAssets" type="Control" parent="." unique_id=711151133]
 anchors_preset = 0
-
-[node name="Hermes" type="TextureRect" parent="cardAssets" unique_id=2123502935]
-layout_mode = 0
-offset_left = 352.0
-offset_top = 153.0
-offset_right = 3871.9998
-offset_bottom = 1337.0
-scale = Vector2(0.05, 0.05)
-texture = ExtResource("1_8g074")
 
 [node name="Cardoutline(1)" type="TextureRect" parent="cardAssets" unique_id=1571439700]
 visible = false
@@ -89,7 +80,9 @@ theme_override_colors/default_color = Color(0, 0, 0, 1)
 theme_override_fonts/normal_font = ExtResource("4_3wt5d")
 theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
-text = "Shotgun cooldown recieves a 10% reduction [color=blue](Unique)[/color]"
+text = "Shotgun cooldown recieves a 10% reduction 
+[color=red](Additive) [/color][color=blue]
+(Stackable)[/color]"
 horizontal_alignment = 1
 
 [node name="Polygon2D" type="Polygon2D" parent="cardAssets" unique_id=974068810]
@@ -107,15 +100,6 @@ points = PackedVector2Array(576, 30, 302, 30)
 width = 5.0
 default_color = Color(0.25490198, 0.14117648, 0.6039216, 1)
 
-[node name="TextureRect" type="TextureRect" parent="cardAssets" unique_id=1594917498]
-layout_mode = 0
-offset_left = 487.99994
-offset_top = 103.99999
-offset_right = 931.99994
-offset_bottom = 554.0
-scale = Vector2(0.1, 0.1)
-texture = ExtResource("6_254nv")
-
 [node name="Button" type="Button" parent="cardAssets" unique_id=780412069]
 material = SubResource("CanvasItemMaterial_gnvft")
 layout_mode = 0
@@ -129,5 +113,23 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_styles/normal = SubResource("StyleBoxFlat_3wt5d")
 theme_override_styles/hover = SubResource("StyleBoxFlat_eddi3")
 text = "SELECT"
+
+[node name="TextureRect2" type="TextureRect" parent="cardAssets" unique_id=639225500]
+layout_mode = 0
+offset_left = 524.0
+offset_top = 44.0
+offset_right = 652.0
+offset_bottom = 172.0
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("7_hm3qa")
+
+[node name="TextureRect" type="TextureRect" parent="cardAssets" unique_id=777119632]
+layout_mode = 0
+offset_left = 341.99997
+offset_top = 94.99999
+offset_right = 854.0
+offset_bottom = 607.0
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("7_gnvft")
 
 [connection signal="pressed" from="cardAssets/Button" to="." method="_on_button_pressed"]

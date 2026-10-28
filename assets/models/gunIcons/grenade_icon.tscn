@@ -1,14 +1,9 @@
 [gd_scene format=3 uid="uid://cxtnlpv0hosl8"]
 
 [ext_resource type="PackedScene" uid="uid://ostt735hy24a" path="res://assets/models/gunIcons/circle_border.tscn" id="1_hv7gj"]
-[ext_resource type="Texture2D" uid="uid://jevg41h8gowd" path="res://assets/images/upgradesSystem/grenade_launcher-Photoroom.png" id="2_fstxd"]
 
 [node name="GrenadeIcon" type="Node2D" unique_id=96000430]
 
 [node name="CircleBorder" parent="." unique_id=322981801 instance=ExtResource("1_hv7gj")]
 
-[node name="pistol_test" type="Sprite2D" parent="." unique_id=1344497678]
-position = Vector2(487, 253.00003)
-rotation = -0.34906584
-scale = Vector2(1.1, 1.1)
-texture = ExtResource("2_fstxd")
+[node name="pistol_test" type="Sprite2D" parent="." unique_id=1194434759]

@@ -1,12 +1,11 @@
 [gd_scene format=3 uid="uid://bpbpc34vgve15"]
 
 [ext_resource type="Script" uid="uid://codytnk00toiw" path="res://assets/AssetCode/cards/large_health_up_card.gd" id="1_2demy"]
-[ext_resource type="Texture2D" uid="uid://d2q8dmmdkhpmc" path="res://assets/images/upgradesSystem/heart-crystal.png" id="1_yvncg"]
 [ext_resource type="Texture2D" uid="uid://ctcrwyn562eq4" path="res://assets/images/upgradesSystem/cardoutline (1).png" id="2_2demy"]
+[ext_resource type="Texture2D" uid="uid://bhoue0fha2kkr" path="res://assets/images/upgradesSystem/edit-1793166789327.svg" id="2_yvncg"]
 [ext_resource type="Texture2D" uid="uid://c4vcfktilhahl" path="res://assets/images/upgradesSystem/heart-shield.png" id="3_yb2vy"]
 [ext_resource type="FontFile" uid="uid://brl5hlu3dc40l" path="res://assets/images/upgradesSystem/Nunito/Nunito-Italic-VariableFont_wght.ttf" id="4_iams3"]
 [ext_resource type="FontFile" uid="uid://b1eo5a8at87ej" path="res://assets/images/upgradesSystem/Nunito/Nunito-VariableFont_wght.ttf" id="5_krslt"]
-[ext_resource type="Texture2D" uid="uid://dtyn5dqvisj54" path="res://assets/images/upgradesSystem/plus.png" id="6_q71ry"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_a6es0"]
 
@@ -45,7 +44,7 @@ offset_top = 105.0
 offset_right = 568.0
 offset_bottom = 305.0
 scale = Vector2(0.67, 0.67)
-texture = ExtResource("1_yvncg")
+texture = ExtResource("2_yvncg")
 
 [node name="Cardoutline(1)" type="TextureRect" parent="cardAssets" unique_id=1745425979]
 visible = false
@@ -89,7 +88,9 @@ theme_override_colors/default_color = Color(0, 0, 0, 1)
 theme_override_fonts/normal_font = ExtResource("4_iams3")
 theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
-text = "Recieve a 20% bonus to maximum health"
+text = "Recieve a 20% bonus to maximum health
+[color=red](Additive) [/color][color=blue]
+(Stackable)[/color]"
 horizontal_alignment = 1
 
 [node name="Polygon2D" type="Polygon2D" parent="cardAssets" unique_id=1791017948]
@@ -120,14 +121,5 @@ position = Vector2(1, 3)
 points = PackedVector2Array(576, 30, 302, 30)
 width = 5.0
 default_color = Color(0.25490198, 0.14117648, 0.6039216, 1)
-
-[node name="TextureRect" type="TextureRect" parent="cardAssets" unique_id=991786870]
-layout_mode = 0
-offset_left = 512.0
-offset_top = 86.00001
-offset_right = 956.0
-offset_bottom = 536.0
-scale = Vector2(0.1, 0.1)
-texture = ExtResource("6_q71ry")
 
 [connection signal="pressed" from="cardAssets/Button" to="." method="_on_button_pressed"]

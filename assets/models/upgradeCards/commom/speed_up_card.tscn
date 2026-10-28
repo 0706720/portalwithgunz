@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://byw5l60pviokk" path="res://assets/images/upgradesSystem/jump-across.png" id="2_ddov1"]
 [ext_resource type="FontFile" uid="uid://brl5hlu3dc40l" path="res://assets/images/upgradesSystem/Nunito/Nunito-Italic-VariableFont_wght.ttf" id="3_ddov1"]
 [ext_resource type="FontFile" uid="uid://b1eo5a8at87ej" path="res://assets/images/upgradesSystem/Nunito/Nunito-VariableFont_wght.ttf" id="4_yh3x6"]
-[ext_resource type="Texture2D" uid="uid://cmwausg74bpcb" path="res://assets/images/upgradesSystem/hermes.jpeg" id="5_ytn23"]
+[ext_resource type="Texture2D" uid="uid://d4luwgelao1jt" path="res://assets/images/upgradesSystem/edit-1793166884536.svg" id="6_ms0un"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_75wfi"]
 
@@ -32,15 +32,6 @@ script = ExtResource("1_ms0un")
 
 [node name="cardAssets" type="Control" parent="." unique_id=108678941]
 anchors_preset = 0
-
-[node name="Hermes" type="TextureRect" parent="cardAssets" unique_id=71788179]
-layout_mode = 0
-offset_left = 363.0
-offset_top = 86.0
-offset_right = 723.0
-offset_bottom = 382.0
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("5_ytn23")
 
 [node name="Cardoutline(1)" type="TextureRect" parent="cardAssets" unique_id=1455631084]
 visible = false
@@ -84,7 +75,9 @@ theme_override_fonts/normal_font = ExtResource("3_ddov1")
 theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
 text = "Recieve a 10% bonus to walking 
-speed"
+speed
+[color=red](Additive) [/color][color=blue]
+(Stackable)[/color]"
 horizontal_alignment = 1
 
 [node name="Polygon2D" type="Polygon2D" parent="cardAssets" unique_id=1325875221]
@@ -115,5 +108,13 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_styles/normal = SubResource("StyleBoxFlat_ms0un")
 theme_override_styles/hover = SubResource("StyleBoxFlat_iuysq")
 text = "SELECT"
+
+[node name="TextureRect" type="TextureRect" parent="cardAssets" unique_id=571957077]
+layout_mode = 0
+offset_left = 374.0
+offset_top = 116.0
+offset_right = 502.0
+offset_bottom = 244.0
+texture = ExtResource("6_ms0un")
 
 [connection signal="pressed" from="cardAssets/Button" to="." method="_on_button_pressed"]

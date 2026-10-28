@@ -5,8 +5,8 @@
 [ext_resource type="Texture2D" uid="uid://cg6wleqmqqa26" path="res://assets/images/upgradesSystem/revolver.png" id="3_23s1d"]
 [ext_resource type="FontFile" uid="uid://brl5hlu3dc40l" path="res://assets/images/upgradesSystem/Nunito/Nunito-Italic-VariableFont_wght.ttf" id="4_0tlur"]
 [ext_resource type="FontFile" uid="uid://b1eo5a8at87ej" path="res://assets/images/upgradesSystem/Nunito/Nunito-VariableFont_wght.ttf" id="5_w5b5i"]
-[ext_resource type="Texture2D" uid="uid://dtyn5dqvisj54" path="res://assets/images/upgradesSystem/plus.png" id="6_lqn3a"]
-[ext_resource type="Texture2D" uid="uid://b2co5h7q3cxjb" path="res://assets/images/upgradesSystem/undertaker.webp" id="7_fjbiq"]
+[ext_resource type="Texture2D" uid="uid://cugp3dx8m5fax" path="res://assets/images/upgradesSystem/pistol_2d.png" id="7_1rtmu"]
+[ext_resource type="Texture2D" uid="uid://c2lrci6jpyrce" path="res://assets/images/upgradesSystem/cross.svg" id="7_pfxs4"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ihd37"]
 
@@ -80,7 +80,8 @@ theme_override_colors/default_color = Color(0, 0, 0, 1)
 theme_override_fonts/normal_font = ExtResource("4_0tlur")
 theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
-text = "Hit shots heal for 5 at a low chance (5%) [color=blue](unique)[/color]"
+text = "Hit shots heal for 5 at a low chance (5%) [color=blue]
+(Unique)[/color]"
 horizontal_alignment = 1
 
 [node name="Polygon2D" type="Polygon2D" parent="cardAssets" unique_id=586361581]
@@ -98,15 +99,6 @@ points = PackedVector2Array(576, 30, 302, 30)
 width = 5.0
 default_color = Color(0.25490198, 0.14117648, 0.6039216, 1)
 
-[node name="TextureRect" type="TextureRect" parent="cardAssets" unique_id=811023429]
-layout_mode = 0
-offset_left = 495.99997
-offset_top = 71.99999
-offset_right = 940.0
-offset_bottom = 522.0
-scale = Vector2(0.1, 0.1)
-texture = ExtResource("6_lqn3a")
-
 [node name="Button" type="Button" parent="cardAssets" unique_id=883597849]
 material = SubResource("CanvasItemMaterial_ihd37")
 layout_mode = 0
@@ -121,13 +113,22 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_26yac")
 theme_override_styles/hover = SubResource("StyleBoxFlat_uocew")
 text = "SELECT"
 
-[node name="Hermes" type="TextureRect" parent="cardAssets" unique_id=81004472]
+[node name="TextureRect" type="TextureRect" parent="cardAssets" unique_id=878243668]
 layout_mode = 0
-offset_left = 344.0
-offset_top = 113.0
-offset_right = 1045.0
-offset_bottom = 479.0
+offset_left = 524.0
+offset_top = 44.0
+offset_right = 652.0
+offset_bottom = 172.0
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("7_pfxs4")
+
+[node name="TextureRect2" type="TextureRect" parent="cardAssets" unique_id=1216548954]
+layout_mode = 0
+offset_left = 369.00003
+offset_top = 92.0
+offset_right = 881.0
+offset_bottom = 604.0
 scale = Vector2(0.3, 0.3)
-texture = ExtResource("7_fjbiq")
+texture = ExtResource("7_1rtmu")
 
 [connection signal="pressed" from="cardAssets/Button" to="." method="_on_button_pressed"]

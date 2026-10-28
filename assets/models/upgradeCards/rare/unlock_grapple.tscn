@@ -5,7 +5,8 @@
 [ext_resource type="Texture2D" uid="uid://byw5l60pviokk" path="res://assets/images/upgradesSystem/jump-across.png" id="2_guojf"]
 [ext_resource type="FontFile" uid="uid://brl5hlu3dc40l" path="res://assets/images/upgradesSystem/Nunito/Nunito-Italic-VariableFont_wght.ttf" id="3_3vnbu"]
 [ext_resource type="FontFile" uid="uid://b1eo5a8at87ej" path="res://assets/images/upgradesSystem/Nunito/Nunito-VariableFont_wght.ttf" id="4_mmsjr"]
-[ext_resource type="Texture2D" uid="uid://c6y16xua77ibe" path="res://assets/images/upgradesSystem/grapple_2d-removebg-preview.png" id="5_wp2jl"]
+[ext_resource type="Texture2D" uid="uid://c2lrci6jpyrce" path="res://assets/images/upgradesSystem/cross.svg" id="7_3vnbu"]
+[ext_resource type="Texture2D" uid="uid://cj20o2crk8rnc" path="res://assets/images/upgradesSystem/grapple.png" id="7_mmsjr"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_luplj"]
 
@@ -111,13 +112,22 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_pb6lt")
 theme_override_styles/hover = SubResource("StyleBoxFlat_fdwmn")
 text = "SELECT"
 
-[node name="TextureRect2" type="TextureRect" parent="cardAssets" unique_id=1177312887]
+[node name="TextureRect2" type="TextureRect" parent="cardAssets" unique_id=485864566]
 layout_mode = 0
-offset_left = 360.0
-offset_top = 100.0
-offset_right = 860.0
-offset_bottom = 600.0
-scale = Vector2(0.3, 0.3)
-texture = ExtResource("5_wp2jl")
+offset_left = 524.0
+offset_top = 44.0
+offset_right = 652.0
+offset_bottom = 172.0
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("7_3vnbu")
+
+[node name="TextureRect" type="TextureRect" parent="cardAssets" unique_id=293157322]
+layout_mode = 0
+offset_left = 338.0
+offset_top = 123.0
+offset_right = 703.0
+offset_bottom = 338.0
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("7_mmsjr")
 
 [connection signal="pressed" from="cardAssets/Button" to="." method="_on_button_pressed"]

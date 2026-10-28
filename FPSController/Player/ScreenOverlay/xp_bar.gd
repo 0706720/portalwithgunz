@@ -68,6 +68,8 @@ func apply_upgrade_all_clients():
 	Global.signal_popup(true)
 	
 func selecting():
+	# if no cards are on screen, the func will give true and the if statement will fail.
+	# this avoids another global variable.
 	if get_tree().get_nodes_in_group("Card").size() >= 1:
 		return true
 	else:
