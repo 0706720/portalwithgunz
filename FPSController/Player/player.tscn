@@ -22,12 +22,6 @@
 [ext_resource type="Script" uid="uid://bjam2q4r8dwcf" path="res://FPSController/WeaponsManagement/weapons_manager.gd" id="17_hjbpo"]
 [ext_resource type="Script" uid="uid://bwjf6rau8gocs" path="res://FPSController/Player/ScreenOverlay/screen_overlay.gd" id="18_do0ft"]
 [ext_resource type="Script" uid="uid://dqjdqpr0mh0og" path="res://assets/AssetCode/emote_wheel.gd" id="18_wpatb"]
-[ext_resource type="Texture2D" uid="uid://wy2hdd51kkgt" path="res://assets/images/ThumbsUp.webp" id="19_e7m0m"]
-[ext_resource type="Texture2D" uid="uid://k7mvukti5jxy" path="res://assets/images/give-me-your-favorite-reaction-memes-v0-je7aot4ib6qe1.webp" id="19_r0754"]
-[ext_resource type="Texture2D" uid="uid://bfdyrk7i0ygu3" path="res://assets/images/Pelican.jpeg" id="20_e7m0m"]
-[ext_resource type="Texture2D" uid="uid://kpodjr2ek4pr" path="res://assets/images/8880154.jpg" id="21_j48a2"]
-[ext_resource type="Texture2D" uid="uid://bvh3f5fu4hvow" path="res://assets/images/mort-meme.png" id="23_qe01f"]
-[ext_resource type="Texture2D" uid="uid://65i6bhs5c4l7" path="res://assets/images/chicken-rice-and-yoghurt-v0-7ria5b8ongi41.webp" id="24_cahw7"]
 [ext_resource type="Script" uid="uid://bjplljit7b0op" path="res://FPSController/Player/upgrades_system.gd" id="27_g48ct"]
 [ext_resource type="Script" uid="uid://s6mq1s78yokb" path="res://FPSController/Player/ScreenOverlay/xp_bar.gd" id="28_wd7pj"]
 [ext_resource type="PackedScene" uid="uid://bprk3daoy6f18" path="res://assets/models/gunIcons/popup.tscn" id="30_e1mg5"]
@@ -534,8 +528,11 @@ script = ExtResource("18_wpatb")
 name = "0"
 metadata/_custom_type_script = "uid://dqjdqpr0mh0og"
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_g48ct"]
+load_path = "res://.godot/imported/ThumbsUp.webp-4a742f97baae9b579290db45696cdb15.ctex"
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_1yo78"]
-atlas = ExtResource("19_e7m0m")
+atlas = SubResource("CompressedTexture2D_g48ct")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4l438"]
 atlas = SubResource("AtlasTexture_1yo78")
@@ -543,8 +540,11 @@ script = ExtResource("18_wpatb")
 name = "1"
 metadata/_custom_type_script = "uid://dqjdqpr0mh0og"
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_evljc"]
+load_path = "res://.godot/imported/Pelican.jpeg-78c03f5bc815699ecc8b3f7c8ed2b6de.ctex"
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_e7m0m"]
-atlas = ExtResource("20_e7m0m")
+atlas = SubResource("CompressedTexture2D_evljc")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pt43d"]
 atlas = SubResource("AtlasTexture_e7m0m")
@@ -552,8 +552,11 @@ script = ExtResource("18_wpatb")
 name = "2"
 metadata/_custom_type_script = "uid://dqjdqpr0mh0og"
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_2ddww"]
+load_path = "res://.godot/imported/8880154.jpg-867f151812fe82def3690e4ba2d36000.ctex"
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_dcoln"]
-atlas = ExtResource("21_j48a2")
+atlas = SubResource("CompressedTexture2D_2ddww")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vcnht"]
 atlas = SubResource("AtlasTexture_dcoln")
@@ -561,8 +564,11 @@ script = ExtResource("18_wpatb")
 name = "3"
 metadata/_custom_type_script = "uid://dqjdqpr0mh0og"
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_51ve3"]
+load_path = "res://.godot/imported/give-me-your-favorite-reaction-memes-v0-je7aot4ib6qe1.webp-954e4dbadaa59b84c9b583da6137da61.ctex"
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_r0754"]
-atlas = ExtResource("19_r0754")
+atlas = SubResource("CompressedTexture2D_51ve3")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_j48a2"]
 atlas = SubResource("AtlasTexture_r0754")
@@ -570,8 +576,11 @@ script = ExtResource("18_wpatb")
 name = "4"
 metadata/_custom_type_script = "uid://dqjdqpr0mh0og"
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_wd7pj"]
+load_path = "res://.godot/imported/mort-meme.png-c6ba00e14436d0ec98583d1f10e79957.ctex"
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_6alim"]
-atlas = ExtResource("23_qe01f")
+atlas = SubResource("CompressedTexture2D_wd7pj")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g48ct"]
 atlas = SubResource("AtlasTexture_6alim")
@@ -579,8 +588,11 @@ script = ExtResource("18_wpatb")
 name = "5"
 metadata/_custom_type_script = "uid://dqjdqpr0mh0og"
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_00aet"]
+load_path = "res://.godot/imported/chicken-rice-and-yoghurt-v0-7ria5b8ongi41.webp-43743c7225ef4852d1131968209ba575.ctex"
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_cahw7"]
-atlas = ExtResource("24_cahw7")
+atlas = SubResource("CompressedTexture2D_00aet")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qe01f"]
 atlas = SubResource("AtlasTexture_cahw7")
@@ -659,34 +671,8 @@ viewport_path = NodePath("SubViewport")
 collision_layer = 2
 script = ExtResource("1_do0ft")
 desired_move_speed_curve = SubResource("Curve_qfm1y")
-max_desired_move_speed = null
-hit_ground_cooldown = null
 crouch_anim_player = NodePath("CrouchAnimationPlayer")
 crouch_shapecast = NodePath("ShapeCast3D")
-crouch_speed = null
-look_sensitivity = null
-auto_bhop = null
-sprint_speed = null
-ground_accel = null
-ground_deccel = null
-ground_friction = null
-spin_charge_rate = null
-spin_max_power = null
-spin_min_release = null
-spin_friction = null
-spin_cam_tilt_amount = null
-spin_cam_tilt_speed = null
-move_forward_action = null
-move_backward_action = null
-move_left_action = null
-move_right_action = null
-run_action = null
-crouch_action = null
-jump_action = null
-throw_action = null
-check_on_ready_if_inputs_registered = null
-Portal_one = null
-Portal_two = null
 ShotgunBullet = ExtResource("2_g48ct")
 
 [node name="Player" type="Node3D" parent="." unique_id=444522863]
