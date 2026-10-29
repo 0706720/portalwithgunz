@@ -404,44 +404,44 @@ func _physics_process(delta):
 		throw_weapon()
 
 	# EMOTE WHEEL
-	var emote = $HUD/SelectionWheel.close()
-	if Input.is_action_just_pressed("emote"):
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-		$HUD/SelectionWheel.show()
-	if Input.is_action_just_released("emote"):
-		$HUD/SelectionWheel.hide()
-		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-		rpc("show_emote_remote", emote)
-		show_emote_local(emote)
-
-func show_emote_local(emote):
-	print(emote)
-	match emote:
-		1.0:
-			$EmoteBar.show()
-			$EmoteBar.texture = load("res://assets/images/ThumbsUp.webp")
-		2.0:
-			$EmoteBar.show()
-			$EmoteBar.texture = load("res://assets/images/Pelican.jpeg")
-		3.0:
-			$EmoteBar.show()
-			$EmoteBar.texture = load("res://assets/images/8880154.jpg")
-		4.0:
-			$EmoteBar.show()
-			$EmoteBar.texture = load("res://assets/images/give-me-your-favorite-reaction-memes-v0-je7aot4ib6qe1.webp")
-		5.0:
-			$EmoteBar.show()
-			$EmoteBar.texture = load("res://assets/images/mort-meme.png")
-		6.0:
-			$EmoteBar.show()
-			$EmoteBar.texture = load("res://assets/images/chicken-rice-and-yoghurt-v0-7ria5b8ongi41.webp")
-		0:
-			pass
-	var timer := get_tree().create_timer(2.0)
-	timer.timeout.connect(func():
-		$EmoteBar.hide()
-		$EmoteBar.texture = null
-	)
+	#var emote = $HUD/SelectionWheel.close()
+	#if Input.is_action_just_pressed("emote"):
+		#Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		#$HUD/SelectionWheel.show()
+	#if Input.is_action_just_released("emote"):
+		#$HUD/SelectionWheel.hide()
+		#Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		#rpc("show_emote_remote", emote)
+		#show_emote_local(emote)
+#
+#func show_emote_local(emote):
+	#print(emote)
+	#match emote:
+		#1.0:
+			#$EmoteBar.show()
+			#$EmoteBar.texture = load("res://assets/images/ThumbsUp.webp")
+		#2.0:
+			#$EmoteBar.show()
+			#$EmoteBar.texture = load("res://assets/images/Pelican.jpeg")
+		#3.0:
+			#$EmoteBar.show()
+			#$EmoteBar.texture = load("res://assets/images/8880154.jpg")
+		#4.0:
+			#$EmoteBar.show()
+			#$EmoteBar.texture = load("res://assets/images/give-me-your-favorite-reaction-memes-v0-je7aot4ib6qe1.webp")
+		#5.0:
+			#$EmoteBar.show()
+			#$EmoteBar.texture = load("res://assets/images/mort-meme.png")
+		#6.0:
+			#$EmoteBar.show()
+			#$EmoteBar.texture = load("res://assets/images/chicken-rice-and-yoghurt-v0-7ria5b8ongi41.webp")
+		#0:
+			#pass
+	#var timer := get_tree().create_timer(2.0)
+	#timer.timeout.connect(func():
+		#$EmoteBar.hide()
+		#$EmoteBar.texture = null
+	#)
 
 @rpc("any_peer")
 func show_emote_remote(emote):
